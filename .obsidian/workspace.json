@@ -74,13 +74,25 @@
               "type": "markdown",
               "state": {
                 "file": "Summary/JVM.md",
-                "mode": "preview",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "fd108eb1a75bc807",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Summary/JVM.md",
+                "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -235,7 +247,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "921dccb9eb7a94a2",
+  "active": "fd108eb1a75bc807",
   "lastOpenFiles": [
     "Summary/Algorithm.md",
     "Summary/JVM.md",
