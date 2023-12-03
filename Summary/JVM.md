@@ -1463,7 +1463,7 @@ public Object pop() {
 一旦引用过期，清空这些引用，将引用置空。
 ![](内存泄漏分析3.png)
 
-## 使用OQL语言查询对象信息
+# 使用OQL语言查询对象信息
 
 MAT支持一种类似于SQL的查询语言OQL（Object Query Language）。OQL使用类SQL语法，可以在堆中进行对象的查找和筛选。
 
