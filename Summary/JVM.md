@@ -676,7 +676,7 @@ jcmd拥有jmap的大部分功能，并且在Oracle的官方网站上也推荐使
 常量池主要存放编译期生成的各种**字面量**和**符号引用**，**这部分内容在类加载后进入方法区的运行时常量池**。字符串常量池放到了堆中。
 
 ## 命令相关
-* java -XX:+PrintFlagsInitial 查看所有JVM参数启动的初始值
-* java -XX:+PrintFlagsFinal 查看所有JVM参数的最终值
-* java -XX:+PrintCommandLineFlags 查看哪些已经被用户或者JVM设置过的详细的XX参数的名称和值
-* -XX: +HeapDumpOn
+* `java -XX:+PrintFlagsInitial` 查看所有JVM参数启动的初始值
+* `java -XX:+PrintFlagsFinal` 查看所有JVM参数的最终值
+* `java -XX:+PrintCommandLineFlags` 查看哪些已经被用户或者JVM设置过的详细的XX参数的名称和值
+* OOM自动dump：`-XX: +HeapDumpOnOutOfMemoryError`：在程序发生OOM时，导出应用程序的当前堆快照。`-XX: +HeapDumpPath`：可以指定堆快照的保存位置
