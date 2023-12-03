@@ -489,6 +489,16 @@ TODO
 - 吞吐量：每天通过高速公路收费站的车辆的数据
 - 并发数：高速公路上正在行驶的车辆的数目
 - 响应时间：车速
+## 怎么选择垃圾回收器？
+- 优先让JVM自适应，调整堆的大小
+- 串行收集器：内存小于100M；单核、单机程序，并且没有停顿时间的要求
+- 并行收集器：多CPU、高吞吐量、允许停顿时间超过1秒
+- 并发收集器：多CPU、追求低停顿时间、快速响应（比如延迟不能超过1秒，如互联网应用）
+- 官方推荐G1，性能高。现在互联网的项目，基本都是使用G1
+
+特别说明：
+- 没有最好的收集器，更没有万能的收集器
+- 调优永远是针对特定场景、特定需求，不存在一劳永逸的收集器
 ## 有哪些常用的jvm调优参数？::
 
 官网地址：[https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html](https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html)
@@ -548,7 +558,7 @@ TODO
 -XX:ParallelGCThreads  设置年轻代并行收集器的线程数。
 	一般地，最好与CPU数量相等，以避免过多的线程数影响垃圾收集性能。
 ```
-##### CMS参数设置
+##### Parallel参数设置
 ```shell
 # Parallel回收器
 -XX:+UseParallelGC  年轻代使用 Parallel Scavenge GC，互相激活
@@ -564,6 +574,9 @@ TODO
 -XX:+UseAdaptiveSizePolicy  设置Parallel Scavenge收集器具有自适应调节策略。
 	在这种模式下，年轻代的大小、Eden和Survivor的比例、晋升老年代的对象年龄等参数会被自动调整，以达到在堆大小、吞吐量和停顿时间之间的平衡点。
 	在手动调优比较困难的场合，可以直接使用这种自适应的方式，仅指定虚拟机的最大堆、目标的吞吐量（GCTimeRatio）和停顿时间（MaxGCPauseMills），让虚拟机自己完成调优工作。
+```
+##### CMS参数设置
+```shell
 # CMS回收器
 -XX:+UseConcMarkSweepGC  年轻代使用CMS GC。
 	开启该参数后会自动将-XX：＋UseParNewGC打开。即：ParNew（Young区）+ CMS（Old区）+ Serial Old的组合
@@ -603,6 +616,52 @@ TODO
 -XX:G1MaxNewSizePercent  新生代占用整个堆内存的最大百分比（默认60％）
 -XX:G1ReservePercent=10  保留内存区域，防止 to space（Survivor中的to区）溢出
 ```
+
+#### GC日志相关选项
+```shell
+-XX:+PrintGC <==> -verbose:gc  打印简要日志信息
+-XX:+PrintGCDetails            打印详细日志信息
+-XX:+PrintGCTimeStamps  打印程序启动到GC发生的时间，搭配-XX:+PrintGCDetails使用
+-XX:+PrintGCDateStamps  打印GC发生时的时间戳，搭配-XX:+PrintGCDetails使用
+-XX:+PrintHeapAtGC  打印GC前后的堆信息，如下图
+-Xloggc:<file> 输出GC导指定路径下的文件中
+```
+
+#### 其他参数
+```shell
+-XX:+DisableExplicitGC  禁用hotspot执行System.gc()，默认禁用
+-XX:ReservedCodeCacheSize=<n>[g|m|k]、-XX:InitialCodeCacheSize=<n>[g|m|k]  指定代码缓存的大小
+-XX:+UseCodeCacheFlushing  放弃一些被编译的代码，避免代码缓存被占满时JVM切换到interpreted-only的情况
+-XX:+DoEscapeAnalysis  开启逃逸分析
+-XX:+UseBiasedLocking  开启偏向锁
+-XX:+UseLargePages  开启使用大页面
+-XX:+PrintTLAB  打印TLAB的使用情况
+-XX:TLABSize  设置TLAB大小
+```
+
+####  通过Java代码获取JVM参数
+Java提供了java.lang.management包用于监视和管理Java虚拟机和Java运行时中的其他组件，它允许本地或远程监控和管理运行的Java虚拟机。其中ManagementFactory类较为常用，另外Runtime类可获取内存、CPU核数等相关的数据。通过使用这些api，可以监控应用服务器的堆内存使用情况，设置一些阈值进行报警等处理。
+```java
+public class MemoryMonitor {
+    public static void main(String[] args) {
+        MemoryMXBean memorymbean = ManagementFactory.getMemoryMXBean();
+        MemoryUsage usage = memorymbean.getHeapMemoryUsage();
+        System.out.println("INIT HEAP: " + usage.getInit() / 1024 / 1024 + "m");
+        System.out.println("MAX HEAP: " + usage.getMax() / 1024 / 1024 + "m");
+        System.out.println("USE HEAP: " + usage.getUsed() / 1024 / 1024 + "m");
+        System.out.println("\nFull Information:");
+        System.out.println("Heap Memory Usage: " + memorymbean.getHeapMemoryUsage());
+        System.out.println("Non-Heap Memory Usage: " + memorymbean.getNonHeapMemoryUsage());
+
+        System.out.println("=======================通过java来获取相关系统状态============================ ");
+        System.out.println("当前堆内存大小totalMemory " + (int) Runtime.getRuntime().totalMemory() / 1024 / 1024 + "m");// 当前堆内存大小
+        System.out.println("空闲堆内存大小freeMemory " + (int) Runtime.getRuntime().freeMemory() / 1024 / 1024 + "m");// 空闲堆内存大小
+        System.out.println("最大可用总堆内存maxMemory " + Runtime.getRuntime().maxMemory() / 1024 / 1024 + "m");// 最大可用总堆内存大小
+
+    }
+}
+```
+
 ### G1相关参数
 * -XX:+UseG1GC
 * -XX:G1HeapRegionSize
