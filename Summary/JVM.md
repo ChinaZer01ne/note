@@ -1577,3 +1577,104 @@ SELECT OBJECTS s.value FROM java.lang.String s
 ```
 
 在Select子句中，使用“AS RETAINED SET”关键字可以得到所得对象的保留集。
+
+```sql
+SELECT AS RETAINED SET *FROM com.atguigu.mat.Student
+```
+
+“DISTINCT”关键字用于在结果集中去除重复对象。
+
+```sql
+SELECT DISTINCT OBJECTS classof(s) FROM java.lang.String s
+```
+
+## 2. FROM子句
+
+From子句用于指定查询范围，它可以指定类名、正则表达式或者对象地址。
+
+```sql
+SELECT * FROM java.lang.String s
+```
+使用正则表达式，限定搜索范围，输出所有com.atguigu包下所有类的实例
+
+```sql
+SELECT * FROM "com\.atguigu\..*"
+```
+使用类的地址进行搜索。使用类的地址的好处是可以区分被不同ClassLoader加载的同一种类型。
+
+```sql
+select * from 0x37a0b4d
+```
+
+## WHERE子句
+
+  
+
+Where子句用于指定OQL的查询条件。OQL查询将只返回满足Where子句指定条件的对象。Where子句的格式与传统SQL极为相似。
+
+  
+
+返回长度大于10的char数组。
+
+```java
+SELECT *FROM Ichar[] s WHERE s.@length>10
+```
+返回包含“java”子字符串的所有字符串，使用“LIKE”操作符，“LIKE”操作符的操作参数为正则表达式。
+```sql
+SELECT * FROM java.lang.String s WHERE toString(s) LIKE ".*java.*"
+```
+
+
+
+返回所有value域不为null的字符串，使用“＝”操作符。
+```java
+SELECT * FROM java.lang.String s where s.value!=null
+```
+
+返回数组长度大于15，并且深堆大于1000字节的所有Vector对象。
+
+```sql
+SELECT * FROM java.util.Vector v WHERE v.elementData.@length>15 AND v.@retainedHeapSize>1000
+```
+
+## 内置对象与方法
+
+  
+
+OQL中可以访问堆内对象的属性，也可以访问堆内代理对象的属性。访问堆内对象的属性时，格式如下，其中alias为对象名称：
+
+  
+
+`[ <alias>. ] <field> . <field>. <field>`
+
+  
+
+访问java.io.File对象的path属性，并进一步访问path的value属性：
+
+```sql
+SELECT toString(f.path.value) FROM java.io.File f
+```
+
+
+显示String对象的内容、objectid和objectAddress。
+```sql
+SELECT s.toString(),s.@objectId, s.@objectAddress FROM java.lang.String s
+```
+
+
+显示java.util.Vector内部数组的长度。
+
+```sql
+SELECT v.elementData.@length FROM java.util.Vector v
+
+```
+显示所有的java.util.Vector对象及其子类型
+
+```sql
+select * from INSTANCEOF java.util.Vector
+```
+
+
+
+
+
