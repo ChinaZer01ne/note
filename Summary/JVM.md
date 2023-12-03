@@ -490,10 +490,51 @@ TODO
 - 并发数：高速公路上正在行驶的车辆的数目
 - 响应时间：车速
 ## 有哪些常用的jvm调优参数？::
+
+官网地址：[https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html](https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html)
+
 * -Xms
 * -Xmx
 * -Xss
 * -XX:ParallelGCThreads ：限制新生代垃圾回收线程数量，默认开启CPU小于8时和CPU核数相同，大于8时，`ParallelGCThreads = 3+[5 * 核数/8]`
+* -XX:+PrintCommandLineFlags 程序运行时JVM默认设置或用户手动设置的XX选项
+* -XX:+PrintFlagsInitial 打印所有XX选项的默认值
+* -XX:+PrintFlagsFinal 打印所有XX选项的实际值
+* -XX:+PrintVMOptions 打印JVM的参数
+
+#### 堆、栈、方法区等内存大小设置
+```shell
+# 栈
+-Xss128k <==> -XX:ThreadStackSize=128k 设置线程栈的大小为128K
+
+# 堆
+-Xms2048m <==> -XX:InitialHeapSize=2048m 设置JVM初始堆内存为2048M
+-Xmx2048m <==> -XX:MaxHeapSize=2048m 设置JVM最大堆内存为2048M
+-Xmn2g <==> -XX:NewSize=2g -XX:MaxNewSize=2g 设置年轻代大小为2G
+-XX:SurvivorRatio=8 设置Eden区与Survivor区的比值，默认为8
+-XX:NewRatio=2 设置老年代与年轻代的比例，默认为2
+-XX:+UseAdaptiveSizePolicy 设置大小比例自适应，默认开启
+-XX:PretenureSizeThreadshold=1024 设置让大于此阈值的对象直接分配在老年代，只对Serial、ParNew收集器有效
+-XX:MaxTenuringThreshold=15 设置新生代晋升老年代的年龄限制，默认为15
+-XX:TargetSurvivorRatio 设置MinorGC结束后Survivor区占用空间的期望比例
+
+# 方法区
+-XX:MetaspaceSize / -XX:PermSize=256m 设置元空间/永久代初始值为256M
+-XX:MaxMetaspaceSize / -XX:MaxPermSize=256m 设置元空间/永久代最大值为256M
+-XX:+UseCompressedOops 使用压缩对象
+-XX:+UseCompressedClassPointers 使用压缩类指针
+-XX:CompressedClassSpaceSize 设置Klass Metaspace的大小，默认1G
+
+# 直接内存
+-XX:MaxDirectMemorySize 指定DirectMemory容量，默认等于Java堆最大值
+```
+#### OutOfMemory相关的选项
+```shell
+-XX:+HeapDumpOnOutMemoryError 内存出现OOM时生成Heap转储文件，两者互斥
+-XX:+HeapDumpBeforeFullGC 出现FullGC时生成Heap转储文件，两者互斥
+-XX:HeapDumpPath=<path> 指定heap转储文件的存储路径，默认当前目录
+-XX:OnOutOfMemoryError=<path> 指定可行性程序或脚本的路径，当发生OOM时执行脚本
+```
 ### G1相关参数
 * -XX:+UseG1GC
 * -XX:G1HeapRegionSize
@@ -668,15 +709,12 @@ jcmd拥有jmap的大部分功能，并且在Oracle的官方网站上也推荐使
 
 JProfier数据采集方式分为两种：Sampling（样本采集）和Instrumentation（重构模式）
 
-**Instrumentation**：这是JProfiler全功能模式。在class加载之前，JProfier把相关功能代码写入到需要分析的class的bytecode中，对正在运行的jvm有一定影响。
-
-- 优点：功能强大。在此设置中，调用堆栈信息是准确的。
-- 缺点：若要分析的class较多，则对应用的性能影响较大，CPU开销可能很高（取决于Filter的控制）。因此使用此模式一般配合Filter使用，只对特定的类或包进行分析
-
-**Sampling**：类似于样本统计，每隔一定时间（5ms）将每个线程栈中方法栈中的信息统计出来。
-
-- 优点：对CPU的开销非常低，对应用影响小（即使你不配置任何Filter）
-- 缺点：一些数据／特性不能提供（例如：方法的调用次数、执行时间）
+* ***Instrumentation**：这是JProfiler全功能模式。在class加载之前，JProfier把相关功能代码写入到需要分析的class的bytecode中，对正在运行的jvm有一定影响。
+	- 优点：功能强大。在此设置中，调用堆栈信息是准确的。
+	- 缺点：若要分析的class较多，则对应用的性能影响较大，CPU开销可能很高（取决于Filter的控制）。因此使用此模式一般配合Filter使用，只对特定的类或包进行分析
+- **Sampling**：类似于样本统计，每隔一定时间（5ms）将每个线程栈中方法栈中的信息统计出来。
+	- 优点：对CPU的开销非常低，对应用影响小（即使你不配置任何Filter）
+	- 缺点：一些数据／特性不能提供（例如：方法的调用次数、执行时间）
 
 注：JProfiler本身没有指出数据的采集类型，这里的采集类型是针对方法调用的采集类型。因为JProfiler的绝大多数核心功能都依赖方法调用采集的数据，所以可以直接认为是JProfiler的数据采集类型。
 #### 内存视图 Live Memory
