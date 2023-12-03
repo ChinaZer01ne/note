@@ -661,7 +661,41 @@ jcmd拥有jmap的大部分功能，并且在Oracle的官方网站上也推荐使
 	* YourKit
 	* JProbe
 	* Spring Insight
+### JProfiler
+官网地址：[https://www.ej-technologies.com/products/jprofiler/overview.html](https://www.ej-technologies.com/products/jprofiler/overview.html)
 
+#### 数据采集方式：
+
+JProfier数据采集方式分为两种：Sampling（样本采集）和Instrumentation（重构模式）
+
+**Instrumentation**：这是JProfiler全功能模式。在class加载之前，JProfier把相关功能代码写入到需要分析的class的bytecode中，对正在运行的jvm有一定影响。
+
+- 优点：功能强大。在此设置中，调用堆栈信息是准确的。
+- 缺点：若要分析的class较多，则对应用的性能影响较大，CPU开销可能很高（取决于Filter的控制）。因此使用此模式一般配合Filter使用，只对特定的类或包进行分析
+
+**Sampling**：类似于样本统计，每隔一定时间（5ms）将每个线程栈中方法栈中的信息统计出来。
+
+- 优点：对CPU的开销非常低，对应用影响小（即使你不配置任何Filter）
+- 缺点：一些数据／特性不能提供（例如：方法的调用次数、执行时间）
+
+注：JProfiler本身没有指出数据的采集类型，这里的采集类型是针对方法调用的采集类型。因为JProfiler的绝大多数核心功能都依赖方法调用采集的数据，所以可以直接认为是JProfiler的数据采集类型。
+#### 内存视图 Live Memory
+
+Live memory 内存剖析：class／class instance的相关信息。例如对象的个数，大小，对象创建的方法执行栈，对象创建的热点。
+
+- **所有对象 All Objects**：显示所有加载的类的列表和在堆上分配的实例数。只有Java 1.5（JVMTI）才会显示此视图。
+- **记录对象 Record Objects**：查看特定时间段对象的分配，并记录分配的调用堆栈。
+- **分配访问树 Allocation Call Tree**：显示一棵请求树或者方法、类、包或对已选择类有带注释的分配信息的J2EE组件。
+- **分配热点 Allocation Hot Spots**：显示一个列表，包括方法、类、包或分配已选类的J2EE组件。你可以标注当前值并且显示差异值。对于每个热点都可以显示它的跟踪记录树。
+- **类追踪器 Class Tracker**：类跟踪视图可以包含任意数量的图表，显示选定的类和包的实例与时间。
+
+#### 堆遍历 heap walker
+#### cpu视图 cpu views
+JProfiler 提供不同的方法来记录访问树以优化性能和细节。线程或者线程组以及线程状况可以被所有的视图选择。所有的视图都可以聚集到方法、类、包或J2EE组件等不同层上。
+- **访问树 Call Tree**：显示一个积累的自顶向下的树，树中包含所有在JVM中已记录的访问队列。JDBC，JMS和JNDI服务请求都被注释在请求树中。请求树可以根据Servlet和JSP对URL的不同需要进行拆分。
+- **热点 Hot Spots**：显示消耗时间最多的方法的列表。对每个热点都能够显示回溯树。该热点可以按照方法请求，JDBC，JMS和JNDI服务请求以及按照URL请求来进行计算。
+- **访问图 Call Graph**：显示一个从已选方法、类、包或J2EE组件开始的访问队列的图。
+- **方法统计 Method Statistis**：显示一段时间内记录的方法的调用时间细节。
 ## 调优相关问题
 ### 生产环境发生了内存溢出该如何处理？
 ### 生产环境应该给服务器分配多少内存合适？
