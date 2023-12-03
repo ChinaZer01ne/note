@@ -533,17 +533,12 @@ jstat（JVM Statistics Monitoring Tool）：用于监视虚拟机各种运行状
 官方文档：[https://docs.oracle.com/javase/8/docs/technotes/tools/unix/jstat.html](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/jstat.html)
 
 基本使用语法为：`jstat -<option> [-t] [-h<lines>] <vmid> [<interval> [<count>]]`
-**interval参数：** 用于指定输出统计数据的周期，单位为毫秒。即：查询间隔
-**count参数：** 用于指定查询的总次数
-**-t参数：** 可以在输出信息前加上一个Timestamp列，显示程序的运行时间。单位：秒
-**-h参数：** 可以在周期性数据输出时，输出多少行数据后输出一个表头信息
-**补充：** jstat还可以用来判断是否出现内存泄漏。
+* **interval参数：** 用于指定输出统计数据的周期，单位为毫秒。即：查询间隔
+* **count参数：** 用于指定查询的总次数
+* **-t参数：** 可以在输出信息前加上一个Timestamp列，显示程序的运行时间。单位：秒
+* **-h参数：** 可以在周期性数据输出时，输出多少行数据后输出一个表头信息
 
-第1步：在长时间运行的 Java 程序中，我们可以运行jstat命令连续获取多行性能数据，并取这几行数据中 OU 列（即已占用的老年代内存）的最小值。
-
-第2步：然后，我们每隔一段较长的时间重复一次上述操作，来获得多组 OU 最小值。如果这些值呈上涨趋势，则说明该 Java 程序的老年代内存已使用量在不断上涨，这意味着无法回收的对象在不断增加，因此很有可能存在内存泄漏。
-
-**option参数**
+#### option参数
 
 * 类装载相关的：
 	- -class：显示ClassLoader的相关信息：类的装载、卸载数量、总空间、类装载所消耗的时间等
@@ -560,6 +555,11 @@ jstat（JVM Statistics Monitoring Tool）：用于监视虚拟机各种运行状
 * JIT相关的：
 	- -compiler：显示JIT编译器编译过的方法、耗时等信息
 	- -printcompilation：输出已经被JIT编译的方法
+
+####  jstat判断是否出现内存泄漏
+
+* 第1步：在长时间运行的 Java 程序中，我们可以运行jstat命令连续获取多行性能数据，并取这几行数据中 OU 列（即已占用的老年代内存）的最小值。
+* 第2步：然后，我们每隔一段较长的时间重复一次上述操作，来获得多组 OU 最小值。如果这些值呈上涨趋势，则说明该 Java 程序的老年代内存已使用量在不断上涨，这意味着无法回收的对象在不断增加，因此很有可能存在内存泄漏。
 ### jinfo
 jinfo(Configuration Info for Java)：查看虚拟机配置参数信息，也可用于调整虚拟机的配置参数。在很多情况下，Java应用程序不会指定所有的Java虚拟机参数。而此时，开发人员可能不知道某一个具体的Java虚拟机参数的默认值。在这种情况下，可能需要通过查找文档获取某个参数的默认值。这个查找过程可能是非常艰难的。但有了jinfo工具，开发人员可以很方便地找到Java虚拟机参数的当前值。
 
@@ -679,3 +679,4 @@ jcmd拥有jmap的大部分功能，并且在Oracle的官方网站上也推荐使
 * java -XX:+PrintFlagsInitial 查看所有JVM参数启动的初始值
 * java -XX:+PrintFlagsFinal 查看所有JVM参数的最终值
 * java -XX:+PrintCommandLineFlags 查看哪些已经被用户或者JVM设置过的详细的XX参数的名称和值
+* -XX: +HeapDumpOn
