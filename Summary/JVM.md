@@ -1160,3 +1160,420 @@ GCViewer是一款离线的GC日志分析器，用于可视化Java VM选项 -verb
 ＞ 是否还被需要？否
 
 ![](内存泄露1.png)
+严格来说，只有对象不会再被程序用到了，但是GC又不能回收他们的情况，才叫内存泄漏。但实际情况很多时候一些不太好的实践（或疏忽）会导致对象的生命周期变得很长甚至导致00M，也可以叫做宽泛意义上的“内存泄漏”。
+
+  
+
+如下图，当Y生命周期结束的时候，X依然引用着Y，这时候，垃圾回收期是不会回收对象Y的；如果对象X还引用着生命周期比较短的A、B、C，对象A又引用着对象 a、b、c，这样就可能造成大量无用的对象不能被回收，进而占据了内存资源，造成内存泄漏，直到内存溢出。
+
+![](内存泄漏2.png)
+申请了内存用完了不释放，比如一共有1024M的内存，分配了512M的内存一直不回收，那么可以用的内存只有512M了，仿佛泄露掉了一部分；通俗一点讲的话，内存泄漏就是【占着茅坑不拉shi】
+
+## 内存溢出（out of memory）
+
+  
+
+申请内存时，没有足够的内存可以使用；通俗一点儿讲，一个厕所就三个坑，有两个站着茅坑不走的（内存泄漏），剩下最后一个坑，厕所表示接待压力很大，这时候一下子来了两个人，坑位（内存）就不够了，内存泄漏变成内存溢出了。可见，内存泄漏和内存溢出的关系：内存泄漏的增多，最终会导致内存溢出。
+
+  
+
+泄漏的分类
+
+  
+
+- 经常发生：发生内存泄露的代码会被多次执行，每次执行，泄露一块内存；
+
+- 偶然发生：在某些特定情况下才会发生
+
+- 一次性：发生内存泄露的方法只会执行一次；
+
+- 隐式泄漏：一直占着内存不释放，直到执行结束；严格的说这个不算内存泄漏，因为最终释放掉了，但是如果执行时间特别长，也可能会导致内存耗尽。
+
+  
+
+## 8. Java中内存泄露的8种情况
+
+  
+
+### 8.1. 静态集合类
+
+  
+
+静态集合类，如HashMap、LinkedList等等。如果这些容器为静态的，那么它们的生命周期与JVM程序一致，则容器中的对象在程序结束之前将不能被释放，从而造成内存泄漏。简单而言，长生命周期的对象持有短生命周期对象的引用，尽管短生命周期的对象不再使用，但是因为长生命周期对象持有它的引用而导致不能被回收。
+```java
+public class MemoryLeak {
+    static List list = new ArrayList();
+    public void oomTests(){
+        Object obj＝new Object();//局部变量
+        list.add(obj);
+    }
+}
+```
+
+### 单例模式
+
+  
+
+单例模式，和静态集合导致内存泄露的原因类似，因为单例的静态特性，它的生命周期和 JVM 的生命周期一样长，所以如果单例对象如果持有外部对象的引用，那么这个外部对象也不会被回收，那么就会造成内存泄漏。
+
+  
+
+### 8.3. 内部类持有外部类
+
+  
+
+内部类持有外部类，如果一个外部类的实例对象的方法返回了一个内部类的实例对象。这个内部类对象被长期引用了，即使那个外部类实例对象不再被使用，但由于内部类持有外部类的实例对象，这个外部类对象将不会被垃圾回收，这也会造成内存泄漏。
+
+  
+
+### 8.4. 各种连接，如数据库连接、网络连接和IO连接等
+
+  
+
+在对数据库进行操作的过程中，首先需要建立与数据库的连接，当不再使用时，需要调用close方法来释放与数据库的连接。只有连接被关闭后，垃圾回收器才会回收对应的对象。否则，如果在访问数据库的过程中，对Connection、Statement或ResultSet不显性地关闭，将会造成大量的对象无法被回收，从而引起内存泄漏。
+
+```java
+public static void main(String[] args) {
+    try{
+        Connection conn =null;
+        Class.forName("com.mysql.jdbc.Driver");
+        conn =DriverManager.getConnection("url","","");
+        Statement stmt =conn.createStatement();
+        ResultSet rs =stmt.executeQuery("....");
+    } catch（Exception e）{//异常日志
+    } finally {
+        // 1．关闭结果集 Statement
+        // 2．关闭声明的对象 ResultSet
+        // 3．关闭连接 Connection
+    }
+}
+```
+
+### 变量不合理的作用域
+
+  
+
+变量不合理的作用域。一般而言，一个变量的定义的作用范围大于其使用范围，很有可能会造成内存泄漏。另一方面，如果没有及时地把对象设置为null，很有可能导致内存泄漏的发生。
+
+```java
+public class UsingRandom {
+    private String msg;
+    public void receiveMsg(){
+        readFromNet();//从网络中接受数据保存到msg中
+        saveDB();//把msg保存到数据库中
+    }
+}
+```
+
+如上面这个伪代码，通过readFromNet方法把接受的消息保存在变量msg中，然后调用saveDB方法把msg的内容保存到数据库中，此时msg已经就没用了，由于msg的生命周期与对象的生命周期相同，此时msg还不能回收，因此造成了内存泄漏。实际上这个msg变量可以放在receiveMsg方法内部，当方法使用完，那么msg的生命周期也就结束，此时就可以回收了。还有一种方法，在使用完msg后，把msg设置为null，这样垃圾回收器也会回收msg的内存空间。
+
+  
+
+### 8.6. 改变哈希值
+
+  
+
+改变哈希值，当一个对象被存储进HashSet集合中以后，就不能修改这个对象中的那些参与计算哈希值的字段了。
+
+  
+
+否则，对象修改后的哈希值与最初存储进HashSet集合中时的哈希值就不同了，在这种情况下，即使在contains方法使用该对象的当前引用作为的参数去HashSet集合中检索对象，也将返回找不到对象的结果，这也会导致无法从HashSet集合中单独删除当前对象，造成内存泄漏。
+
+  
+
+这也是 String 为什么被设置成了不可变类型，我们可以放心地把 String 存入 HashSet，或者把String 当做 HashMap 的 key 值；
+
+  
+
+当我们想把自己定义的类保存到散列表的时候，需要保证对象的 hashCode 不可变。
+
+```java
+/**
+ * 例1
+ */
+public class ChangeHashCode {
+    public static void main(String[] args) {
+        HashSet set = new HashSet();
+        Person p1 = new Person(1001, "AA");
+        Person p2 = new Person(1002, "BB");
+
+        set.add(p1);
+        set.add(p2);
+
+        p1.name = "CC";//导致了内存的泄漏
+        set.remove(p1); //删除失败
+
+        System.out.println(set);
+
+        set.add(new Person(1001, "CC"));
+        System.out.println(set);
+
+        set.add(new Person(1001, "AA"));
+        System.out.println(set);
+
+    }
+}
+
+class Person {
+    int id;
+    String name;
+
+    public Person(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
+
+        Person person = (Person) o;
+
+        if (id != person.id) return false;
+        return name != null ? name.equals(person.name) : person.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+}
+```
+
+```java
+/**
+ * 例2
+ */
+public class ChangeHashCode1 {
+    public static void main(String[] args) {
+        HashSet<Point> hs = new HashSet<Point>();
+        Point cc = new Point();
+        cc.setX(10);//hashCode = 41
+        hs.add(cc);
+
+        cc.setX(20);//hashCode = 51  此行为导致了内存的泄漏
+
+        System.out.println("hs.remove = " + hs.remove(cc));//false
+        hs.add(cc);
+        System.out.println("hs.size = " + hs.size());//size = 2
+
+        System.out.println(hs);
+    }
+
+}
+
+class Point {
+    int x;
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + x;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        Point other = (Point) obj;
+        if (x != other.x) return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Point{" +
+                "x=" + x +
+                '}';
+    }
+}
+```
+
+### 缓存泄露
+
+  
+
+内存泄漏的另一个常见来源是缓存，一旦你把对象引用放入到缓存中，他就很容易遗忘。比如：之前项目在一次上线的时候，应用启动奇慢直到夯死，就是因为代码中会加载一个表中的数据到缓存（内存）中，测试环境只有几百条数据，但是生产环境有几百万的数据。
+
+  
+
+对于这个问题，可以使用WeakHashMap代表缓存，此种Map的特点是，当除了自身有对key的引用外，此key没有其他引用那么此map会自动丢弃此值。
+
+```java
+public class MapTest {
+    static Map wMap = new WeakHashMap();
+    static Map map = new HashMap();
+
+    public static void main(String[] args) {
+        init();
+        testWeakHashMap();
+        testHashMap();
+    }
+
+    public static void init() {
+        String ref1 = new String("obejct1");
+        String ref2 = new String("obejct2");
+        String ref3 = new String("obejct3");
+        String ref4 = new String("obejct4");
+        wMap.put(ref1, "cacheObject1");
+        wMap.put(ref2, "cacheObject2");
+        map.put(ref3, "cacheObject3");
+        map.put(ref4, "cacheObject4");
+        System.out.println("String引用ref1，ref2，ref3，ref4 消失");
+
+    }
+
+    public static void testWeakHashMap() {
+        System.out.println("WeakHashMap GC之前");
+        for (Object o : wMap.entrySet()) {
+            System.out.println(o);
+        }
+        try {
+            System.gc();
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("WeakHashMap GC之后");
+        for (Object o : wMap.entrySet()) {
+            System.out.println(o);
+        }
+    }
+
+    public static void testHashMap() {
+        System.out.println("HashMap GC之前");
+        for (Object o : map.entrySet()) {
+            System.out.println(o);
+        }
+        try {
+            System.gc();
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("HashMap GC之后");
+        for (Object o : map.entrySet()) {
+            System.out.println(o);
+        }
+    }
+
+}
+```
+
+上面代码和图示主演演示WeakHashMap如何自动释放缓存对象，当init函数执行完成后，局部变量字符串引用weakd1，weakd2，d1，d2都会消失，此时只有静态map中保存中对字符串对象的引用，可以看到，调用gc之后，HashMap的没有被回收，而WeakHashMap里面的缓存被回收了。
+
+  
+
+### 8.8. 监听器和其他回调
+
+  
+
+内存泄漏第三个常见来源是监听器和其他回调，如果客户端在你实现的API中注册回调，却没有显示的取消，那么就会积聚。
+
+  
+
+需要确保回调立即被当作垃圾回收的最佳方法是只保存它的弱引用，例如将他们保存成为WeakHashMap中的键。
+
+# 内存泄露案例分析
+
+```java
+public class Stack {
+    private Object[] elements;
+    private int size = 0;
+    private static final int DEFAULT_INITIAL_CAPACITY = 16;
+
+    public Stack() {
+        elements = new Object[DEFAULT_INITIAL_CAPACITY];
+    }
+
+    public void push(Object e) { //入栈
+        ensureCapacity();
+        elements[size++] = e;
+    }
+
+    public Object pop() { //出栈
+        if (size == 0)
+            throw new EmptyStackException();
+        return elements[--size];
+    }
+
+    private void ensureCapacity() {
+        if (elements.length == size)
+            elements = Arrays.copyOf(elements, 2 * size + 1);
+    }
+}
+```
+
+上述程序并没有明显的错误，但是这段程序有一个内存泄漏，随着GC活动的增加，或者内存占用的不断增加，程序性能的降低就会表现出来，严重时可导致内存泄漏，但是这种失败情况相对较少。
+
+  
+
+代码的主要问题在pop函数，下面通过这张图示展现。假设这个栈一直增长，增长后如下图所示
+![](内存泄漏分析1.png)
+
+当进行大量的pop操作时，由于引用未进行置空，gc是不会释放的，如下图所示
+![](内存泄漏分析2.png)
+从上图中看以看出，如果栈先增长，再收缩，那么从栈中弹出的对象将不会被当作垃圾回收，即使程序不再使用栈中的这些队象，他们也不会回收，因为栈中仍然保存这对象的引用，俗称过期引用，这个内存泄露很隐蔽。
+
+  
+
+将代码中的pop()方法变成如下方法：
+```java
+public Object pop() {
+    if (size == 0)
+        throw new EmptyStackException();
+    Object result = elements[--size];
+    elements[size] = null;
+    return result;
+}
+```
+
+一旦引用过期，清空这些引用，将引用置空。
+![](内存泄漏分析3.png)
+
+## 使用OQL语言查询对象信息
+
+MAT支持一种类似于SQL的查询语言OQL（Object Query Language）。OQL使用类SQL语法，可以在堆中进行对象的查找和筛选。
+
+  
+
+## 1. SELECT子句
+
+  
+
+在MAT中，Select子句的格式与SQL基本一致，用于指定要显示的列。Select子句中可以使用“＊”，查看结果对象的引用实例（相当于outgoing references）。
+
+```sql
+SELECT * FROM java.util.Vector v
+```
+
+使用“OBJECTS”关键字，可以将返回结果集中的项以对象的形式显示。
+```sql
+SELECT objects v.elementData FROM java.util.Vector v
+
+SELECT OBJECTS s.value FROM java.lang.String s
+```
+
+在Select子句中，使用“AS RETAINED SET”关键字可以得到所得对象的保留集。
