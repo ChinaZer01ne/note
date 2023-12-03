@@ -85,7 +85,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/JVM.md",
+                "file": "Summary/MarkDown.md",
                 "mode": "source",
                 "source": false
               }
@@ -158,7 +158,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/JVM.md",
+                "file": "Summary/MarkDown.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -175,7 +175,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/JVM.md",
+                "file": "Summary/MarkDown.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -198,7 +198,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/JVM.md"
+                "file": "Summary/MarkDown.md"
               }
             }
           },
@@ -249,8 +249,9 @@
   },
   "active": "fd108eb1a75bc807",
   "lastOpenFiles": [
-    "停顿时间（或响应时间）.md",
     "Summary/JVM.md",
+    "Summary/MarkDown.md",
+    "停顿时间（或响应时间）.md",
     "Summary/Algorithm.md",
     "Summary/Mysql.md",
     "conflict-files-obsidian-git.md",
@@ -293,7 +294,6 @@
     "Summary/test2.md",
     "().md",
     "未命名 1.md",
-    "未命名.md",
-    "daliy_note/2023-09-27.md"
+    "未命名.md"
   ]
 }
