@@ -625,11 +625,12 @@ jcmd拥有jmap的大部分功能，并且在Oracle的官方网站上也推荐使
 * Java Misssion Control
 * 其他工具
 	* Flame Graphs（火焰图）
-	* **Tprofiler**
-	* **Btrace**
-	* **YourKit**
-	* **JProbe**
-	***** **Spring Insight******
+	* Tprofiler
+	* Btrace
+	* YourKit
+	* JProbe
+	* Spring Insight
+
 ## 调优相关问题
 ### 生产环境发生了内存溢出该如何处理？
 ### 生产环境应该给服务器分配多少内存合适？
