@@ -42,9 +42,45 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "793bf0039c51b193",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Summary/JVM.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "158ba4bfa7e57843",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Summary/JVM.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "921dccb9eb7a94a2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Summary/JVM.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -199,7 +235,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "e244faaaea7d5024",
+  "active": "921dccb9eb7a94a2",
   "lastOpenFiles": [
     "Summary/Algorithm.md",
     "Summary/JVM.md",
