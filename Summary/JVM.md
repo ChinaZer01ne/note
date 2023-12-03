@@ -800,16 +800,75 @@ Arthas只是一个java程序，所以可以直接用java -jar运行。
 * thread 
 	>查看当前JVM的线程堆栈信息
 * jvm 
-	* 查看当前JVM的信息
-* sysprop 查看和修改JVM的系统属性
-* sysem 查看JVM的环境变量
-* vmoption 查看和修改JVM里诊断相关的option
-* perfcounter 查看当前JVM的 Perf Counter信息
-* logger 查看和修改logger
-* getstatic 查看类的静态属性
-* ognl 执行ognl表达式
-* mbean 查看 Mbean的信息
-* heapdump dump java heap，类似jmap命令的 heap dump功能
+	>查看当前JVM的信息
+* sysprop 
+	>查看和修改JVM的系统属性
+* sysem 
+	>查看JVM的环境变量
+* vmoption 
+	>查看和修改JVM里诊断相关的option
+* perfcounter 
+	>查看当前JVM的 Perf Counter信息
+* logger 
+	>查看和修改logger
+* getstatic 
+	>查看类的静态属性
+* ognl 
+	>执行ognl表达式
+* mbean 
+	>查看 Mbean的信息
+* heapdump 
+	>dump java heap，类似jmap命令的 heap dump功能
+#### class/classloader相关
+* sc 
+	>查看JVM已加载的类信息
+	* -d 输出当前类的详细信息，包括这个类所加载的原始文件来源、类的声明、加载的Classloader等详细信息。如果一个类被多个Classloader所加载，则会出现多次
+	* -E 开启正则表达式匹配，默认为通配符匹配
+	* -f 输出当前类的成员变量信息（需要配合参数-d一起使用）
+	* -X 指定输出静态变量时属性的遍历深度，默认为0，即直接使用toString输出
+* sm 
+	>查看已加载类的方法信息
+	* -d 展示每个方法的详细信息
+	* -E 开启正则表达式匹配,默认为通配符匹配
+* jad 
+	>反编译指定已加载类的源码
+* mc 
+	>内存编译器，内存编译.java文件为.class文件
+* retransform 
+	>加载外部的.class文件, retransform到JVM里
+* redefine 
+	>加载外部的.class文件，redefine到JVM里
+* dump 
+	>dump已加载类的byte code到特定目录
+* classloader 
+	>查看classloader的继承树，urts，类加载信息，使用classloader
+* getResource
+	* -t 查看classloader的继承树
+	* -l 按类加载实例查看统计信息
+	* -c 用classloader对应的hashcode来查看对应的 Jar urls
+#### monitor/watch/trace相关
+* monitor 方法执行监控，调用次数、执行时间、失败率
+	* -c 统计周期，默认值为120秒
+* watch 方法执行观测，能观察到的范围为：返回值、抛出异常、入参，通过编写groovy表达式进行对应变量的查看
+	* -b 在方法调用之前观察(默认关闭)
+	* -e 在方法异常之后观察(默认关闭)
+	* -s 在方法返回之后观察(默认关闭)
+	* -f 在方法结束之后(正常返回和异常返回)观察(默认开启)
+	* -x 指定输岀结果的属性遍历深度,默认为0
+* trace 方法内部调用路径,并输出方法路径上的每个节点上耗时
+	* -n 执行次数限制
+* stack 输出当前方法被调用的调用路径
+* tt 方法执行数据的时空隧道,记录下指定方法每次调用的入参和返回信息,并能对这些不同的时间下调用进行观测
+#### 其他
+* jobs 列出所有job
+* kill 强制终止任务
+* fg 将暂停的任务拉到前台执行
+* bg 将暂停的任务放到后台执行
+* grep 搜索满足条件的结果
+* plaintext 将命令的结果去除ANSI颜色
+* wc 按行统计输出结果
+* options 查看或设置Arthas全局开关
+* profiler 使用async-profiler对应用采样，生成火焰图
 ## 调优相关问题
 ### 生产环境发生了内存溢出该如何处理？
 ### 生产环境应该给服务器分配多少内存合适？
