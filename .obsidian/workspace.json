@@ -247,8 +247,11 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "8c92b1f716b38d62",
+  "active": "6aa11b407ce3eab2",
   "lastOpenFiles": [
+    "Summary/image/JVM/G1垃圾收集流程.jpg",
+    "Summary/image/JVM/1702142029132.jpg",
+    "Summary/image/Pasted image 20231210011333.png",
     "().md",
     "Summary/JVM.md",
     "Summary/TO DO LIST.md",
@@ -267,13 +270,11 @@
     "Summary/image/JVM/对象引用.png",
     "Summary/image/JVM/对象引用.png.crdownload",
     "Summary/image/Pasted image 20231203202237.png",
-    "Summary/image/Pasted image 20231203202235.png",
     "Summary/MarkDown.md",
     "停顿时间（或响应时间）.md",
     "Summary/Algorithm.md",
     "Summary/Mysql.md",
     "conflict-files-obsidian-git.md",
-    "Summary/image/架构/服务负载均衡.webp",
     "Summary/image/架构",
     "Summary/Design Patterns.md",
     "Summary/image/Mysql/phut.html",
