@@ -56,18 +56,6 @@
             }
           },
           {
-            "id": "8c92b1f716b38d62",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/JVM.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "921dccb9eb7a94a2",
             "type": "leaf",
             "state": {
@@ -92,7 +80,7 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -158,7 +146,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/JVM.md",
+                "file": "Summary/TO DO LIST.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -175,7 +163,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/JVM.md",
+                "file": "Summary/TO DO LIST.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -198,7 +186,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/JVM.md"
+                "file": "Summary/TO DO LIST.md"
               }
             }
           },
@@ -247,14 +235,15 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "6aa11b407ce3eab2",
+  "active": "793bf0039c51b193",
   "lastOpenFiles": [
+    "Summary/JVM.md",
+    "Summary/TO DO LIST.md",
     "Summary/image/JVM/G1垃圾收集流程.jpg",
+    "Summary/image/JVM/1702143163092.jpg",
     "Summary/image/JVM/1702142029132.jpg",
     "Summary/image/Pasted image 20231210011333.png",
     "().md",
-    "Summary/JVM.md",
-    "Summary/TO DO LIST.md",
     "Summary/image/JVM/内存泄漏分析3.png",
     "Summary/image/JVM/内存泄漏分析3.png.crdownload",
     "Summary/image/JVM/内存泄漏分析2.png",
@@ -267,9 +256,7 @@
     "Summary/image/JVM/内存泄露1.png.crdownload",
     "Summary/image/JVM/支配树.png",
     "Summary/image/JVM/支配树.png.crdownload",
-    "Summary/image/JVM/对象引用.png",
     "Summary/image/JVM/对象引用.png.crdownload",
-    "Summary/image/Pasted image 20231203202237.png",
     "Summary/MarkDown.md",
     "停顿时间（或响应时间）.md",
     "Summary/Algorithm.md",
