@@ -49,7 +49,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Distributed Theory.md",
+                "file": "Summary/IO.md",
                 "mode": "source",
                 "source": false
               }
@@ -146,7 +146,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Distributed Theory.md",
+                "file": "Summary/IO.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -163,7 +163,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Distributed Theory.md",
+                "file": "Summary/IO.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -186,7 +186,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Distributed Theory.md"
+                "file": "Summary/IO.md"
               }
             }
           },
@@ -237,6 +237,8 @@
   },
   "active": "793bf0039c51b193",
   "lastOpenFiles": [
+    "Summary/ES.md",
+    "Summary/Distributed Theory.md",
     "Summary/image/DistributedTheory/分布式系统指标.png",
     "Summary/image/DistributedTheory/分布式系统指标.png.crdownload",
     "Summary/Mysql.md",
@@ -258,7 +260,6 @@
     "Summary/image/JVM/内存泄漏2.png.crdownload",
     "Summary/image/JVM/内存泄露1.png",
     "Summary/image/JVM/内存泄露1.png.crdownload",
-    "Summary/image/JVM/支配树.png",
     "Summary/image/JVM/支配树.png.crdownload",
     "Summary/image/JVM/对象引用.png.crdownload",
     "Summary/MarkDown.md",
@@ -275,10 +276,8 @@
     "Summary/MicroServices.md",
     "Summary/System Design.md",
     "Summary/MicroService.md",
-    "Summary/Distributed Theory.md",
     "Summary/Architecture.md",
     "Summary/Redis.md",
-    "Summary/ES.md",
     "Summary/MQ.md",
     "Summary/Spring.md",
     "Summary/test2.md",
