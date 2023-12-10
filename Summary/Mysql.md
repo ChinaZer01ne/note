@@ -1127,6 +1127,13 @@ InnoDB 引擎引入了本地分区策略（native partitioning）。这个策略
 * Mycat
 * sharding-jdbc
 ### Mycat
+#### Mycat能做什么？::
+* 读写分离
+* 数据分片，分库分表
+	* 垂直拆分
+	* 水平拆分
+* 多数据源整合
+
 TODO
 ### sharding-jdbc
 TODO
