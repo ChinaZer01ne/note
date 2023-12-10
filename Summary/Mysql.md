@@ -1123,6 +1123,13 @@ binlog 的组提交的时候，有两个参数：
 #### InnoDB的分区策略
 InnoDB 引擎引入了本地分区策略（native partitioning）。这个策略是在 InnoDB 内部自己管理打开分区的行为。并且在5.7.17后就不推荐使用MyISAM；而从8.0开始直接就不允许建立MyISAM的分区表了
 
+## 如何实现分库分表？::
+* Mycat
+* sharding-jdbc
+### Mycat
+TODO
+### sharding-jdbc
+TODO
 # 问题
 ## 自增id用完怎么办？::
 
