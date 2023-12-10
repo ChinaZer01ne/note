@@ -163,6 +163,7 @@ write(socket_fd, tmp_buf, len);
 
 ![](https://pic2.zhimg.com/v2-28463616753963ac9f189ce23a485e2d_b.jpg)
 
+![](mmap.webp)
 基于 mmap + write 系统调用的零拷贝方式，整个拷贝过程会发生 4 次上下文切换，1 次 CPU 拷贝和 2 次 DMA 拷贝，用户程序读写数据的流程如下：
 
 1. 用户进程通过 mmap() 函数向内核（kernel）发起系统调用，上下文从用户态（user space）切换为内核态（kernel space）。
@@ -188,6 +189,7 @@ sendfile(socket_fd, file_fd, len);
 
 ![](https://pic3.zhimg.com/v2-48132735369375701f3d8ac1d6029c2a_b.jpg)
 
+![](sendfile.webp)
 基于 sendfile 系统调用的零拷贝方式，整个拷贝过程会发生 2 次上下文切换，1 次 CPU 拷贝和 2 次 DMA 拷贝，用户程序读写数据的流程如下：
 
 1. 用户进程通过 sendfile() 函数向内核（kernel）发起系统调用，上下文从用户态（user space）切换为内核态（kernel space）。
@@ -208,6 +210,7 @@ sendfile(socket_fd, file_fd, len);
 
 ![](https://pic4.zhimg.com/v2-15edf2971101883e2a90253225a3b0d3_b.jpg)
 
+![](sendfile-gather.webp)
 基于 sendfile + DMA gather copy 系统调用的零拷贝方式，整个拷贝过程会发生 2 次上下文切换、0 次 CPU 拷贝以及 2 次 DMA 拷贝，用户程序读写数据的流程如下：
 
 1. 用户进程通过 sendfile() 函数向内核（kernel）发起系统调用，上下文从用户态（user space）切换为内核态（kernel space）。
