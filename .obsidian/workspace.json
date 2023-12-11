@@ -237,6 +237,14 @@
   },
   "active": "793bf0039c51b193",
   "lastOpenFiles": [
+    "Summary/image/Architecture/累计心跳检测.png",
+    "Summary/image/Architecture/累计心跳检测.png.crdownload",
+    "Summary/image/Architecture/周期心跳检测.png",
+    "Summary/image/Architecture/周期心跳检测.png.crdownload",
+    "Summary/image/Architecture/心跳检测.png",
+    "Summary/image/Architecture/心跳检测.png.crdownload",
+    "Summary/image/Architecture",
+    "Summary/image/新建文件夹",
     "Summary/Algorithm.md",
     "Summary/Distributed Theory.md",
     "Summary/Design Patterns.md",
@@ -263,14 +271,7 @@
     "Summary/image/JVM/G1垃圾收集流程.jpg",
     "Summary/image/JVM/1702143163092.jpg",
     "Summary/image/JVM/1702142029132.jpg",
-    "Summary/image/Pasted image 20231210011333.png",
     "().md",
-    "Summary/image/JVM/内存泄漏分析3.png",
-    "Summary/image/JVM/内存泄漏分析3.png.crdownload",
-    "Summary/image/JVM/内存泄漏分析2.png.crdownload",
-    "Summary/image/JVM/内存泄漏分析1.png.crdownload",
-    "Summary/image/JVM/内存泄漏2.png.crdownload",
-    "Summary/image/JVM/内存泄露1.png.crdownload",
     "Summary/MarkDown.md",
     "停顿时间（或响应时间）.md",
     "conflict-files-obsidian-git.md",
@@ -281,7 +282,6 @@
     "Summary/Architecture.md",
     "Summary/Redis.md",
     "Summary/MQ.md",
-    "Summary/test2.md",
-    "未命名 1.md"
+    "Summary/test2.md"
   ]
 }
