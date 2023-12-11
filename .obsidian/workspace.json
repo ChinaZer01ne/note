@@ -126,7 +126,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -237,9 +238,10 @@
   },
   "active": "793bf0039c51b193",
   "lastOpenFiles": [
+    "Summary/Distributed Theory.md",
+    "Summary/Architecture Design.md",
     "Summary/Algorithm.md",
     "Summary/MarkDown.md",
-    "Summary/Architecture Design.md",
     "Summary/image/Architecture/累计心跳检测.png",
     "Summary/image/Architecture/累计心跳检测.png.crdownload",
     "Summary/image/Architecture/周期心跳检测.png",
@@ -248,7 +250,6 @@
     "Summary/image/Architecture/心跳检测.png.crdownload",
     "Summary/image/Architecture",
     "Summary/image/新建文件夹",
-    "Summary/Distributed Theory.md",
     "Summary/Design Patterns.md",
     "Summary/Computer Network.md",
     "Summary/Spring.md",
