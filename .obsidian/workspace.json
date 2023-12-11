@@ -4,47 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "7016e6fb77a1c35c",
+        "id": "66b299b4ad7dcf7a",
         "type": "tabs",
         "children": [
           {
-            "id": "80a22731cfd5eaac",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/Mysql.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "fe629a7b50239e19",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/Mysql.md",
-                "mode": "preview",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "e244faaaea7d5024",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/JVM.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "793bf0039c51b193",
+            "id": "dfeaecb5b1fadce1",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -54,33 +18,8 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "921dccb9eb7a94a2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/MarkDown.md",
-                "mode": "preview",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "fd108eb1a75bc807",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/MarkDown.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -126,8 +65,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -236,12 +174,12 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "793bf0039c51b193",
+  "active": "dfeaecb5b1fadce1",
   "lastOpenFiles": [
     "Summary/Distributed Theory.md",
+    "Summary/MarkDown.md",
     "Summary/Architecture Design.md",
     "Summary/Algorithm.md",
-    "Summary/MarkDown.md",
     "Summary/image/Architecture/累计心跳检测.png",
     "Summary/image/Architecture/累计心跳检测.png.crdownload",
     "Summary/image/Architecture/周期心跳检测.png",
