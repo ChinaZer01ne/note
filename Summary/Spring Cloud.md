@@ -1737,15 +1737,7 @@ void unregister() {
 
 ## 关于负载均衡
 
-负载均衡⼀般分为服务器端负载均衡和客户端负载均衡，区别是负载均衡在客户端执行还是在服务端执行。
-
-- 所谓服务器端负载均衡，⽐如Nginx、 F5这些，请求到达服务器之后由这些负载均衡器根据⼀定的算法将请求路由到⽬标服务器处理。
-- 所谓客户端负载均衡，⽐如我们要说的Ribbon，服务消费者客户端会有⼀个服务器地址列表，调⽤⽅在请求前通过⼀定的负载均衡算法选择⼀个服务器进⾏访问，负载均衡算法的执⾏是在请求客户端进⾏。
-
-![](https://secure2.wostatic.cn/static/bk5XivyurxjsV4YeS3ybAV/image.png)
-
-Ribbon是Netflix发布的负载均衡器。 Eureka⼀般配合Ribbon进⾏使⽤， Ribbon利⽤从Eureka中读取到服务信息，在调⽤服务提供者提供的服务时，会根据⼀定的算法进⾏负载。
-
+![[Architecture Design]]
 ## Ribbon使用
 
 不需要引⼊额外的Jar坐标，因为在服务消费者中我们引⼊过eureka-client，它会引⼊Ribbon相关Jar。
@@ -1913,7 +1905,7 @@ public ClientHttpResponse intercept(final HttpRequest request, final byte[] body
 
 ```
 
-requestFactory.createRequest(request, body, execution)
+`requestFactory.createRequest(request, body, execution)`
 
 ```java
 public LoadBalancerRequest<ClientHttpResponse> createRequest(
@@ -1964,7 +1956,7 @@ public <T> T execute(String serviceId, LoadBalancerRequest<T> request, Object hi
 }
 ```
 
-- getServer(loadBalancer, hint); 获取一个server
+- `getServer(loadBalancer, hint); `获取一个server
 
 ```java
 protected Server getServer(ILoadBalancer loadBalancer, Object hint) {
@@ -2105,7 +2097,7 @@ public <T> T execute(String serviceId, ServiceInstance serviceInstance,
 
 ```
 
-那么？ RibbonLoadBalancerClient对象是在哪⾥注⼊的===》》回到最初的⾃动配置类`RibbonAutoConfiguration`中
+那么？ `RibbonLoadBalancerClient`对象是在哪⾥注⼊的===》》回到最初的⾃动配置类`RibbonAutoConfiguration`中
 
 OMG! 负载均衡的事情执⾏原来交给了我们最初看到的`RibbonLoadBalancerClient`对象
 
@@ -2120,9 +2112,9 @@ public class RibbonAutoConfiguration {
   }
 ```
 
-在进⾏负载chooseServer的时候， LoadBalancer负载均衡器中已经有了serverList，那么这个serverList是什么时候被注⼊到LoadBalancer中的，它的⼀个机制⼤概是怎样的？
+在进⾏负载chooseServer的时候， `LoadBalancer`负载均衡器中已经有了serverList，那么这个serverList是什么时候被注⼊到`LoadBalancer`中的，它的⼀个机制⼤概是怎样的？
 
-首先回到RibbonAutoConfiguration中，可以找到注入了一个SpringClientFactory
+首先回到`RibbonAutoConfiguration`中，可以找到注入了一个`SpringClientFactory`
 
 ```java
 @Bean
@@ -2134,7 +2126,7 @@ public SpringClientFactory springClientFactory() {
 }
 ```
 
-SpringClientFactory的创建会保存这个类，之后会注册这个类
+`SpringClientFactory`的创建会保存这个类，之后会注册这个类
 
 ```java
 public SpringClientFactory() {
@@ -2142,7 +2134,7 @@ public SpringClientFactory() {
 }
 ```
 
-来到RibbonClientConfiguration，发现其注入了serverList
+来到`RibbonClientConfiguration`，发现其注入了serverList
 
 ```java
 @Bean
@@ -2174,7 +2166,7 @@ public ILoadBalancer ribbonLoadBalancer(IClientConfig config,
 }
 ```
 
-在ZoneAwareLoadBalancer父类中，可以发现有一个方法
+在`ZoneAwareLoadBalancer`父类中，可以发现有一个方法
 
 ```java
 public DynamicServerListLoadBalancer(IClientConfig clientConfig, IRule rule, IPing ping,
@@ -2192,7 +2184,7 @@ public DynamicServerListLoadBalancer(IClientConfig clientConfig, IRule rule, IPi
 }
 ```
 
-进入restOfInit(clientConfig);其调用了updateListOfServers来初始化了serverList
+进入`restOfInit(clientConfig);`其调用了updateListOfServers来初始化了serverList
 
 ```java
 void restOfInit(IClientConfig clientConfig) {
@@ -2249,7 +2241,7 @@ public void enableAndInitLearnNewServersFeature() {
 }
 ```
 
-com.netflix.loadbalancer.PollingServerListUpdater#starta
+`com.netflix.loadbalancer.PollingServerListUpdater#start`
 
 ```java
 @Override
