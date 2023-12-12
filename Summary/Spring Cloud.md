@@ -95,7 +95,7 @@ Eureka Server会定时（间隔值是`eureka.server.eviction-interval-timer-in-m
 
 服务提供者 —> 注册中⼼
 
-定期的续约（服务提供者和注册中⼼通信），假如服务提供者和注册中⼼之间的⽹络有点问题，不代表服务提供者不可⽤，不代表服务消费者⽆法访问服务提供者
+定期的续约（服务提供者和注册中⼼通信），假如服务提供者和注册中⼼之间的⽹络有点问题，不代表服务提供者不可⽤，不代表服务消费者⽆法访问服务提供者。
 
 如果在15分钟内超过85%的客户端节点都没有正常的⼼跳，那么Eureka就认为客户端与注册中⼼出现了⽹络故障， Eureka Server⾃动进⼊⾃我保护机制。
 
@@ -108,7 +108,7 @@ Eureka Server会定时（间隔值是`eureka.server.eviction-interval-timer-in-m
 - Eureka Server仍然能够接受新服务的注册和查询请求，但是不会被同步到其它节点上，保证当前节点依然可⽤，当⽹络稳定时，当前Eureka Server新的注册信息会被同步到其它节点中。
 - 在Eureka Server⼯程中通过`eureka.server.enable-self-preservation`配置可⽤关停⾃我保护，默认值是打开
 
-```ymal
+```yaml
 eureka:
   server:
     enable-self-preservation: false # 关闭⾃我保护模式（缺省为打开）
