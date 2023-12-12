@@ -1,5 +1,48 @@
 
 # 注册中心
+
+服务注册中⼼本质上是为了解耦服务提供者和服务消费者。为了⽀持弹性扩缩容特性，⼀个微服务的提供者的数量和分布往往是动态变化的，也是⽆法预先确定的。因此，原本在单体应⽤阶段常⽤的静态LB机制就不再适⽤了，需要引⼊额外的组件来管理微服务提供者的注册与发现，⽽这个组件就是服务注册中⼼。
+
+## 原理
+
+- 服务提供者启动
+- 服务提供者将相关服务信息主动注册到注册中⼼
+- 服务消费者获取服务注册信息：
+    - poll模式：服务消费者可以主动拉取可⽤的服务提供者清单
+    - push模式：服务消费者订阅服务（当服务提供者有变化时，注册中⼼也会主动推送更新后的服务清单给消费者
+- 服务消费者直接调⽤服务提供者
+
+另外，注册中⼼也需要完成服务提供者的健康监控，当发现服务提供者失效时需要及时剔除；
+
+## 主流服务中⼼对⽐
+
+- Zookeeper
+    Zookeeper它是⼀个分布式服务框架，是Apache Hadoop 的⼀个⼦项⽬，它主要是⽤来解决分布式应 ⽤中经常遇到的⼀些数据管理问题，如：统⼀命名服务、状态同步服务、集群管理、分布式应⽤配置项的管理等。
+    
+    简单来说zookeeper本质=存储+监听通知。
+    
+    Zookeeper ⽤来做服务注册中⼼，主要是因为它具有节点变更通知功能，只要客户端监听相关服务节点，服务节点的所有变更，都能及时的通知到监听客户端，这样作为调⽤⽅只要使⽤ Zookeeper 的客户端就能实现服务节点的订阅和变更通知功能了，⾮常⽅便。另外， Zookeeper 可⽤性也可以，因为只要半数以上的选举节点存活，整个集群就是可⽤的。 3
+    
+- Eureka
+    
+    由Netflix开源，并被Pivatal集成到SpringCloud体系中，它是基于 RestfulAPI⻛格开发的服务注册与发现组件。
+    
+- Consul
+    
+    Consul是由HashiCorp基于Go语⾔开发的⽀持多数据中⼼分布式⾼可⽤的服务发布和注册服务软件， 采⽤Raft算法保证服务的⼀致性，且⽀持健康检查。
+    
+- Nacos
+    
+    Nacos是⼀个更易于构建云原⽣应⽤的动态服务发现、配置管理和服务管理平台。简单来说 Nacos 就是 注册中⼼ + 配置中⼼的组合，帮助我们解决微服务开发必会涉及到的服务注册 与发现，服务配置，服务管理等问题。 Nacos 是Spring Cloud Alibaba 核⼼组件之⼀，负责服务注册与发现，还有配置。
+    
+
+|组件名|语⾔|CAP|对外暴露接⼝|
+|---|---|---|---|
+|Eureka|Java|AP（⾃我保护机制，保证可⽤）|HTTP|
+|Consul|Go|CP|HTTP/DNS|
+|Zookeeper|Java|CP|客户端|
+|Nacos|Java|⽀持AP/CP切换|HTTP|
+
 # 分布式事务
 - XA 方案
 - TCC 方案
@@ -22,7 +65,7 @@
 
 [![distributed-transacion-XA](https://github.com/doocs/advanced-java/raw/main/docs/distributed-system/images/distributed-transaction-XA.png)](https://github.com/doocs/advanced-java/blob/main/docs/distributed-system/images/distributed-transaction-XA.png)
 
-### TCC 方案
+## TCC 方案
 
 TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 
@@ -40,7 +83,7 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 
 [![distributed-transacion-TCC](https://github.com/doocs/advanced-java/raw/main/docs/distributed-system/images/distributed-transaction-TCC.png)](https://github.com/doocs/advanced-java/blob/main/docs/distributed-system/images/distributed-transaction-TCC.png)
 
-### Saga 方案
+## Saga 方案
 
 金融核心等业务可能会选择 TCC 方案，以追求强一致性和更高的并发量，而对于更多的金融核心以上的业务系统 往往会选择补偿事务，补偿事务处理在 30 多年前就提出了 Saga 理论，随着微服务的发展，近些年才逐步受到大家的关注。目前业界比较公认的是采用 Saga 作为长事务的解决方案。
 
@@ -87,7 +130,7 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 
 [![distributed-transaction-local-message-table](https://github.com/doocs/advanced-java/raw/main/docs/distributed-system/images/distributed-transaction-local-message-table.png)](https://github.com/doocs/advanced-java/blob/main/docs/distributed-system/images/distributed-transaction-local-message-table.png)
 
-### 可靠消息最终一致性方案
+## 可靠消息最终一致性方案
 
 这个的意思，就是干脆不要用本地的消息表了，直接基于 MQ 来实现事务。比如阿里的 RocketMQ 就支持消息事务。
 
@@ -102,7 +145,7 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 
 [![distributed-transaction-reliable-message](https://github.com/doocs/advanced-java/raw/main/docs/distributed-system/images/distributed-transaction-reliable-message.png)](https://github.com/doocs/advanced-java/blob/main/docs/distributed-system/images/distributed-transaction-reliable-message.png)
 
-### 最大努力通知方案
+## 最大努力通知方案
 
 这个方案的大致意思就是：
 
