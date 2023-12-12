@@ -176,6 +176,12 @@
   },
   "active": "dfeaecb5b1fadce1",
   "lastOpenFiles": [
+    "Summary/image/SpringCloud/eureka官网架构图.png",
+    "Summary/image/SpringCloud/eureka官网架构图.png.crdownload",
+    "Summary/image/SpringCloud/eureka架构.png",
+    "Summary/image/SpringCloud/eureka架构.png.crdownload",
+    "Summary/image/SpringCloud",
+    "Summary/image/新建文件夹",
     "Summary/MicroService Design.md",
     "Summary/Spring Cloud.md",
     "Summary/System Design.md",
@@ -192,7 +198,6 @@
     "Summary/image/Architecture/心跳检测.png",
     "Summary/image/Architecture/心跳检测.png.crdownload",
     "Summary/image/Architecture",
-    "Summary/image/新建文件夹",
     "Summary/Design Patterns.md",
     "Summary/Computer Network.md",
     "Summary/Spring.md",
@@ -201,16 +206,12 @@
     "Summary/image/IO/sendfile-gather.webp",
     "Summary/image/IO/sendfile-gather.webp.crdownload",
     "Summary/image/IO/sendfile.webp",
-    "Summary/image/IO/sendfile.webp.crdownload",
     "Summary/image/IO/mmap.webp",
-    "Summary/image/IO/mmap.webp.crdownload",
     "Summary/image/IO/传统拷贝.webp",
-    "Summary/image/IO/传统拷贝.webp.crdownload",
     "Summary/ES.md",
     "Summary/image/DistributedTheory/分布式系统指标.png",
     "Summary/Mysql.md",
     "Summary/JVM.md",
-    "Summary/image/JVM/G1垃圾收集流程.jpg",
     "().md",
     "停顿时间（或响应时间）.md",
     "conflict-files-obsidian-git.md",
@@ -220,7 +221,6 @@
     "Summary/MicroService.md",
     "Summary/Architecture.md",
     "Summary/Redis.md",
-    "Summary/MQ.md",
-    "Summary/test2.md"
+    "Summary/MQ.md"
   ]
 }

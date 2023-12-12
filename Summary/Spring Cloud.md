@@ -2,15 +2,14 @@
 
 ### Eureka 基础架构
 
-![](https://secure2.wostatic.cn/static/jjZ3Rocxcmk9jw1TwEXWvm/image.png?auth_key=1702393712-2QDA37gacYywDm1bRPhMVe-0-aab01655bacef9b05a851b367a991f2b)
+![](eureka架构.png)
 
 ### Eureka 交互流程及原理
 
-下图是官⽹描述的⼀个架构图
+![](eureka官网架构图.png)
 
-![](https://secure2.wostatic.cn/static/vMD93Ec3L1daQP6d3EuTtW/image.png?auth_key=1702393712-6nkqEDWXmZj9TmEtEPZoB6-0-5b16646598324977ee3bbf62758c872c)
-
-Eureka 包含两个组件： Eureka Server 和 Eureka Client， Eureka Client是⼀个Java客户端，⽤于简化与Eureka Server的交互； Eureka Server提供服务发现的能⼒，各个微服务启动时，会通过Eureka Client向Eureka Server 进⾏注册⾃⼰的信息（例如⽹络信息）， Eureka Server会存储该服务的信息；
+Eureka 包含两个组件： `Eureka Server` 和 `Eureka Client`。
+* Eureka Client是⼀个Java客户端，⽤于简化与Eureka Server的交互； Eureka Server提供服务发现的能⼒，各个微服务启动时，会通过Eureka Client向Eureka Server 进⾏注册⾃⼰的信息（例如⽹络信息）， Eureka Server会存储该服务的信息；
 
 - 图中us-east-1c、 us-east-1d， us-east-1e代表不同的区也就是不同的机房
 - 图中每⼀个Eureka Server都是⼀个集群。
@@ -82,18 +81,18 @@ eureka:
 - 每隔30秒，会重新获取并更新数据
 - 每隔30秒的时间可以通过配置eureka.client.registry-fetch-interval-seconds修改
 
-### Eureka服务端详解
+#### Eureka服务端详解
 
-#### 服务下线
+##### 服务下线
 
 - 当服务正常关闭操作时，会发送服务下线的REST请求给EurekaServer。
 - 服务中⼼接受到请求后，将该服务置为下线状态
 
-#### 失效剔除
+##### 失效剔除
 
 Eureka Server会定时（间隔值是`eureka.server.eviction-interval-timer-in-ms`，默认60s）进⾏检查，如果发现实例在在⼀定时间（此值由客户端设置的`eureka.instance.lease-expiration-duration-in-seconds`定义，默认值为90s）内没有收到⼼跳，则会注销此实例。
 
-#### ⾃我保护
+##### ⾃我保护
 
 服务提供者 —> 注册中⼼
 
@@ -118,9 +117,9 @@ eureka:
 
 经验：建议⽣产环境打开⾃我保护机制
 
-## Eureka核⼼源码剖析
+### Eureka核⼼源码剖析
 
-### Eureka Server启动过程
+#### Eureka Server启动过程
 
 ⼊⼝：SpringCloud充分利⽤了SpringBoot的⾃动装配的特点
 
@@ -128,7 +127,7 @@ eureka:
 
 springboot应⽤启动时会加载`EurekaServerAutoConfiguration`⾃动配置类
 
-#### EurekaServerAutoConfiguration类
+##### EurekaServerAutoConfiguration类
 
 ```java
 @Configuration(proxyBeanMethods = false)
@@ -580,7 +579,7 @@ protected void postInit() {
 }
 ```
 
-### Eureka Server服务接⼝暴露策略
+#### Eureka Server服务接⼝暴露策略
 
 在Eureka Server启动过程中主配置类注册了Jersey框架（是⼀个发布restful⻛格接⼝的框架，类似于我们的springmvc）
 
@@ -647,7 +646,7 @@ public javax.ws.rs.core.Application jerseyApplication(Environment environment,
 
 这些就是使⽤Jersey发布的供Eureka Client调⽤的Restful⻛格服务接⼝（完成服务注册、⼼跳续约等接⼝）
 
-### Eureka Server服务注册接⼝（接受客户端注册服务）
+#### Eureka Server服务注册接⼝（接受客户端注册服务）
 
 `ApplicationResource`类的`addInstance()`⽅法中代码：`registry.register(info, "true".equals(isReplication));`
 
@@ -894,7 +893,7 @@ private void replicateInstanceActionsToPeers(Action action, String appName,
 }
 ```
 
-### Eureka Server服务续约接⼝（接受客户端续约）
+#### Eureka Server服务续约接⼝（接受客户端续约）
 
 `InstanceResource`的`renewLease`⽅法中完成客户端的⼼跳（续约）处理，关键代码： registry.renew(app.getName(), id, isFromReplicaNode)`
 
@@ -1040,7 +1039,7 @@ private void replicateInstanceActionsToPeers(Action action, String appName,
 }
 ```
 
-### Eureka Client注册服务
+#### Eureka Client注册服务
 
 启动过程： Eureka客户端在启动时也会装载很多配置类，我们通过spring-cloudnetflix-eureka-client-2.1.0.RELEASE.jar下的spring.factories⽂件可以看到加载的配置类，主要是`EurekaClientAutoConfiguration`
 
@@ -1067,7 +1066,7 @@ public class EurekaClientAutoConfiguration {
 3. 注册⾃⼰到EurekaServer（addInstance）
 4. 开启⼀些定时任务（⼼跳续约，刷新本地服务缓存列表）
 
-#### 读取配置文件
+##### 读取配置文件
 
 在`EurekaClientAutoConfiguration`中注入了读取配置文件的类，读取了配置，封装成配置类
 
@@ -1149,7 +1148,7 @@ public EurekaInstanceConfigBean eurekaInstanceConfigBean(InetUtils inetUtils,
 }
 ```
 
-#### 启动时从EurekaServer获取服务实例信息
+##### 启动时从EurekaServer获取服务实例信息
 
 首先会创建CloudEurekaClient类
 
@@ -1450,7 +1449,7 @@ private boolean fetchRegistry(boolean forceFullRegistryFetch) {
 }
 ```
 
-#### 注册自己到Eureka Server
+##### 注册自己到Eureka Server
 
 完成服务注册列表的拉去后，把自己注册到Eureka Server
 
@@ -1487,7 +1486,7 @@ boolean register() throws Throwable {
 }
 ```
 
-#### 开启⼀些定时任务（⼼跳续约，刷新本地服务缓存列表）
+##### 开启⼀些定时任务（⼼跳续约，刷新本地服务缓存列表）
 
 当完成把自己注册到Eureka Server后，会开启一些定时任务
 
@@ -1679,7 +1678,7 @@ boolean renew() {
 
 ```
 
-### Eureka Client下架服务
+#### Eureka Client下架服务
 
 在EurekaClientAutoConfiguration中注入了shutdown bean，服务下架入口，当客户端工程关闭容器销毁的时候，会调用shutdown方法执行一些清理操作，下线操作
 
@@ -1747,7 +1746,7 @@ void unregister() {
 }
 ```
 
-### Eureka Client⼼跳续约
+#### Eureka Client⼼跳续约
 
 参考前面
 
