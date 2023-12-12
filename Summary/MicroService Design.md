@@ -43,6 +43,10 @@ Nacos是⼀个更易于构建云原⽣应⽤的动态服务发现、配置管理
 |Zookeeper|Java|CP|客户端|
 |Nacos|Java|⽀持AP/CP切换|HTTP|
 
+# 分布式配置中⼼
+
+
+
 # 分布式事务
 - XA 方案
 - TCC 方案
