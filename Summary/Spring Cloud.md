@@ -122,7 +122,7 @@ eureka:
 
 ⼊⼝：SpringCloud充分利⽤了SpringBoot的⾃动装配的特点
 
-观察eureka-server的jar包，发现在META-INF下⾯有配置⽂件spring.factories
+观察eureka-server的jar包，发现在`META-INF`下⾯有配置⽂件`spring.factories`
 
 springboot应⽤启动时会加载`EurekaServerAutoConfiguration`⾃动配置类
 
