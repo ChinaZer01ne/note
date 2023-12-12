@@ -628,9 +628,7 @@ public javax.ws.rs.core.Application jerseyApplication(Environment environment,
 }
 ```
 
-举例
-
-![](https://secure2.wostatic.cn/static/v74r7j9ttaxfEb6pNACKBW/image.png)
+![](eureka接口.png)
 
 这些就是使⽤Jersey发布的供Eureka Client调⽤的Restful⻛格服务接⼝（完成服务注册、⼼跳续约等接⼝）
 
@@ -841,9 +839,7 @@ private void replicateToPeers(Action action, String appName, String id,
 }
 ```
 
-```
-PeerAwareInstanceRegistryImpl#replicateInstanceActionsToPeers
-```
+* `PeerAwareInstanceRegistryImpl#replicateInstanceActionsToPeers`
 
 ```java
 private void replicateInstanceActionsToPeers(Action action, String appName,
@@ -883,7 +879,7 @@ private void replicateInstanceActionsToPeers(Action action, String appName,
 
 #### Eureka Server服务续约接⼝（接受客户端续约）
 
-`InstanceResource`的`renewLease`⽅法中完成客户端的⼼跳（续约）处理，关键代码： registry.renew(app.getName(), id, isFromReplicaNode)`
+`InstanceResource`的`renewLease`⽅法中完成客户端的⼼跳（续约）处理，关键代码： `registry.renew(app.getName(), id, isFromReplicaNode)`
 
 ```java
 @PUT
@@ -921,7 +917,7 @@ public Response renewLease(
 }
 ```
 
-com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl#renew
+* `com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl#renew`
 
 ```java
 public boolean renew(final String appName, final String id, final boolean isReplication) {
@@ -936,7 +932,7 @@ public boolean renew(final String appName, final String id, final boolean isRepl
 
 renew()⽅法中—>leaseToRenew.renew()—>对最后更新时间戳进⾏更新
 
-- super.renew(appName, id, isReplication)
+- `super.renew(appName, id, isReplication)`
 
 ```java
 public boolean renew(String appName, String id, boolean isReplication) {
@@ -979,9 +975,8 @@ public boolean renew(String appName, String id, boolean isReplication) {
     }
 ```
 
-```
-leaseToRenew.renew(); 更新一下最后更新时间戳
-```
+
+* `leaseToRenew.renew(); `更新一下最后更新时间戳
 
 ```java
 public void renew() {
@@ -989,7 +984,7 @@ public void renew() {
 }
 ```
 
-- replicateInstanceActionsToPeers() 复制Instance实例操作到其它节点
+- `replicateInstanceActionsToPeers() `复制Instance实例操作到其它节点
 
 ```java
 private void replicateInstanceActionsToPeers(Action action, String appName,
@@ -1051,7 +1046,7 @@ public class EurekaClientAutoConfiguration {
 
 1. 读取配置⽂件
 2. 启动时从EurekaServer获取服务实例信息
-3. 注册⾃⼰到EurekaServer（addInstance）
+3. 注册⾃⼰到Eureka Server（addInstance）
 4. 开启⼀些定时任务（⼼跳续约，刷新本地服务缓存列表）
 
 ##### 读取配置文件
@@ -1678,7 +1673,7 @@ public EurekaClient eurekaClient(ApplicationInfoManager manager, EurekaClientCon
 }
 ```
 
-com.netflix.discovery.DiscoveryClient#shutdown·
+`com.netflix.discovery.DiscoveryClient#shutdown`
 
 ```java
 @PreDestroy
@@ -1716,7 +1711,7 @@ public synchronized void shutdown() {
 }
 ```
 
-unregister()
+`unregister()`
 
 ```java
 void unregister() {
