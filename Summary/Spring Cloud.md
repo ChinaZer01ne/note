@@ -4471,10 +4471,8 @@ location / {
 ```
 
 # Spring Cloud Config 分布式配置中⼼
-@[TOC](#catalog)
 
-
-![[MicroService Design#分布式配置中⼼]]
+[[MicroService Design#分布式配置中⼼]]
 
 ## Spring Cloud Config
 

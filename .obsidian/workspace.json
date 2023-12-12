@@ -14,12 +14,37 @@
               "type": "markdown",
               "state": {
                 "file": "Summary/Spring Cloud.md",
-                "mode": "preview",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "312c29067cf17634",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Summary/Spring Cloud.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "aabfd764baf98b4b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Summary/MarkDown.md",
+                "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -85,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Spring Cloud.md",
+                "file": "Summary/MarkDown.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Spring Cloud.md",
+                "file": "Summary/MarkDown.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Spring Cloud.md"
+                "file": "Summary/MarkDown.md"
               }
             }
           },
@@ -174,11 +199,13 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "dfeaecb5b1fadce1",
+  "active": "aabfd764baf98b4b",
   "lastOpenFiles": [
-    "Summary/Architecture Design.md",
     "Summary/MicroService Design.md",
     "Summary/Spring Cloud.md",
+    "daliy_note/2023-09-27.md",
+    "Summary/TO DO LIST.md",
+    "Summary/Architecture Design.md",
     "Summary/Computer Network.md",
     "Summary/Design Patterns.md",
     "Summary/image/SpringCloud/eureka接口.png",
@@ -203,7 +230,6 @@
     "Summary/image/Architecture/心跳检测.png.crdownload",
     "Summary/image/Architecture",
     "Summary/Spring.md",
-    "Summary/TO DO LIST.md",
     "Summary/IO.md",
     "Summary/image/IO/sendfile-gather.webp",
     "Summary/image/IO/sendfile.webp",
