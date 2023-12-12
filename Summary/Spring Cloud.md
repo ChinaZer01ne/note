@@ -32,6 +32,7 @@ Eureka的元数据有两种：标准元数据和⾃定义元数据。
 - ⾃定义元数据： 可以使⽤eureka.instance.metadata-map配置，符合KEY/VALUE的存储格式。这 些元数据可以在远程客户端中访问。
 
 ```YAML
+# 标准元数据
 instance:
   prefer-ip-address: true
   metadata-map:
@@ -42,17 +43,16 @@ instance:
 
 #### Eureka客户端详解
 
-服务提供者（也是Eureka客户端）要向EurekaServer注册服务，并完成服务续约等⼯作
+服务提供者（也是Eureka客户端）要向Eureka Server注册服务，并完成服务续约等⼯作
 
 ##### 服务注册详解（服务提供者）
 
-- 当我们导⼊了eureka-client依赖坐标，配置Eureka服务注册中⼼地址
 - 服务在启动时会向注册中⼼发起注册请求，携带服务元数据信息
 - Eureka注册中⼼会把服务的信息保存在Map中。
 
 ##### 服务续约详解（服务提供者）
 
-服务每隔30秒会向注册中⼼续约(⼼跳)⼀次（也称为报活），如果没有续约，租约在90秒后到期，然后服务会被失效。每隔30秒的续约操作我们称之为⼼跳检测。往往不需要我们调整这两个配置
+服务每隔30秒会向注册中⼼续约(⼼跳)⼀次（也称为报活），如果没有续约，租约在90秒后到期，然后服务会被失效。每隔30秒的续约操作我们称之为⼼跳检测。
 
 ```YAML
 #向Eureka服务中⼼集群注册服务
@@ -66,7 +66,7 @@ eureka:
 
 ##### 获取服务列表详解（服务消费者）
 
-每隔30秒服务会从注册中⼼中拉取⼀份服务列表，这个时间可以通过配置修改。往往不需要我们调整
+每隔30秒服务会从注册中⼼中拉取⼀份服务列表。
 
 ```YAML
 #向Eureka服务中⼼集群注册服务
@@ -76,15 +76,15 @@ eureka:
     registry-fetch-interval-seconds: 30
 ```
 
-- 服务消费者启动时，从 EurekaServer服务列表获取只读备份，缓存到本地
+- 服务消费者启动时，从 Eureka Server服务列表获取只读备份，缓存到本地
 - 每隔30秒，会重新获取并更新数据
-- 每隔30秒的时间可以通过配置eureka.client.registry-fetch-interval-seconds修改
+- 每隔30秒的时间可以通过配置`eureka.client.registry-fetch-interval-seconds`修改
 
 #### Eureka服务端详解
 
 ##### 服务下线
 
-- 当服务正常关闭操作时，会发送服务下线的REST请求给EurekaServer。
+- 当服务正常关闭操作时，会发送服务下线的REST请求给Eureka Server。
 - 服务中⼼接受到请求后，将该服务置为下线状态
 
 ##### 失效剔除
