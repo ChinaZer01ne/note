@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Architecture Design.md",
+                "file": "Summary/System Design.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Architecture Design.md",
+                "file": "Summary/System Design.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Architecture Design.md",
+                "file": "Summary/System Design.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Architecture Design.md"
+                "file": "Summary/System Design.md"
               }
             }
           },
@@ -176,11 +176,11 @@
   },
   "active": "dfeaecb5b1fadce1",
   "lastOpenFiles": [
+    "Summary/Architecture Design.md",
     "Summary/image/Architecture/负载均衡.png",
     "Summary/image/Architecture/负载均衡.png.crdownload",
     "Summary/Distributed Theory.md",
     "Summary/MarkDown.md",
-    "Summary/Architecture Design.md",
     "Summary/Algorithm.md",
     "Summary/image/Architecture/累计心跳检测.png",
     "Summary/image/Architecture/累计心跳检测.png.crdownload",
@@ -210,7 +210,6 @@
     "Summary/MicroService Design.md",
     "Summary/JVM.md",
     "Summary/image/JVM/G1垃圾收集流程.jpg",
-    "Summary/image/JVM/1702143163092.jpg",
     "().md",
     "停顿时间（或响应时间）.md",
     "conflict-files-obsidian-git.md",
