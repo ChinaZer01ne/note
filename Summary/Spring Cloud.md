@@ -120,11 +120,7 @@ eureka:
 
 #### Eureka Server启动过程
 
-⼊⼝：SpringCloud充分利⽤了SpringBoot的⾃动装配的特点
-
-观察eureka-server的jar包，发现在`META-INF`下⾯有配置⽂件`spring.factories`
-
-springboot应⽤启动时会加载`EurekaServerAutoConfiguration`⾃动配置类
+SpringCloud充分利⽤了SpringBoot的⾃动装配的特点，观察eureka-server的jar包，发现在`META-INF`下⾯有配置⽂件`spring.factories`，springboot应⽤启动时会加载`EurekaServerAutoConfiguration`⾃动配置类
 
 ##### EurekaServerAutoConfiguration类
 
@@ -147,7 +143,6 @@ public class EurekaServerAutoConfiguration implements WebMvcConfigurer {
 public @interface EnableEurekaServer {
 
 }
-
 ```
 
 可以看到这个注解导入了一个类`EurekaServerMarkerConfiguration`，他注入了我们说的`EurekaServerMarkerConfiguration.Marker`类，也就是说只有添加了`@EnableEurekaServer`注解，才会有后续的动作，这是成为⼀个EurekaServer的前提。
@@ -166,7 +161,6 @@ public class EurekaServerMarkerConfiguration {
   }
 
 }
-
 ```
 
 在`EurekaServerAutoConfiguration`中有一些其他配置，比如
@@ -184,15 +178,12 @@ public EurekaController eurekaController() {
 - 对等节点感知实例注册器
     
     集群模式下注册服务使用到的注册器，EurekaServer集群中各个节点是对等的，没有主从之分
-    
 
 ```java
 @Bean
 public PeerAwareInstanceRegistry peerAwareInstanceRegistry(ServerCodecs serverCodecs) {
   this.eurekaClient.getApplications(); // force initialization
-  return new InstanceRegistry(this.eurekaServerConfig, this.eurekaClientConfig,
-      serverCodecs, this.eurekaClient,
-      this.instanceRegistryProperties.getExpectedNumberOfClientsSendingRenews(),
+  return new InstanceRegistry(this.eurekaServerConfig, this.eurekaClientConfig, serverCodecs, this.eurekaClient,  this.instanceRegistryProperties.getExpectedNumberOfClientsSendingRenews(),
       this.instanceRegistryProperties.getDefaultOpenForTrafficCount());
 }
 ```
@@ -559,9 +550,7 @@ public void openForTraffic(ApplicationInfoManager applicationInfoManager, int co
 }
 ```
 
-```
-`postInit`
-```
+* `postInit`
 
 ```java
 protected void postInit() {
