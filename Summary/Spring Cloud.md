@@ -9,15 +9,16 @@
 ![](eureka官网架构图.png)
 
 Eureka 包含两个组件： `Eureka Server` 和 `Eureka Client`。
-* Eureka Client是⼀个Java客户端，⽤于简化与Eureka Server的交互； Eureka Server提供服务发现的能⼒，各个微服务启动时，会通过Eureka Client向Eureka Server 进⾏注册⾃⼰的信息（例如⽹络信息）， Eureka Server会存储该服务的信息；
+* Eureka Client是⼀个Java客户端，⽤于简化与Eureka Server的交互； 
+* Eureka Server提供服务发现的能⼒，各个微服务启动时，会通过Eureka Client向Eureka Server 进⾏注册⾃⼰的信息（例如⽹络信息）， Eureka Server会存储该服务的信息；
 
-- 图中us-east-1c、 us-east-1d， us-east-1e代表不同的区也就是不同的机房
-- 图中每⼀个Eureka Server都是⼀个集群。
-- 图中Application Service作为服务提供者向Eureka Server中注册服务，Eureka Server接受到注册事件会在集群和分区中进⾏数据同步， Application Client作为消费端（服务消费者）可以从Eureka Server中获取到服务注册信息，进⾏服务调⽤。
-- 微服务启动后，会周期性地向Eureka Server发送⼼跳（默认周期为30秒）以续约⾃⼰的信息
-- Eureka Server在⼀定时间内没有接收到某个微服务节点的⼼跳， Eureka Server将会注销该微服务节点（默认90秒）
-- 每个Eureka Server同时也是Eureka Client，多个Eureka Server之间通过复制的⽅式完成服务注册列表的同步
-- Eureka Client会缓存Eureka Server中的信息。即使所有的Eureka Server节点都宕掉，服务消费者依然可以使⽤缓存中的信息找到服务提供者
+- 图中`us-east-1c`、 `us-east-1d`， `us-east-1e`代表不同的区也就是不同的机房
+- 图中每⼀个`Eureka Server`都是⼀个集群。
+- 图中`Application Service`作为服务提供者向`Eureka Server`中注册服务，`Eureka Server`接受到注册事件会在集群和分区中进⾏数据同步， `Application Client`作为消费端（服务消费者）可以从`Eureka Server`中获取到服务注册信息，进⾏服务调⽤。
+- 微服务启动后，会周期性地向`Eureka Server`发送⼼跳（默认周期为30秒）以续约⾃⼰的信息
+- `Eureka Server`在⼀定时间内没有接收到某个微服务节点的⼼跳， `Eureka Server`将会注销该微服务节点（默认90秒）
+- 每个`Eureka Server`同时也是`Eureka Client`，多个`Eureka Server`之间通过复制的⽅式完成服务注册列表的同步
+- `Eureka Client`会缓存`Eureka Server`中的信息。即使所有的`Eureka Server`节点都宕掉，服务消费者依然可以使⽤缓存中的信息找到服务提供者
 
 **Eureka通过⼼跳检测、健康检查和客户端缓存等机制，提⾼系统的灵活性、可伸缩性和可⽤性。**
 
