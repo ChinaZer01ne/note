@@ -2470,32 +2470,31 @@ xxxService:
 ## Feign对熔断器的⽀持
 
 1. 在Feign客户端⼯程配置⽂件（`application.yml`）中开启Feign对熔断器的⽀持
-
-```yaml
-# 开启Feign的熔断功能
-feign:
-  hystrix:
-    enabled: true
-```
-
-Feign的超时时⻓设置那其实就上⾯Ribbon的超时时⻓设置Hystrix超时设置。
-
-注意：  
-
-1. 开启Hystrix之后， Feign中的⽅法都会被进⾏⼀个管理了，⼀旦出现问题就进⼊对应的回退逻辑处理  
-2. Feign把复杂的http请求包装成我们只需要加注解就可以实现，但是底层使用的还是Ribbon。Feign的调用，总共分两层，即Ribbon的调用和Hystrix(熔断处理)的调用，***高版本的Hystrix默认是关闭的***。综上所得：Feign的熔断超时时间需要同时设置Ribbon和Hystrix的超时时间设置
-3. 针对超时这⼀点，当前有两个超时时间设置（Feign/hystrix），熔断的时候是根据这两个时间的最⼩值来进⾏的，即处理时⻓超过最短的那个超时时间了就熔断进⼊回退降级逻辑
-```
-
-```yaml
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            ##########################################Hystrix的超时时⻓设置
-            timeoutInMilliseconds: 15000
+	
+	```yaml
+	# 开启Feign的熔断功能
+	feign:
+	  hystrix:
+	    enabled: true
+	```
+	
+	Feign的超时时⻓设置那其实就上⾯Ribbon的超时时⻓设置Hystrix超时设置。
+	
+	注意：  
+	
+	1. 开启Hystrix之后， Feign中的⽅法都会管理，⼀旦出现问题就进⼊对应的回退逻辑处理  
+	2. Feign把复杂的http请求包装成我们只需要加注解就可以实现，但是底层使用的还是Ribbon。Feign的调用，总共分两层，即Ribbon的调用和Hystrix(熔断处理)的调用，***高版本的Hystrix默认是关闭的***。综上所得：**Feign的熔断超时时间需要同时设置Ribbon和Hystrix的超时时间设置**
+	3. 针对超时这⼀点，当前有两个超时时间设置（Feign/hystrix），熔断的时候是根据这两个时间的最⼩值来进⾏的，即处理时⻓超过最短的那个超时时间了就熔断进⼊回退降级逻辑
+	
+	```yaml
+	hystrix:
+	  command:
+	    default:
+	      execution:
+	        isolation:
+	          thread:
+	            # Hystrix的超时时⻓设置
+	            timeoutInMilliseconds: 15000
 ```
 
 2. ⾃定义FallBack处理类（需要实现FeignClient接⼝）
@@ -2514,10 +2513,10 @@ public class ResumeFallback implements ResumeServiceFeignClient {
 }
 ```
 
-3. 在@FeignClient注解中关联2）中⾃定义的处理类
+3. 在@FeignClient注解中关联第二步中⾃定义的处理类
 
 ```java
-@FeignClient(value = "lagou-service-resume",fallback = ResumeFallback.class,path = "/resume") 
+@FeignClient(value = "xxxService",fallback = ResumeFallback.class,path = "/resume") 
 // 使⽤fallback的时候，类上的@RequestMapping的url前缀限定，改成配置在@FeignClient的path属性中
 //@RequestMapping("/resume")
 public interface ResumeServiceFeignClient {
@@ -2572,7 +2571,7 @@ logging:
 
 ## Feign核⼼源码剖析
 
-思考⼀个问题：只定义了接⼝，添加上@FeignClient，真的没有实现的话，能完成远程请求么？
+思考⼀个问题：只定义了接⼝，添加上`@FeignClient`，真的没有实现的话，能完成远程请求么？
 
 不能，考虑是做了代理了。
 
@@ -2580,7 +2579,7 @@ logging:
     
     ![](https://secure2.wostatic.cn/static/wYVSpgem558PCq2ekhss7A/image.png)
     
-2. 从@EnableFeignClients 正向切⼊
+2. 从@`EnableFeignClients` 正向切⼊
     
 
 ```java
