@@ -3615,7 +3615,7 @@ Binder绑定器是Spring Cloud Stream 中⾮常核⼼的概念，就是通过它
 
 Stream中的消息通信⽅式遵循了发布—订阅模式。
 
-在Spring Cloud Stream中的消息通信⽅式遵循了发布-订阅模式，当⼀条消息被投递到消息中间件之 后，它会通过共享的 Topic 主题进⾏⼴播，消息消费者在订阅的主题中收到它并触发⾃身的业务逻辑处理。这⾥所提到的 Topic 主题是Spring Cloud Stream中的⼀个抽象概念，⽤来代表发布共享消息给消 费者的地⽅。在不同的消息中间件中， Topic 可能对应着不同的概念，⽐如：在RabbitMQ中的它对应了Exchange、在Kakfa中则对应了Kafka中的Topic。
+在Spring Cloud Stream中的消息通信⽅式遵循了发布-订阅模式，当⼀条消息被投递到消息中间件之 后，它会通过共享的 Topic 主题进⾏⼴播，消息消费者在订阅的主题中收到它并触发⾃身的业务逻辑处理。这⾥所提到的 Topic 主题是Spring Cloud Stream中的⼀个抽象概念，⽤来代表发布共享消息给消费者的地⽅。在不同的消息中间件中， Topic 可能对应着不同的概念，⽐如：在RabbitMQ中的它对应了Exchange、在Kakfa中则对应了Kafka中的Topic。
 
 ### Stream编程注解
 
@@ -3659,11 +3659,11 @@ server:
   port: 9090
 spring:
   application:
-    name: lagou-cloud-stream-producer
+    name: producer-9090
   cloud:
     stream:
       binders: # 绑定MQ服务信息（此处我们是RabbitMQ）
-        lagouRabbitBinder: # 给Binder定义的名称，⽤于后⾯的关联
+        xxxRabbitBinder: # 给Binder定义的名称，⽤于后⾯的关联
           type: rabbit # MQ类型，如果是Kafka的话，此处配置kafka
           environment: # MQ环境配置（⽤户名、密码等）
             spring:
@@ -3674,13 +3674,13 @@ spring:
                 password: guest
       bindings: # 关联整合通道和binder对象
         output: # output是我们定义的通道名称，此处不能乱改
-          destination: lagouExchange # 要使⽤的Exchange名称（消息队列主题名称）
+          destination: xxxExchange # 要使⽤的Exchange名称（消息队列主题名称）
           content-type: text/plain # application/json # 消息类型设置，⽐如json
-          binder: lagouRabbitBinder # 关联MQ服务
+          binder: xxxRabbitBinder # 关联MQ服务
 eureka:
   client:
     serviceUrl: # eureka server的路径
-      defaultZone: http://lagoucloudeurekaservera:8761/eureka/,http://lagoucloudeurekaserverb:8762/eureka/ #把 eureka 集群中的所有 url 都填写了进来，也可以只写⼀台，因为各个 eureka server 可以同步注册表
+      defaultZone: http://servera:8761/eureka/,http://serverb:8762/eureka/ #把 eureka 集群中的所有 url 都填写了进来，也可以只写⼀台，因为各个 eureka server 可以同步注册表
 instance:
   prefer-ip-address: true #使⽤ip注册
 ```
@@ -3705,9 +3705,7 @@ public interface IMessageProducer {
 }
 ```
 
-```
 实现类
-```
 
 ```java
 // Source.class⾥⾯就是对输出通道的定义（这是Spring Cloud Stream内置的通道封装）
@@ -3726,9 +3724,7 @@ public class MessageProducerImpl implements IMessageProducer {
 
 ```
 
-```
 测试类
-```
 
 ```java
 @SpringBootTest(classes = {StreamProducerApplication9090.class})
@@ -3739,14 +3735,14 @@ public class MessageProducerTest {
 
     @Test
     public void testSendMessage() {
-        iMessageProducer.sendMessage("hello world-lagou101");
+        iMessageProducer.sendMessage("hello world");
     }
 }
 ```
 
 ### Stream消息驱动之开发消费者端
 
-此处我们记录lagou-cloud-stream-consumer-9091编写过程， 9092⼯程类似
+此处我们记录consumer-9091编写过程， 9092⼯程类似
 
 1. application.yml
 
@@ -3755,11 +3751,11 @@ server:
   port: 9091
 spring:
   application:
-    name: lagou-cloud-stream-consumer
+    name: consumer-9091
   cloud:
     stream:
       binders: # 绑定MQ服务信息（此处我们是RabbitMQ）
-        lagouRabbitBinder: # 给Binder定义的名称，⽤于后⾯的关联
+        xxxRabbitBinder: # 给Binder定义的名称，⽤于后⾯的关联
           type: rabbit # MQ类型，如果是Kafka的话，此处配置kafka
           environment: # MQ环境配置（⽤户名、密码等）
             spring:
@@ -3770,14 +3766,14 @@ spring:
                 password: guest
       bindings: # 关联整合通道和binder对象
         intput: # output是我们定义的通道名称，此处不能乱改
-          destination: lagouExchange # 要使⽤的Exchange名称（消息队列主题名称）
+          destination: xxxExchange # 要使⽤的Exchange名称（消息队列主题名称）
           content-type: text/plain # application/json # 消息类型设置，⽐如json
-          binder: lagouRabbitBinder # 关联MQ服务
-          group: lagou001
+          binder: xxxRabbitBinder # 关联MQ服务
+          group: xxx001
 eureka:
   client:
     serviceUrl: # eureka server的路径
-      defaultZone: http://lagoucloudeurekaservera:8761/eureka/,http://lagoucloudeurekaserverb:8762/eureka/ #把 eureka 集群中的所有 url 都填写了进来，也可以只写⼀台，因为各个 eureka server 可以同步注册表
+      defaultZone: http://servera:8761/eureka/,http://serverb:8762/eureka/ #把 eureka 集群中的所有 url 都填写了进来，也可以只写⼀台，因为各个 eureka server 可以同步注册表
 instance:
   prefer-ip-address: true #使⽤ip注册
 ```
