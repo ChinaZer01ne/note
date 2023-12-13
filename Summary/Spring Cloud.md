@@ -2566,7 +2566,7 @@ public class FeignConfig {
 logging:
   level:
     # Feign⽇志只会对⽇志级别为debug的做出响应
-    com.lagou.edu.controller.service.ResumeServiceFeignClient: debug
+    com.xxx.xxx.controller.service.ResumeServiceFeignClient: debug
 ```
 
 ## Feign核⼼源码剖析
@@ -3076,9 +3076,7 @@ public Server getServerFromLoadBalancer(@Nullable URI original, @Nullable Object
 }
 ```
 
-![](https://secure2.wostatic.cn/static/wXUC9tmWgJk2ia4rq2qrAN/image.png)
-
-最后回到AbstractLoadBalancerAwareClient#executeWithLoadBalancer()，里面会执行execute方法，最终请求的发起使⽤的是HttpURLConnection
+最后回到`AbstractLoadBalancerAwareClient#executeWithLoadBalancer()`，里面会执行`execute`方法，最终请求的发起使⽤的是`HttpURLConnection`
 
 ```java
 public Response execute(Request request, Options options) throws IOException {
