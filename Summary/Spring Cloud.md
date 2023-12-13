@@ -2092,9 +2092,7 @@ public <T> T execute(String serviceId, ServiceInstance serviceInstance,
 
 ```
 
-那么？ `RibbonLoadBalancerClient`对象是在哪⾥注⼊的===》》回到最初的⾃动配置类`RibbonAutoConfiguration`中
-
-OMG! 负载均衡的事情执⾏原来交给了我们最初看到的`RibbonLoadBalancerClient`对象
+那么 `RibbonLoadBalancerClient`对象是在哪⾥注⼊的？回到最初的⾃动配置类`RibbonAutoConfiguration`中，可以看到是交给了我们最初看到的`RibbonLoadBalancerClient`对象
 
 ```java
 public class RibbonAutoConfiguration {
@@ -2164,9 +2162,7 @@ public ILoadBalancer ribbonLoadBalancer(IClientConfig config,
 在`ZoneAwareLoadBalancer`父类中，可以发现有一个方法
 
 ```java
-public DynamicServerListLoadBalancer(IClientConfig clientConfig, IRule rule, IPing ping,
-                                         ServerList<T> serverList, ServerListFilter<T> filter,
-                                         ServerListUpdater serverListUpdater) {
+public DynamicServerListLoadBalancer(IClientConfig clientConfig, IRule rule, IPing ping, ServerList<T> serverList, ServerListFilter<T> filter, ServerListUpdater serverListUpdater) {
     super(clientConfig, rule, ping);
     this.serverListImpl = serverList;
     this.filter = filter;
@@ -2195,7 +2191,6 @@ void restOfInit(IClientConfig clientConfig) {
                 .primeConnections(getReachableServers());
     }
     this.setEnablePrimingConnections(primeConnection);
-    LOGGER.info("DynamicServerListLoadBalancer for client {} initialized: {}", clientConfig.getClientName(), this.toString());
 }
 ```
 
@@ -2205,13 +2200,8 @@ public void updateListOfServers() {
     List<T> servers = new ArrayList<T>();
     if (serverListImpl != null) {
         servers = serverListImpl.getUpdatedListOfServers();
-        LOGGER.debug("List of Servers for {} obtained from Discovery client: {}",
-                getIdentifier(), servers);
-
         if (filter != null) {
             servers = filter.getFilteredListOfServers(servers);
-            LOGGER.debug("Filtered List of Servers for {} obtained from Discovery client: {}",
-                    getIdentifier(), servers);
         }
     }
     // 更新所有serverList
@@ -2231,7 +2221,6 @@ protected final ServerListUpdater.UpdateAction updateAction = new ServerListUpda
 };
 
 public void enableAndInitLearnNewServersFeature() {
-    LOGGER.info("Using serverListUpdater {}", serverListUpdater.getClass().getSimpleName());
     serverListUpdater.start(updateAction);
 }
 ```
@@ -2273,49 +2262,6 @@ public synchronized void start(final UpdateAction updateAction) {
 ```
 
 # Hystrix熔断器
-
-## 微服务中的雪崩效应
-
-微服务中，⼀个请求可能需要多个微服务接⼝才能实现，会形成复杂的调⽤链路。
-
-![](https://secure2.wostatic.cn/static/kHMxkMqFUiDJWoB23irDzF/image.png)
-
-![](https://secure2.wostatic.cn/static/M93Z1F3jMmTD5eaTJhTgF/image.png)
-
-- 扇⼊：代表着该微服务被调⽤的次数，扇⼊⼤，说明该模块复⽤性好
-- 扇出：该微服务调⽤其他微服务的个数，扇出⼤，说明业务逻辑复杂
-
-> 扇⼊⼤是⼀个好事，扇出⼤不⼀定是好事
-
-## 雪崩效应解决⽅案
-
-从可⽤性可靠性着想，为防⽌系统的整体缓慢甚⾄崩溃，采⽤的技术⼿段；
-
-下⾯，我们介绍三种技术⼿段应对微服务中的雪崩效应，这三种⼿段都是从系统可⽤性、可靠性⻆度出发，尽量防⽌系统整体缓慢甚⾄瘫痪。
-
-### 服务熔断
-
-熔断机制是应对雪崩效应的⼀种微服务链路保护机制。在微服务架构中，熔断机制也是起着类似的作⽤。当扇出链路的某个微服务不可⽤或者响应时间太⻓时，熔断该节点微服务的调⽤，进⾏服务的降级，快速返回错误的响应信息。当检测到该节点微服务调⽤响应正常后，恢复调⽤链路。
-
-注意：
-
-- 服务熔断重点在“断”，切断对下游服务的调⽤
-- 服务熔断和服务降级往往是⼀起使⽤的， Hystrix就是这样。
-
-### 服务降级
-
-通俗讲就是整体资源不够⽤了，先将⼀些不关紧的服务停掉（调⽤我的时候，给你返回⼀个预留的值，也叫做兜底数据），待渡过难关⾼峰过去，再把那些服务打开。
-
-服务降级⼀般是从整体考虑，就是当某个服务熔断之后，服务器将不再被调⽤，此刻客户端可以⾃⼰准备⼀个本地的fallback回调，返回⼀个缺省值，这样做，虽然服务⽔平下降，但好⽍可⽤，⽐直接挂掉要强。
-
-### 服务限流
-
-服务降级是当服务出问题或者影响到核⼼流程的性能时，暂时将服务屏蔽掉，待⾼峰或者问题解决后再打开；但是有些场景并不能⽤服务降级来解决，⽐如秒杀业务这样的核⼼功能，这个时候可以结合服务限流来限制这些场景的并发/请求量限流措施也很多，⽐如
-
-- 限制总并发数（⽐如数据库连接池、线程池）
-- 限制瞬时并发数（如nginx限制瞬时并发连接数）
-- 限制时间窗⼝内的平均速率（如Guava的RateLimiter、 nginx的limit_req模块，限制每秒的平均速率）
-- 限制远程接⼝调⽤速率、限制MQ的消费速率等
 
 ## Hystrix简介
 
