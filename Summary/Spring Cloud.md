@@ -3093,31 +3093,25 @@ Spring Cloud GateWay是Spring Cloud的⼀个全新项⽬，⽬标是取代Netfli
 
 Spring Cloud GateWay不仅提供统⼀的路由⽅式（反向代理）并且基于 Filter(定义过滤器对请求过滤，完成⼀些功能) 链的⽅式提供了⽹关基本的功能，例如：鉴权、流量控制、熔断、路径重写、⽇志监控等。
 
-![](https://secure2.wostatic.cn/static/oufKgDMGQNT6YCw3iy1mQ8/image.png)
-
-![](https://secure2.wostatic.cn/static/94SnPgyzvEbcA2QHGYbUog/image.png)
+![](gateway.png)
 
 ## GateWay核⼼概念
 
-Zuul1.x 阻塞式IO 2.x 基于Netty。Spring Cloud GateWay天⽣就是异步⾮阻塞的，基于Reactor模型，⼀个请求—>⽹关根据⼀定的条件匹配—匹配成功之后可以将请求转发到指定的服务地址；⽽在这个过程中，我们可以进⾏⼀些⽐较具体的控制（限流、⽇志、⿊⽩名单）
+Zuul1.x 阻塞式IO，2.x 基于Netty。Spring Cloud GateWay天⽣就是异步⾮阻塞的，基于Reactor模型，⼀个请求—>⽹关根据⼀定的条件匹配—匹配成功之后可以将请求转发到指定的服务地址；⽽在这个过程中，我们可以进⾏⼀些⽐较具体的控制（限流、⽇志、⿊⽩名单）
 
 - 路由（route）： ⽹关最基础的部分，也是⽹关⽐较基础的⼯作单元。路由由⼀个ID、⼀个⽬标URL（最终路由到的地址）、⼀系列的断⾔（匹配条件判断）和 Filter过滤器（精细化控制）组成。如果断⾔为true，则匹配该路由。
 - 断⾔（predicates）：参考了Java8中的断⾔java.util.function.Predicate，开发⼈员可以匹配Http请求中的所有内容（包括请求头、请求参数等）（类似于nginx中的location匹配⼀样），如果断⾔与请求相匹配则路由。
 - 过滤器（filter）：⼀个标准的Spring webFilter，使⽤过滤器，可以在请求之前或者之后执⾏业务逻辑。
 
-来⾃官⽹的⼀张图
-
-![](https://secure2.wostatic.cn/static/wUrhF41FKffsUYyCLT3F83/image.png)
-
-![](https://secure2.wostatic.cn/static/kN6KWUJrNVJbTntKjzno8S/image.png)
+![](gateway核心.png)
 
 其中， Predicates断⾔就是我们的匹配条件，⽽Filter就可以理解为⼀个⽆所不能的拦截器，有了这两个元素，结合⽬标URL，就可以实现⼀个具体的路由转发。
 
 ## GateWay⼯作过程（How It Works）
 
-![](https://secure2.wostatic.cn/static/fL5V2PthURG4MAFAvXZfEq/image.png)
+![](gateway工作过程.png)
 
-客户端向Spring Cloud GateWay发出请求，然后在GateWay Handler Mapping中找到与请求相匹配的路由，将其发送到GateWay Web Handler； Handler再通过指定的过滤器链来将请求发送到我们实际的服务执⾏业务逻辑，然后返回。过滤器之间⽤虚线分开是因为过滤器可能会在发送代理请求之前（pre）或者之后（post）执⾏业务逻辑。
+客户端向`Spring Cloud GateWay`发出请求，然后在`GateWay Handler Mapping`中找到与请求相匹配的路由，将其发送到GateWay Web Handler； Handler再通过指定的过滤器链来将请求发送到我们实际的服务执⾏业务逻辑，然后返回。过滤器之间⽤虚线分开是因为过滤器可能会在发送代理请求之前（pre）或者之后（post）执⾏业务逻辑。
 
 Filter在“pre”类型过滤器中可以做参数校验、权限校验、流量监控、⽇志输出、协议转换等，在“post”类型的过滤器中可以做响应内容、响应头的修改、⽇志的输出、流量监控等。
 
@@ -3562,7 +3556,7 @@ public class BlackListFilter implements GlobalFilter, Ordered {
 
 ```
 
-# GateWay⾼可⽤
+## GateWay⾼可⽤
 
 ⽹关作为⾮常核⼼的⼀个部件，如果挂掉，那么所有请求都可能⽆法路由处理，因此我们需要做GateWay的⾼可⽤。
 
