@@ -2575,12 +2575,7 @@ logging:
 
 不能，考虑是做了代理了。
 
-1. 先断点验证⼀下这个⽅法，确实是个代理对象啊！
-    
-    ![](https://secure2.wostatic.cn/static/wYVSpgem558PCq2ekhss7A/image.png)
-    
-2. 从@`EnableFeignClients` 正向切⼊
-    
+* 从@`EnableFeignClients` 正向切⼊
 
 ```java
 @Retention(RetentionPolicy.RUNTIME)
@@ -2590,18 +2585,14 @@ logging:
 public @interface EnableFeignClients {
 ```
 
-```
 类中导入了一个类`FeignClientsRegistrar`
-```
 
 ```java
 class FeignClientsRegistrar
     implements ImportBeanDefinitionRegistrar, ResourceLoaderAware, EnvironmentAware {
 ```
 
-```
 该类实现了`ImportBeanDefinitionRegistrar`接口，实现该接口，重写`registerBeanDefinitions`方法，可以完成一些Bean的注入·
-```
 
 ```java
 @Override
@@ -2614,9 +2605,7 @@ public void registerBeanDefinitions(AnnotationMetadata metadata,
 }
 ```
 
-```
 - registerDefaultConfiguration
-```
 
 ```java
 private void registerDefaultConfiguration(AnnotationMetadata metadata,
@@ -2639,9 +2628,7 @@ private void registerDefaultConfiguration(AnnotationMetadata metadata,
 }
 ```
 
-```
 - `registerFeignClients(metadata,  registry);`
-```
 
 ```java
 public void registerFeignClients(AnnotationMetadata metadata,
@@ -2693,9 +2680,7 @@ public void registerFeignClients(AnnotationMetadata metadata,
 }
 ```
 
-```
     注册客户端，给每⼀个客户端⽣成代理对象
-```
 
 ```java
 private void registerFeignClient(BeanDefinitionRegistry registry,
@@ -2737,11 +2722,7 @@ private void registerFeignClient(BeanDefinitionRegistry registry,
 }
 ```
 
-```
-所以，下⼀步，关注FeignClientFactoryBean这个⼯⼚Bean的getObject⽅法，根据经验，这个⽅法会返回我们的代理对象  
-
-接下来， FeignClientFactoryBean.getObject⽅法
-```
+所以，下⼀步，关注FeignClientFactoryBean这个⼯⼚Bean的getObject⽅法，这个⽅法会返回我们的代理对象。
 
 ```java
 @Override
@@ -2791,9 +2772,7 @@ public Object getObject() throws Exception {
 }
 ```
 
-```
 - url为空，调用loadBalance方法
-```
 
 ```java
 protected <T> T loadBalance(Feign.Builder builder, FeignContext context,
@@ -2810,9 +2789,7 @@ protected <T> T loadBalance(Feign.Builder builder, FeignContext context,
 }
 ```
 
-```
     org.springframework.cloud.openfeign.HystrixTargeter#target
-```
 
 ```java
 @Override
@@ -2874,9 +2851,7 @@ public Feign build() {
 }
 ```
 
-```
     在ReflectiveFeign中创建了代理对象
-```
 
 ```java
 @Override
@@ -2909,9 +2884,7 @@ public <T> T newInstance(Target<T> target) {
 }
 ```
 
-```
 请求进来时候，是进⼊增强逻辑的，所以接下来我们要关注增强逻辑部分，`FeignInvocationHandler`
-```
 
 ```java
 @Override
@@ -2934,9 +2907,7 @@ public Object invoke(Object proxy, Method method, Object[] args) throws Throwabl
 }
 ```
 
-```
-SynchronousMethodHandler#invoke
-```
+`SynchronousMethodHandler#invoke`
 
 ```java
 @Override
@@ -2976,9 +2947,7 @@ Object executeAndDecode(RequestTemplate template, Options options) throws Throwa
 }
 ```
 
-```
-org.springframework.cloud.openfeign.ribbon.LoadBalancerFeignClient#execute
-```
+`org.springframework.cloud.openfeign.ribbon.LoadBalancerFeignClient#execute`
 
 ```java
 @Override
@@ -3006,9 +2975,7 @@ public Response execute(Request request, Request.Options options) throws IOExcep
 }
 ```
 
-```
-AbstractLoadBalancerAwareClient#executeWithLoadBalancer()
-```
+`AbstractLoadBalancerAwareClient#executeWithLoadBalancer()`
 
 ```java
 public T executeWithLoadBalancer(final S request, final IClientConfig requestConfig) throws ClientException {
@@ -3044,9 +3011,7 @@ public T executeWithLoadBalancer(final S request, final IClientConfig requestCon
 }
 ```
 
-```
 进⼊submit⽅法，我们进⼀步就会发现使⽤Ribbon在做负载均衡了
-```
 
 ```java
 public Observable<T> submit(final ServerOperation<T> operation) {
@@ -3111,11 +3076,9 @@ public Server getServerFromLoadBalancer(@Nullable URI original, @Nullable Object
 }
 ```
 
-```
 ![](https://secure2.wostatic.cn/static/wXUC9tmWgJk2ia4rq2qrAN/image.png)
 
 最后回到AbstractLoadBalancerAwareClient#executeWithLoadBalancer()，里面会执行execute方法，最终请求的发起使⽤的是HttpURLConnection
-```
 
 ```java
 public Response execute(Request request, Options options) throws IOException {
