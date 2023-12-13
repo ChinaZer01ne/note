@@ -2282,22 +2282,9 @@ TODO
 
 ## Hystrix舱壁模式（线程池隔离策略）
 
-默认Hystrix有一个线程池（10个），为所有的添加了@
-如果不进⾏任何设置，所有熔断⽅法使⽤⼀个Hystrix线程池（默认10个线程），那么这样的话会导致问题，这个问题并不是扇出链路微服务不可⽤导致的，⽽是我们的线程机制导致的，如果⽅法A的请求把10个线程都⽤了，⽅法2请求处理的时候压根都没法去访问B，因为没有线程可⽤，并不是B服务不可⽤。
+默认Hystrix有一个线程池（10个），为所有的添加了`@HystrixCommand`方法提供线程，如果这些方法接受请求超过了10个，其他请求就得等待或者拒绝链接。为了避免问题服务请求过多导致正常服务⽆法访问， Hystrix 不是采⽤增加线程数，⽽是单独的为每⼀个控制⽅法创建⼀个线程池的⽅式，这种模式叫做“**舱壁模式**"，也是线程隔离的⼿段。
 
-![](https://secure2.wostatic.cn/static/pHuWL6ojshTZ4JzQw9qoxg/image.png)
-
-![](https://secure2.wostatic.cn/static/oP1JtHrU9WAh54n4UoAr16/image.png)
-
-为了避免问题服务请求过多导致正常服务⽆法访问， Hystrix 不是采⽤增加线程数，⽽是单独的为每⼀个控制⽅法创建⼀个线程池的⽅式，这种模式叫做“舱壁模式"，也是线程隔离的⼿段。
-
-我们可以使⽤⼀些⼿段查看线程情况
-
-![](https://secure2.wostatic.cn/static/6aVTE8EQk22QXCng4btFZr/image.png)
-
-发起请求，可以使⽤PostMan模拟批量请求
-
-![](https://secure2.wostatic.cn/static/5TwcDZ7NBfSbRKzrkf6Z6j/image.png)
+![](hystrix舱壁模式.png)
 
 Hystrix舱壁模式程序修改
 
@@ -2326,7 +2313,7 @@ Hystrix舱壁模式程序修改
 @GetMapping("/checkStateTimeout/{userId}")
 public Integer findResumeOpenStateTimeout(@PathVariable Long userId) {
     // 使⽤ribbon不需要我们⾃⼰获取服务实例然后选择⼀个那么去访问了（⾃⼰的负载均衡）
-    String url = "http://lagou-serviceresume/resume/openstate/" + userId; // 指定服务名
+    String url = "http://xxxService/resume/openstate/" + userId; // 指定服务名
     Integer forObject = restTemplate.getForObject(url, Integer.class);
     return forObject;
 }
@@ -2349,16 +2336,12 @@ public Integer findResumeOpenStateTimeout(@PathVariable Long userId) {
 )
 public Integer findResumeOpenStateTimeoutFallback(@PathVariable Long userId) {
     // 使⽤ribbon不需要我们⾃⼰获取服务实例然后选择⼀个那么去访问了（⾃⼰的负载均衡）
-    String url = "http://lagou-serviceresume/resume/openstate/" + userId; // 指定服务名
+    String url = "http://xxxService/resume/openstate/" + userId; // 指定服务名
     Integer forObject = restTemplate.getForObject(url, Integer.class);
     return forObject;
 }
 
 ```
-
-通过jstack命令查看线程情况，和我们程序设置相符合
-
-![](https://secure2.wostatic.cn/static/dVL6WxeJgEEpPSdeM5ttNr/image.png)
 
 ## Hystrix⼯作流程与⾼级应⽤
 
