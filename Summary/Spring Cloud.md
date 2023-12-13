@@ -3832,26 +3832,26 @@ bindings:
 
 **Eureka 服务发现慢的原因**
 
-Eureka 服务发现慢的原因主要有两个，⼀部分是因为服务缓存导致的，另⼀部分是因为客户端缓存导致的。
+Eureka 服务发现慢的原因主要有两个，⼀部分是因为**服务缓存**导致的，另⼀部分是因为**客户端缓存**导致的。
 
-![](https://secure2.wostatic.cn/static/xv1AdAHNwC5NXCee15hzaP/image.png)
+![](euraka问题.png)
 
 - 服务端缓存
     
     服务注册到注册中⼼后，服务实例信息是存储在注册表中的，也就是内存中。但Eureka为了提⾼响应速度，在内部做了优化，加⼊了两层的缓存结构，将Client需要的实例信息，直接缓存起来，获取的时候直接从缓存中拿数据然后响应给 Client。
     
-    - 第⼀层缓存是readOnlyCacheMap， readOnlyCacheMap是采⽤ConcurrentHashMap来存储数据的，主要负责定时与readWriteCacheMap进⾏数据同步，默认同步时间为 30 秒⼀次。
-    - 第⼆层缓存是readWriteCacheMap， readWriteCacheMap采⽤Guava来实现缓存。缓存过期时间默认为180秒，当服务下线、过期、注册、状态变更等操作都会清除此缓存中的数据。
+    - 第⼀层缓存是`readOnlyCacheMap`， `readOnlyCacheMap`是采⽤`ConcurrentHashMap`来存储数据的，主要负责定时与`readWriteCacheMap`进⾏数据同步，默认同步时间为 30 秒⼀次。
+    - 第⼆层缓存是`readWriteCacheMap`， `readWriteCacheMap`采⽤Guava来实现缓存。缓存过期时间默认为180秒，当服务下线、过期、注册、状态变更等操作都会清除此缓存中的数据。
     
     Client获取服务实例数据时，会先从⼀级缓存中获取，如果⼀级缓存中不存在，再从⼆级缓存中获取，如果⼆级缓存也不存在，会触发缓存的加载，从存储层拉取数据到缓存中，然后再返回给 Client。
     
-    Eureka 之所以设计⼆级缓存机制，也是为了提⾼ Eureka Server 的响应速度，缺点是缓存会导致 Client 获取不到最新的服务实例信息，然后导致⽆法快速发现新的服务和已下线的服务。
+    Eureka 之所以设计⼆级缓存机制，也是为了提⾼ Eureka Server 的响应速度，缺点是**缓存会导致 Client 获取不到最新的服务实例信息，然后导致⽆法快速发现新的服务和已下线的服务**。
     
-    了解了服务端的实现后，想要解决这个问题就变得很简单了，
-    
-    - 我们可以缩短只读缓存的更新时间（eureka.server.response-cache-update-interval-ms）让服务发现变得更加及时，或者直接将只读缓存关闭（eureka.server.use-read-onlyresponse-cache=false），多级缓存也导致C层⾯（数据⼀致性）很薄弱。
+    - 我们可以缩短只读缓存的更新时间（`eureka.server.response-cache-update-interval-ms`）让服务发现变得更加及时，或者直接将只读缓存关闭（`eureka.server.use-read-onlyresponse-cache=false`），多级缓存也导致数据⼀致性很薄弱。
     - Eureka Server 中会有定时任务去检测失效的服务，将服务实例信息从注册表中移除，也可以将这个失效检测的时间缩短，这样服务下线后就能够及时从注册表中清除。
-- 客户端缓存客户端缓存主要分为两块内容，⼀块是 Eureka Client 缓存，⼀块是Ribbon 缓存。
+- 客户端缓存
+	
+	客户端缓存主要分为两块内容，⼀块是 Eureka Client 缓存，⼀块是Ribbon 缓存。
     
     - Eureka Client 缓存
         
