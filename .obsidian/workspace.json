@@ -201,6 +201,8 @@
   },
   "active": "aabfd764baf98b4b",
   "lastOpenFiles": [
+    "Summary/image/SpringCloud/ribbon.png",
+    "Summary/image/SpringCloud/ribbon.png.crdownload",
     "Summary/MicroService Design.md",
     "Summary/Architecture Design.md",
     "Summary/Computer Network.md",
@@ -228,7 +230,6 @@
     "Summary/image/Architecture/周期心跳检测.png.crdownload",
     "Summary/image/Architecture/心跳检测.png",
     "Summary/image/Architecture/心跳检测.png.crdownload",
-    "Summary/image/Architecture",
     "Summary/Spring.md",
     "Summary/IO.md",
     "Summary/image/IO/sendfile-gather.webp",
@@ -245,7 +246,6 @@
     "Summary/MicroServices.md",
     "Summary/MicroService.md",
     "Summary/Architecture.md",
-    "Summary/Redis.md",
-    "Summary/MQ.md"
+    "Summary/Redis.md"
   ]
 }

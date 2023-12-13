@@ -1475,7 +1475,6 @@ boolean register() throws Throwable {
 
 ```java
 initScheduledTasks();
-
 ```
 
 ```java
