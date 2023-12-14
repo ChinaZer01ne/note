@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Architecture Design.md",
+                "file": "Summary/Zookeeper.md",
                 "mode": "source",
                 "source": false
               }
@@ -109,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Architecture Design.md",
+                "file": "Summary/Zookeeper.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -126,7 +126,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Architecture Design.md",
+                "file": "Summary/Zookeeper.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Architecture Design.md"
+                "file": "Summary/Zookeeper.md"
               }
             }
           },
@@ -200,6 +200,8 @@
   },
   "active": "dfeaecb5b1fadce1",
   "lastOpenFiles": [
+    "Summary/Architecture Design.md",
+    "Summary/Zookeeper.md",
     "Summary/image/Architecture/互备模式.webp",
     "Summary/image/Architecture/互备模式.webp.crdownload",
     "Summary/image/Architecture/主备模式.webp",
@@ -222,9 +224,7 @@
     "Summary/Spring Cloud.md",
     "Summary/image/SpringCloud/euraka问题.png",
     "Summary/image/SpringCloud/MQ模型.png",
-    "Summary/image/SpringCloud/springstream.png",
     "Summary/MicroService Design.md",
-    "Summary/Architecture Design.md",
     "Summary/Computer Network.md",
     "Summary/MarkDown.md",
     "daliy_note/2023-09-27.md",
