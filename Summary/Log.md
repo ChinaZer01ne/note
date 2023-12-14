@@ -32,7 +32,73 @@
 目前最常用的日志接口层。
 
 ![](sl4j.png)
+## 入门
 
+```xml
+<!-- slf4j 日志门面 -->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-api</artifactId>
+    <version>1.7.26</version>
+</dependency>
+<!-- slf4j 内置的简单实现-->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-simple</artifactId>
+    <version>1.7.21</version>
+</dependency>
+```
+
+## 桥接旧的日志框架（Bridging）
+
+通常，您依赖的某些组件依赖于SLF4J以外的日志记录API。您也可以假设这些组件在不久的将来不会切换到SLF4J。为了解决这种情况，SLF4J附带了几个桥接模块，这些模块将对log4j，JCL和java.util.logging API的调用重定向，就好像它们是对SLF4J API一样。
+
+桥接解决的是项目中日志的遗留问题，当系统中存在之前的日志API，可以通过桥接转换到slf4j的实现
+
+1. 先去除之前老的日志框架的依赖
+2. 添加SLF4J提供的桥接组件
+3. 为项目添加SLF4J的具体实现
+
+![](slf4j桥接.png)
+
+## 迁移的方式
+
+如果我们要使用SLF4J的桥接器，替换原有的日志框架，那么我们需要做的第一件事情，就是删除掉原有项目中的日志框架的依赖。然后替换成SLF4J提供的桥接器。
+
+```xml
+<!-- log4j -->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>log4j-over-slf4j</artifactId>
+    <version>1.7.27</version>
+</dependency>
+<!-- jul -->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>jul-to-slf4j</artifactId>
+    <version>1.7.27</version>
+</dependency>
+<!-- jcl -->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>jcl-over-slf4j</artifactId>
+    <version>1.7.27</version>
+</dependency>
+```
+
+## 注意问题
+
+1. jcl-over-slf4j.jar和 slf4j-jcl.jar不能同时部署。前一个jar文件将导致JCL将日志系统的选择委托给SLF4J，后一个jar文件将导致SLF4J将日志系统的选择委托给JCL，从而导致无限循环。
+2. log4j-over-slf4j.jar和slf4j-log4j12.jar不能同时出现
+3. jul-to-slf4j.jar和slf4j-jdk14.jar不能同时出现
+4. 所有的桥接都只对Logger日志记录器对象有效，如果程序中调用了内部的配置类或者是Appender,Filter等对象，将无法产生效果。
+
+## SLF4J原理解析
+
+1. SLF4J通过LoggerFactory加载日志具体的实现对象。
+2. LoggerFactory在初始化的过程中，会通过performInitialization()方法绑定具体的日志实现。
+3. 在绑定具体实现的时候，通过类加载器，加载`org/slf4j/impl/StaticLoggerBinder.class`
+4. 所以，只要是一个日志实现框架，在org.slf4j.impl包中提供一个自己的StaticLoggerBinder类，在其中提供具体日志实现的LoggerFactory就可以被SLF4J所加载
 # Logback
 
 常用的日志实现层框架。
@@ -47,7 +113,7 @@ Logback主要分为三个模块：
 * `logback-classic`：它是log4j的一个改良版本，同时它完整实现了slf4j API
 * `logback-access`：访问模块与Servlet容器集成提供通过Http来访问日志的功能
 
-# logback入门
+## logback入门
 
 引入依赖
 
@@ -68,21 +134,20 @@ Logback主要分为三个模块：
 </dependency>
 ```
 
-# logback配置
+## logback配置
 
 logback会依次读取以下类型配置文件：
 
-- logback.groovy
-- logback-test.xml
-- logback.xml 如果均不存在会采用默认配置
+- `logback.groovy`
+- `logback-test.xml`
+- `logback.xml` 
+- 如果均不存在会采用默认配置
 
 ## logback组件之间的关系
 
-`Logger`:日志的记录器，把它关联到应用的对应的context上后，主要用于存放日志对象，也可以定义日志类型、级别。
-
-`Appender`:用于指定日志输出的目的地，目的地可以是控制台、文件、数据库等等。
-
-`Layout`:负责把事件转换成字符串，格式化的日志信息的输出。在logback中Layout对象被封装在encoder中。
+* `Logger`：日志的记录器，把它关联到应用的对应的context上后，主要用于存放日志对象，也可以定义日志类型、级别。
+* `Appender`：用于指定日志输出的目的地，目的地可以是控制台、文件、数据库等等。
+* `Layout`：负责把事件转换成字符串，格式化的日志信息的输出。在logback中Layout对象被封装在encoder中。
 
 ## 输出到控制台
 
@@ -262,16 +327,16 @@ logback会依次读取以下类型配置文件：
 
 ## logback-access配置
 
-logback-access模块与Servlet容器（如Tomcat和Jetty）集成，以提供HTTP访问日志功能。我们可以使用logback-access模块来替换tomcat的访问日志。
+`logback-access`模块与Servlet容器（如Tomcat和Jetty）集成，以提供HTTP访问日志功能。我们可以使用logback-access模块来替换tomcat的访问日志。
 
-1. 将logback-access.jar与logback-core.jar复制到$TOMCAT_HOME/lib/目录下
-2. 修改$TOMCAT_HOME/conf/server.xml中的Host元素中添加：
+1. 将`logback-access.jar`与`logback-core.jar`复制到`$TOMCAT_HOME/lib/`目录下
+2. 修改`$TOMCAT_HOME/conf/server.xml`中的Host元素中添加：
 
 ```xml
 <Valve className="ch.qos.logback.access.tomcat.LogbackValve" />
 ```
 
-3. logback默认会在$TOMCAT_HOME/conf下查找文件 logback-access.xml
+3. logback默认会在`$TOMCAT_HOME/conf`下查找文件`logback-access.xml`
 
 ```XML
 <?xml version="1.0" encoding="UTF-8"?>
