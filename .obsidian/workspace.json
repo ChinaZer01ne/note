@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Log.md",
+                "file": "Summary/Architecture Design.md",
                 "mode": "source",
                 "source": false
               }
@@ -109,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Log.md",
+                "file": "Summary/Architecture Design.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -126,7 +126,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Log.md",
+                "file": "Summary/Architecture Design.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Log.md"
+                "file": "Summary/Architecture Design.md"
               }
             }
           },
@@ -200,6 +200,15 @@
   },
   "active": "dfeaecb5b1fadce1",
   "lastOpenFiles": [
+    "Summary/image/Architecture/限流令牌桶算法.png",
+    "Summary/image/Architecture/限流令牌桶算法.png.crdownload",
+    "Summary/image/Architecture/限流漏桶算法.png",
+    "Summary/image/Architecture/限流漏桶算法.png.crdownload",
+    "Summary/image/Architecture/限流滑动窗口算法.png",
+    "Summary/image/Architecture/限流滑动窗口算法.png.crdownload",
+    "Summary/image/Architecture/限流计数器法.png",
+    "Summary/image/Architecture/限流计数器法.png.crdownload",
+    "Summary/Log.md",
     "Summary/image/Log/slf4j桥接.png",
     "Summary/image/Log/slf4j桥接.png.crdownload",
     "Summary/image/Log/sl4j.png",
@@ -207,23 +216,14 @@
     "Summary/image/Log",
     "Summary/image/新建文件夹",
     "Summary/Spring Cloud.md",
-    "Summary/Log.md",
     "Summary/image/SpringCloud/euraka问题.png",
     "Summary/image/SpringCloud/euraka问题.png.crdownload",
     "Summary/image/SpringCloud/MQ模型.png",
     "Summary/image/SpringCloud/MQ模型.png.crdownload",
     "Summary/image/SpringCloud/springstream.png",
-    "Summary/image/SpringCloud/springstream.png.crdownload",
     "Summary/image/SpringCloud/gateway工作过程.png",
-    "Summary/image/SpringCloud/gateway工作过程.png.crdownload",
     "Summary/image/SpringCloud/gateway核心.png",
-    "Summary/image/SpringCloud/gateway核心.png.crdownload",
-    "Summary/image/SpringCloud/gateway.png",
-    "Summary/image/SpringCloud/gateway.png.crdownload",
-    "Summary/image/SpringCloud/hystrix舱壁模式.png",
-    "Summary/image/SpringCloud/hystrix工作流程.png",
     "Summary/MicroService Design.md",
-    "Summary/image/SpringCloud/ribbon2.png",
     "Summary/Architecture Design.md",
     "Summary/Computer Network.md",
     "Summary/MarkDown.md",
