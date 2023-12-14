@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Spring Cloud.md",
+                "file": "Summary/Log.md",
                 "mode": "source",
                 "source": false
               }
@@ -109,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Spring Cloud.md",
+                "file": "Summary/Log.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -126,7 +126,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Spring Cloud.md",
+                "file": "Summary/Log.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Spring Cloud.md"
+                "file": "Summary/Log.md"
               }
             }
           },
@@ -200,6 +200,12 @@
   },
   "active": "dfeaecb5b1fadce1",
   "lastOpenFiles": [
+    "Summary/image/Log/sl4j.png",
+    "Summary/image/Log/sl4j.png.crdownload",
+    "Summary/image/Log",
+    "Summary/image/新建文件夹",
+    "Summary/Spring Cloud.md",
+    "Summary/Log.md",
     "Summary/image/SpringCloud/euraka问题.png",
     "Summary/image/SpringCloud/euraka问题.png.crdownload",
     "Summary/image/SpringCloud/MQ模型.png",
@@ -215,20 +221,15 @@
     "Summary/image/SpringCloud/hystrix舱壁模式.png",
     "Summary/image/SpringCloud/hystrix舱壁模式.png.crdownload",
     "Summary/image/SpringCloud/hystrix工作流程.png",
-    "Summary/image/SpringCloud/hystrix工作流程.png.crdownload",
     "Summary/MicroService Design.md",
-    "Summary/Spring Cloud.md",
     "Summary/image/SpringCloud/ribbon2.png",
-    "Summary/image/SpringCloud/ribbon2.png.crdownload",
     "Summary/image/SpringCloud/ribbon.png",
-    "Summary/image/SpringCloud/ribbon.png.crdownload",
     "Summary/Architecture Design.md",
     "Summary/Computer Network.md",
     "Summary/MarkDown.md",
     "daliy_note/2023-09-27.md",
     "Summary/TO DO LIST.md",
     "Summary/Design Patterns.md",
-    "Summary/image/SpringCloud/eureka接口.png",
     "Summary/System Design.md",
     "Summary/Distributed Theory.md",
     "Summary/Algorithm.md",
@@ -244,7 +245,6 @@
     "Summary/Java.md",
     "Summary/MicroServices.md",
     "Summary/MicroService.md",
-    "Summary/Architecture.md",
-    "Summary/Redis.md"
+    "Summary/Architecture.md"
   ]
 }
