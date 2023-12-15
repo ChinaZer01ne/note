@@ -200,6 +200,10 @@
   },
   "active": "dfeaecb5b1fadce1",
   "lastOpenFiles": [
+    "Summary/image/zookeeper/znode.png",
+    "Summary/image/zookeeper/znode.png.crdownload",
+    "Summary/image/zookeeper",
+    "Summary/image/新建文件夹",
     "Summary/Architecture Design.md",
     "Summary/Zookeeper.md",
     "Summary/image/Architecture/互备模式.webp",
@@ -218,9 +222,6 @@
     "Summary/image/Log/slf4j桥接.png",
     "Summary/image/Log/slf4j桥接.png.crdownload",
     "Summary/image/Log/sl4j.png",
-    "Summary/image/Log/sl4j.png.crdownload",
-    "Summary/image/Log",
-    "Summary/image/新建文件夹",
     "Summary/Spring Cloud.md",
     "Summary/image/SpringCloud/euraka问题.png",
     "Summary/image/SpringCloud/MQ模型.png",
@@ -244,7 +245,6 @@
     "Summary/TCP.md",
     "Summary/Java.md",
     "Summary/MicroServices.md",
-    "Summary/MicroService.md",
-    "Summary/Architecture.md"
+    "Summary/MicroService.md"
   ]
 }

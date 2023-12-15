@@ -38,7 +38,7 @@ Zookeeper采⽤ACL（Access Control Lists）策略来进⾏权限控制，其定
 
 在ZooKeeper中，数据信息被保存在⼀个个数据节点上，这些节点被称为znode。 ZNode 是Zookeeper 中最⼩数据单位，在 ZNode 下⾯⼜可以再挂 ZNode，这样⼀层层下去就形成了⼀个层次化命名空间 ZNode 树，我们称为 ZNode Tree，它采⽤了类似⽂件系统的层级树状结构进⾏管理。⻅下图
 
-![](https://secure2.wostatic.cn/static/czeUDGHDDPBLgeuj5aQD6V/image.png?auth_key=1702573903-abEsBEi8iFrMBUEoYPffRq-0-c283f753c3b6516dbe70d48f9014d6da)
+![](znode.png)
 
 示例：
 
