@@ -64,44 +64,45 @@ Zookeeper采⽤ACL（Access Control Lists）策略来进⾏权限控制，其定
 
 ![](zk状态信息.png)
 
-整个 ZNode 节点内容包括两部分：节点数据内容和节点状态信息。图中quota 是数据内容，其他的属于状态信息。那么这些状态信息都有什么含义呢？
+整个 ZNode 节点内容包括两部分：
+* 节点数据内容
+* 节点状态信息
 
-```text
-cZxid 就是 Create ZXID，表示节点被创建时的事务ID。
-ctime 就是 Create Time，表示节点创建时间。
-mZxid 就是 Modified ZXID，表示节点最后⼀次被修改时的事务ID。
-mtime 就是 Modified Time，表示节点最后⼀次被修改的时间。
-pZxid 表示该节点的⼦节点列表最后⼀次被修改时的事务 ID。只有⼦节点列表变更才会更新 pZxid，
-⼦节点内容变更不会更新。
-cversion 表示⼦节点的版本号。
-dataVersion 表示内容版本号。
-aclVersion 标识acl版本
-ephemeralOwner 表示创建该临时节点时的会话 sessionID，如果是持久性节点那么值为 0
-dataLength 表示数据⻓度。
-numChildren 表示直系⼦节点数
-```
+图中quota 是数据内容，其他的属于状态信息。那么这些状态信息都有什么含义呢？
+
+* cZxid 就是 Create ZXID，表示节点被创建时的事务ID。
+* ctime 就是 Create Time，表示节点创建时间。
+* mZxid 就是 Modified ZXID，表示节点最后⼀次被修改时的事务ID。
+* mtime 就是 Modified Time，表示节点最后⼀次被修改的时间。
+* pZxid 表示该节点的⼦节点列表最后⼀次被修改时的事务 ID。只有⼦节点列表变更才会更新 pZxid，⼦节点内容变更不会更新。
+* cversion 表示⼦节点的版本号。
+* dataVersion 表示内容版本号。
+* aclVersion 标识acl版本
+* ephemeralOwner 表示创建该临时节点时的会话 sessionID，如果是持久性节点那么值为 0 dataLength 表示数据⻓度。
+* numChildren 表示直系⼦节点数
 
 ### Watcher
 
-Zookeeper使⽤Watcher机制实现分布式数据的发布/订阅功能
-
-⼀个典型的发布/订阅模型系统定义了⼀种 ⼀对多的订阅关系，能够让多个订阅者同时监听某⼀个主题对象，当这个主题对象⾃身状态变化时，会通知所有订阅者，使它们能够做出相应的处理。
+Zookeeper使⽤Watcher机制实现分布式数据的发布/订阅功能。
 
 在 ZooKeeper 中，引⼊了 Watcher 机制来实现这种分布式的通知功能。 ZooKeeper 允许客户端向服务端注册⼀个 Watcher 监听，当服务端的⼀些指定事件触发了这个 Watcher，那么就会向指定客户端发送⼀个事件通知来实现分布式的通知功能。
 
 整个Watcher注册与通知过程如图所示。
 
-![](https://secure2.wostatic.cn/static/vE9y8smos9myVnp6edZmTp/image.png?auth_key=1702573903-zYuphJ7RPNvh4owTaCBhL-0-2ecfb6c4ab827cd9365b228295bdbda5)
+![](zk的watch机制.png)
 
-Zookeeper的Watcher机制主要包括客户端线程、客户端WatcherManager、 Zookeeper服务器三部分。
+Zookeeper的Watcher机制主要包括三部分。
+* 客户端线程
+* 客户端WatcherManager
+*  Zookeeper服务器
 
-具体⼯作流程为：客户端在向Zookeeper服务器注册的同时，会将Watcher对象存储在客户端的WatcherManager当中。当Zookeeper服务器触发Watcher事件后，会向客户端发送通知，客户端线程从WatcherManager中取出对应的Watcher对象来执⾏回调逻辑。
+具体⼯作流程为：**客户端在向Zookeeper服务器注册的同时，会将Watcher对象存储在客户端的WatcherManager当中。当Zookeeper服务器触发Watcher事件后，会向客户端发送通知，客户端线程从WatcherManager中取出对应的Watcher对象来执⾏回调逻辑**。
 
 ### ACL
 
 Zookeeper作为⼀个分布式协调框架，其内部存储了分布式系统运⾏时状态的元数据，这些元数据会直接影响基于Zookeeper进⾏构造的分布式系统的运⾏状态，因此，如何保障系统中数据的安全，从⽽避免因误操作所带来的数据随意变更⽽导致的数据库异常⼗分重要，在Zookeeper中，提供了⼀套完善的ACL（Access Control List）权限控制机制来保障数据的安全。
 
-我们可以从三个⽅⾯来理解ACL机制： **权限模式（Scheme）**、**授权对象（ID）**、**权限（Permission）** ，通常使⽤"scheme: id : permission"来标识⼀个有效的ACL信息。
+我们可以从三个⽅⾯来理解ACL机制： **权限模式（Scheme）**、**授权对象（ID）**、**权限（Permission）** ，通常使⽤"`scheme : id : permission`"来标识⼀个有效的ACL信息。
 
 - **权限模式： Scheme**
     
