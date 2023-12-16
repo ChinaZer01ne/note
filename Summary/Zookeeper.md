@@ -1102,7 +1102,7 @@ public class FastLeaderElection implements Election {}
 - sendqueue：选票发送队列，用于保存待发送的选票。
 - recvqueue：选票接收队列，用于保存接收到的外部投票。
 
-![](https://secure2.wostatic.cn/static/uWDUDCPgDoYrXUYS3PXJ25/image.png?auth_key=1702729727-ve5ST8CHqkKGT9YxKjiCZM-0-f48d131569c1c508b6e82d9da0e0c734)
+![](FastLeaderElection类结构.jpg)
 
 - `Notification`：FastLeaderElection的内部类。他表示收到的选举投票信息（其他服务器发来的选举投票信息），其中包含了被选举者的id、zxid、选举周期等信息。
 - `ToSend`：表示发送给其他服务器的选举投票信息，也包含了被选举者的id、zxid、选举周期等信息
@@ -1112,7 +1112,7 @@ public class FastLeaderElection implements Election {}
 
 当 ZooKeeper 服务器检测到当前服务器状态变成 LOOKING 时，就会触发 Leader选举，即调用 lookForLeader方法来进行Leader选举。
 
-![](https://secure2.wostatic.cn/static/6peCdYLT8QREKXYJM4bA1r/image.png?auth_key=1702729727-co1f5F5vHETaiSsmzS4rLH-0-ca251544f346b58ce82965a220e287b2)
+![](https://pics5.baidu.com/feed/d52a2834349b033b5450a23688f408dfd739bdcc.jpeg@f_auto?token=f59a7e3e2ac3832f2d110eef7b24d7fb)
 
 ```java
 /**
