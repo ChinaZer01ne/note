@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Zookeeper.md",
+                "file": "Summary/Build Tool.md",
                 "mode": "source",
                 "source": false
               }
@@ -109,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Zookeeper.md",
+                "file": "Summary/Build Tool.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -126,7 +126,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Zookeeper.md",
+                "file": "Summary/Build Tool.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Zookeeper.md"
+                "file": "Summary/Build Tool.md"
               }
             }
           },
@@ -200,6 +200,8 @@
   },
   "active": "dfeaecb5b1fadce1",
   "lastOpenFiles": [
+    "Summary/Zookeeper.md",
+    "Summary/Build Tool.md",
     "Summary/image/zookeeper/zk选举流程图.png",
     "Summary/image/zookeeper/zk选举流程图.png.crdownload",
     "Summary/image/zookeeper/FastLeaderElection类结构.jpg",
@@ -220,9 +222,7 @@
     "Summary/image/zookeeper/zk-fifo实现.png.crdownload",
     "Summary/image/zookeeper/zk-fifo.png",
     "Summary/image/zookeeper/zk-fifo.png.crdownload",
-    "Summary/image/zookeeper/改进版zk锁.png",
     "Summary/Architecture Design.md",
-    "Summary/Zookeeper.md",
     "Summary/Log.md",
     "Summary/Spring Cloud.md",
     "Summary/MicroService Design.md",

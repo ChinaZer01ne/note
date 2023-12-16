@@ -2073,9 +2073,9 @@ public class CreateNote implements Watcher {
          * EPHEMERAL_SEQUENTIAL：临时顺序节点
          String node = zookeeper.create(path,data,acl,createMode);
          */
-        String node_PERSISTENT = zooKeeper.create("/lg_persistent", "持久节点内容".getBytes(" utf-8"), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-        String node_PERSISTENT_SEQUENTIAL = zooKeeper.create("/lg_persistent_sequential", "持久节点内容".getBytes("utf-8"), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT_SEQUENTIAL);
-        String node_EPERSISTENT = zooKeeper.create("/lg_ephemeral", "临时节点内容".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+        String node_PERSISTENT = zooKeeper.create("/persistent", "持久节点内容".getBytes(" utf-8"), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        String node_PERSISTENT_SEQUENTIAL = zooKeeper.create("/persistent_sequential", "持久节点内容".getBytes("utf-8"), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT_SEQUENTIAL);
+        String node_EPERSISTENT = zooKeeper.create("/ephemeral", "临时节点内容".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
         System.out.println("创建的持久节点是:" + node_PERSISTENT);
         System.out.println("创建的持久顺序节点是:" + node_PERSISTENT_SEQUENTIAL);
         System.out.println("创建的临时节点是:" + node_EPERSISTENT);
@@ -2131,7 +2131,7 @@ public class GetNoteData implements Watcher {
          * stat : 节点状态信息, null表示获取最新版本的数据
          * zk.getData(path, watch, stat);
          */
-        byte[] data = zooKeeper.getData("/lg_persistent/lg-children", true, null);
+        byte[] data = zooKeeper.getData("/persistent/children", true, null);
         System.out.println(new String(data, "utf-8"));
     }
 
@@ -2141,7 +2141,7 @@ public class GetNoteData implements Watcher {
         watch:是否要启动监听，当⼦节点列表发⽣变化，会触发监听
         zooKeeper.getChildren(path, watch);
         */
-        List<String> children = zooKeeper.getChildren("/lg_persistent", true);
+        List<String> children = zooKeeper.getChildren("/persistent", true);
         System.out.println(children);
     }
 }
@@ -2174,11 +2174,11 @@ public class updateNote implements Watcher {
         version:为-1，表示对最新版本的数据进⾏修改
         zooKeeper.setData(path, data,version);
         */
-        byte[] data = zooKeeper.getData("/lg_persistent", false, null);
+        byte[] data = zooKeeper.getData("/persistent", false, null);
         System.out.println("修改前的值:" + new String(data));
         //修改 stat:状态信息对象 -1:最新版本
-        Stat stat = zooKeeper.setData("/lg_persistent", "客户端修改内容".getBytes(), -1);
-        byte[] data2 = zooKeeper.getData("/lg_persistent", false, null);
+        Stat stat = zooKeeper.setData("/persistent", "客户端修改内容".getBytes(), -1);
+        byte[] data2 = zooKeeper.getData("/persistent", false, null);
         System.out.println("修改后的值:" + new String(data2));
     }
 }
@@ -2207,10 +2207,10 @@ public class DeleteNote implements Watcher {
         zooKeeper.exists(path,watch) :判断节点是否存在
         zookeeper.delete(path,version) : 删除节点
         */
-        Stat exists = zooKeeper.exists("/lg_persistent/lg-children", false);
+        Stat exists = zooKeeper.exists("/persistent/children", false);
         System.out.println(exists == null ? "该节点不存在":"该节点存在");
-        zooKeeper.delete("/lg_persistent/lg-children",-1);
-        Stat exists2 = zooKeeper.exists("/lg_persistent/lg-children", false);
+        zooKeeper.delete("/persistent/children",-1);
+        Stat exists2 = zooKeeper.exists("/persistent/children", false);
         System.out.println(exists2 == null ? "该节点不存在":"该节点存在");
     }
 }
@@ -2265,7 +2265,7 @@ public class Create_Node_Sample {
         ZkClient zkClient = new ZkClient("127.0.0.1:2181");
         System.out.println("ZooKeeper session established.");
         //createParents的值设置为true，可以递归创建节点
-        zkClient.createPersistent("/lg-zkClient/lg-c1", true);
+        zkClient.createPersistent("/zkClient/c1", true);
         System.out.println("success create znode.");
     }
 }
@@ -2284,7 +2284,7 @@ ZkClient提供了递归删除节点的接⼝，即其帮助开发者先删除所
 ```java
 public class Del_Data_Sample {
     public static void main(String[] args) throws Exception {
-        String path = "/lg-zkClient/lg-c1";
+        String path = "/zkClient/c1";
         ZkClient zkClient = new ZkClient("127.0.0.1:2181", 5000);
         zkClient.deleteRecursive(path);
         System.out.println("success delete znode.");
@@ -2302,7 +2302,7 @@ public class Del_Data_Sample {
 public class GetChildrenSample {
     public static void main(String[] args) throws Exception {
         ZkClient zkClient = new ZkClient("127.0.0.1:2181", 5000);
-        List<String> children = zkClient.getChildren("/lg-zkClient");
+        List<String> children = zkClient.getChildren("/zkClient");
         System.out.println(children);
         //注册监听事件
         zkClient.subscribeChildChanges(path, new IZkChildListener() {
@@ -2310,11 +2310,11 @@ public class GetChildrenSample {
                 System.out.println(parentPath + " 's child changed, currentChilds:" + currentChilds);
             }
         });
-        zkClient.createPersistent("/lg-zkClient");
+        zkClient.createPersistent("/zkClient");
         Thread.sleep(1000);
-        zkClient.createPersistent("/lg-zkClient/c1");
+        zkClient.createPersistent("/zkClient/c1");
         Thread.sleep(1000);
-        zkClient.delete("/lg-zkClient/c1");
+        zkClient.delete("/zkClient/c1");
         Thread.sleep(1000);
         zkClient.delete(path);
         Thread.sleep(Integer.MAX_VALUE);
@@ -2344,7 +2344,7 @@ public class GetChildrenSample {
 ```java
 public class GetDataSample {
     public static void main(String[] args) throws InterruptedException {
-        String path = "/lg-zkClient-Ep";
+        String path = "/zkClient-Ep";
         ZkClient zkClient = new ZkClient("127.0.0.1:2181");
         //判断节点是否存在
         boolean exists = zkClient.exists(path);
@@ -2378,8 +2378,8 @@ public class GetDataSample {
 
 ```text
 123
-/lg-zkClient-Ep该节点内容被更新，更新后的内容4567
-/lg-zkClient-Ep 该节点被删除
+/zkClient-Ep该节点内容被更新，更新后的内容4567
+/zkClient-Ep 该节点被删除
 ```
 
 结果表明可以成功监听节点数据变化或删除事件。
@@ -2525,16 +2525,16 @@ public static void main(String[] args) throws Exception {
     client.start();
     System.out.println("Zookeeper session established. ");
     //添加节点
-    String path = "/lg-curator/c1";
+    String path = "/curator/c1";
     client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(path, "init".getBytes());
     Thread.sleep(1000);
     System.out.println("success create znode" + path);
 }
 ```
 
-运⾏结果： Zookeeper session established. success create znode/lg-curator/c1
+运⾏结果： Zookeeper session established. success create znode/curator/c1
 
-其中，也创建了lg-curator/c1的⽗节点lg-curator节点。
+其中，也创建了curator/c1的⽗节点curator节点。
 
 ### 删除节点
 
@@ -2586,15 +2586,15 @@ public static void main(String[] args) throws Exception {
     client.start();
     System.out.println("Zookeeper session established. ");
     //删除节点
-    String path = "/lg-curator";
+    String path = "/curator";
     client.delete().deletingChildrenIfNeeded().withVersion(-1).forPath(path);
     System.out.println("success create znode"+path);
 }
 ```
 
-运⾏结果： Zookeeper session established. success create znode/lg-curator
+运⾏结果： Zookeeper session established. success create znode/curator
 
-结果表明成功删除/lg-curator节点
+结果表明成功删除/curator节点
 
 ### 获取数据
 
@@ -2615,7 +2615,7 @@ public class GetNodeSample {
     public static void main(String[] args) throws Exception {
         CuratorFramework client = CuratorFrameworkFactory.builder()
                 .connectString("127.0.0.1:2181") //server地址
-                .sessionTimeoutMs(5000) // 会话超时时间运⾏结果： Zookeeper session established. success create znode/lg-curator/c1 init
+                .sessionTimeoutMs(5000) // 会话超时时间运⾏结果： Zookeeper session established. success create znode/curator/c1 init
                 .connectionTimeoutMs(3000) // 连接超时时间
                 .retryPolicy(new ExponentialBackoffRetry(1000, 5)) // 重试策略
                 .build(); //
@@ -2633,7 +2633,7 @@ public class GetNodeSample {
 }
 ```
 
-运⾏结果： Zookeeper session established. success create znode/lg-curator/c1 init
+运⾏结果： Zookeeper session established. success create znode/curator/c1 init
 
 结果表明成功获取了节点的数据
 
@@ -2668,7 +2668,7 @@ public class SetNodeSample {
                 .build(); //
         client.start();
         System.out.println("Zookeeper session established. ");
-        String path = "/lg-curator/c1";
+        String path = "/curator/c1";
         //获取节点数据
         Stat stat = new Stat();
         byte[] bytes = client.getData().storingStatIn(stat).forPath(path);
@@ -2686,10 +2686,10 @@ public class SetNodeSample {
 ```java
 Zookeeper session established.
 init
-Success set node for : /lg-curator/c1, new version: 1
+Success set node for : /curator/c1, new version: 1
 Exception in thread "main"
 org.apache.zookeeper.KeeperException$BadVersionException: KeeperErrorCode =
-BadVersion for /lg-curator/c1
+BadVersion for /curator/c1
 ```
 
 结果表明当携带数据版本不⼀致时，⽆法完成更新操作。
