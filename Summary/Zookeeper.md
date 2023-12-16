@@ -755,7 +755,6 @@ protected void initializeAndRun(String[] args) throws ConfigException, IOExcepti
     if (args.length == 1 && config.isDistributed()) {
         runFromConfig(config);
     } else {
-        LOG.warn("Either no config or no quorum defined in config, running in standalone mode");
         // there is only server in the quorum -- run as standalone
         // 单机模式启动
         ZooKeeperServerMain.main(args);
@@ -764,13 +763,13 @@ protected void initializeAndRun(String[] args) throws ConfigException, IOExcepti
 
 ```
 
-# 单机模式服务端启动
+## 单机模式服务端启动
 
-一、执行过程概述
+### 执行过程概述
 
 单机模式的ZK服务端逻辑写在`ZooKeeperServerMain`类中，由里面的main函数启动，整个过程如下:
 
-![](https://secure2.wostatic.cn/static/rC9G7Ygi3Jj35ctqPEzxPy/image.png?auth_key=1702729727-oQsigf5pyz9c2RufPKKbxi-0-8199fa6ca082d167942fca1d6210033a)
+![](单机zk启动流程.png)
 
 单机模式的委托启动类为:`ZooKeeperServerMain` 服务端启动过程 看下`ZooKeeperServerMain`里面的main函数代码:
 
@@ -906,9 +905,9 @@ public void runFromConfig(ServerConfig config) throws IOException, AdminServerEx
 
 ```
 
-小结:  
-zk单机模式启动主要流程:
+### 启动流程小结
 
+zk单机模式启动主要流程:
 1. 注册jmx
 2. 解析ServerConfig配置对象
 3. 根据配置对象，运行单机zk服务
@@ -1069,15 +1068,11 @@ protected void setupRequestProcessors() {
 }
 ```
 
-# Leader选举
+## Leader选举
 
-## Election
+### Election
 
-分析Zookeeper中一个核心的模块，Leader选举。 对于Leader选举，其总体框架图如下图所示
-
-![](https://secure2.wostatic.cn/static/sdxwjPb8AXAYbnzx77cQtF/image.png?auth_key=1702729727-uk4vuKhcZcjFbD614ot6Ee-0-66250805f1b06369bebc136ed773e0f3)
-
-AuthFastLeaderElection，LeaderElection其在3.4.0之后的版本中已经不建议使用。
+分析Zookeeper中一个核心的模块，Leader选举。主要是`Election``实现类FastLeaderElection`，`AuthFastLeaderElection`，`LeaderElection`其在3.4.0之后的版本中已经不建议使用。
 
 ```java
 public interface Election {
@@ -1088,7 +1083,7 @@ public interface Election {
 
 说明: 选举的父接口为`Election`，其定义了`lookForLeader`和`shutdown`两个方法，`lookForLeader`表示寻找Leader，`shutdown`则表示关闭，如关闭服务端之间的连接。
 
-## FastLeaderElection
+### FastLeaderElection
 
 刚刚介绍了Leader选举的总体框架，接着来学习Zookeeper中默认的选举策略，FastLeaderElection。 FastLeaderElection源码分析类的继承关系
 
