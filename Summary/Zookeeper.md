@@ -1112,7 +1112,7 @@ public class FastLeaderElection implements Election {}
 
 当 ZooKeeper 服务器检测到当前服务器状态变成 LOOKING 时，就会触发 Leader选举，即调用 lookForLeader方法来进行Leader选举。
 
-![](https://pics5.baidu.com/feed/d52a2834349b033b5450a23688f408dfd739bdcc.jpeg@f_auto?token=f59a7e3e2ac3832f2d110eef7b24d7fb)
+![](zk选举流程图.png)
 
 ```java
 /**
@@ -1485,12 +1485,11 @@ if (voteSet.hasAllQuorums()) {
 
 以上 10 个步骤，就是 FastLeaderElection 选举算法的核心步骤，其中步骤 4~9 会经过几轮循环，直到Leader选举产生。另外还有一个细节需要注意，就是在完成步骤9 之后，如果统计投票发现已经有过半的服务器认可了当前的选票，这个时候，ZooKeeper 并不会立即进 入步骤 10 来更新服务器状态，而是会等待一段时间(默认是 200 毫秒)来确定是否有新的更优的投票
 
-# 集群模式服务端
+## 集群模式服务端
 
 执行流程图
 
-![](https://secure2.wostatic.cn/static/u2SYe24pkUQ3gBRA2tk6NP/image.png)
-
+![](集群zk启动流程.png)
 ## 源码分析
 
 集群模式下启动所有的ZK节点启动入口都是QuorumPeerMain类的main方法。 main方法加载配置文件以后，最终会调用到QuorumPeer的start方法，来看下:

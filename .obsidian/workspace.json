@@ -200,6 +200,8 @@
   },
   "active": "dfeaecb5b1fadce1",
   "lastOpenFiles": [
+    "Summary/image/zookeeper/zk选举流程图.png",
+    "Summary/image/zookeeper/zk选举流程图.png.crdownload",
     "Summary/image/zookeeper/FastLeaderElection类结构.jpg",
     "Summary/image/zookeeper/FastLeaderElection类结构.jpg.crdownload",
     "Summary/image/zookeeper/leader和follower交互.png",
@@ -219,8 +221,6 @@
     "Summary/image/zookeeper/zk-fifo.png",
     "Summary/image/zookeeper/zk-fifo.png.crdownload",
     "Summary/image/zookeeper/改进版zk锁.png",
-    "Summary/image/zookeeper/改进版zk锁.png.crdownload",
-    "Summary/image/zookeeper/zk锁的羊群效应.png",
     "Summary/Architecture Design.md",
     "Summary/Zookeeper.md",
     "Summary/Log.md",
