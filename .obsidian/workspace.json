@@ -200,6 +200,8 @@
   },
   "active": "dfeaecb5b1fadce1",
   "lastOpenFiles": [
+    "Summary/image/zookeeper/leader和follower交互.png",
+    "Summary/image/zookeeper/leader和follower交互.png.crdownload",
     "Summary/image/zookeeper/集群zk启动流程.png",
     "Summary/image/zookeeper/集群zk启动流程.png.crdownload",
     "Summary/image/zookeeper/单机zk启动流程.png",
@@ -219,8 +221,6 @@
     "Summary/image/zookeeper/zk锁的羊群效应.png",
     "Summary/image/zookeeper/zk锁的羊群效应.png.crdownload",
     "Summary/image/zookeeper/zk共享锁.png",
-    "Summary/image/zookeeper/zk共享锁.png.crdownload",
-    "Summary/image/zookeeper/zk排他锁流程.png",
     "Summary/Architecture Design.md",
     "Summary/Zookeeper.md",
     "Summary/Log.md",

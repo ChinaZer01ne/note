@@ -665,26 +665,25 @@ Zookeeper服务器的启动，⼤致可以分为以下五个步骤
 
 上图的过程可以分为**预启动**、**初始化**、 **Leader选举**、 Leader与Follower启动期交互、 Leader与Follower启动等过程
 
-预启动
+### 预启动
 
 统⼀由QuorumPeerMain作为启动类。
     1. 解析配置⽂件zoo.cfg。
     2. 创建并启动历史⽂件清理器DatadirCleanupFactory。
     3. 判断当前是集群模式还是单机模式的启动。在集群模式中，在zoo.cfg⽂件中配置了多个服务器地址，可以选择集群启动。
 
-初始化
-    1. 创建ServerCnxnFactory。
-    2. 初始化ServerCnxnFactory。
-    3. 创建Zookeeper数据管理器FileTxnSnapLog。
-    4. 创建QuorumPeer实例。 Quorum是集群模式下特有的对象，是Zookeeper服务器实例（ZooKeeperServer）的托管者， QuorumPeer代表了集群中的⼀台机器，在运⾏期间，QuorumPeer会不断检测当前服务器实例的运⾏状态，同时根据情况发起Leader选举。
-    5. 创建内存数据库ZKDatabase。 ZKDatabase负责管理ZooKeeper的所有会话记录以及DataTree和事务⽇志的存储。
-    6. 初始化QuorumPeer。将核⼼组件如FileTxnSnapLog、 ServerCnxnFactory、 ZKDatabase注册到QuorumPeer中，同时配置QuorumPeer的参数，如服务器列表地址、 Leader选举算法和会话超时时间限制等。
-    7. 恢复本地数据。
-    8. 启动ServerCnxnFactory主线程
+### 初始化
 
-## Leader选举
+1. 创建ServerCnxnFactory。
+2. 初始化ServerCnxnFactory。
+3. 创建Zookeeper数据管理器FileTxnSnapLog。
+4. 创建QuorumPeer实例。 Quorum是集群模式下特有的对象，是Zookeeper服务器实例（ZooKeeperServer）的托管者， QuorumPeer代表了集群中的⼀台机器，在运⾏期间，QuorumPeer会不断检测当前服务器实例的运⾏状态，同时根据情况发起Leader选举。
+5. 创建内存数据库ZKDatabase。 ZKDatabase负责管理ZooKeeper的所有会话记录以及DataTree和事务⽇志的存储。
+6. 初始化QuorumPeer。将核⼼组件如FileTxnSnapLog、 ServerCnxnFactory、 ZKDatabase注册到QuorumPeer中，同时配置QuorumPeer的参数，如服务器列表地址、 Leader选举算法和会话超时时间限制等。
+7. 恢复本地数据。
+8. 启动ServerCnxnFactory主线程
 
-### 流程
+### Leader选举
 
 1. 初始化Leader选举。
     
@@ -701,11 +700,11 @@ Zookeeper服务器的启动，⼤致可以分为以下五个步骤
     ZooKeeper的Leader选举过程，简单地讲，就是⼀个集群中所有的机器相互之间进⾏⼀系列投票，选举产⽣最合适的机器成为Leader，同时其余机器成为Follower或是Observer的集群机器⻆⾊初始化过程。关于Leader选举算法，简⽽⾔之，就是集群中哪个机器处理的数据越新（通常我们根据每个服务器处理过的最⼤ZXID来⽐较确定其数据是否更新），其越有可能成为Leader。当然，如果集群中的所有机器处理的ZXID⼀致的话，那么SID最⼤的服务器成为Leader，其余机器称为Follower和Observer
     
 
-### **Leader和Follower启动期交互过程**
+### Leader和Follower启动期交互过程
 
 到这⾥为⽌， ZooKeeper已经完成了Leader选举，并且集群中每个服务器都已经确定了⾃⼰的⻆⾊——通常情况下就分为 Leader 和 Follower 两种⻆⾊。下⾯我们来对 Leader和Follower在启动期间的交互进⾏介绍，其⼤致交互流程如图所示。
 
-![](https://secure2.wostatic.cn/static/avPyWryTbSMqsGPA2vy2fC/image.png)
+![](leader和follower交互.png)
 
 1. 创建Leader服务器和Follower服务器。完成Leader选举后，每个服务器会根据⾃⼰服务器的⻆⾊创建相应的服务器实例，并进⼊各⾃⻆⾊的主流程。
 2. Leader服务器启动Follower接收器LearnerCnxAcceptor。运⾏期间， Leader服务器需要和所有其余的服务器（统称为Learner）保持连接以确集群的机器存活情况， LearnerCnxAcceptor负责接收所有⾮Leader服务器的连接请求。
@@ -726,14 +725,1263 @@ Zookeeper服务器的启动，⼤致可以分为以下五个步骤
 
 ⾄此，集群版的Zookeeper服务器启动完毕
 
+# 源码分析
+
+## 方法入口
+
+入口在`QuorumPeerMain`的main方法
+
+```java
+public static void main(String[] args) {
+    QuorumPeerMain main = new QuorumPeerMain();
+    main.initializeAndRun(args);
+    ServiceUtils.requestSystemExit(ExitCode.EXECUTION_FINISHED.getValue());
+}
+
+protected void initializeAndRun(String[] args) throws ConfigException, IOException, AdminServerException {
+    QuorumPeerConfig config = new QuorumPeerConfig();
+    if (args.length == 1) {
+        config.parse(args[0]);
+    }
+
+    // Start and schedule the the purge task
+    DatadirCleanupManager purgeMgr = new DatadirCleanupManager(
+        config.getDataDir(),
+        config.getDataLogDir(),
+        config.getSnapRetainCount(),
+        config.getPurgeInterval());
+    purgeMgr.start();
+    // 集群模式启动
+    if (args.length == 1 && config.isDistributed()) {
+        runFromConfig(config);
+    } else {
+        LOG.warn("Either no config or no quorum defined in config, running in standalone mode");
+        // there is only server in the quorum -- run as standalone
+        // 单机模式启动
+        ZooKeeperServerMain.main(args);
+    }
+}
+
+```
+
+# 单机模式服务端启动
+
+一、执行过程概述
+
+单机模式的ZK服务端逻辑写在`ZooKeeperServerMain`类中，由里面的main函数启动，整个过程如下:
+
+![](https://secure2.wostatic.cn/static/rC9G7Ygi3Jj35ctqPEzxPy/image.png?auth_key=1702729727-oQsigf5pyz9c2RufPKKbxi-0-8199fa6ca082d167942fca1d6210033a)
+
+单机模式的委托启动类为:`ZooKeeperServerMain` 服务端启动过程 看下`ZooKeeperServerMain`里面的main函数代码:
+
+```java
+public static void main(String[] args) {
+    ZooKeeperServerMain main = new ZooKeeperServerMain();
+    main.initializeAndRun(args);
+    ServiceUtils.requestSystemExit(ExitCode.EXECUTION_FINISHED.getValue());
+}
+
+protected void initializeAndRun(String[] args) throws ConfigException, IOException, AdminServerException {
+    try {
+        // 注册jmx    
+        ManagedUtil.registerLog4jMBeans();
+    } catch (JMException e) {
+        LOG.warn("Unable to register log4j JMX control", e);
+    }
+    
+    // 解析ServerConfig配置对象 
+    ServerConfig config = new ServerConfig();
+    // 如果参数是一个，则认为是配置文件的路径
+    if (args.length == 1) {
+        config.parse(args[0]);
+    } else {
+        //否则是多个参数
+        config.parse(args);
+    }
+
+    runFromConfig(config);
+}
+
+/**
+ * Run from a ServerConfig.
+ * @param config ServerConfig to use.
+ * @throws IOException
+ * @throws AdminServerException
+ */
+public void runFromConfig(ServerConfig config) throws IOException, AdminServerException {
+    LOG.info("Starting server");
+    FileTxnSnapLog txnLog = null;
+    try {
+        try {
+            metricsProvider = MetricsProviderBootstrap.startMetricsProvider(
+                config.getMetricsProviderClassName(),
+                config.getMetricsProviderConfiguration());
+        } catch (MetricsProviderLifeCycleException error) {
+            throw new IOException("Cannot boot MetricsProvider " + config.getMetricsProviderClassName(), error);
+        }
+        ServerMetrics.metricsProviderInitialized(metricsProvider);
+        ProviderRegistry.initialize();
+        // Note that this thread isn't going to be doing anything else,
+        // so rather than spawning another thread, we will just call
+        // run() in this thread.
+        // create a file logger url from the command line args
+        //，创建FileTxnSnapLog管理器，提供了一系列操作数据文件的接口，如事务日志文件和快照数据文件
+        txnLog = new FileTxnSnapLog(config.dataLogDir, config.dataDir);
+        JvmPauseMonitor jvmPauseMonitor = null;
+        if (config.jvmPauseMonitorToRun) {
+            jvmPauseMonitor = new JvmPauseMonitor(config);
+        }
+        // 初始化ZooKeeperServer对象，创建服务器统计器
+        final ZooKeeperServer zkServer = new ZooKeeperServer(jvmPauseMonitor, txnLog, config.tickTime, config.minSessionTimeout, config.maxSessionTimeout, config.listenBacklog, null, config.initialConfig);
+        txnLog.setServerStats(zkServer.serverStats());
+
+        // Registers shutdown handler which will be used to know the
+        // server error or shutdown state changes.
+        final CountDownLatch shutdownLatch = new CountDownLatch(1);
+        // 设置zk服务钩子，用于知道服务器错误或关闭状态更改
+        zkServer.registerServerShutdownHandler(new ZooKeeperServerShutdownHandler(shutdownLatch));
+
+        // Start Admin server，创建admin服务，用于接收请求（创建jetty服务）
+        adminServer = AdminServerFactory.createAdminServer();
+        // 设置zookeeper服务
+        adminServer.setZooKeeperServer(zkServer);
+        adminServer.start();
+
+        boolean needStartZKServer = true;
+        // 启动zookeeper
+        // 判断配置文件中clientPortAddress是否为null
+        if (config.getClientPortAddress() != null) {
+            //初始化server端IO对象，默认是NIOServerCnxnFactory ：Java原生NIO处理网络IO事件
+            // ServerCnxnFactory是zookeeper中的重要的组件，负责处理客户端与服务端的连接
+            cnxnFactory = ServerCnxnFactory.createFactory();
+            //初始化配置信息 
+            cnxnFactory.configure(config.getClientPortAddress(), config.getMaxClientCnxns(), config.getClientPortListenBacklog(), false);
+            //启动服务：此方法除了启动ServerCnxnFactory，还会启动zookeeper
+            cnxnFactory.startup(zkServer);
+            // zkServer has been started. So we don't need to start it again in secureCnxnFactory.
+            needStartZKServer = false;
+        }
+        if (config.getSecureClientPortAddress() != null) {
+            secureCnxnFactory = ServerCnxnFactory.createFactory();
+            secureCnxnFactory.configure(config.getSecureClientPortAddress(), config.getMaxClientCnxns(), config.getClientPortListenBacklog(), true);
+            secureCnxnFactory.startup(zkServer, needStartZKServer);
+        }
+         // 定时清除容器节点
+        //container ZNodes是3.6版本之后新增的节点类型，Container类型的节点会在它没有子节点时
+        // 被删除(新创建的Container节点除外)，该类就是用来周期性的进行检查清理工作
+        containerManager = new ContainerManager(
+            zkServer.getZKDatabase(),
+            zkServer.firstProcessor,
+            Integer.getInteger("znode.container.checkIntervalMs", (int) TimeUnit.MINUTES.toMillis(1)),
+            Integer.getInteger("znode.container.maxPerMinute", 10000),
+            Long.getLong("znode.container.maxNeverUsedIntervalMs", 0)
+        );
+        containerManager.start();
+        ZKAuditProvider.addZKStartStopAuditLog();
+
+        serverStarted();
+
+        // Watch status of ZooKeeper server. It will do a graceful shutdown
+        // if the server is not running or hits an internal error.
+        // zookeeperShutdownHandler处理逻辑，只有在服务运行不正常的情况下，才会往下执行
+        shutdownLatch.await();
+        // 关闭服务
+        shutdown();
+
+        if (cnxnFactory != null) {
+            cnxnFactory.join();
+        }
+        if (secureCnxnFactory != null) {
+            secureCnxnFactory.join();
+        }
+        if (zkServer.canShutdown()) {
+            zkServer.shutdown(true);
+        }
+    } catch (InterruptedException e) {
+        // ...
+    } finally {
+        // ...
+    }
+}
+
+```
+
+小结:  
+zk单机模式启动主要流程:
+
+1. 注册jmx
+2. 解析ServerConfig配置对象
+3. 根据配置对象，运行单机zk服务
+4. 创建管理事务日志和快照FileTxnSnapLog对象，zookeeperServer对象，并设置zkServer的统计对象
+5. 设置zk服务钩子，原理是通过设置CountDownLatch，调用ZooKeeperServerShutdownHandler的 handle方法，可以将触发shutdownLatch.await方法继续执行，即调用shutdown关闭单机服务
+6. 基于jetty创建zk的admin服务
+7. 创建连接对象cnxnFactory和secureCnxnFactory(安全连接才创建该对象)，用于处理客户端的请求
+8. 创建定时清除容器节点管理器，用于处理容器节点下不存在子节点的清理容器节点工作等可以看到关键点在于解析配置跟启动两个方法，先来看下解析配置逻辑，对应上面的configure方法:
+
+```java
+public void configure(InetSocketAddress addr, int maxcc, int backlog, boolean secure) throws IOException {
+    if (secure) {
+        throw new UnsupportedOperationException("SSL isn't supported in NIOServerCnxn");
+    }
+    configureSaslLogin();
+
+    //会话超时时间
+    maxClientCnxns = maxcc;
+    
+    initMaxCnxns();
+    sessionlessCnxnTimeout = Integer.getInteger(ZOOKEEPER_NIO_SESSIONLESS_CNXN_TIMEOUT, 10000);
+    // We also use the sessionlessCnxnTimeout as expiring interval for
+    // cnxnExpiryQueue. These don't need to be the same, but the expiring
+    // interval passed into the ExpiryQueue() constructor below should be
+    // less than or equal to the timeout.
+    //过期队列
+    cnxnExpiryQueue = new ExpiryQueue<NIOServerCnxn>(sessionlessCnxnTimeout);
+    //过期线程，从cnxnExpiryQueue中读取数据，如果已经过期则关闭
+    expirerThread = new ConnectionExpirerThread();
+
+    int numCores = Runtime.getRuntime().availableProcessors();
+    // 32 cores sweet spot seems to be 4 selector threads
+    numSelectorThreads = Integer.getInteger(
+        ZOOKEEPER_NIO_NUM_SELECTOR_THREADS,
+        Math.max((int) Math.sqrt((float) numCores / 2), 1));
+    if (numSelectorThreads < 1) {
+        throw new IOException("numSelectorThreads must be at least 1");
+    }
+
+    //计算woker线程的数量
+    numWorkerThreads = Integer.getInteger(ZOOKEEPER_NIO_NUM_WORKER_THREADS, 2 * numCores);
+    //worker线程关闭时间
+    workerShutdownTimeoutMS = Long.getLong(ZOOKEEPER_NIO_SHUTDOWN_TIMEOUT, 5000);
+
+    for (int i = 0; i < numSelectorThreads; ++i) {
+        selectorThreads.add(new SelectorThread(i));
+    }
+
+    listenBacklog = backlog;
+    //初始化selector线程
+    this.ss = ServerSocketChannel.open();
+    ss.socket().setReuseAddress(true);
+    LOG.info("binding to port {}", addr);
+    if (listenBacklog == -1) {
+        ss.socket().bind(addr);
+    } else {
+        ss.socket().bind(addr, listenBacklog);
+    }
+    ss.configureBlocking(false);
+    //初始化accept线程，这里看出accept线程只有一个，里面会注册监听ACCEPT事件
+    acceptThread = new AcceptThread(ss, addr, selectorThreads);
+}
+
+```
+
+再来看下启动逻辑，在`NIOServerCnxnFactory`里:
+
+```java
+public void startup(ZooKeeperServer zkServer) throws IOException, InterruptedException {
+    startup(zkServer, true);
+}
+
+public void startup(ZooKeeperServer zks, boolean startServer) throws IOException, InterruptedException {
+    // 启动相关线程
+    start();
+    setZooKeeperServer(zks);
+    if (startServer) {
+        //恢复本地数据
+        zks.startdata();
+        // 启动定时清除session的管理器，注册jmx，添加请求处理器
+        zks.startup();
+    }
+}
+
+//首先是start方法
+public void start() {
+    stopped = false; 
+    //初始化worker线程池
+    if (workerPool == null) {
+        workerPool = new WorkerService("NIOWorker", numWorkerThreads, false);
+    }
+    //挨个启动selector线程
+    for (SelectorThread thread : selectorThreads) {
+        if (thread.getState() == Thread.State.NEW) {
+            thread.start();
+        }
+    }
+    //启动acceptThread线程
+    if (acceptThread.getState() == Thread.State.NEW) {
+        acceptThread.start();
+    }
+    //启动expirerThread线程，处理过期连接
+    if (expirerThread.getState() == Thread.State.NEW) {
+        expirerThread.start();
+    }
+}
+
+//初始化数据结构
+public void startdata() throws IOException, InterruptedException {
+    //初始化ZKDatabase，该数据结构用来保存ZK上面存储的所有数据
+    if (zkDb == null) {
+        //初始化数据数据，这里会加入一些原始节点，例如/zookeeper
+        zkDb = new ZKDatabase(this.txnLogFactory);
+    }
+    //加载磁盘上已经存储的数据，如果有的话
+    if (!zkDb.isInitialized()) {
+        loadData();
+    }
+}
+
+private void startupWithServerState(State state) {
+    //初始化session追踪器
+    if (sessionTracker == null) {
+        createSessionTracker();
+    }
+    //启动session追踪器 
+    startSessionTracker();
+    //建立请求处理链路 
+    setupRequestProcessors();
+
+    startRequestThrottler();
+    // 注册jmx
+    // jmx的全程Java Management Extensions，是管理Java的一种扩展
+    // 这种机制可以方便的管理、监控正在运行中的程序。常用于管理线程，内存，日志level，服务重启，系统环境等
+    registerJMX();
+
+    startJvmPauseMonitor();
+
+    registerMetrics();
+
+    setState(state);
+
+    requestPathMetricsCollector.start();
+
+    localSessionEnabled = sessionTracker.isLocalSessionsEnabled();
+
+    notifyAll();
+}
+
+//这里可以看出，单机模式下请求的处理链路为:
+//PrepRequestProcessor -> SyncRequestProcessor -> FinalRequestProcessor
+protected void setupRequestProcessors() {
+    RequestProcessor finalProcessor = new FinalRequestProcessor(this);
+    RequestProcessor syncProcessor = new SyncRequestProcessor(this, finalProcessor);
+    ((SyncRequestProcessor) syncProcessor).start();
+    firstProcessor = new PrepRequestProcessor(this, syncProcessor);
+    ((PrepRequestProcessor) firstProcessor).start();
+}
+```
+
+# Leader选举
+
+## Election
+
+分析Zookeeper中一个核心的模块，Leader选举。 对于Leader选举，其总体框架图如下图所示
+
+![](https://secure2.wostatic.cn/static/sdxwjPb8AXAYbnzx77cQtF/image.png?auth_key=1702729727-uk4vuKhcZcjFbD614ot6Ee-0-66250805f1b06369bebc136ed773e0f3)
+
+AuthFastLeaderElection，LeaderElection其在3.4.0之后的版本中已经不建议使用。
+
+```java
+public interface Election {
+    public Vote lookForLeader() throws InterruptedException;
+    public void shutdown();
+}
+```
+
+说明: 选举的父接口为`Election`，其定义了`lookForLeader`和`shutdown`两个方法，`lookForLeader`表示寻找Leader，`shutdown`则表示关闭，如关闭服务端之间的连接。
+
+## FastLeaderElection
+
+刚刚介绍了Leader选举的总体框架，接着来学习Zookeeper中默认的选举策略，FastLeaderElection。 FastLeaderElection源码分析类的继承关系
+
+```java
+public class FastLeaderElection implements Election {}
+```
+
+说明:FastLeaderElection实现了Election接口，重写了接口中定义的lookForLeader方法和shutdown方法
+
+在源码分析之前，我们首先介绍几个概念:
+
+- 外部投票：特指其他服务器发来的投票。
+- 内部投票：服务器自身当前的投票。
+- 选举轮次：ZooKeeper服务器Leader选举的轮次，即logical clock(逻辑时钟)。
+- PK：指对内部投票和外部投票进行一个对比来确定是否需要变更内部投票。选票管理
+- sendqueue：选票发送队列，用于保存待发送的选票。
+- recvqueue：选票接收队列，用于保存接收到的外部投票。
+
+![](https://secure2.wostatic.cn/static/uWDUDCPgDoYrXUYS3PXJ25/image.png?auth_key=1702729727-ve5ST8CHqkKGT9YxKjiCZM-0-f48d131569c1c508b6e82d9da0e0c734)
+
+- `Notification`：FastLeaderElection的内部类。他表示收到的选举投票信息（其他服务器发来的选举投票信息），其中包含了被选举者的id、zxid、选举周期等信息。
+- `ToSend`：表示发送给其他服务器的选举投票信息，也包含了被选举者的id、zxid、选举周期等信息
+- `Messager`：消息处理的多线程实现，其中有两个内部类，WorkReceiver和WordSender，一个是接收选票信息，另一个是发送选票信息
+
+### lookForLeader函数
+
+当 ZooKeeper 服务器检测到当前服务器状态变成 LOOKING 时，就会触发 Leader选举，即调用 lookForLeader方法来进行Leader选举。
+
+![](https://secure2.wostatic.cn/static/6peCdYLT8QREKXYJM4bA1r/image.png?auth_key=1702729727-co1f5F5vHETaiSsmzS4rLH-0-ca251544f346b58ce82965a220e287b2)
+
+```java
+/**
+ * 开始新一轮的leader选举。 每当我们的 QuorumPeer 状态更改为 LOOKING 时，就会调用此方法，并向所有其他对等方发送通知。
+ * Starts a new round of leader election. Whenever our QuorumPeer
+ * changes its state to LOOKING, this method is invoked, and it
+ * sends notifications to all other peers.
+ */
+public Vote lookForLeader() throws InterruptedException {
+    try {
+        self.jmxLeaderElectionBean = new LeaderElectionBean();
+        MBeanRegistry.getInstance().register(self.jmxLeaderElectionBean, self.jmxLocalPeerBean);
+    } catch (Exception e) {
+        LOG.warn("Failed to register with JMX", e);
+        self.jmxLeaderElectionBean = null;
+    }
+
+    self.start_fle = Time.currentElapsedTime();
+    try {
+        /*
+         * 当前领导人选举的选票存储在 recvset 中。
+         * 换句话说，如果 v.electionEpoch == logicalclock，则投票 v 在 recvset 中。
+         * 当前参与者使用 recvset 来推断是否大多数参与者都投票支持它。
+         * The votes from the current leader election are stored in recvset. In other words, a vote v is in recvset
+         * if v.electionEpoch == logicalclock. The current participant uses recvset to deduce on whether a majority
+         * of participants has voted for it.
+         */
+        Map<Long, Vote> recvset = new HashMap<Long, Vote>();
+
+        /*
+         * 之前领导人选举的选票，以及当前领导人选举的选票都存储在 outofelection 中。
+         * 请注意，处于 LOOKING 状态的通知不会存储在 outofelection 中。
+         * 只有 FOLLOWING 或 LEADING 通知存储在 outofelection 中。
+         * 当前参与者可以使用 outofelection 来了解哪个参与者是领导者，如果它在领导选举中迟到（即，逻辑时钟高于收到通知的选举纪元）。
+         * The votes from previous leader elections, as well as the votes from the current leader election are
+         * stored in outofelection. Note that notifications in a LOOKING state are not stored in outofelection.
+         * Only FOLLOWING or LEADING notifications are stored in outofelection. The current participant could use
+         * outofelection to learn which participant is the leader if it arrives late (i.e., higher logicalclock than
+         * the electionEpoch of the received notifications) in a leader election.
+        */
+        Map<Long, Vote> outofelection = new HashMap<Long, Vote>();
+
+        int notTimeout = minNotificationInterval;
+
+        synchronized (this) {
+            // 1. ⾸先会将逻辑时钟⾃增，每进⾏⼀轮新的leader选举，都需要更新逻辑时钟
+            logicalclock.incrementAndGet();
+            // 2. 初始化选票（更新选票）
+            updateProposal(getInitId(), getInitLastLoggedZxid(), getPeerEpoch());
+        }
+
+        
+        // 3. 向其他服务器发送⾃⼰的选票（已更新的选票）
+        sendNotifications();
+
+        SyncedLearnerTracker voteSet;
+
+        /*
+         * 我们交换选票信息直到找到领导者的循环
+         * Loop in which we exchange notifications until we find a leader
+         */
+        // 选举开始，当前机器选举状态是LOOKING，选举还未结果
+        while ((self.getPeerState() == ServerState.LOOKING) && (!stop)) {
+            /*
+             * Remove next notification from queue, times out after 2 times
+             * the termination time
+             */
+            // 4. 接收外部投票。从recvqueue接收队列中取出其他机器的投票（外部投票）
+            Notification n = recvqueue.poll(notTimeout, TimeUnit.MILLISECONDS);
+
+            /*
+             * Sends more notifications if haven't received enough.
+             * Otherwise processes new notification.
+             */
+            // 没有获得选票
+            if (n == null) {
+                // 判断自己是否和集群断开了连接
+                // manager已经发送了所有选票消息（表示有连接）
+                if (manager.haveDelivered()) {
+                    // 向所有其他服务器发送消息
+                    sendNotifications();
+                } else { // 还未发送所有消息（表示⽆连接）
+                    // 重新连接其他每个服务器
+                    manager.connectAll();
+                }
+
+                /*
+                 * Exponential backoff
+                 */
+                int tmpTimeOut = notTimeout * 2;
+                notTimeout = Math.min(tmpTimeOut, maxNotificationInterval);
+            // 5. 处理外部投票（判断选举轮次）
+            } else if (validVoter(n.sid) && validVoter(n.leader)) {
+                /*
+                 * Only proceed if the vote comes from a replica in the current or next
+                 * voting view for a replica in the current or next voting view.
+                 */
+                switch (n.state) {
+                case LOOKING:
+                    if (getInitLastLoggedZxid() == -1) {
+                        LOG.debug("Ignoring notification as our zxid is -1");
+                        break;
+                    }
+                    if (n.zxid == -1) {
+                        LOG.debug("Ignoring notification from member with -1 zxid {}", n.sid);
+                        break;
+                    }
+                    // If notification > current, replace and send messages out
+                    // 外部投票的选举轮次大于内部投票
+                    if (n.electionEpoch > logicalclock.get()) {
+                        // 更新选举轮次
+                        logicalclock.set(n.electionEpoch);
+                        // 清空所有接收到的投票
+                        recvset.clear();
+                        // 进⾏PK，选出较优的服务器
+                        if (totalOrderPredicate(n.leader, n.zxid, n.peerEpoch, getInitId(), getInitLastLoggedZxid(), getPeerEpoch())) {
+                            // 更新选票，外部选票为主
+                            updateProposal(n.leader, n.zxid, n.peerEpoch);
+                        } else { // ⽆法选出较优的服务器
+                            // 更新选票，自己的选票优先
+                            updateProposal(getInitId(), getInitLastLoggedZxid(), getPeerEpoch());
+                        }
+                        // 再次发送本服务器的内部选票消息
+                        sendNotifications();
+                    } else if (n.electionEpoch < logicalclock.get()) {
+                        // 如果外部投票的选举轮次小于内部投票，不做处理，直接忽略
+                        break;
+                    // 外部投票的选举轮次和内部投票一致，也是绝大多数情况
+                    // 6. 进行投票PK
+                    } else if (totalOrderPredicate(n.leader, n.zxid, n.peerEpoch, proposedLeader, proposedZxid, proposedEpoch)) { // PK，选出较优的服务器
+                        // 更新自己本身的轮次
+                        updateProposal(n.leader, n.zxid, n.peerEpoch);
+                        //7。 变更选票，重新发送选票信息
+                        sendNotifications();
+                    }
+        
+                    //8.选票归档： 将收到的外部投票放进选票集合recvset中
+                    // recvset⽤于记录当前服务器在本轮次的Leader选举中收到的所有外部投票
+                    // don't care about the version if it's in LOOKING state
+                    recvset.put(n.sid, new Vote(n.leader, n.zxid, n.electionEpoch, n.peerEpoch));
+
+                    voteSet = getVoteTracker(recvset, new Vote(proposedLeader, proposedZxid, logicalclock.get(), proposedEpoch));
+                    // 9. 判断当前节点收到的票数是否可以结束选举
+                    // 若能选出leader  
+                    if (voteSet.hasAllQuorums()) {
+                        // 遍历已经接收的投票集合
+                        // Verify if there is any change in the proposed leader
+                        while ((n = recvqueue.poll(finalizeWait, TimeUnit.MILLISECONDS)) != null) {
+                            // 选票有变更，⽐之前提议的Leader有更好的选票加⼊
+                            if (totalOrderPredicate(n.leader, n.zxid, n.peerEpoch, proposedLeader, proposedZxid, proposedEpoch)) {
+                                // 将更优的选票放在recvset中
+                                recvqueue.put(n);
+                                break;
+                            }
+                        }
+
+                        /*
+                         * This predicate is true once we don't read any new
+                         * relevant message from the reception queue
+                         */
+                         // 10. 更新服务器状态
+                         // 表示之前提议的Leader已经是最优的
+                        if (n == null) {
+                            // 设置服务器状态
+                            setPeerState(proposedLeader, voteSet);
+                            // 最终的选票
+                            Vote endVote = new Vote(proposedLeader, proposedZxid, logicalclock.get(), proposedEpoch);
+                            // 清空recvqueue队列的选票
+                            leaveInstance(endVote);
+                            // 返回选票
+                            return endVote;
+                        }
+                    }
+                    break;
+                case OBSERVING:
+                    LOG.debug("Notification from observer: {}", n.sid);
+                    break;
+                case FOLLOWING:
+                case LEADING:
+                    /*
+                     * Consider all notifications from the same epoch
+                     * together.
+                     */
+                    if (n.electionEpoch == logicalclock.get()) {
+                        recvset.put(n.sid, new Vote(n.leader, n.zxid, n.electionEpoch, n.peerEpoch, n.state));
+                        voteSet = getVoteTracker(recvset, new Vote(n.version, n.leader, n.zxid, n.electionEpoch, n.peerEpoch, n.state));
+                        if (voteSet.hasAllQuorums() && checkLeader(recvset, n.leader, n.electionEpoch)) {
+                            setPeerState(n.leader, voteSet);
+                            Vote endVote = new Vote(n.leader, n.zxid, n.electionEpoch, n.peerEpoch);
+                            leaveInstance(endVote);
+                            return endVote;
+                        }
+                    }
+
+                    /*
+                     * Before joining an established ensemble, verify that
+                     * a majority are following the same leader.
+                     *
+                     * Note that the outofelection map also stores votes from the current leader election.
+                     * See ZOOKEEPER-1732 for more information.
+                     */
+                    outofelection.put(n.sid, new Vote(n.version, n.leader, n.zxid, n.electionEpoch, n.peerEpoch, n.state));
+                    voteSet = getVoteTracker(outofelection, new Vote(n.version, n.leader, n.zxid, n.electionEpoch, n.peerEpoch, n.state));
+
+                    if (voteSet.hasAllQuorums() && checkLeader(outofelection, n.leader, n.electionEpoch)) {
+                        synchronized (this) {
+                            logicalclock.set(n.electionEpoch);
+                            setPeerState(n.leader, voteSet);
+                        }
+                        Vote endVote = new Vote(n.leader, n.zxid, n.electionEpoch, n.peerEpoch);
+                        leaveInstance(endVote);
+                        return endVote;
+                    }
+                    break;
+                default:
+                    LOG.warn("Notification state unrecognized: {} (n.state), {}(n.sid)", n.state, n.sid);
+                    break;
+                }
+            } else {
+                if (!validVoter(n.leader)) {
+                    LOG.warn("Ignoring notification for non-cluster member sid {} from sid {}", n.leader, n.sid);
+                }
+                if (!validVoter(n.sid)) {
+                    LOG.warn("Ignoring notification for sid {} from non-quorum member sid {}", n.leader, n.sid);
+                }
+            }
+        }
+        return null;
+    } finally {
+        try {
+            if (self.jmxLeaderElectionBean != null) {
+                MBeanRegistry.getInstance().unregister(self.jmxLeaderElectionBean);
+            }
+        } catch (Exception e) {
+            LOG.warn("Failed to unregister with JMX", e);
+        }
+        self.jmxLeaderElectionBean = null;
+    }
+}
+```
+
+### 执行顺序
+
+1. 自增选举轮次。 在 FastLeaderElection 实现中，有一个 logicalclock 属性，用于标识当前Leader的 选举轮次，ZooKeeper规定了所有有效的投票都必须在同一轮次中。ZooKeeper在开始新一轮的投票 时，会首先对logicalclock进行自增操作。
+2. 初始化选票。 在开始进行新一轮的投票之前，每个服务器都会首先初始化自己的选票。在图7-33中我 们已经讲解了 Vote 数据结构，初始化选票也就是对 Vote 属性的初始化。在初始化阶段，每台服务器都 会将自己推举为Leader，表7-10展示了一个初始化的选票。
+3. 发送初始化选票。 在完成选票的初始化后，服务器就会发起第一次投票。ZooKeeper 会将刚刚初始 化好的选票放入sendqueue队列中，由发送器WorkerSender负责
+
+```java
+/**
+ * Send notifications to all peers upon a change in our vote
+ */
+private void sendNotifications() {
+    for (long sid : self.getCurrentAndNextConfigVoters()) {
+        QuorumVerifier qv = self.getQuorumVerifier();
+        // 将选票信息封装成toSend
+        ToSend notmsg = new ToSend(
+            ToSend.mType.notification,
+            proposedLeader,
+            proposedZxid,
+            logicalclock.get(),
+            QuorumPeer.ServerState.LOOKING,
+            sid,
+            proposedEpoch,
+            qv.toString().getBytes(UTF_8));
+        // 放入队列中，由发送器workerSender发送出去
+        sendqueue.offer(notmsg);
+    }
+}
+```
+
+4. 接收外部投票。 每台服务器都会不断地从 recvqueue 队列中获取外部投票。如果服务器发现无法获 取到任何的外部投票，那么就会立即确认自己是否和集群中其他服务器保持着有效连接。如果发现没有 建立连接，那么就会⻢上建立连接。如果已经建立了连接，那么就再次发送自己当前的内部投票。
+
+```java
+/*
+ * Loop in which we exchange notifications until we find a leader
+ */
+  
+while ((self.getPeerState() == ServerState.LOOKING) && (!stop)) {
+    // 从recvqueue接收队列中取出投票
+    Notification n = recvqueue.poll(notTimeout, TimeUnit.MILLISECONDS);
+
+    /*
+     * Sends more notifications if haven't received enough.
+     * Otherwise processes new notification.
+     */
+    if(n == null){ // 无法获取选票
+        if(manager.haveDelivered()){ 
+            // manager已经发送了所有选票消息
+            // 向所有其他服务器发送消息
+            sendNotifications();
+        } else { 
+            // 还未发送所有消息(表示无连接)
+            // 连接其他每个服务器
+            manager.connectAll();
+        }
+        /*
+         * Exponential backoff
+         */
+        int tmpTimeOut = notTimeout*2;
+        notTimeout = (tmpTimeOut < maxNotificationInterva l? tmpTimeOut : maxNotificationInterval);
+    }
+```
+
+5. 判断选举轮次。 当发送完初始化选票之后，接下来就要开始处理外部投票了。在处理外部投票的时 候，会根据选举轮次来进行不同的处理。
+    - 外部投票的选举轮次大于内部投票。如果服务器发现自己的 选举轮次已经落后于该外部投票对应服务器的选举轮次，那么就会立即更新自己的选举轮次 (logicalclock)，并且清空所有已经收到的投票，然后使用初始化的投票来进行PK以确定是否变更内 部投票(关于PK的逻辑会在步骤6中统一讲解)，最终再将内部投票发送出去。
+    - 外部投票的选举轮次 小于内部投票。 如果接收到的选票的选举轮次落后于服务器自身的，那么ZooKeeper就会直接忽略该外 部投票，不做任何处理，并返回步骤4。
+    - 外部投票的选举轮次和内部投票一致。 这也是绝大多数投票的场景，如外部投票的选举轮次和内部投 票一致的话，那么就开始进行选票PK。 总的来说，只有在同一个选举轮次的投票才是有效的投票。
+6. 选票PK。 在步骤5中提到，在收到来自其他服务器有效的外部投票后，就要进行选票PK了——也就是 FastLeaderElection.totalOrderPredicate方法的核心逻辑。选票PK的目的是为了确定当前服务器是否 需要变更投票，主要从选举轮次、ZXID和 SID 三个因素来考虑，具体条件如下:在选票 PK 的时候依次 判断，符合任意一个条件就需要进行投票变更。 · 如果外部投票中被推举的Leader服务器的选举轮次大 于内部投票，那么就需要进行投票变更。 · 如果选举轮次一致的话，那么就对比两者的ZXID。如果外部 投票的ZXID大于内部投票，那么就需要进行投票变更。 · 如果两者的 ZXID 一致，那么就对比两者的 SID。如果外部投票的 SID 大于内部投票，那么就需要进行投票变更。
+
+```java
+/**
+ * 如何PK出leader？
+ */
+protected boolean totalOrderPredicate(long newId, long newZxid, long newEpoch, long curId, long curZxid, long curEpoch) {
+    if (self.getQuorumVerifier().getWeight(newId) == 0) {
+        return false;
+    }
+
+    /*
+     * 如果以下三种情况之一成立，我们将返回 true： 
+     * 1- 新纪元更高 （选举轮次高的优先）
+     * 2- 新纪元与当前纪元相同，但新 zxid 更高 （选举轮次相同，zxid高的优先）
+     * 3- 新纪元与当前纪元相同，新 zxid 相同，但服务器 id 更高。（选举轮次相同，zxid也相同，服务器id高的优先）
+     * We return true if one of the following three cases hold:
+     * 1- New epoch is higher
+     * 2- New epoch is the same as current epoch, but new zxid is higher
+     * 3- New epoch is the same as current epoch, new zxid is the same
+     *  as current zxid, but server id is higher.
+     */
+
+    return ((newEpoch > curEpoch)
+            || ((newEpoch == curEpoch)
+                && ((newZxid > curZxid)
+                    || ((newZxid == curZxid)
+                        && (newId > curId)))));
+}
+```
+
+7. 变更投票。 通过选票PK后，如 果确定了外部投票优于内部投票(所谓的“优于”，是指外部投票所推举的服务器更适合成为Leader)， 那么就进行投票变更——使用外部投票的选票信息来覆盖内部投票。变更完成后，再次将这个变更后的 内部投票发送出去。
+8. 选票归档。 无论是否进行了投票变更，都会将刚刚收到的那份外部投票放入“选票集合”recvset中进行 归档。recvset用于记录当前服务器在本轮次的Leader选举中收到的所有外部投票——按照服务器对应 的SID来区分，例如，{(1，vote1)，(2，vote2)，...}。
+
+```java
+voteSet = getVoteTracker(recvset, new Vote(proposedLeader, proposedZxid, logicalclock.get(), proposedEpoch));
+
+if (voteSet.hasAllQuorums()) {
+// Verify if there is any change in the proposed leader
+    while ((n = recvqueue.poll(finalizeWait, TimeUnit.MILLISECONDS)) != null) {
+        if (totalOrderPredicate(n.leader, n.zxid, n.peerEpoch, proposedLeader, proposedZxid, proposedEpoch)) {
+            recvqueue.put(n);
+            break;
+        }
+    }
+
+    /*
+     * This predicate is true once we don't read any new
+     * relevant message from the reception queue
+     */
+    if (n == null) {
+        setPeerState(proposedLeader, voteSet);
+        Vote endVote = new Vote(proposedLeader, proposedZxid, logicalclock.get(), proposedEpoch);
+        leaveInstance(endVote);
+        return endVote;
+    }
+}
+
+```
+
+9. 统计投票。 完成了选票归档之后，就可 以开始统计投票了。统计投票的过程就是为了统计集群中是否已经有过半的服务器认可了当前的内部投 票。如果确定已经有过半的服务器认可了该内部投票，则终止投票。否则返回步骤4。
+10. 更新服务器状态。 统计投票后，如果已经确定可以终止投票，那么就开始更新服务器状态。服务器会首先判断当前被 过半服务器认可的投票所对应的Leader服务器是否是自己，如果是自己的话，那么就会将自己的服务器 状态更新为 LEADING。如果自己不是被选举产生的 Leader 的话，那么就会根据具体情况来确定自己是 FOLLOWING或是OBSERVING。
+
+以上 10 个步骤，就是 FastLeaderElection 选举算法的核心步骤，其中步骤 4~9 会经过几轮循环，直到Leader选举产生。另外还有一个细节需要注意，就是在完成步骤9 之后，如果统计投票发现已经有过半的服务器认可了当前的选票，这个时候，ZooKeeper 并不会立即进 入步骤 10 来更新服务器状态，而是会等待一段时间(默认是 200 毫秒)来确定是否有新的更优的投票
+
+# 集群模式服务端
+
+执行流程图
+
+![](https://secure2.wostatic.cn/static/u2SYe24pkUQ3gBRA2tk6NP/image.png)
+
+## 源码分析
+
+集群模式下启动所有的ZK节点启动入口都是QuorumPeerMain类的main方法。 main方法加载配置文件以后，最终会调用到QuorumPeer的start方法，来看下:
+
+```java
+public void runFromConfig(QuorumPeerConfig config) throws IOException, AdminServerException {
+    try {
+        ManagedUtil.registerLog4jMBeans();
+    } catch (JMException e) {
+        LOG.warn("Unable to register log4j JMX control", e);
+    }
+
+    LOG.info("Starting quorum peer, myid=" + config.getServerId());
+    final MetricsProvider metricsProvider;
+    try {
+        metricsProvider = MetricsProviderBootstrap.startMetricsProvider(
+            config.getMetricsProviderClassName(),
+            config.getMetricsProviderConfiguration());
+    } catch (MetricsProviderLifeCycleException error) {
+        throw new IOException("Cannot boot MetricsProvider " + config.getMetricsProviderClassName(), error);
+    }
+    try {
+        ServerMetrics.metricsProviderInitialized(metricsProvider);
+        ProviderRegistry.initialize();
+        ServerCnxnFactory cnxnFactory = null;
+        ServerCnxnFactory secureCnxnFactory = null;
+
+        if (config.getClientPortAddress() != null) {
+            cnxnFactory = ServerCnxnFactory.createFactory();
+            cnxnFactory.configure(config.getClientPortAddress(), config.getMaxClientCnxns(), config.getClientPortListenBacklog(), false);
+        }
+
+        if (config.getSecureClientPortAddress() != null) {
+            secureCnxnFactory = ServerCnxnFactory.createFactory();
+            secureCnxnFactory.configure(config.getSecureClientPortAddress(), config.getMaxClientCnxns(), config.getClientPortListenBacklog(), true);
+        }
+
+        quorumPeer = getQuorumPeer();
+        quorumPeer.setTxnFactory(new FileTxnSnapLog(config.getDataLogDir(), config.getDataDir()));
+        quorumPeer.enableLocalSessions(config.areLocalSessionsEnabled());
+        quorumPeer.enableLocalSessionsUpgrading(config.isLocalSessionsUpgradingEnabled());
+        //quorumPeer.setQuorumPeers(config.getAllMembers());
+        quorumPeer.setElectionType(config.getElectionAlg());
+        quorumPeer.setMyid(config.getServerId());
+        quorumPeer.setTickTime(config.getTickTime());
+        quorumPeer.setMinSessionTimeout(config.getMinSessionTimeout());
+        quorumPeer.setMaxSessionTimeout(config.getMaxSessionTimeout());
+        quorumPeer.setInitLimit(config.getInitLimit());
+        quorumPeer.setSyncLimit(config.getSyncLimit());
+        quorumPeer.setConnectToLearnerMasterLimit(config.getConnectToLearnerMasterLimit());
+        quorumPeer.setObserverMasterPort(config.getObserverMasterPort());
+        quorumPeer.setConfigFileName(config.getConfigFilename());
+        quorumPeer.setClientPortListenBacklog(config.getClientPortListenBacklog());
+        quorumPeer.setZKDatabase(new ZKDatabase(quorumPeer.getTxnFactory()));
+        quorumPeer.setQuorumVerifier(config.getQuorumVerifier(), false);
+        if (config.getLastSeenQuorumVerifier() != null) {
+            quorumPeer.setLastSeenQuorumVerifier(config.getLastSeenQuorumVerifier(), false);
+        }
+        quorumPeer.initConfigInZKDatabase();
+        quorumPeer.setCnxnFactory(cnxnFactory);
+        quorumPeer.setSecureCnxnFactory(secureCnxnFactory);
+        quorumPeer.setSslQuorum(config.isSslQuorum());
+        quorumPeer.setUsePortUnification(config.shouldUsePortUnification());
+        quorumPeer.setLearnerType(config.getPeerType());
+        quorumPeer.setSyncEnabled(config.getSyncEnabled());
+        quorumPeer.setQuorumListenOnAllIPs(config.getQuorumListenOnAllIPs());
+        if (config.sslQuorumReloadCertFiles) {
+            quorumPeer.getX509Util().enableCertFileReloading();
+        }
+        quorumPeer.setMultiAddressEnabled(config.isMultiAddressEnabled());
+        quorumPeer.setMultiAddressReachabilityCheckEnabled(config.isMultiAddressReachabilityCheckEnabled());
+        quorumPeer.setMultiAddressReachabilityCheckTimeoutMs(config.getMultiAddressReachabilityCheckTimeoutMs());
+
+        // sets quorum sasl authentication configurations
+        quorumPeer.setQuorumSaslEnabled(config.quorumEnableSasl);
+        if (quorumPeer.isQuorumSaslAuthEnabled()) {
+            quorumPeer.setQuorumServerSaslRequired(config.quorumServerRequireSasl);
+            quorumPeer.setQuorumLearnerSaslRequired(config.quorumLearnerRequireSasl);
+            quorumPeer.setQuorumServicePrincipal(config.quorumServicePrincipal);
+            quorumPeer.setQuorumServerLoginContext(config.quorumServerLoginContext);
+            quorumPeer.setQuorumLearnerLoginContext(config.quorumLearnerLoginContext);
+        }
+        quorumPeer.setQuorumCnxnThreadsSize(config.quorumCnxnThreadsSize);
+        quorumPeer.initialize();
+
+        if (config.jvmPauseMonitorToRun) {
+            quorumPeer.setJvmPauseMonitor(new JvmPauseMonitor(config));
+        }
+
+        quorumPeer.start();
+        ZKAuditProvider.addZKStartStopAuditLog();
+        quorumPeer.join();
+    } catch (InterruptedException e) {
+        // warn, but generally this is ok
+        LOG.warn("Quorum Peer interrupted", e);
+    } finally {
+        try {
+            metricsProvider.stop();
+        } catch (Throwable error) {
+            LOG.warn("Error while stopping metrics", error);
+        }
+    }
+}
+```
+
+```java
+public synchronized void start() { //校验ServerId是否合法
+    if (!getView().containsKey(myid)) {
+        throw new RuntimeException("My id " + myid + " not in the peer list");
+    }
+    //载入之前持久化的一些信息 
+    loadDataBase(); 
+    //启动线程监听 
+    startServerCnxnFactory(); 
+    try {
+        adminServer.start();
+    } catch (AdminServerException e) {
+        LOG.warn("Problem starting AdminServer", e);
+    }
+    //初始化选举投票以及算法 
+    startLeaderElection(); 
+    startJvmPauseMonitor();
+    //当前也是一个线程，注意run方法 
+    super.start();
+}
+```
+
+我们已经知道了当一个节点启动时需要先发起选举寻找Leader节点，然后再根据Leader节点的事务信息进行同步，最后开始对外提供服务，这里我们先来看下初始化选举的逻辑，即上面的 startLeaderElection方法:
+
+```java
+synchronized public void startLeaderElection() {
+    try {
+        //所有节点启动的初始状态都是LOOKING，因此这里都会是创建一张投自己为Leader的票 
+        if (getPeerState() == ServerState.LOOKING) {
+            currentVote = new Vote(myid, getLastLoggedZxid(), getCurrentEpoch());
+        }
+    } catch(IOException e) {
+        //异常处理 
+    }
+    //初始化选举算法，electionType默认为3
+    this.electionAlg = createElectionAlgorithm(electionType);
+}
+
+protected Election createElectionAlgorithm(int electionAlgorithm) {
+    Election le = null;
+    switch (electionAlgorithm) {
+        case 1:
+        //忽略 
+        case 2:
+        //忽略 
+        case 3:
+            //electionAlgorithm默认是3，直接走到这里
+            qcm = createCnxnManager();
+            //监听选举事件的listener
+            QuorumCnxManager.Listener listener = qcm.listener; 
+            if(listener != null){
+                //开启监听器
+                listener.start();
+                //初始化选举算法
+                FastLeaderElection fle = new FastLeaderElection(this, qcm); 
+                //发起选举
+                fle.start();
+                le = fle;
+            } else {
+                LOG.error("Null listener when initializing cnx manager");
+            }
+            break;
+      default:
+      //忽略 
+    }
+    return le; 
+}
+
+```
+
+接下来，回到QuorumPeer类中start方法的最后一行super.start()，QuorumPeer本身也是一个线程类，一起来看下它的run方法:
+
+```java
+public void run() {
+  try {
+      while (running) {
+          //根据当前节点的状态执行不同流程
+          switch (getPeerState()) {
+              case LOOKING:
+                  try {
+                      //寻找Leader节点
+                      setCurrentVote(makeLEStrategy().lookForLeader());
+                  } catch (Exception e) {
+                      setPeerState(ServerState.LOOKING);
+                  }
+                  break;
+              case OBSERVING:
+                  try {
+                      //当前节点启动模式为Observer
+                      setObserver(makeObserver(logFactory));
+                      //与Leader节点进行数据同步
+                      observer.observeLeader();
+                  } catch (Exception e) {
+                  } finally {
+                  }
+                  break;
+              case FOLLOWING:
+                  try {
+                      //当前节点启动模式为Follower
+                      setFollower(makeFollower(logFactory));
+                      //与Leader节点进行数据同步
+                      follower.followLeader();
+                  } catch (Exception e) {
+                  } finally {
+                  }
+                  break;
+              case LEADING:
+                  try {
+                      //当前节点启动模式为Leader
+                      setLeader(makeLeader(logFactory));
+                      //发送自己成为Leader的通知
+                      leader.lead();
+                      setLeader(null);
+                  } catch (Exception e) {
+                  } finally {
+                  }
+                  break;
+          }
+      }
+  }
+}
+```
+
+节点初始化的状态为LOOKING，因此启动时直接会调用lookForLeader方法发起Leader选举，一起看下:
+
+```java
+/**
+ * 开始新一轮的leader选举。 每当我们的 QuorumPeer 状态更改为 LOOKING 时，就会调用此方法，并向所有其他对等方发送通知。
+ * Starts a new round of leader election. Whenever our QuorumPeer
+ * changes its state to LOOKING, this method is invoked, and it
+ * sends notifications to all other peers.
+ */
+public Vote lookForLeader() throws InterruptedException {
+    try {
+        self.jmxLeaderElectionBean = new LeaderElectionBean();
+        MBeanRegistry.getInstance().register(self.jmxLeaderElectionBean, self.jmxLocalPeerBean);
+    } catch (Exception e) {
+        LOG.warn("Failed to register with JMX", e);
+        self.jmxLeaderElectionBean = null;
+    }
+
+    self.start_fle = Time.currentElapsedTime();
+    try {
+        /*
+         * 当前领导人选举的选票存储在 recvset 中。
+         * 换句话说，如果 v.electionEpoch == logicalclock，则投票 v 在 recvset 中。
+         * 当前参与者使用 recvset 来推断是否大多数参与者都投票支持它。
+         * The votes from the current leader election are stored in recvset. In other words, a vote v is in recvset
+         * if v.electionEpoch == logicalclock. The current participant uses recvset to deduce on whether a majority
+         * of participants has voted for it.
+         */
+        Map<Long, Vote> recvset = new HashMap<Long, Vote>();
+
+        /*
+         * 之前领导人选举的选票，以及当前领导人选举的选票都存储在 outofelection 中。
+         * 请注意，处于 LOOKING 状态的通知不会存储在 outofelection 中。
+         * 只有 FOLLOWING 或 LEADING 通知存储在 outofelection 中。
+         * 当前参与者可以使用 outofelection 来了解哪个参与者是领导者，如果它在领导选举中迟到（即，逻辑时钟高于收到通知的选举纪元）。
+         * The votes from previous leader elections, as well as the votes from the current leader election are
+         * stored in outofelection. Note that notifications in a LOOKING state are not stored in outofelection.
+         * Only FOLLOWING or LEADING notifications are stored in outofelection. The current participant could use
+         * outofelection to learn which participant is the leader if it arrives late (i.e., higher logicalclock than
+         * the electionEpoch of the received notifications) in a leader election.
+         */
+        Map<Long, Vote> outofelection = new HashMap<Long, Vote>();
+
+        int notTimeout = minNotificationInterval;
+
+        synchronized (this) {
+            // ⾸先会将逻辑时钟⾃增，每进⾏⼀轮新的leader选举，都需要更新逻辑时钟
+            logicalclock.incrementAndGet();
+            // 更新选票（初始化选票）
+            updateProposal(getInitId(), getInitLastLoggedZxid(), getPeerEpoch());
+        }
+
+        LOG.info("New election. My id = {}, proposed zxid=0x{}", self.getId(), Long.toHexString(proposedZxid));
+        
+        // 向其他服务器发送⾃⼰的选票（已更新的选票）
+        sendNotifications();
+
+        SyncedLearnerTracker voteSet;
+
+        /*
+         * 我们交换选票信息直到找到领导者的循环
+         * Loop in which we exchange notifications until we find a leader
+         */
+        // 选举开始，当前机器选举状态是LOOKING，选举还未结果
+        while ((self.getPeerState() == ServerState.LOOKING) && (!stop)) {
+            /*
+             * Remove next notification from queue, times out after 2 times
+             * the termination time
+             */
+            // 从recvqueue接收队列中取出其他机器的投票
+            Notification n = recvqueue.poll(notTimeout, TimeUnit.MILLISECONDS);
+
+            /*
+             * Sends more notifications if haven't received enough.
+             * Otherwise processes new notification.
+             */
+            // 没有获得选票
+            if (n == null) {
+                // manager已经发送了所有选票消息（表示有连接）
+                if (manager.haveDelivered()) {
+                    // 向所有其他服务器发送消息
+                    sendNotifications();
+                } else { // 还未发送所有消息（表示⽆连接）
+                    // 连接其他每个服务器
+                    manager.connectAll();
+                }
+
+                /*
+                 * Exponential backoff
+                 */
+                int tmpTimeOut = notTimeout * 2;
+                notTimeout = Math.min(tmpTimeOut, maxNotificationInterval);
+                LOG.info("Notification time out: {}", notTimeout);
+            } else if (validVoter(n.sid) && validVoter(n.leader)) {
+                /*
+                 * Only proceed if the vote comes from a replica in the current or next
+                 * voting view for a replica in the current or next voting view.
+                 */
+                switch (n.state) {
+                case LOOKING:
+                    if (getInitLastLoggedZxid() == -1) {
+                        LOG.debug("Ignoring notification as our zxid is -1");
+                        break;
+                    }
+                    if (n.zxid == -1) {
+                        LOG.debug("Ignoring notification from member with -1 zxid {}", n.sid);
+                        break;
+                    }
+                    // If notification > current, replace and send messages out
+                    // 其选举周期⼤于逻辑时钟
+                    if (n.electionEpoch > logicalclock.get()) {
+                        // 重新赋值逻辑时钟
+                        logicalclock.set(n.electionEpoch);
+                        // 清空所有接收到的所有选票
+                        recvset.clear();
+                        // 进⾏PK，选出较优的服务器
+                        if (totalOrderPredicate(n.leader, n.zxid, n.peerEpoch, getInitId(), getInitLastLoggedZxid(), getPeerEpoch())) {
+                            // 更新选票
+                            updateProposal(n.leader, n.zxid, n.peerEpoch);
+                        } else { // ⽆法选出较优的服务器
+                            // 更新选票
+                            updateProposal(getInitId(), getInitLastLoggedZxid(), getPeerEpoch());
+                        }
+                        // 发送本服务器的内部选票消息
+                        sendNotifications();
+                    } else if (n.electionEpoch < logicalclock.get()) {
+                        // 选举周期⼩于逻辑时钟，不做处理，直接忽略
+                            LOG.debug(
+                                "Notification election epoch is smaller than logicalclock. n.electionEpoch = 0x{}, logicalclock=0x{}",
+                                Long.toHexString(n.electionEpoch),
+                                Long.toHexString(logicalclock.get()));
+                        break;
+                    } else if (totalOrderPredicate(n.leader, n.zxid, n.peerEpoch, proposedLeader, proposedZxid, proposedEpoch)) { // PK，选出较优的服务器
+                        // 更新选票
+                        updateProposal(n.leader, n.zxid, n.peerEpoch);
+                        // 本服务器的内部选票消息
+                        sendNotifications();
+                    }
+
+                    LOG.debug(
+                        "Adding vote: from={}, proposed leader={}, proposed zxid=0x{}, proposed election epoch=0x{}",
+                        n.sid,
+                        n.leader,
+                        Long.toHexString(n.zxid),
+                        Long.toHexString(n.electionEpoch));
+
+                    // recvset⽤于记录当前服务器在本轮次的Leader选举中收到的所有外部投票
+                    // don't care about the version if it's in LOOKING state
+                    recvset.put(n.sid, new Vote(n.leader, n.zxid, n.electionEpoch, n.peerEpoch));
+
+                    voteSet = getVoteTracker(recvset, new Vote(proposedLeader, proposedZxid, logicalclock.get(), proposedEpoch));
+
+                    // 若能选出leader  
+                    if (voteSet.hasAllQuorums()) {
+                        // 遍历已经接收的投票集合
+                        // Verify if there is any change in the proposed leader
+                        while ((n = recvqueue.poll(finalizeWait, TimeUnit.MILLISECONDS)) != null) {
+                            // 选票有变更，⽐之前提议的Leader有更好的选票加⼊
+                            if (totalOrderPredicate(n.leader, n.zxid, n.peerEpoch, proposedLeader, proposedZxid, proposedEpoch)) {
+                                // 将更优的选票放在recvset中
+                                recvqueue.put(n);
+                                break;
+                            }
+                        }
+
+                        /*
+                         * This predicate is true once we don't read any new
+                         * relevant message from the reception queue
+                         */
+                         // 表示之前提议的Leader已经是最优的
+                        if (n == null) {
+                            // 设置服务器状态
+                            setPeerState(proposedLeader, voteSet);
+                            // 最终的选票
+                            Vote endVote = new Vote(proposedLeader, proposedZxid, logicalclock.get(), proposedEpoch);
+                            // 清空recvqueue队列的选票
+                            leaveInstance(endVote);
+                            // 返回选票
+                            return endVote;
+                        }
+                    }
+                    break;
+                case OBSERVING:
+                    LOG.debug("Notification from observer: {}", n.sid);
+                    break;
+                case FOLLOWING:
+                case LEADING:
+                    /*
+                     * Consider all notifications from the same epoch
+                     * together.
+                     */
+                    if (n.electionEpoch == logicalclock.get()) {
+                        recvset.put(n.sid, new Vote(n.leader, n.zxid, n.electionEpoch, n.peerEpoch, n.state));
+                        voteSet = getVoteTracker(recvset, new Vote(n.version, n.leader, n.zxid, n.electionEpoch, n.peerEpoch, n.state));
+                        if (voteSet.hasAllQuorums() && checkLeader(recvset, n.leader, n.electionEpoch)) {
+                            setPeerState(n.leader, voteSet);
+                            Vote endVote = new Vote(n.leader, n.zxid, n.electionEpoch, n.peerEpoch);
+                            leaveInstance(endVote);
+                            return endVote;
+                        }
+                    }
+
+                    /*
+                     * Before joining an established ensemble, verify that
+                     * a majority are following the same leader.
+                     *
+                     * Note that the outofelection map also stores votes from the current leader election.
+                     * See ZOOKEEPER-1732 for more information.
+                     */
+                    outofelection.put(n.sid, new Vote(n.version, n.leader, n.zxid, n.electionEpoch, n.peerEpoch, n.state));
+                    voteSet = getVoteTracker(outofelection, new Vote(n.version, n.leader, n.zxid, n.electionEpoch, n.peerEpoch, n.state));
+
+                    if (voteSet.hasAllQuorums() && checkLeader(outofelection, n.leader, n.electionEpoch)) {
+                        synchronized (this) {
+                            logicalclock.set(n.electionEpoch);
+                            setPeerState(n.leader, voteSet);
+                        }
+                        Vote endVote = new Vote(n.leader, n.zxid, n.electionEpoch, n.peerEpoch);
+                        leaveInstance(endVote);
+                        return endVote;
+                    }
+                    break;
+                default:
+                    LOG.warn("Notification state unrecognized: {} (n.state), {}(n.sid)", n.state, n.sid);
+                    break;
+                }
+            } else {
+                if (!validVoter(n.leader)) {
+                    LOG.warn("Ignoring notification for non-cluster member sid {} from sid {}", n.leader, n.sid);
+                }
+                if (!validVoter(n.sid)) {
+                    LOG.warn("Ignoring notification for sid {} from non-quorum member sid {}", n.leader, n.sid);
+                }
+            }
+        }
+        return null;
+    } finally {
+        try {
+            if (self.jmxLeaderElectionBean != null) {
+                MBeanRegistry.getInstance().unregister(self.jmxLeaderElectionBean);
+            }
+        } catch (Exception e) {
+            LOG.warn("Failed to unregister with JMX", e);
+        }
+        self.jmxLeaderElectionBean = null;
+        LOG.debug("Number of connection processing threads: {}", manager.getConnectionThrea
+```
+
+经过上面的发起投票，统计投票信息最终每个节点都会确认自己的身份，节点根据类型的不同会执行以下逻辑:
+
+1. 如果是Leader节点，首先会想其他节点发送一条NEWLEADER信息，确认自己的身份，等到各个节 点的ACK消息以后开始正式对外提供服务，同时开启新的监听器，处理新节点加入的逻辑。
+2. 如果是Follower节点，首先向Leader节点发送一条FOLLOWERINFO信息，告诉Leader节点自己已 处理的事务的最大Zxid，然后Leader节点会根据自己的最大Zxid与Follower节点进行同步，如果 Follower节点落后的不多则会收到Leader的DIFF信息通过内存同步，如果Follower节点落后的很 多则会收到SNAP通过快照同步，如果Follower节点的Zxid大于Leader节点则会收到TRUNC信息忽 略多余的事务。
+3. 如果是Observer节点，则与Follower节点相同
+
 # 扩展
 
 ---
 
-[环境搭建](https://www.wolai.com/7eMC4nGgdZPQRBDYgx27Yc)
-
-[Zookeeper命令行操作](https://www.wolai.com/cSsFgYACTtQBUHQx3casco)
-
-[Java调用Zookeeper](https://www.wolai.com/3Y84MTdiHKdX4n5AWVXDLN)
-
-[源码分析](https://www.wolai.com/u4nSHJa3WGeANEMNhvFNw8)
+* 环境搭建
+* Zookeeper命令行操作
+* Java调用Zookeeper
