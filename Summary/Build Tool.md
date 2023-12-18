@@ -1905,9 +1905,7 @@ A Build Phases is Made Up of Plugin Goals
 
 ```
 pre-clean:
-
 clean:
-
 post-clean:
 ```
 
@@ -1915,13 +1913,9 @@ post-clean:
 
 ```
 complie:
-
 package:
-
 install:
-
 deploy:
-
 ...
 ```
 
@@ -1929,11 +1923,8 @@ deploy:
 
 ```
 pre-site；
-
 site：
-
 post-site:
-
 site-deploy:
 ```
 
@@ -1941,17 +1932,14 @@ site-deploy:
 
 ## 版本管理：
 
-a）1.0-SNAPSHOT（约定由于配置，不稳定版）
-
-b）刷新本地仓库
-
+* `1.0-SNAPSHOT`（约定由于配置，不稳定版）
+* 刷新本地仓库
 ```
 1）从repository删除
-
 2）mvn clean package -U（强制拉一次）
 ```
 
-c）主版本号.此版本号.增量版本号-<里程碑版本>
+* `主版本号.次版本号.增量版本号-<里程碑版本>`
 
 ## 常用命令
 
@@ -2162,7 +2150,7 @@ e）从私服下载jar
 
 第二种方式：setting文件的profile属性
 
-## 13.archetype模板化
+## archetype模板化
 
 a） 生成一个archetype
 
@@ -2201,7 +2189,7 @@ iiii、如果想要发布到私服
   </distributionManagement>
 ```
 
-## 14.springboot与maven整合
+## springboot与maven整合
 
 当出现找不到类的问题时，需要将项目安装到本地仓库。
 
@@ -2217,7 +2205,7 @@ iiii、如果想要发布到私服
 
 3、执行`mvn install:install-file -Dfile=xxx.original -DgroupId="your groupId" -DartifactId="your artifactId" -Dversion="your version" -Dpackaging=jar`
 
-## 15.遇到的问题
+## 遇到的问题
 
 1、依赖jar包的时候没有触发传递依赖。
 
