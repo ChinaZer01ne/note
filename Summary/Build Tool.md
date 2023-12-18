@@ -790,7 +790,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
 
 ```
 
-##### 项目持续集成信息
+##### ciManagement项目持续集成信息
 
 ```xml
 <!-- 项目持续集成信息 -->
@@ -821,7 +821,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   </ciManagement>
 ```
 
-1.3 mailingLists项目相关邮件列表信息
+##### mailingLists项目相关邮件列表信息
 
 ```xml
 <!-- 项目相关邮件列表信息 -->
@@ -843,7 +843,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   </mailingLists>
 ```
 
-1.4 developers项目开发者列表
+##### developers项目开发者列表
 
 ```xml
 <!-- 项目开发者列表 -->
@@ -877,7 +877,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   </developers>
 ```
 
-1.5 contributors项目的其他贡献者列表
+##### contributors项目的其他贡献者列表
 
 ```xml
 <!-- 项目的其他贡献者列表 -->
@@ -909,7 +909,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   </contributors>
 ```
 
-1.6 licenses许可证列表
+##### licenses许可证列表
 
 ```xml
 <!-- 该元素描述了项目所有License列表。 应该只列出该项目的license列表，不要列出依赖项目的 license列表。
@@ -933,7 +933,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   </licenses>
 ```
 
-1.7 scm和organization
+##### scm和organization
 
 ```xml
 <!-- SCM(Source Control Management)标签允许你配置你的代码库，供Maven web站点和其它插件使用。 -->
@@ -958,9 +958,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   </organization>
 ```
 
-#### (2) 重要的信息
+#### 重要的信息
 
-2.1 build 构建项目需要的信息
+##### build 构建项目需要的信息
 
 ```xml
 <!-- 构建项目需要的信息 -->
@@ -1298,7 +1298,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   </build>
 ```
 
-2.2 profiles 构建规则
+##### profiles 构建规则
 
 个人认为可以看作一个pom中规则的集合，符合设定条件则激活，或者手动激活
 
@@ -1476,9 +1476,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   </profiles>
 ```
 
-2.3 modules模块：略
+##### modules模块：略
 
-2.4 repositories 远程仓库设置
+##### repositories 远程仓库设置
 
 ```xml
 <!-- 发现依赖和扩展的远程仓库列表。 -->
@@ -1548,7 +1548,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   </repositories>
 ```
 
-2.5 pluginRepositories插件仓库
+##### pluginRepositories插件仓库
 
 ```xml
 <!-- 发现插件的远程仓库列表，这些插件用于构建和报表 -->
@@ -1562,7 +1562,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   </pluginRepositories>
 ```
 
-2.6 dependencies依赖
+##### dependencies依赖
 
 ```xml
 <!-- 该元素描述了项目相关的所有依赖。 这些依赖组成了项目构建过程中的一个个环节。它们自动从项目定义的仓库中下载。要获取更多信息，请看项目依赖机制。 -->
@@ -1636,7 +1636,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   </dependencies>
 ```
 
-2.7 reporting 报表产生的规范
+##### reporting 报表产生的规范
 
 ```xml
 <!-- 该元素描述使用报表插件产生报表的规范。当用户执行“mvn site”，这些报表就会运行。 在页面导航栏能看到所有报表的链接。 -->
@@ -1714,7 +1714,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   </reporting>
 ```
 
-2.8 dependencyManagement依赖管理
+##### dependencyManagement依赖管理
 
 ```xml
 <!-- 继承自该项目的所有子项目的默认依赖信息。这部分的依赖信息不会被立即解析,而是当子项目声明一个依赖（必须描述group ID和artifact ID信息），如果group ID和artifact ID以外的一些信息没有描述，则通过group ID和artifact ID匹配到这里的依赖，并使用这里的依赖信息。 -->
@@ -1732,7 +1732,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   </dependencyManagement>
 ```
 
-2.9 distributionManagement项目分发信息
+##### distributionManagement项目分发信息
 
 ```xml
 <!-- 项目分发信息，在执行mvn deploy后表示要发布的位置。有了这些信息就可以把网站部署到远程服务器或者
@@ -1844,7 +1844,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   </distributionManagement>
 ```
 
-2.10 properties配置参数
+##### properties配置参数
 
 ```xml
 <!-- 以值替代名称，Properties可以在整个POM中使用，也可以作为触发条件（见settings.xml配置文件里
@@ -1901,7 +1901,7 @@ A Build Lifecycle is Made Up of Phases
 
 A Build Phases is Made Up of Plugin Goals
 
-1）clean：
+### clean：
 
 ```
 pre-clean:
@@ -1911,7 +1911,7 @@ clean:
 post-clean:
 ```
 
-2）default:
+### default:
 
 ```
 complie:
@@ -1925,7 +1925,7 @@ deploy:
 ...
 ```
 
-3）site:
+### site:
 
 ```
 pre-site；
@@ -1955,19 +1955,14 @@ c）主版本号.此版本号.增量版本号-<里程碑版本>
 
 ## 常用命令
 
-a）compile
+* compile
+* clean 删除 target/
+* test 运行test case junit/testNG
+* package 打包
+* install 把项目 install 到 local repository
+* deploy 把本地的jar发布到私服上面去
 
-b）clean 删除 target/
-
-c）test 运行test case junit/testNG
-
-d）package 打包
-
-e）install 把项目 install 到 local repository
-
-f）deploy 把本地的jar发布到私服上面去
-
-## 9.常用插件
+## 常用插件
 
 i. [https://maven.apache.org/plugins/](https://maven.apache.org/plugins/)
 
@@ -2332,13 +2327,13 @@ Git保证完整性。
 
 ## 用户设置
 
-a）git config --global user.username 'xxx'
+a）`git config --global user.username 'xxx'`
 
-b）git config --global user.email 'xxx'
+b）`git config --global user.email 'xxx'`
 
 > `git config --systemgit config --local`
 
-对于user.name和user.email来说，有3个地方可以设置,查找顺序最近原则3，2，1.
+对于`user.name`和`user.email`来说，有3个地方可以设置,查找顺序最近原则3，2，1.
 
 1、`/etc/gitconfig`（几乎不会使用），针对于操作系统，`git config --system`
 
