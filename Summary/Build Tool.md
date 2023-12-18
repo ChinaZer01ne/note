@@ -66,7 +66,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
         <!-- 问题管理系统（例如jira）的名字， -->
         <system> jira </system>
         <!-- 该项目使用的问题管理系统的URL -->
-        <url> http://jira.baidu.com/banseon </url>
+        <url> http://jira.baidu.com/xxx </url>
     </issueManagement>
     <!-- 项目持续集成信息 -->
     <ciManagement>
@@ -176,7 +176,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
             <!-- license用于法律上的名称 -->
             <name> Apache 2 </name>
             <!-- 官方的license正文页面的URL -->
-            <url> http://www.baidu.com/banseon/LICENSE-2.0.txt </url>
+            <url> http://www.baidu.com/xxx/LICENSE-2.0.txt </url>
             <!-- 项目分发的主要方式： 
                     repo，可以从Maven库下载 
                     manual， 用户必须手动下载和安装依赖 -->
@@ -188,21 +188,21 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
     <!-- SCM(Source Control Management)标签允许你配置你的代码库，供Maven web站点和其它插件使用。 -->
     <scm>
         <!-- SCM的URL,该URL描述了版本库和如何连接到版本库。欲知详情，请看SCMs提供的URL格式和列表。该连接只读。 -->
-        <connection>scm:svn:http://svn.baidu.com/banseon/maven/banseon/banseon-maven2-trunk(dao-trunk) </connection>
+        <connection>scm:svn:http://svn.baidu.com/xxx/maven/xxx/xxx-maven2-trunk(dao-trunk) </connection>
         <!-- 给开发者使用的，类似connection元素。即该连接不仅仅只读 -->
-        <developerConnection> scm:svn:http://svn.baidu.com/banseon/maven/banseon/dao-trunk
+        <developerConnection> scm:svn:http://svn.baidu.com/xxx/maven/xxx/dao-trunk
         </developerConnection>
         <!-- 当前代码的标签，在开发阶段默认为HEAD -->
         <tag></tag>
         <!-- 指向项目的可浏览SCM库（例如ViewVC或者Fisheye）的URL。 -->
-        <url> http://svn.baidu.com/banseon </url>
+        <url> http://svn.baidu.com/xxx </url>
     </scm>
     <!-- 描述项目所属组织的各种属性。Maven产生的文档用 -->
     <organization>
         <!-- 组织的全名 -->
         <name> demo </name>
         <!-- 组织主页的URL -->
-        <url> http://www.baidu.com/banseon </url>
+        <url> http://www.baidu.com/xxx </url>
     </organization>
     <!-- 构建项目需要的信息 -->
     <build>
@@ -598,9 +598,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
                 <checksumPolicy></checksumPolicy>
             </snapshots>
             <!-- 远程仓库唯一标识符。可以用来匹配在settings.xml文件里配置的远程仓库 -->
-            <id> banseon-repository-proxy </id>
+            <id> xxx-repository-proxy </id>
             <!-- 远程仓库名称 -->
-            <name> banseon-repository-proxy </name>
+            <name> xxx-repository-proxy </name>
             <!-- 远程仓库URL，按protocol://hostname/path形式 -->
             <url> http://192.168.1.169:9999/repository/
             </url>
@@ -719,8 +719,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
             <!-- 是分配给快照一个唯一的版本号（由时间戳和构建流水号）？还是每次都使用相同的版本号？参见
                  repositories/repository元素 -->
             <uniqueVersion />
-            <id> banseon-maven2 </id>
-            <name> banseon maven2 </name>
+            <id> xxx-maven2 </id>
+            <name> xxx maven2 </name>
             <url> file://${basedir}/target/deploy
             </url>
             <layout></layout>
@@ -729,21 +729,21 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
              distributionManagement/repository元素 -->
         <snapshotRepository>
             <uniqueVersion />
-            <id> banseon-maven2 </id>
-            <name> Banseon-maven2 Snapshot Repository
+            <id> xxx-maven2 </id>
+            <name> xxx-maven2 Snapshot Repository
             </name>
-            <url> scp://svn.baidu.com/banseon:/usr/local/maven-snapshot
+            <url> scp://svn.baidu.com/xxx:/usr/local/maven-snapshot
             </url>
             <layout></layout>
         </snapshotRepository>
         <!-- 部署项目的网站需要的信息 -->
         <site>
             <!-- 部署位置的唯一标识符，用来匹配站点和settings.xml文件里的配置 -->
-            <id> banseon-site </id>
+            <id> xxx-site </id>
             <!-- 部署位置的名称 -->
             <name> business api website </name>
             <!-- 部署位置的URL，按protocol://hostname/path形式 -->
-            <url> scp://svn.baidu.com/banseon:/var/www/localhost/banseon-web
+            <url> scp://svn.baidu.com/xxx:/var/www/localhost/xxx-web
             </url>
         </site>
         <!-- 项目下载页面的URL。如果没有该元素，用户应该参考主页。使用该元素的原因是：帮助定位
@@ -775,9 +775,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
 
 ### 其中的节点详情
 
-#### （1）一般信息节点
+#### 一般信息节点
 
-1.1. issueManagement项目问题管理系统
+##### issueManagement项目问题管理系统
 
 ```XML
 <!-- 项目的问题管理系统(Bugzilla, Jira, Scarab,或任何你喜欢的问题管理系统)的名称和URL，本例为 jira -->
@@ -785,12 +785,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
   <!-- 问题管理系统（例如jira）的名字， -->
   <system> jira </system>
   <!-- 该项目使用的问题管理系统的URL -->
-  <url> [http://jira.baidu.com/banseon](http://jira.baidu.com/banseon) </url>
+  <url> [http://jira.baidu.com/xxx](http://jira.baidu.com/xxx) </url>
 </issueManagement>
 
 ```
 
-1.2 项目持续集成信息
+##### 项目持续集成信息
 
 ```xml
 <!-- 项目持续集成信息 -->
@@ -831,13 +831,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
       <!-- 邮件的名称 -->
       <name> Demo </name>
       <!-- 发送邮件的地址或链接，如果是邮件地址，创建文档时，mailto: 链接会被自动创建 -->
-      <post> [banseon@126.com](mailto:banseon@126.com) </post>
+      <post> [xxx@126.com](mailto:xxx@126.com) </post>
       <!-- 订阅邮件的地址或链接，如果是邮件地址，创建文档时，mailto: 链接会被自动创建 -->
-      <subscribe> [banseon@126.com](mailto:banseon@126.com) </subscribe>
+      <subscribe> [xxx@126.com](mailto:xxx@126.com) </subscribe>
       <!-- 取消订阅邮件的地址或链接，如果是邮件地址，创建文档时，mailto: 链接会被自动创建 -->
-      <unsubscribe> [banseon@126.com](mailto:banseon@126.com) </unsubscribe>
+      <unsubscribe> [xxx@126.com](mailto:xxx@126.com) </unsubscribe>
       <!-- 你可以浏览邮件信息的URL -->
-      <archive> http:/hi.baidu.com/banseon/demo/dev/
+      <archive> http:/hi.baidu.com/xxx/demo/dev/
       </archive>
     </mailingList>
   </mailingLists>
@@ -853,9 +853,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
       <!-- SCM里项目开发者的唯一标识符 -->
       <id> HELLO WORLD </id>
       <!-- 项目开发者的全名 -->
-      <name> banseon </name>
+      <name> xxx </name>
       <!-- 项目开发者的email -->
-      <email> [banseon@126.com](mailto:banseon@126.com) </email>
+      <email> [xxx@126.com](mailto:xxx@126.com) </email>
       <!-- 项目开发者的主页的URL -->
       <url></url>
       <!-- 项目开发者在项目中扮演的角色，角色元素描述了各种角色 -->
@@ -920,7 +920,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
       <!-- license用于法律上的名称 -->
       <name> Apache 2 </name>
       <!-- 官方的license正文页面的URL -->
-      <url> [http://www.baidu.com/banseon/LICENSE-2.0.txt](http://www.baidu.com/banseon/LICENSE-2.0.txt)
+      <url> [http://www.baidu.com/xxx/LICENSE-2.0.txt](http://www.baidu.com/xxx/LICENSE-2.0.txt)
       </url>
       <!-- 项目分发的主要方式： 
         repo，可以从Maven库下载 
@@ -939,22 +939,22 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
 <!-- SCM(Source Control Management)标签允许你配置你的代码库，供Maven web站点和其它插件使用。 -->
   <scm>
     <!-- SCM的URL,该URL描述了版本库和如何连接到版本库。欲知详情，请看SCMs提供的URL格式和列表。该连接只读。 -->
-    <connection> scm:svn:[http://svn.baidu.com/banseon/maven/banseon/banseon-maven2-trunk(dao-trunk)](http://svn.baidu.com/banseon/maven/banseon/banseon-maven2-trunk(dao-trunk))
+    <connection> scm:svn:[http://svn.baidu.com/xxx/maven/xxx/xxx-maven2-trunk(dao-trunk)](http://svn.baidu.com/xxx/maven/xxx/xxx-maven2-trunk(dao-trunk))
     </connection>
     <!-- 给开发者使用的，类似connection元素。即该连接不仅仅只读 -->
-    <developerConnection> scm:svn:[http://svn.baidu.com/banseon/maven/banseon/dao-trunk](http://svn.baidu.com/banseon/maven/banseon/dao-trunk)
+    <developerConnection> scm:svn:[http://svn.baidu.com/xxx/maven/xxx/dao-trunk](http://svn.baidu.com/xxx/maven/xxx/dao-trunk)
     </developerConnection>
     <!-- 当前代码的标签，在开发阶段默认为HEAD -->
     <tag></tag>
     <!-- 指向项目的可浏览SCM库（例如ViewVC或者Fisheye）的URL。 -->
-    <url> [http://svn.baidu.com/banseon](http://svn.baidu.com/banseon) </url>
+    <url> [http://svn.baidu.com/xxx](http://svn.baidu.com/xxx) </url>
   </scm>
   <!-- 描述项目所属组织的各种属性。Maven产生的文档用 -->
   <organization>
     <!-- 组织的全名 -->
     <name> demo </name>
     <!-- 组织主页的URL -->
-    <url> [http://www.baidu.com/banseon](http://www.baidu.com/banseon) </url>
+    <url> [http://www.baidu.com/xxx](http://www.baidu.com/xxx) </url>
   </organization>
 ```
 
@@ -1525,11 +1525,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
 
       <!-- 远程仓库唯一标识符。可以用来匹配在settings.xml文件里配置的远程仓库 -->
 
-      <id> banseon-repository-proxy </id>
+      <id> xxx-repository-proxy </id>
 
       <!-- 远程仓库名称 -->
 
-      <name> banseon-repository-proxy </name>
+      <name> xxx-repository-proxy </name>
 
       <!-- 远程仓库URL，按protocol://hostname/path形式 -->
 
@@ -1751,9 +1751,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
 
       <uniqueVersion />
 
-      <id> banseon-maven2 </id>
+      <id> xxx-maven2 </id>
 
-      <name> banseon maven2 </name>
+      <name> xxx maven2 </name>
 
       <url> file://${basedir}/target/deploy
 
@@ -1771,13 +1771,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
 
       <uniqueVersion />
 
-      <id> banseon-maven2 </id>
+      <id> xxx-maven2 </id>
 
-      <name> Banseon-maven2 Snapshot Repository
+      <name> xxx-maven2 Snapshot Repository
 
       </name>
 
-      <url> scp://svn.baidu.com/banseon:/usr/local/maven-snapshot
+      <url> scp://svn.baidu.com/xxx:/usr/local/maven-snapshot
 
       </url>
 
@@ -1791,7 +1791,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
 
       <!-- 部署位置的唯一标识符，用来匹配站点和settings.xml文件里的配置 -->
 
-      <id> banseon-site </id>
+      <id> xxx-site </id>
 
       <!-- 部署位置的名称 -->
 
@@ -1799,7 +1799,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
 
       <!-- 部署位置的URL，按protocol://hostname/path形式 -->
 
-      <url> scp://svn.baidu.com/banseon:/var/www/localhost/banseon-web
+      <url> scp://svn.baidu.com/xxx:/var/www/localhost/xxx-web
 
       </url>
 
