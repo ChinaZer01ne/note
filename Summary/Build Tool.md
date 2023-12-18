@@ -4,16 +4,14 @@
 
 ### 配置优先级
 
-- ~/.m2/setting.xml
-- 安装目录/conf/setting.xml
+- `~/.m2/setting.xml`
+- `安装目录/conf/setting.xml`
 
 ### 具体配置
 
-localRepository : 定义jar包下载位置
-
-mirros：镜像
-
-...
+* `localRepository` : 定义jar包下载位置
+* `mirros`：镜像
+* ...
 
 ## pom.xml详解
 
@@ -21,8 +19,7 @@ mirros：镜像
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd ">
-    <!-- 父项目的坐标。如果项目中没有规定某个元素的值，那么父项目中的对应值即为项目的默认值。
-         坐标包括group ID，artifact ID和 version。 -->
+    <!-- 父项目的坐标。如果项目中没有规定某个元素的值，那么父项目中的对应值即为项目的默认值。坐标包括group ID，artifact ID和 version。 -->
     <parent>
           <!-- 被继承的父项目的全球唯一标识符 -->
         <groupId>xxx</groupId>
@@ -106,14 +103,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
             <!-- 邮件的名称 -->
             <name> Demo </name>
             <!-- 发送邮件的地址或链接，如果是邮件地址，创建文档时，mailto: 链接会被自动创建 -->
-            <post> banseon@126.com </post>
+            <post> xxx@126.com </post>
             <!-- 订阅邮件的地址或链接，如果是邮件地址，创建文档时，mailto: 链接会被自动创建 -->
-            <subscribe> banseon@126.com </subscribe>
+            <subscribe> xxx@126.com </subscribe>
             <!-- 取消订阅邮件的地址或链接，如果是邮件地址，创建文档时，mailto: 链接会被自动创建 -->
-            <unsubscribe> banseon@126.com </unsubscribe>
+            <unsubscribe> xxx@126.com </unsubscribe>
             <!-- 你可以浏览邮件信息的URL -->
-            <archive> http:/hi.baidu.com/banseon/demo/dev/
-            </archive>
+            <archive> http:/hi.baidu.com/xxx/demo/dev/</archive>
         </mailingList>
     </mailingLists>
     <!-- 项目开发者列表 -->
@@ -123,9 +119,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
             <!-- SCM里项目开发者的唯一标识符 -->
             <id> HELLO WORLD </id>
             <!-- 项目开发者的全名 -->
-            <name> banseon </name>
+            <name> xxx </name>
             <!-- 项目开发者的email -->
-            <email> banseon@126.com </email>
+            <email> xxx@126.com </email>
             <!-- 项目开发者的主页的URL -->
             <url></url>
             <!-- 项目开发者在项目中扮演的角色，角色元素描述了各种角色 -->
@@ -180,22 +176,19 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
             <!-- license用于法律上的名称 -->
             <name> Apache 2 </name>
             <!-- 官方的license正文页面的URL -->
-            <url> http://www.baidu.com/banseon/LICENSE-2.0.txt
-            </url>
+            <url> http://www.baidu.com/banseon/LICENSE-2.0.txt </url>
             <!-- 项目分发的主要方式： 
                     repo，可以从Maven库下载 
                     manual， 用户必须手动下载和安装依赖 -->
             <distribution> repo </distribution>
             <!-- 关于license的补充信息 -->
-            <comments> A business-friendly OSS license
-            </comments>
+            <comments> A business-friendly OSS license  </comments>
         </license>
     </licenses>
     <!-- SCM(Source Control Management)标签允许你配置你的代码库，供Maven web站点和其它插件使用。 -->
     <scm>
         <!-- SCM的URL,该URL描述了版本库和如何连接到版本库。欲知详情，请看SCMs提供的URL格式和列表。该连接只读。 -->
-        <connection> scm:svn:http://svn.baidu.com/banseon/maven/banseon/banseon-maven2-trunk(dao-trunk)
-        </connection>
+        <connection>scm:svn:http://svn.baidu.com/banseon/maven/banseon/banseon-maven2-trunk(dao-trunk) </connection>
         <!-- 给开发者使用的，类似connection元素。即该连接不仅仅只读 -->
         <developerConnection> scm:svn:http://svn.baidu.com/banseon/maven/banseon/dao-trunk
         </developerConnection>
