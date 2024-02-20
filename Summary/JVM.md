@@ -1651,7 +1651,12 @@ select * from INSTANCEOF java.util.Vector
 # 生产环境CPU负载飙高该如何处理？
 
 1. **定位CPU高的进程**
-   > 通过`top -c`指令找到CPU高的进程PID
+   > 通过 `top -c` 指令找到CPU高的进程PID
 2. **定位具体线程**
-   > 通过`top - Hp {PID}`找到具体线程
-3. 
+   > 通过 `top - Hp {PID}` 找到具体线程pid
+3. **将线程pid转换为十六进制**
+   > 通过 `printf "x%\n" {pid}`
+4. **定位CPU飙高的代码**
+   > 通过 `jstack {pid} | grep -A {转换后的16进制pid}`
+
+## 实际案例
