@@ -200,6 +200,8 @@
   },
   "active": "dfeaecb5b1fadce1",
   "lastOpenFiles": [
+    "怎么选择垃圾回收器？.md",
+    "Summary/JVM.md",
     "Summary/Build Tool.md",
     "Summary/Zookeeper.md",
     "Summary/image/zookeeper/zk选举流程图.png",
@@ -238,13 +240,11 @@
     "Summary/IO.md",
     "Summary/ES.md",
     "Summary/Mysql.md",
-    "Summary/JVM.md",
     "().md",
     "停顿时间（或响应时间）.md",
     "conflict-files-obsidian-git.md",
     "Summary/TCP.md",
     "Summary/Java.md",
-    "Summary/MicroServices.md",
-    "Summary/MicroService.md"
+    "Summary/MicroServices.md"
   ]
 }
