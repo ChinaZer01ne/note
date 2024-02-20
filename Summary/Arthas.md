@@ -144,7 +144,7 @@ java -jar arthas-boot.jar --telnet-port 9998 --http-port -1
 
 ### 4. 通过浏览器连接 arthas
 
-Arthas目前支持Web Console，用户在attach成功之后，可以直接访问：[http://127.0.0.1:3658/。可以填入IP，远程连接其它机器上的arthas。](http://127.0.0.1:3658/%E3%80%82%E5%8F%AF%E4%BB%A5%E5%A1%AB%E5%85%A5IP%EF%BC%8C%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E5%85%B6%E5%AE%83%E6%9C%BA%E5%99%A8%E4%B8%8A%E7%9A%84arthas%E3%80%82)
+Arthas目前支持Web Console，用户在attach成功之后，可以直接访问：http://127.0.0.1:3658/。可以填入IP，远程连接其它机器上的arthas。
 
 ![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118133301.png "QQ截图20201229183512.png")
 
@@ -333,7 +333,7 @@ reset
 
 > thread 查看当前 JVM 的线程堆栈信息
 
-### [参数说明](https://bright-boy.gitee.io/technical-notes/#/jvm/arthas?id=%e5%8f%82%e6%95%b0%e8%af%b4%e6%98%8e)
+### 参数说明
 
 |参数名称|参数说明|
 |---|:-:|
@@ -1321,19 +1321,19 @@ profiler stop --format html
 
 ##### 将ssm_student.war项目部署到Linux的tomcat服务器下，可以正常访问。
 
-##### [启动之后，访问：](https://bright-boy.gitee.io/technical-notes/#/jvm/arthas?id=%e5%90%af%e5%8a%a8%e4%b9%8b%e5%90%8e%ef%bc%8c%e8%ae%bf%e9%97%ae%ef%bc%9ahttp1921682541998080ssm_student-%ef%bc%8c%e4%bc%9a%e8%bf%94%e5%9b%9e%e5%a6%82%e4%b8%8b%e9%a1%b5%e9%9d%a2%e3%80%82)[http://192.168.254.199:8080/ssm_student](http://192.168.254.199:8080/ssm_student) ，会返回如下页面。
+##### 启动之后，访问： ，会返回如下页面。
 
-##### [那么这个请求是被哪个Controller处理的呢？](https://bright-boy.gitee.io/technical-notes/#/jvm/arthas?id=%e9%82%a3%e4%b9%88%e8%bf%99%e4%b8%aa%e8%af%b7%e6%b1%82%e6%98%af%e8%a2%ab%e5%93%aa%e4%b8%aacontroller%e5%a4%84%e7%90%86%e7%9a%84%e5%91%a2%ef%bc%9f)
+##### 那么这个请求是被哪个Controller处理的呢？
 
 ![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118155620.png "QQ截图20201229183512.png")
 
-### [步骤](https://bright-boy.gitee.io/technical-notes/#/jvm/arthas?id=%e6%ad%a5%e9%aa%a4)
+### 步骤
 
 - 1. trace定位DispatcherServlet
 - 2. jad反编译DispatcherServlet
 - 3. watch定位handler
 
-### [实现步骤](https://bright-boy.gitee.io/technical-notes/#/jvm/arthas?id=%e5%ae%9e%e7%8e%b0%e6%ad%a5%e9%aa%a4)
+### 实现步骤
 
 - 第1步：
     
@@ -1370,7 +1370,7 @@ trace *.FrameworkServlet doService
     ![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118155927.png "QQ截图20201229183512.png")
     
 
-### [结论](https://bright-boy.gitee.io/technical-notes/#/jvm/arthas?id=%e7%bb%93%e8%ae%ba)
+### 结论
 
 通过trace, jad, watch最后得到这个操作由2个控制器来处理，分别是：
 
