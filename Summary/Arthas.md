@@ -288,21 +288,43 @@ Affect(row-cnt:1) cost in 970 ms.
 
 通过watch命令来查看`demo.MathGame#primeFactors`函数的返回值：
 
-```
-watch demo.MathGame primeFactors returnObj
+```sh
+$ watch demo.MathGame primeFactors returnObj
+Press Ctrl+C to abort.
+Affect(class-cnt:1 , method-cnt:1) cost in 107 ms.
+ts=2018-11-28 19:22:30; [cost=1.715367ms] result=null
+ts=2018-11-28 19:22:31; [cost=0.185203ms] result=null
+ts=2018-11-28 19:22:32; [cost=19.012416ms] result=@ArrayList[
+    @Integer[5],
+    @Integer[47],
+    @Integer[2675531],
+]
+ts=2018-11-28 19:22:33; [cost=0.311395ms] result=@ArrayList[
+    @Integer[2],
+    @Integer[5],
+    @Integer[317],
+    @Integer[503],
+    @Integer[887],
+]
+ts=2018-11-28 19:22:34; [cost=10.136007ms] result=@ArrayList[
+    @Integer[2],
+    @Integer[2],
+    @Integer[3],
+    @Integer[3],
+    @Integer[31],
+    @Integer[717593],
+]
+ts=2018-11-28 19:22:35; [cost=29.969732ms] result=@ArrayList[
+    @Integer[5],
+    @Integer[29],
+    @Integer[7651739],
+]
 ```
 
 ### 9. 退出 arthas
 
-- 如果只是退出当前的连接，可以用quit或者exit命令。Attach到目标进程上的arthas还会继续运行，端口会保持开放，下次连接时可以直接连接上。
-- 如果想完全退出arthas，可以执行stop命令。
-
-|命令|功能|
-|---|---|
-|dashboard|会展示当前进程的信息|
-|thread|打印指定编号的线程调用栈|
-|jad|反编译指定的类|
-|watch|查看指定方法的返回值|
+- 如果只是退出当前的连接，可以用`quit`或者`exit`命令。Attach到目标进程上的arthas还会继续运行，端口会保持开放，下次连接时可以直接连接上。
+- 如果想完全退出arthas，可以执行`stop`命令。
 
 ## 基础命令
 
@@ -420,12 +442,13 @@ reset
 - ctrl + z: 挂起当前命令，后续可以 bg/fg 重新支持此命令，或 kill 掉
 - ctrl + a: 回到行首
 - ctrl + e: 回到行尾
-
-## jvm相关
+## 命令
+### jvm相关
+#### dashboard
 
 > dashboard 显示当前系统的实时数据面板，按q或ctrl+c退出 ![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118141418.png "QQ截图20201229183512.png")
 
-### 数据说明
+##### 数据说明
 
 - ID: Java级别的线程ID，注意这个ID不能跟jstack中的nativeID一一对应
 - NAME: 线程名
@@ -437,9 +460,11 @@ reset
 - INTERRUPTED: 线程当前的中断位状态
 - DAEMON: 是否是daemon线程
 
+#### thread
+
 > thread 查看当前 JVM 的线程堆栈信息
 
-### 参数说明
+##### 参数说明
 
 |参数名称|参数说明|
 |---|:-:|
@@ -448,21 +473,21 @@ reset
 |[b]|找出当前阻塞其他线程的线程|
 |[i ]|指定cpu占比统计的采样间隔，单位为毫秒|
 
-### 举例
+##### 举例
 
-```
+```sh
 # 展示当前最忙的前 3 个线程并打印堆栈
 thread -n 3
 ```
 
 ![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118141901.png "QQ截图20201229183512.png")
 
-```
+```sh
 # 当没有参数时，显示所有线程的信息
 thread
 ```
 
-```
+```sh
 # 显示 1 号线程的运行堆栈
 thread 1
 ```
