@@ -8,36 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "dfeaecb5b1fadce1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/Arthas.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b0025531dec4210f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/Arthas.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "312c29067cf17634",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/MicroService Design.md",
+                "file": "Summary/Arthas.md",
                 "mode": "source",
                 "source": false
               }
@@ -55,8 +31,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -213,10 +188,11 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "b0025531dec4210f",
+  "active": "312c29067cf17634",
   "lastOpenFiles": [
-    "Summary/JVM.md",
+    "Summary/MicroService Design.md",
     "Summary/Arthas.md",
+    "Summary/JVM.md",
     "怎么选择垃圾回收器？.md",
     "Summary/Build Tool.md",
     "Summary/Zookeeper.md",
@@ -243,7 +219,6 @@
     "Summary/Architecture Design.md",
     "Summary/Log.md",
     "Summary/Spring Cloud.md",
-    "Summary/MicroService Design.md",
     "Summary/Computer Network.md",
     "Summary/MarkDown.md",
     "daliy_note/2023-09-27.md",
