@@ -30,7 +30,7 @@ rm -rf ~/.arthas/
 rm -rf ~/logs/arthas
 ```
 
-
+  
 ## 快速入门
 
 - 1. 执行一个jar包
@@ -327,6 +327,21 @@ ts=2018-11-28 19:22:35; [cost=29.969732ms] result=@ArrayList[
 - 如果想完全退出arthas，可以执行`stop`命令。
 
 ## 基础命令
+- [base64](https://arthas.gitee.io/doc/base64.html) - base64 编码转换，和 linux 里的 base64 命令类似
+- [cat](https://arthas.gitee.io/doc/cat.html) - 打印文件内容，和 linux 里的 cat 命令类似
+- [cls](https://arthas.gitee.io/doc/cls.html) - 清空当前屏幕区域
+- [echo](https://arthas.gitee.io/doc/echo.html) - 打印参数，和 linux 里的 echo 命令类似
+- [grep](https://arthas.gitee.io/doc/grep.html) - 匹配查找，和 linux 里的 grep 命令类似
+- [help](https://arthas.gitee.io/doc/help.html) - 查看命令帮助信息
+- [history](https://arthas.gitee.io/doc/history.html) - 打印命令历史
+- [keymap](https://arthas.gitee.io/doc/keymap.html) - Arthas 快捷键列表及自定义快捷键
+- [pwd](https://arthas.gitee.io/doc/pwd.html) - 返回当前的工作目录，和 linux 命令类似
+- [quit](https://arthas.gitee.io/doc/quit.html) - 退出当前 Arthas 客户端，其他 Arthas 客户端不受影响
+- [reset](https://arthas.gitee.io/doc/reset.html) - 重置增强类，将被 Arthas 增强过的类全部还原，Arthas 服务端关闭时会重置所有增强过的类
+- [session](https://arthas.gitee.io/doc/session.html) - 查看当前会话的信息
+- [stop](https://arthas.gitee.io/doc/stop.html) - 关闭 Arthas 服务端，所有 Arthas 客户端全部退出
+- [tee](https://arthas.gitee.io/doc/tee.html) - 复制标准输入到标准输出和指定的文件，和 linux 里的 tee 命令类似
+- [version](https://arthas.gitee.io/doc/version.html) - 输出当前目标 Java 进程所加载的 Arthas 版本号
 
 > help 查看命令帮助信息
 
@@ -563,7 +578,7 @@ sysprop user.country CN
 
 > sysenv 查看当前JVM的环境属性(System Environment Variables)
 
-### 举例
+##### 举例
 
 ```sh
 # 查看所有属性
@@ -644,7 +659,41 @@ ognl '#value1=@System@getProperty("java.home"),
 ```
 
 ![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118150340.png "QQ截图20201229183512.png")
+#### heapdump
 
+[`heapdump`在线教程在新窗口打开](https://arthas.aliyun.com/doc/arthas-tutorials.html?language=cn&id=command-heapdump)
+
+提示
+
+dump java heap, 类似 jmap 命令的 heap dump 功能。
+
+##### dump 到指定文件
+
+```sh
+[arthas@58205]$ heapdump arthas-output/dump.hprof
+Dumping heap to arthas-output/dump.hprof ...
+Heap dump file created
+```
+
+提示
+
+生成文件在`arthas-output`目录，可以通过浏览器下载： http://localhost:8563/arthas-output/
+
+##### 只 dump live 对象
+
+```sh
+[arthas@58205]$ heapdump --live /tmp/dump.hprof
+Dumping heap to /tmp/dump.hprof ...
+Heap dump file created
+```
+
+##### dump 到临时文件
+
+```sh
+[arthas@58205]$ heapdump
+Dumping heap to /var/folders/my/wy7c9w9j5732xbkcyt1mb4g40000gp/T/heapdump2019-09-03-16-385121018449645518991.hprof...
+Heap dump file created
+```
 ### class/classloader相关
 
 #### sc
@@ -655,11 +704,11 @@ ognl '#value1=@System@getProperty("java.home"),
 
 |参数名称|参数说明|
 |---|:-:|
-|class-pattern|类名表达式匹配，支持全限定名，如com.taobao.test.AAA，也支持com/taobao/test/AAA这样的格式，这样，我们从异常堆栈里面把类名拷贝过来的时候，不需要在手动把/替换为.啦。|
-|method-pattern|方法名表达式匹配|
-|[d]|输出当前类的详细信息，包括这个类所加载的原始文件来源、类的声明、加载的 ClassLoader等详细信息。 如果一个类被多个ClassLoader所加载，则会出现多次|
-|[E]|开启正则表达式匹配，默认为通配符匹配|
-|[f]|输出当前类的成员变量信息（需要配合参数-d一起使用）|
+|`class-pattern` |类名表达式匹配，支持全限定名，如com.taobao.test.AAA，也支持com/taobao/test/AAA这样的格式，这样，我们从异常堆栈里面把类名拷贝过来的时候，不需要在手动把/替换为.啦。|
+|`method-pattern` |方法名表达式匹配|
+|`[d]` |输出当前类的详细信息，包括这个类所加载的原始文件来源、类的声明、加载的 ClassLoader等详细信息。 如果一个类被多个ClassLoader所加载，则会出现多次|
+|`[E]` |开启正则表达式匹配，默认为通配符匹配|
+|`[f]` |输出当前类的成员变量信息（需要配合参数-d一起使用）|
 
 ##### 举例
 
