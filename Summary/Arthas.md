@@ -2,8 +2,6 @@
 
 ### Arthas（阿尔萨斯） 能为你做什么？
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220117180324.png "QQ截图20201229183512.png")
-
 Arthas 是Alibaba开源的Java诊断工具，深受开发者喜爱。当你遇到以下类似问题而束手无策时，Arthas可以帮助你解决：
 - 1. 这个类从哪个 jar 包加载的？为什么会报各种类相关的 Exception？
 - 2. 我改的代码为什么没有执行到？难道是我没 commit？分支搞错了？
