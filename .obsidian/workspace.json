@@ -20,6 +20,16 @@
             }
           },
           {
+            "id": "b0025531dec4210f",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.5.3"
+              }
+            }
+          },
+          {
             "id": "312c29067cf17634",
             "type": "leaf",
             "state": {
@@ -43,7 +53,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -175,7 +186,9 @@
             "state": {
               "type": "all-properties",
               "state": {
-                "sortOrder": "frequency"
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
               }
             }
           }
@@ -198,7 +211,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "dfeaecb5b1fadce1",
+  "active": "b0025531dec4210f",
   "lastOpenFiles": [
     "Summary/JVM.md",
     "Summary/Arthas.md",
