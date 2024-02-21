@@ -157,7 +157,7 @@ Arthas目前支持Web Console，用户在attach成功之后，可以直接访问
 - 1. 第一部分是显示JVM中运行的所有线程：所在线程组，优先级，线程的状态，CPU的占用率，是否是后台进程等
 - 2. 第二部分显示的JVM内存的使用情况
 - 3. 第三部分是操作系统的一些信息和Java版本号
-```
+```sh
 $ dashboard
 ID     NAME                   GROUP          PRIORI STATE  %CPU    TIME   INTERRU DAEMON
 17     pool-2-thread-1        system         5      WAITIN 67      0:0    false   false
@@ -182,6 +182,7 @@ ps_survivor_space  4M     5M    5M           s)
 ps_old_gen         12M    85M   1365M  0.91% gc.ps_marksweep.count 0
 nonheap            20M    23M   -1           gc.ps_marksweep.time( 0
 code_cache         3M     5M    240M   1.32% ms)
+
 Runtime
 os.name                Mac OS X
 os.version             10.13.4
@@ -194,23 +195,98 @@ java.home              /Library/Java/JavaVir
 
 ### 6. 通过 thread 命令来获取到 arthas-demo 进程的 Main Class
 
-获取到arthas-demo进程的Main Class
+`thread 1`会打印线程 ID 1 的栈，通常是 main 函数的线程。
 
-thread 1会打印线程ID 1的栈，通常是main函数的线程。
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118135353.png "QQ截图20201229183512.png")
-
+```sh
+$ thread 1 | grep 'main('
+    at demo.MathGame.main(MathGame.java:17)
+```
 ### 7. 通过 jad 来反编译 Main Class
+```sh
+$ jad demo.MathGame
+`````
 
+```java
+ClassLoader:
++-sun.misc.Launcher$AppClassLoader@3d4eac69
+  +-sun.misc.Launcher$ExtClassLoader@66350f69
+
+Location:
+/tmp/math-game.jar
+
+/*
+ * Decompiled with CFR 0_132.
+ */
+package demo;
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
+public class MathGame {
+    private static Random random = new Random();
+    private int illegalArgumentCount = 0;
+
+    public static void main(String[] args) throws InterruptedException {
+        MathGame game = new MathGame();
+        do {
+            game.run();
+            TimeUnit.SECONDS.sleep(1L);
+        } while (true);
+    }
+
+    public void run() throws InterruptedException {
+        try {
+            int number = random.nextInt();
+            List<Integer> primeFactors = this.primeFactors(number);
+            MathGame.print(number, primeFactors);
+        }
+        catch (Exception e) {
+            System.out.println(String.format("illegalArgumentCount:%3d, ", this.illegalArgumentCount) + e.getMessage());
+        }
+    }
+
+    public static void print(int number, List<Integer> primeFactors) {
+        StringBuffer sb = new StringBuffer("" + number + "=");
+        Iterator<Integer> iterator = primeFactors.iterator();
+        while (iterator.hasNext()) {
+            int factor = iterator.next();
+            sb.append(factor).append('*');
+        }
+        if (sb.charAt(sb.length() - 1) == '*') {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        System.out.println(sb);
+    }
+
+    public List<Integer> primeFactors(int number) {
+        if (number < 2) {
+            ++this.illegalArgumentCount;
+            throw new IllegalArgumentException("number is: " + number + ", need >= 2");
+        }
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        int i = 2;
+        while (i <= number) {
+            if (number % i == 0) {
+                result.add(i);
+                number /= i;
+                i = 2;
+                continue;
+            }
+            ++i;
+        }
+        return result;
+    }
+}
+
+Affect(row-cnt:1) cost in 970 ms.
 ```
-jad demo.MathGame
-```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118135415.png "QQ截图20201229183512.png")
-
 ### 8. watch
 
-通过watch命令来查看demo.MathGame#primeFactors函数的返回值：
+通过watch命令来查看`demo.MathGame#primeFactors`函数的返回值：
 
 ```
 watch demo.MathGame primeFactors returnObj
