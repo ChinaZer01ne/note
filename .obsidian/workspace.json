@@ -23,9 +23,11 @@
             "id": "b0025531dec4210f",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
+              "type": "markdown",
               "state": {
-                "currentVersion": "1.5.3"
+                "file": "Summary/Arthas.md",
+                "mode": "source",
+                "source": false
               }
             }
           },
