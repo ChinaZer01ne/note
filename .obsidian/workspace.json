@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Java.md",
+                "file": "Summary/Concurrent programming.md",
                 "mode": "source",
                 "source": false
               }
@@ -97,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Java.md",
+                "file": "Summary/Concurrent programming.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Java.md",
+                "file": "Summary/Concurrent programming.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,7 +137,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Java.md"
+                "file": "Summary/Concurrent programming.md"
               }
             }
           },
@@ -190,6 +190,8 @@
   },
   "active": "312c29067cf17634",
   "lastOpenFiles": [
+    "Summary/Java.md",
+    "Summary/Concurrent programming.md",
     "Summary/Arthas.md",
     "Summary/Log.md",
     "Summary/MicroService Design.md",
@@ -233,8 +235,6 @@
     "Summary/Mysql.md",
     "().md",
     "停顿时间（或响应时间）.md",
-    "conflict-files-obsidian-git.md",
-    "Summary/TCP.md",
-    "Summary/Java.md"
+    "conflict-files-obsidian-git.md"
   ]
 }
