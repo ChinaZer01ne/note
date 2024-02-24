@@ -20,6 +20,16 @@
             }
           },
           {
+            "id": "14a0451441558df1",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.5.8"
+              }
+            }
+          },
+          {
             "id": "aabfd764baf98b4b",
             "type": "leaf",
             "state": {
@@ -31,7 +41,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -188,7 +199,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "312c29067cf17634",
+  "active": "14a0451441558df1",
   "lastOpenFiles": [
     "Summary/Java.md",
     "Summary/Concurrent programming.md",
