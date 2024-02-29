@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Design Patterns.md",
+                "file": "Summary/Concurrent programming.md",
                 "mode": "source",
                 "source": false
               }
@@ -110,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Design Patterns.md",
+                "file": "Summary/Concurrent programming.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Design Patterns.md",
+                "file": "Summary/Concurrent programming.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Design Patterns.md"
+                "file": "Summary/Concurrent programming.md"
               }
             }
           },
@@ -203,6 +203,7 @@
   },
   "active": "14a0451441558df1",
   "lastOpenFiles": [
+    "Summary/Design Patterns.md",
     "Summary/Concurrent programming.md",
     "Summary/JVM.md",
     "Summary/Java.md",
@@ -238,7 +239,6 @@
     "Summary/MarkDown.md",
     "daliy_note/2023-09-27.md",
     "Summary/TO DO LIST.md",
-    "Summary/Design Patterns.md",
     "Summary/System Design.md",
     "Summary/Distributed Theory.md",
     "Summary/Algorithm.md",
