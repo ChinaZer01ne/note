@@ -361,7 +361,46 @@ public class User {
 ## 状态模式
 
 ## 观察者模式
+```java
+public class Subject {
+    private List<Observer> observers = new ArrayList<>();
+    
+    private int state;
+    
+    public int getState() {
+        return this.state;
+    }
+    
+    public void setState(int state) {
+        if(state == this.state) {
+            return;
+        }
+        this.state = state;
+        notifyAllObserver();
+    }
+    
+    public void attach(Observer observer) {
+        observers.add(observer);
+    }
+    
+    private void notifyAllObserver() {
+        observers.stream().forEach(Observer::update);
+    }
+}
+```
 
+```java
+public abstract class Observer {
+    protected Subject subject;
+    
+    public Observer(Subject subject) {
+        this.subject = subject;
+        this.subject.attach(this);
+    }
+    
+    public abstract void update();
+}
+```
 ## 中介者模式
 
 ## 迭代器模式
