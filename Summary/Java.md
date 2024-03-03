@@ -198,6 +198,7 @@ public static volatile int a = 0;
 ```
 ##### 方式二：synchronized
 ```java
+// 读线程增加synchronized
 new Thread(() -> {  
     int tmp = a;  
     while (tmp < 50) {  
@@ -216,6 +217,24 @@ new Thread(() -> {
   
     System.out.println("read thread :" + a);  
 }, "read").start();
+```
+##### 为什么这么加不可以？
+这么加，a变量在循环中只会读取一次，因为synchronized只会执行一次；如果synchronized加载循环里面，由于synchronized执行多次，那么变量a就会多次从主存读取。
+```java
+synchronized (ThreadTest.class) {  
+	while (tmp < 50) {  
+		if (tmp != a) {  
+			try {  
+				Thread.sleep(100);  
+			} catch (InterruptedException e) {  
+				throw new RuntimeException(e);  
+			}  
+			tmp = a;  
+		}  
+
+	}  
+}  
+  
 ```
 ## AQS
 ### AQS是如何实现的？::
