@@ -231,10 +231,8 @@ synchronized (ThreadTest.class) {
 			}  
 			tmp = a;  
 		}  
-
 	}  
 }  
-  
 ```
 ## AQS
 ### AQS是如何实现的？::
