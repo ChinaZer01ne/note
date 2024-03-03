@@ -149,6 +149,74 @@ Java内存模型还规定了执行上述8种基本操作时必须满足如下规
 
 ### JMM和CPU多级缓存
 JMM屏蔽了不同硬件细节，定义了不同机器下，Java程序中多线程并发访问共享内存时的行为规范，其中存在线程本地内存不一致的问题。在CPU多级缓存下，同样存在缓存不一致的问题。无论是JMM中线程工作内存和主存的不一致，还是CPU多级缓存和主存的不一致，java中提供了一系列关键字以及锁来影响这些行为。
+
+### 一个可见性的例子
+```java
+public class ThreadTest {  
+  
+    public static int a = 0;  
+  
+    public static void main(String[] args) {  
+        new Thread(() -> {  
+            int tmp = a;  
+            while (tmp < 50) {  
+                synchronized (ThreadTest.class) {  
+                    if (tmp != a) {  
+                        try {  
+                            Thread.sleep(100);  
+                        } catch (InterruptedException e) {  
+                            throw new RuntimeException(e);  
+                        }  
+                        tmp = a;  
+                    }  
+  
+                }  
+            }  
+  
+            System.out.println("read thread :" + a);  
+        }, "read").start();  
+  
+        new Thread(() -> {  
+            while (a < 50) {  
+                    try {  
+                        Thread.sleep(100);  
+                    } catch (InterruptedException e) {  
+                        throw new RuntimeException(e);  
+                    }  
+                    a++;  
+            }  
+            System.out.println("write thread :" + a);  
+        }, "write").start();  
+  
+    }  
+}
+```
+#### 解决方式
+##### 方式一: volatile
+```java
+public static volatile int a = 0;  
+```
+##### 方式二：synchronized
+```java
+new Thread(() -> {  
+    int tmp = a;  
+    while (tmp < 50) {  
+        synchronized (ThreadTest.class) {  
+            if (tmp != a) {  
+                try {  
+                    Thread.sleep(100);  
+                } catch (InterruptedException e) {  
+                    throw new RuntimeException(e);  
+                }  
+                tmp = a;  
+            }  
+  
+        }  
+    }  
+  
+    System.out.println("read thread :" + a);  
+}, "read").start();
+```
 ## AQS
 ### AQS是如何实现的？::
 #### AQS的数据结构
