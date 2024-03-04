@@ -36,3 +36,4 @@
 22. 原子性：8中原子性操作，注意a = b不是原子性，虽然是复制但是是两条指令read b; assign a;
 23. 可见性：volatile， 锁
 24. 有序性：happens-before原则
+25. A a = new A(); 这行代码中的引用、对象、class对象都在内存中的什么位置
