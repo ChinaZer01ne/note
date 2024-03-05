@@ -133,9 +133,11 @@
 * 启动类加载器（Bootstrap Class Loader）
     - 是虚拟机的一部分，负责加载Java核心库（如rt.jar）。
     - 它是由C++编写的，不是Java类加载器实现的。
+    - 加载位置：系统属性`sun.boot.class.path`指定的位置
 - 扩展类加载器（Extension Class Loader）
     - 负责加载Java的扩展库（如jre\lib\ext目录下的jar包）。
     - 由sun.misc.Launcher$ExtClassLoader类实现。
+    - 加载位置：系统属性`java.ext.dirs`指定的位置
 - 应用程序类加载器（Application Class Loader）
     - 也称为系统类加载器（System Class Loader）。
     - 负责加载应用程序的类路径（Classpath）下的类和资源。
