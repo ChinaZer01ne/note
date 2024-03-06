@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/System Design.md",
+                "file": "Summary/JVM.md",
                 "mode": "source",
                 "source": false
               }
@@ -110,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/System Design.md",
+                "file": "Summary/JVM.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/System Design.md",
+                "file": "Summary/JVM.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/System Design.md"
+                "file": "Summary/JVM.md"
               }
             }
           },
@@ -203,10 +203,11 @@
   },
   "active": "14a0451441558df1",
   "lastOpenFiles": [
+    "Summary/Java.md",
+    "Summary/System Design.md",
     "Summary/Design Patterns.md",
     "Summary/JVM.md",
     "Summary/Concurrent programming.md",
-    "Summary/Java.md",
     "Summary/Arthas.md",
     "Summary/Log.md",
     "Summary/MicroService Design.md",
@@ -239,7 +240,6 @@
     "Summary/MarkDown.md",
     "daliy_note/2023-09-27.md",
     "Summary/TO DO LIST.md",
-    "Summary/System Design.md",
     "Summary/Distributed Theory.md",
     "Summary/Algorithm.md",
     "Summary/Spring.md",
