@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Design Patterns.md",
+                "file": "Summary/System Design.md",
                 "mode": "source",
                 "source": false
               }
@@ -110,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Design Patterns.md",
+                "file": "Summary/System Design.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Design Patterns.md",
+                "file": "Summary/System Design.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Design Patterns.md"
+                "file": "Summary/System Design.md"
               }
             }
           },
@@ -203,10 +203,10 @@
   },
   "active": "14a0451441558df1",
   "lastOpenFiles": [
+    "Summary/Design Patterns.md",
     "Summary/JVM.md",
     "Summary/Concurrent programming.md",
     "Summary/Java.md",
-    "Summary/Design Patterns.md",
     "Summary/Arthas.md",
     "Summary/Log.md",
     "Summary/MicroService Design.md",
