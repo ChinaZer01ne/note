@@ -45,3 +45,20 @@
 27. 单线程的指令重排序和多线程的指令重排序
 	1. 单线程的指令重排序不会对结果造成影响
 	2. 多线程下发生指令重排序可能会造成错误的结果
+28. 线程上下文加载器打破双亲委派机制
+29. 多线程设计模式
+	1. 观察者
+	2. 单线程设计模式
+	3. 读写锁分离
+	4. 不可变对象
+	5. Future设计模式
+	6. Guarded suspension
+	7. Threadlocal
+	8. 多线程上下文设计模式
+	9. balking设计模式
+	10. 生产消费模式
+	11. count down
+	12. thread-per-message
+	13. two phase temination
+	14. work thread
+	15. 多线程active objects
