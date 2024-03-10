@@ -61,6 +61,8 @@
 	12. thread-per-message
 	13. two phase temination
 	14. work thread
+		1. Worker-Thread 和 Producer-Consumer设计模式区别不是很大，Worker-Thread中用Channel封装了queue和消费线程
 	15. 多线程active objects
 30. 原子类
 31. cas存在的问题，aba
+32. 
