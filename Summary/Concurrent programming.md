@@ -66,3 +66,11 @@
 30. 原子类
 31. cas存在的问题，aba
 32. unsafe
+	1. 底层的CPU指令
+		1. cmpxchg1：compareAndSwapInt
+		2. cmpxchg：compareAndSwapLong
+		3. xchg1：putOrderedInt
+		4. cmpxchgq：compareAndSwapObject
+		5. lock1：volatile
+		6. membar-acquire
+	2. 
