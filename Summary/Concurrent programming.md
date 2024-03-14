@@ -74,3 +74,4 @@
 		5. lock1：volatile
 		6. membar-acquire
 33. exchanger：只适合2个线程
+34. StampedLock
