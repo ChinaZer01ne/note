@@ -76,3 +76,7 @@
 33. exchanger：只适合2个线程
 34. StampedLock
 35. complationService
+36. 学习习惯
+	1. 为什么有这个东西，他是解决了什么问题
+	2. 使用
+	3. 原理
