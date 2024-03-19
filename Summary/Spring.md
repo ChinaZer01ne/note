@@ -65,10 +65,10 @@ Spring的初始化流程主要是执行`AbstractApplicationContext`类的`refres
 
 # Spring Bean的生命周期
 1. **实例化（Instantiation）**：[创建对象](#Spring创建Bean有哪些方式？)
-2. **属性赋值（Population）**：主要是在populateBean方法中，在属性赋值阶段，Spring将相应的属性值设置到 Bean 实例中。这包括基于 XML 配置、注解的属性注入。
-3. **初始化（Initialization）**：在初始化阶段，Spring 主要执行InitializingBean#afterPropertiesSet() 方法，BeanPostProcessor以及配置的 init-method 属性的指定的初始化方法。
+2. **属性赋值（Population）**：主要是在`populateBean`方法中，在属性赋值阶段，Spring将相应的属性值设置到 Bean 实例中。这包括基于 XML 配置、注解的属性注入。
+3. **初始化（Initialization）**：在初始化阶段，Spring 主要执行`InitializingBean#afterPropertiesSet()` 方法，`BeanPostProcessor`以及配置的 `init-method` 属性的指定的初始化方法。
 4. **使用（In Use）**：在初始化完成后，Bean 就处于可用状态。
-5. **销毁（Destruction）**：在容器关闭或显式销毁 Bean 的时候，会触发 Bean 的销毁阶段。主要执行DisposableBean#destroy() 方法，以及配置的destroy-method 属性指定的销毁方法。
+5. **销毁（Destruction）**：在容器关闭或显式销毁 Bean 的时候，会触发 Bean 的销毁阶段。主要执行`DisposableBean#destroy() `方法，以及配置的`destroy-method` 属性指定的销毁方法。
 # Spring创建Bean有哪些方式？
 
  1. 实现InstantiationAwareBeanPostProcessor  
