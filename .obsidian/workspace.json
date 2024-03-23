@@ -32,6 +32,16 @@
             }
           },
           {
+            "id": "42a1bb09ee705063",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.5.11"
+              }
+            }
+          },
+          {
             "id": "aabfd764baf98b4b",
             "type": "leaf",
             "state": {
@@ -44,7 +54,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -201,7 +211,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "14a0451441558df1",
+  "active": "42a1bb09ee705063",
   "lastOpenFiles": [
     "Summary/Concurrent programming.md",
     "Summary/JVM.md",
