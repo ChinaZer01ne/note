@@ -1248,49 +1248,44 @@ Affect(row-cnt:1) cost in 39 ms.
 classloader
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118151917.png "QQ截图20201229183512.png")
-
 ```sh
 # 按类加载实例查看统计信息，可以看到类加载的hashCode
 classloader -l
 ```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118151928.png "QQ截图20201229183512.png")
 
 ```sh
 # 查看ClassLoader的继承树
 classloader -t
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118151954.png "QQ截图20201229183512.png")
-
 ```sh
 # 通过类加载器的hash，查看此类加载器实际所在的位置
 classloader -c 680f2737
 ```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118152024.png "QQ截图20201229183512.png")
 
 ```sh
 # 使用ClassLoader去查找指定资源resource所在的位置
 classloader -c 680f2737 -r META-INF/MANIFEST.MF
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118152105.png "QQ截图20201229183512.png")
-
 ```sh
 # 使用ClassLoader去查找类的class文件所在的位置
 classloader -c 680f2737 -r java/lang/String.class
 ```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118152116.png "QQ截图20201229183512.png")
 
 ```sh
 # 使用ClassLoader去加载类
 classloader -c 70dea4e --load java.lang.String
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118152140.png "QQ截图20201229183512.png")
+##### 小结
+
+###### classloader命令主要作用有哪些？
+
+- 1. 显示所有类加载器的信息
+- 2. 获取某个类加载器所在的jar包
+- 3. 获取某个资源在哪个jar包中
+- 4. 加载某个类
 
 ### monitor/watch/trace相关
 
@@ -1318,8 +1313,6 @@ classloader -c 70dea4e --load java.lang.String
 # 过 5 秒统计一次，统计类demo.MathGame中primeFactors方法
 monitor -c 5 demo.MathGame primeFactors
 ```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118152539.png "QQ截图20201229183512.png")
 
 ##### 监控的维度说明
 
@@ -1380,14 +1373,10 @@ monitor -c 5 demo.MathGame primeFactors
 watch demo.MathGame primeFactors "{params,returnObj}" -x 2
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118153022.png "QQ截图20201229183512.png")
-
 ```sh
 # 观察方法入参，对比前一个例子，返回值为空（事件点为方法执行前，因此获取不到返回值）
 watch demo.MathGame primeFactors "{params,returnObj}" -x 2 -b
 ```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118153102.png "QQ截图20201229183512.png")
 
 ```sh
 # 同时观察方法调用前和方法返回后，参数里-n 2，表示只执行两次。这里输出结果中，第一次输出的是方法调用前的观察表达式的结果，第二次输出的是方法返回后的表达式的结果params表示参数，target表示执行方法的对象，returnObject表示返回值
@@ -1395,28 +1384,20 @@ watch demo.MathGame primeFactors "{params,returnObj}" -x 2 -b
 watch demo.MathGame primeFactors "{params,target,returnObj}" -x 2 -b -s -n 2
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118153145.png "QQ截图20201229183512.png")
-
 ```sh
 # 观察当前对象中的属性，如果想查看方法运行前后，当前对象中的属性，可以使用target关键字，代表当前对象
 watch demo.MathGame primeFactors 'target'
 ```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118153220.png "QQ截图20201229183512.png")
 
 ```sh
 # 使用target.field_name访问当前对象的某个属性
 watch demo.MathGame primeFactors 'target.illegalArgumentCount'
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118153235.png "QQ截图20201229183512.png")
-
 ```sh
 # 条件表达式的例子，输出第 1 参数小于的情况
 watch demo.MathGame primeFactors "{params[0],target}" "params[0]<0"
 ```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118153312.png "QQ截图20201229183512.png")
 
 #### trace
 
@@ -1430,14 +1411,14 @@ watch demo.MathGame primeFactors "{params[0],target}" "params[0]<0"
 
 ##### 参数说明
 
-|参数名称|参数说明|
-|---|:-:|
-|class-pattern|类名表达式匹配|
-|method-pattern|方法名表达式匹配|
-|condition-express|条件表达式|
-|[E]|开启正则表达式匹配，默认为通配符匹配|
-|[n:]|命令执行次数|
-|#cost|方法执行耗时|
+| 参数名称              |        参数说明        |
+| ----------------- | :----------------: |
+| class-pattern     |      类名表达式匹配       |
+| method-pattern    |      方法名表达式匹配      |
+| condition-express |       条件表达式        |
+| [E]               | 开启正则表达式匹配，默认为通配符匹配 |
+| [n:]              |       命令执行次数       |
+| #cost             |       方法执行耗时       |
 
 ##### 举例
 
@@ -1446,28 +1427,20 @@ watch demo.MathGame primeFactors "{params[0],target}" "params[0]<0"
 trace demo.MathGame run
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118154001.png "QQ截图20201229183512.png")
-
 ```sh
 # 如果方法调用的次数很多，那么可以用-n参数指定捕捉结果的次数。比如下面的例子里，捕捉到一次调用就退出命令。
 trace demo.MathGame run -n 1
 ```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118154037.png "QQ截图20201229183512.png")
 
 ```sh
 # 默认情况下，trace不会包含jdk里的函数调用，如果希望trace jdk里的函数，需要显式设置--skipJDKMethod false。
 trace --skipJDKMethod false demo.MathGame run
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118154121.png "QQ截图20201229183512.png")
-
 ```sh
 # 据调用耗时过滤，trace大于0.5ms的调用路径
 trace demo.MathGame run '#cost > .5'
 ```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118154204.png "QQ截图20201229183512.png")
 
 ```sh
 # 可以用正则表匹配路径上的多个类和函数，一定程度上达到多层trace的效果。
@@ -1497,129 +1470,16 @@ trace -E com.test.ClassA|org.test.ClassB method1|method2|method3
 stack demo.MathGame primeFactors
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118155116.png "QQ截图20201229183512.png")
-
 ```sh
 # 条件表达式来过滤，第 0 个参数的值小于 0 ，-n表示获取 2 次
 stack demo.MathGame primeFactors 'params[0]<0' -n 2
 ```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118155159.png "QQ截图20201229183512.png")
 
 ```sh
 # 据执行时间来过滤，耗时大于 5 毫秒
 stack demo.MathGame primeFactors '#cost>5'
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118155228.png "QQ截图20201229183512.png")
-
-#### dump
-
-> dump 将已加载类的字节码文件保存到特定目录：logs/arthas/classdump/
-
-##### 参数
-
-|参数名称|参数说明|
-|---|:-:|
-|class-pattern|类名表达式匹配|
-|[c:]|类所属 ClassLoader 的 hashcode|
-|[E]|开启正则表达式匹配，默认为通配符匹配|
-
-##### 举例
-
-```sh
-# 把String类的字节码文件保存到~/logs/arthas/classdump/目录下
-dump java.lang.String
-```
-
-```sh
-# 把demo包下所有的类的字节码文件保存到~/logs/arthas/classdump/目录下
-dump demo.*
-```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118161524.png "QQ截图20201229183512.png")
-
-##### 小结
-
-dump作用：将正在JVM中运行的程序的字节码文件提取出来，保存在logs相应的目录下不同的类加载器放在不同的目录下
-
-#### classloader
-
-> classloader 获取类加载器的信息
-
-- 1. classloader 命令将 JVM 中所有的classloader的信息统计出来，并可以展示继承树，urls等。
-- 2. 可以让指定的classloader去getResources，打印出所有查找到的resources的url。对于
-
-###### 参数说明
-
-|参数名称|参数说明|
-|---|:-:|
-|[l] 按类加载实例进行统计||
-|[t] 打印所有ClassLoader的继承树||
-|[a] 列出所有ClassLoader加载的类，请谨慎使用||
-|[c:] ClassLoader的hashcode||
-|[c: r:] 用ClassLoader去查找resource||
-|[c: load:] 用ClassLoader去加载指定的类||
-
-##### 举例
-
-```sh
-# 默认按类加载器的类型查看统计信息
-classloader
-```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118162454.png "QQ截图20201229183512.png")
-
-```sh
-# 按类加载器的实例查看统计信息，可以看到类加载的hashCode
-classloader -l
-```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118162520.png "QQ截图20201229183512.png")
-
-```sh
-# 查看ClassLoader的继承树
-classloader -t
-```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118162554.png "QQ截图20201229183512.png")
-
-```sh
-# 通过类加载器的hash，查看此类加载器实际所在的位置
-classloader -c 680f2737
-```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118162708.png "QQ截图20201229183512.png")
-
-```sh
-# 使用ClassLoader去查找指定资源resource所在的位置
-classloader -c 680f2737 -r META-INF/MANIFEST.MF
-```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118162832.png "QQ截图20201229183512.png")
-
-```sh
-# 使用ClassLoader去查找类的class文件所在的位置
-classloader -c 680f2737 -r java/lang/String.class
-```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118162844.png "QQ截图20201229183512.png")
-
-```sh
-# 使用ClassLoader去加载类
-classloader -c 70dea4e --load java.lang.String
-```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118162855.png "QQ截图20201229183512.png")
-
-##### 小结
-
-###### classloader命令主要作用有哪些？
-
-- 1. 显示所有类加载器的信息
-- 2. 获取某个类加载器所在的jar包
-- 3. 获取某个资源在哪个jar包中
-- 4. 加载某个类
 
 > tt time-tunnel 时间隧道,记录下指定方法每次调用的入参和返回信息，并能对这些不同时间下调用的信息进行观测
 
