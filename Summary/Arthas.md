@@ -479,13 +479,12 @@ JVM 内部线程包括下面几种：
 - 再次第二次采样，获取所有线程的 CPU 时间，对比两次采样数据，计算出每个线程的增量 CPU 时间
 - 线程 CPU 使用率 = 线程增量 CPU 时间 / 采样间隔时间 * 100%
 
-注意
+> 注意
+> 注意： 这个统计也会产生一定的开销（JDK 这个接口本身开销比较大），因此会看到 as 的线程占用一定的百分比，为了降低统计自身的开销带来的影响，可以把采样间隔拉长一些，比如 5000 毫秒。
 
-注意： 这个统计也会产生一定的开销（JDK 这个接口本身开销比较大），因此会看到 as 的线程占用一定的百分比，为了降低统计自身的开销带来的影响，可以把采样间隔拉长一些，比如 5000 毫秒。
+>提示
+  另外一种查看 Java 进程的线程 cpu 使用率方法：可以使用[`show-busy-java-threads`](https://github.com/oldratlee/useful-scripts/blob/dev-2.x/docs/java.md#-show-busy-java-threads)这个脚本。
 
-提示
-
-另外一种查看 Java 进程的线程 cpu 使用率方法：可以使用[`show-busy-java-threads`在新窗口打开](https://github.com/oldratlee/useful-scripts/blob/dev-2.x/docs/java.md#-show-busy-java-threads)这个脚本
 ##### 举例
 
 ```sh
@@ -493,7 +492,32 @@ JVM 内部线程包括下面几种：
 thread -n 3
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118141901.png "QQ截图20201229183512.png")
+```sh
+$ thread -n 3
+"C1 CompilerThread0" [Internal] cpuUsage=1.63% deltaTime=3ms time=1170ms
+
+
+"arthas-command-execute" Id=23 cpuUsage=0.11% deltaTime=0ms time=401ms RUNNABLE
+    at java.management@11.0.7/sun.management.ThreadImpl.dumpThreads0(Native Method)
+    at java.management@11.0.7/sun.management.ThreadImpl.getThreadInfo(ThreadImpl.java:466)
+    at com.taobao.arthas.core.command.monitor200.ThreadCommand.processTopBusyThreads(ThreadCommand.java:199)
+    at com.taobao.arthas.core.command.monitor200.ThreadCommand.process(ThreadCommand.java:122)
+    at com.taobao.arthas.core.shell.command.impl.AnnotatedCommandImpl.process(AnnotatedCommandImpl.java:82)
+    at com.taobao.arthas.core.shell.command.impl.AnnotatedCommandImpl.access$100(AnnotatedCommandImpl.java:18)
+    at com.taobao.arthas.core.shell.command.impl.AnnotatedCommandImpl$ProcessHandler.handle(AnnotatedCommandImpl.java:111)
+    at com.taobao.arthas.core.shell.command.impl.AnnotatedCommandImpl$ProcessHandler.handle(AnnotatedCommandImpl.java:108)
+    at com.taobao.arthas.core.shell.system.impl.ProcessImpl$CommandProcessTask.run(ProcessImpl.java:385)
+    at java.base@11.0.7/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+    at java.base@11.0.7/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+    at java.base@11.0.7/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+    at java.base@11.0.7/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+    at java.base@11.0.7/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+    at java.base@11.0.7/java.lang.Thread.run(Thread.java:834)
+
+
+"VM Periodic Task Thread" [Internal] cpuUsage=0.07% deltaTime=0ms time=584ms
+
+```
 
 ```sh
 # 当没有参数时，显示所有线程的信息
@@ -505,34 +529,212 @@ thread
 thread 1
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118141939.png "QQ截图20201229183512.png")
+```sh
+$ thread 1
+"main" Id=1 WAITING on java.util.concurrent.CountDownLatch$Sync@29fafb28
+    at sun.misc.Unsafe.park(Native Method)
+    -  waiting on java.util.concurrent.CountDownLatch$Sync@29fafb28
+    at java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)
+    at java.util.concurrent.locks.AbstractQueuedSynchronizer.parkAndCheckInterrupt(AbstractQueuedSynchronizer.java:836)
+    at java.util.concurrent.locks.AbstractQueuedSynchronizer.doAcquireSharedInterruptibly(AbstractQueuedSynchronizer.java:997)
+    at java.util.concurrent.locks.AbstractQueuedSynchronizer.acquireSharedInterruptibly(AbstractQueuedSynchronizer.java:1304)
+    at java.util.concurrent.CountDownLatch.await(CountDownLatch.java:231)
+
+```
 
 ```sh
 # 找出当前阻塞其他线程的线程，有时候我们发现应用卡住了， 通常是由于某个线程拿住了某个锁， 并且其他线程都在等待这把锁造成的。 为了排查这类问题， arthas提供了thread -b， 一键找出那个罪魁祸首。
 thread -b
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118142033.png "QQ截图20201229183512.png")
+```sh
+$ thread -b
+"http-bio-8080-exec-4" Id=27 TIMED_WAITING
+    at java.lang.Thread.sleep(Native Method)
+    at test.arthas.TestThreadBlocking.doGet(TestThreadBlocking.java:22)
+    -  locked java.lang.Object@725be470 <---- but blocks 4 other threads!
+    at javax.servlet.http.HttpServlet.service(HttpServlet.java:624)
+    at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
+    at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
+    at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+    at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+    at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+    at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+    at test.filter.TestDurexFilter.doFilter(TestDurexFilter.java:46)
+    at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+    at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+    at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:220)
+    at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
+    at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:505)
+    at com.taobao.tomcat.valves.ContextLoadFilterValve$FilterChainAdapter.doFilter(ContextLoadFilterValve.java:191)
+    at com.taobao.eagleeye.EagleEyeFilter.doFilter(EagleEyeFilter.java:81)
+    at com.taobao.tomcat.valves.ContextLoadFilterValve.invoke(ContextLoadFilterValve.java:150)
+    at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:170)
+    at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:103)
+    at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
+    at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:429)
+    at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1085)
+    at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:625)
+    at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:318)
+    -  locked org.apache.tomcat.util.net.SocketWrapper@7127ee12
+    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+    at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+    at java.lang.Thread.run(Thread.java:745)
+
+    Number of locked synchronizers = 1
+    - java.util.concurrent.ThreadPoolExecutor$Worker@31a6493e
+
+```
 
 ```sh
 # 指定采样时间间隔，每过1000毫秒采样，显示最占时间的3个线程 
 thread -i 1000 -n 3
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118142156.png "QQ截图20201229183512.png")
+```sh
+$ thread -n 3 -i 1000
+"as-command-execute-daemon" Id=4759 cpuUsage=23% RUNNABLE
+    at sun.management.ThreadImpl.dumpThreads0(Native Method)
+    at sun.management.ThreadImpl.getThreadInfo(ThreadImpl.java:440)
+    at com.taobao.arthas.core.command.monitor200.ThreadCommand.processTopBusyThreads(ThreadCommand.java:133)
+    at com.taobao.arthas.core.command.monitor200.ThreadCommand.process(ThreadCommand.java:79)
+    at com.taobao.arthas.core.shell.command.impl.AnnotatedCommandImpl.process(AnnotatedCommandImpl.java:96)
+    at com.taobao.arthas.core.shell.command.impl.AnnotatedCommandImpl.access$100(AnnotatedCommandImpl.java:27)
+    at com.taobao.arthas.core.shell.command.impl.AnnotatedCommandImpl$ProcessHandler.handle(AnnotatedCommandImpl.java:125)
+    at com.taobao.arthas.core.shell.command.impl.AnnotatedCommandImpl$ProcessHandler.handle(AnnotatedCommandImpl.java:122)
+    at com.taobao.arthas.core.shell.system.impl.ProcessImpl$CommandProcessTask.run(ProcessImpl.java:332)
+    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+    at java.lang.Thread.run(Thread.java:756)
+
+    Number of locked synchronizers = 1
+    - java.util.concurrent.ThreadPoolExecutor$Worker@546aeec1
+...
+
+```
 
 ```sh
 # 查看处于等待状态的线程 
 thread --state WAITING
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118142232.png "QQ截图20201229183512.png")
+```sh
+[arthas@28114]$ thread --state WAITING
+Threads Total: 16, NEW: 0, RUNNABLE: 9, BLOCKED: 0, WAITING: 3, TIMED_WAITING: 4, TERMINATED: 0
+ID   NAME                           GROUP           PRIORITY   STATE     %CPU      DELTA_TIME TIME      INTERRUPTE DAEMON
+3    Finalizer                      system          8          WAITING   0.0       0.000      0:0.000   false      true
+20   arthas-UserStat                system          9          WAITING   0.0       0.000      0:0.001   false      true
+14   arthas-timer                   system          9          WAITING   0.0       0.000      0:0.000   false      true
+
+```
 
 #### jvm
 
 > jvm 查看当前 JVM 的信息
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118142431.png "QQ截图20201229183512.png")
+```sh
+$ jvm
+RUNTIME
+--------------------------------------------------------------------------------------------------------------
+ MACHINE-NAME                   37@ff267334bb65
+ JVM-START-TIME                 2020-07-23 07:50:36
+ MANAGEMENT-SPEC-VERSION        1.2
+ SPEC-NAME                      Java Virtual Machine Specification
+ SPEC-VENDOR                    Oracle Corporation
+ SPEC-VERSION                   1.8
+ VM-NAME                        Java HotSpot(TM) 64-Bit Server VM
+ VM-VENDOR                      Oracle Corporation
+ VM-VERSION                     25.201-b09
+ INPUT-ARGUMENTS                []
+ CLASS-PATH                     demo-arthas-spring-boot.jar
+ BOOT-CLASS-PATH                /usr/lib/jvm/java-8-oracle/jre/lib/resources.jar:/usr/lib/jvm/java-8-oracle/j
+                                re/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/sunrsasign.jar:/usr/lib/jvm/
+                                java-8-oracle/jre/lib/jsse.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:/us
+                                r/lib/jvm/java-8-oracle/jre/lib/charsets.jar:/usr/lib/jvm/java-8-oracle/jre/l
+                                ib/jfr.jar:/usr/lib/jvm/java-8-oracle/jre/classes
+ LIBRARY-PATH                   /usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+
+--------------------------------------------------------------------------------------------------------------
+ CLASS-LOADING
+--------------------------------------------------------------------------------------------------------------
+ LOADED-CLASS-COUNT             7529
+ TOTAL-LOADED-CLASS-COUNT       7529
+ UNLOADED-CLASS-COUNT           0
+ IS-VERBOSE                     false
+
+--------------------------------------------------------------------------------------------------------------
+ COMPILATION
+--------------------------------------------------------------------------------------------------------------
+ NAME                           HotSpot 64-Bit Tiered Compilers
+ TOTAL-COMPILE-TIME             14921(ms)
+
+--------------------------------------------------------------------------------------------------------------
+ GARBAGE-COLLECTORS
+--------------------------------------------------------------------------------------------------------------
+ PS Scavenge                            name : PS Scavenge
+ [count/time (ms)]                      collectionCount : 7
+                                        collectionTime : 68
+
+ PS MarkSweep                           name : PS MarkSweep
+ [count/time (ms)]                      collectionCount : 1
+                                        collectionTime : 47
+
+--------------------------------------------------------------------------------------------------------------
+ MEMORY-MANAGERS
+--------------------------------------------------------------------------------------------------------------
+ CodeCacheManager               Code Cache
+
+ Metaspace Manager              Metaspace
+                                Compressed Class Space
+
+ Copy                           Eden Space
+                                Survivor Space
+
+ MarkSweepCompact               Eden Space
+                                Survivor Space
+                                Tenured Gen
+
+
+--------------------------------------------------------------------------------------------------------------
+ MEMORY
+--------------------------------------------------------------------------------------------------------------
+ HEAP-MEMORY-USAGE                      init : 268435456(256.0 MiB)
+ [memory in bytes]                      used : 18039504(17.2 MiB)
+                                        committed : 181403648(173.0 MiB)
+                                        max : 3817865216(3.6 GiB)
+
+ NO-HEAP-MEMORY-USAGE                   init : 2555904(2.4 MiB)
+ [memory in bytes]                      used : 33926216(32.4 MiB)
+                                        committed : 35176448(33.5 MiB)
+                                        max : -1(-1 B)
+
+--------------------------------------------------------------------------------------------------------------
+ OPERATING-SYSTEM
+--------------------------------------------------------------------------------------------------------------
+ OS                             Linux
+ ARCH                           amd64
+ PROCESSORS-COUNT               3
+ LOAD-AVERAGE                   29.53
+ VERSION                        4.15.0-52-generic
+
+--------------------------------------------------------------------------------------------------------------
+ THREAD
+--------------------------------------------------------------------------------------------------------------
+ COUNT                          30
+ DAEMON-COUNT                   24
+ PEAK-COUNT                     31
+ STARTED-COUNT                  36
+ DEADLOCK-COUNT                 0
+
+--------------------------------------------------------------------------------------------------------------
+ FILE-DESCRIPTOR
+--------------------------------------------------------------------------------------------------------------
+ MAX-FILE-DESCRIPTOR-COUNT      1048576
+ OPEN-FILE-DESCRIPTOR-COUNT     100
+Affect(row-cnt:0) cost in 88 ms.
+
+```
 
 ##### THREAD 相关
 
