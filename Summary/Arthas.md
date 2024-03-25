@@ -1633,6 +1633,8 @@ options save-result true
 
 options的作用是：查看或设置arthas全局环境变量
 
+#### profiler
+
 > profiler 火焰图火焰图
 
 - profiler 命令支持生成应用热点的火焰图。本质上是通过不断的采样，然后把收集到的采样结果生成火焰图。
@@ -1685,11 +1687,11 @@ profiler stop --format html
 
 ##### 默认情况下，arthas使用3658端口，则可以打开： 查看到arthas-output目录下面的profiler结果：
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118173237.png "QQ截图20201229183512.png")
+![](arthas-output.jpg)
 
 ##### 点击可以查看具体的结果：
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118173310.png "QQ截图20201229183512.png")
+![](arthas-output-svg.jpg)
 
 ### 火焰图的含义
 
@@ -1711,68 +1713,3 @@ profiler stop --format html
 |profiler status|查看profiler的状态，运行的时间|
 |profiler stop|停止profiler，生成火焰图的结果，指定输出目录和输出格式：svg或html|
 
-## Arthas实践：哪个Controller处理了请求
-
-> 我们可以快速定位一个请求是被哪些Filter拦截的，或者请求最终是由哪些Servlet处理的。但有时，我们想知道一个请求是被哪个Spring MVC Controller处理的。如果翻代码的话，会比较难找，并且不一定准确。通过Arthas可以精确定位是哪个Controller处理请求。
-
-### 准备场景
-
-##### 将ssm_student.war项目部署到Linux的tomcat服务器下，可以正常访问。
-
-##### 启动之后，访问： ，会返回如下页面。
-
-##### 那么这个请求是被哪个Controller处理的呢？
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118155620.png "QQ截图20201229183512.png")
-
-### 步骤
-
-- 1. trace定位DispatcherServlet
-- 2. jad反编译DispatcherServlet
-- 3. watch定位handler
-
-### 实现步骤
-
-- 第1步：
-    
-    ```
-    # 在浏览器上进行登录操作，检查最耗时的方法
-    trace *.DispatcherServlet *
-    ```
-    
-    ![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118155743.png "QQ截图20201229183512.png")
-
-```
-# 可以分步trace，请求最终是被DispatcherServlet#doDispatch()处理了
-trace *.FrameworkServlet doService
-```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118155754.png "QQ截图20201229183512.png")
-
-- 第2步：
-    
-    ```
-    # trace结果里把调用的行号打印出来了，我们可以直接在IDE里查看代码（也可以用jad命令反编译）
-    jad --source-only *.DispatcherServlet doDispatch
-    ```
-    
-    ![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118155838.png "QQ截图20201229183512.png")
-    
-- 第3步：
-    
-    ```
-    # 查看返回的结果，得到使用到了 2 个控制器的方法
-    watch *.DispatcherServlet getHandler 'returnObj'
-    ```
-    
-    ![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118155927.png "QQ截图20201229183512.png")
-    
-
-### 结论
-
-通过trace, jad, watch最后得到这个操作由2个控制器来处理，分别是：
-
-```
-com.itheima.controller.UserController.login()
-com.itheima.controller.StudentController.findAll()
-```
