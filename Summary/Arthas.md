@@ -112,41 +112,58 @@ public class MathGame {
 ### 2. 启动 Demo
 
 ```shell
-#下载已经打包好的arthas-demo.jar
-curl -O https://alibaba.github.io/arthas/arthas-demo.jar
+curl -O https://arthas.aliyun.com/math-game.jar
 
-#在命令行下执行
-java -jar arthas-demo.jar
+java -jar math-game.jar
 ```
-
-#### 效果
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118123825.png "QQ截图20201229183512.png")
-
 ### 3. 启动 arthas
 
-- 1. 因为`arthas-demo.jar`进程打开了一个窗口，所以另开一个命令窗口执行`arthas-boot.jar`
-- 2. 选择要粘附的进程：`arthas-demo.jar`
+在命令行下面执行（使用和目标进程一致的用户启动，否则可能 attach 失败）：
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118124000.png "QQ截图20201229183512.png")
-
-- 3. 如果粘附成功，在arthas-demo.jar那个窗口中会出现日志记录的信息，记录在c:\Users\Administrator\logs目录下
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118124028.png "QQ截图20201229183512.png")
-
-- 4. 如果端口号被占用，也可以通过以下命令换成另一个端口号执行
-
+```SHELL
+curl -O https://arthas.aliyun.com/arthas-boot.jar
+java -jar arthas-boot.jar
 ```
-java -jar arthas-boot.jar --telnet-port 9998 --http-port -1
+
+- 执行该程序的用户需要和目标进程具有相同的权限。比如以`admin`用户来执行：`sudo su admin && java -jar arthas-boot.jar` 或 `sudo -u admin -EH java -jar arthas-boot.jar`。
+- 如果 attach 不上目标进程，可以查看`~/logs/arthas/` 目录下的日志。
+- 如果下载速度比较慢，可以使用 aliyun 的镜像：`java -jar arthas-boot.jar --repo-mirror aliyun --use-http`
+- `java -jar arthas-boot.jar -h` 打印更多参数信息。
+
+选择应用 java 进程：
+
+```bash
+$ $ java -jar arthas-boot.jar
+* [1]: 35542
+  [2]: 71560 math-game.jar
+```
+
+`math-game`进程是第 2 个，则输入 2，再输入`回车/enter`。Arthas 会 attach 到目标进程上，并输出日志：
+
+```shell
+[INFO] Try to attach process 71560
+[INFO] Attach process 71560 success.
+[INFO] arthas-client connect 127.0.0.1 3658
+  ,---.  ,------. ,--------.,--.  ,--.  ,---.   ,---.
+ /  O  \ |  .--. ''--.  .--'|  '--'  | /  O  \ '   .-'
+|  .-.  ||  '--'.'   |  |   |  .--.  ||  .-.  |`.  `-.
+|  | |  ||  |\  \    |  |   |  |  |  ||  | |  |.-'    |
+`--' `--'`--' '--'   `--'   `--'  `--'`--' `--'`-----'
+
+
+wiki: https://arthas.aliyun.com/doc
+version: 3.0.5.20181127201536
+pid: 71560
+time: 2018-11-28 19:16:24
+
+$
 ```
 
 ### 4. 通过浏览器连接 arthas
 
-Arthas目前支持Web Console，用户在attach成功之后，可以直接访问：http://127.0.0.1:3658/。可以填入IP，远程连接其它机器上的arthas。
+Arthas目前支持Web Console，用户在attach成功之后，可以直接访问：`http://127.0.0.1:3658/`。可以填入IP，远程连接其它机器上的arthas。
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118133301.png "QQ截图20201229183512.png")
-
-默认情况下，arthas只listen 127.0.0.1，所以如果想从远程连接，则可以使用 --target-ip参数指定listen的IP
+默认情况下，arthas只listen 127.0.0.1，所以如果想从远程连接，则可以使用 `--target-ip`参数指定listen的IP
 
 ### 5. dashboard 仪表板
 
