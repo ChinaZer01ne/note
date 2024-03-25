@@ -1480,6 +1480,7 @@ stack demo.MathGame primeFactors 'params[0]<0' -n 2
 stack demo.MathGame primeFactors '#cost>5'
 ```
 
+#### tt
 
 > tt time-tunnel 时间隧道,记录下指定方法每次调用的入参和返回信息，并能对这些不同时间下调用的信息进行观测
 
@@ -1496,17 +1497,23 @@ stack demo.MathGame primeFactors '#cost>5'
 |-n|次数 只记录多少次|
 |-s|表达式 搜索表达式|
 |-i|索引号 查看指定索引号的详细调用信息|
-|-p|重新调用指定的索引号时间碎片|
+|-p|重新调用指定的索引号时间碎片|命令参数解析
 
-- - t
-        - tt 命令有很多个主参数，-t 就是其中之一。这个参数表明希望记录下类 *Test 的 print 方法的每次执行情况。
-- - n 3
-        - 当你执行一个调用量不高的方法时可能你还能有足够的时间用 CTRL+C 中断 tt 命令记录的过程，但如果遇到调用量非常大的方法，瞬间就能将你的 JVM 内存撑爆。此时你可以通过 -n 参数指定你需要记录的次数，当达到记录次数时 Arthas 会主动中断tt命令的记录过程，避免人工操作无法停止的情况。
+命令参数解析
 
-```sh
-# 条件表达式来过滤，第 0 个参数的值小于 0 ，-n表示获取 2 次
-stack demo.MathGame primeFactors 'params[0]<0' -n 2
-```
+- `-t`
+    
+    tt 命令有很多个主参数，`-t` 就是其中之一。这个参数的表明希望记录下类 `*Test` 的 `print` 方法的每次执行情况。
+    
+- `-n 3`
+    
+    当你执行一个调用量不高的方法时可能你还能有足够的时间用 `CTRL+C` 中断 tt 命令记录的过程，但如果遇到调用量非常大的方法，瞬间就能将你的 JVM 内存撑爆。
+    
+    此时你可以通过 `-n` 参数指定你需要记录的次数，当达到记录次数时 Arthas 会主动中断 tt 命令的记录过程，避免人工操作无法停止的情况。
+    
+- `-m 1`
+    
+    通过 `-m` 参数指定 Class 匹配的最大数量，防止匹配到的 Class 数量太多导致 JVM 挂起，默认值是 50。
 
 ##### 使用案例
 
@@ -1514,8 +1521,6 @@ stack demo.MathGame primeFactors 'params[0]<0' -n 2
 # 最基本的使用来说，就是记录下当前方法的每次调用环境现场。
 tt -t demo.MathGame primeFactors
 ```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118170830.png "QQ截图20201229183512.png")
 
 ##### 表格字段说明
 
@@ -1541,19 +1546,19 @@ tt -t demo.MathGame primeFactors
 
 - 解决方法重载
 
-```
+```sh
 tt -t *Test print params.length==1
 ```
 
 - 通过制定参数个数的形式解决不同的方法签名，如果参数个数一样，你还可以这样写
 
-```
+```sh
 tt -t *Test print 'params[1] instanceof Integer'
 ```
 
 - 解决指定参数
 
-```
+```sh
 tt -t *Test print params[0].mobile=="13989838402"
 ```
 
@@ -1561,29 +1566,23 @@ tt -t *Test print params[0].mobile=="13989838402"
 
 当你用 tt 记录了一大片的时间片段之后，你希望能从中筛选出自己需要的时间片段，这个时候你就需要对现有记录进行检索。
 
-```
+```sh
 tt -l
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118171351.png "QQ截图20201229183512.png")
-
 ##### 需要筛选出 primeFactors 方法的调用信息
 
-```
+```sh
 tt -s 'method.name=="primeFactors"'
 ```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118171445.png "QQ截图20201229183512.png")
 
 ##### 查看调用信息
 
 对于具体一个时间片的信息而言，你可以通过 -i 参数后边跟着对应的 INDEX 编号查看到他的详细信息。
 
-```
+```sh
 tt -i 1002
 ```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118171526.png "QQ截图20201229183512.png")
 
 ##### 重做一次调用
 
@@ -1591,11 +1590,9 @@ tt -i 1002
 
 tt 命令由于保存了当时调用的所有现场信息，所以我们可以自己主动对一个 INDEX 编号的时间片自主发起一次调用，从而解放你的沟通成本。此时你需要 -p 参数。通过 --replay-times 指定 调用次数，通过 --replay-interval 指定多次调用间隔(单位ms, 默认1000ms)
 
-```
+```sh
 tt -i 1002 -p
 ```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118171605.png "QQ截图20201229183512.png")
 
 #### options
 
@@ -1622,21 +1619,15 @@ tt -i 1002 -p
 options
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118172204.png "QQ截图20201229183512.png")
-
 ```sh
 # 获取 option 的值
 options json-format
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118172321.png "QQ截图20201229183512.png")
-
 ```sh
 # 设置指定的 option 例如，想打开执行结果存日志功能，输入如下命令即可：
 options save-result true
 ```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118172425.png "QQ截图20201229183512.png")
 
 ##### 小结
 
