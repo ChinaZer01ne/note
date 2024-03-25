@@ -392,6 +392,42 @@ ts=2018-11-28 19:22:35; [cost=29.969732ms] result=@ArrayList[
 
 > dashboard 显示当前系统的实时数据面板，按q或ctrl+c退出 
 
+##### 使用参考
+```sh
+$ dashboard
+ID   NAME                           GROUP           PRIORITY   STATE     %CPU      DELTA_TIME TIME      INTERRUPTE DAEMON
+-1   C2 CompilerThread0             -               -1         -         1.55      0.077      0:8.684   false      true
+53   Timer-for-arthas-dashboard-07b system          5          RUNNABLE  0.08      0.004      0:0.004   false      true
+22   scheduling-1                   main            5          TIMED_WAI 0.06      0.003      0:0.287   false      false
+-1   C1 CompilerThread0             -               -1         -         0.06      0.003      0:2.171   false      true
+-1   VM Periodic Task Thread        -               -1         -         0.03      0.001      0:0.092   false      true
+49   arthas-NettyHttpTelnetBootstra system          5          RUNNABLE  0.02      0.001      0:0.156   false      true
+16   Catalina-utility-1             main            1          TIMED_WAI 0.0       0.000      0:0.029   false      false
+-1   G1 Young RemSet Sampling       -               -1         -         0.0       0.000      0:0.019   false      true
+17   Catalina-utility-2             main            1          WAITING   0.0       0.000      0:0.025   false      false
+34   http-nio-8080-ClientPoller     main            5          RUNNABLE  0.0       0.000      0:0.016   false      true
+23   http-nio-8080-BlockPoller      main            5          RUNNABLE  0.0       0.000      0:0.011   false      true
+-1   VM Thread                      -               -1         -         0.0       0.000      0:0.032   false      true
+-1   Service Thread                 -               -1         -         0.0       0.000      0:0.006   false      true
+-1   GC Thread#5                    -               -1         -         0.0       0.000      0:0.043   false      true
+Memory                     used     total    max      usage    GC
+heap                       36M      70M      4096M    0.90%    gc.g1_young_generation.count   12
+g1_eden_space              6M       18M      -1       33.33%                                  86
+g1_old_gen                 30M      50M      4096M    0.74%    gc.g1_old_generation.count     0
+g1_survivor_space          491K     2048K    -1       24.01%   gc.g1_old_generation.time(ms)  0
+nonheap                    66M      69M      -1       96.56%
+codeheap_'non-nmethods'    1M       2M       5M       22.39%
+metaspace                  46M      47M      -1       98.01%
+Runtime
+os.name                                                        Mac OS X
+os.version                                                     10.15.4
+java.version                                                   15
+java.home                                                      /Library/Java/JavaVirtualMachines/jdk-15.jdk/Contents/Home
+systemload.average                                             10.68
+processors                                                     8
+uptime                                                         272s
+
+```
 
 ##### 数据说明
 
@@ -404,20 +440,52 @@ ts=2018-11-28 19:22:35; [cost=29.969732ms] result=@ArrayList[
 - TIME: 线程运行总时间，数据格式为分：秒
 - INTERRUPTED: 线程当前的中断位状态
 - DAEMON: 是否是daemon线程
+###### JVM 内部线程
 
+Java 8 之后支持获取 JVM 内部线程 CPU 时间，这些线程只有名称和 CPU 时间，没有 ID 及状态等信息（显示 ID 为-1）。 通过内部线程可以观测到 JVM 活动，如 GC、JIT 编译等占用 CPU 情况，方便了解 JVM 整体运行状况。
+
+- 当 JVM 堆(heap)/元数据(metaspace)空间不足或 OOM 时，可以看到 GC 线程的 CPU 占用率明显高于其他的线程。
+- 当执行`trace/watch/tt/redefine`等命令后，可以看到 JIT 线程活动变得更频繁。因为 JVM 热更新 class 字节码时清除了此 class 相关的 JIT 编译结果，需要重新编译。
+
+JVM 内部线程包括下面几种：
+
+- JIT 编译线程: 如 `C1 CompilerThread0`, `C2 CompilerThread0`
+- GC 线程: 如`GC Thread0`, `G1 Young RemSet Sampling`
+- 其它内部线程: 如`VM Periodic Task Thread`, `VM Thread`, `Service Thread`
+
+##### 截图展示
+![](dashboard.png)
 #### thread
 
 > thread 查看当前 JVM 的线程堆栈信息
 
 ##### 参数说明
+| 参数名称          | 参数说明                             |
+| ------------- | -------------------------------- |
+| _id_          | 线程 id                            |
+| [n:]          | 指定最忙的前 N 个线程并打印堆栈                |
+| [b]           | 找出当前阻塞其他线程的线程                    |
+| [i `<value>`] | 指定 cpu 使用率统计的采样间隔，单位为毫秒，默认值为 200 |
+| [--all]       | 显示所有匹配的线程                        |
 
-|参数名称|参数说明|
-|---|:-:|
-|d|线程id|
-|[n:]|指定最忙的前N个线程并打印堆栈|
-|[b]|找出当前阻塞其他线程的线程|
-|[i ]|指定cpu占比统计的采样间隔，单位为毫秒|
+##### cpu 使用率是如何统计出来的？
 
+这里的 cpu 使用率与 linux 命令`top -H -p <pid>` 的线程`%CPU`类似，一段采样间隔时间内，当前 JVM 里各个线程的增量 cpu 时间与采样间隔时间的比例。
+
+###### 工作原理说明：
+
+- 首先第一次采样，获取所有线程的 CPU 时间(调用的是`java.lang.management.ThreadMXBean#getThreadCpuTime()`及`sun.management.HotspotThreadMBean.getInternalThreadCpuTimes()`接口)
+- 然后睡眠等待一个间隔时间（默认为 200ms，可以通过`-i`指定间隔时间）
+- 再次第二次采样，获取所有线程的 CPU 时间，对比两次采样数据，计算出每个线程的增量 CPU 时间
+- 线程 CPU 使用率 = 线程增量 CPU 时间 / 采样间隔时间 * 100%
+
+注意
+
+注意： 这个统计也会产生一定的开销（JDK 这个接口本身开销比较大），因此会看到 as 的线程占用一定的百分比，为了降低统计自身的开销带来的影响，可以把采样间隔拉长一些，比如 5000 毫秒。
+
+提示
+
+另外一种查看 Java 进程的线程 cpu 使用率方法：可以使用[`show-busy-java-threads`在新窗口打开](https://github.com/oldratlee/useful-scripts/blob/dev-2.x/docs/java.md#-show-busy-java-threads)这个脚本
 ##### 举例
 
 ```sh

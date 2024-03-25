@@ -215,6 +215,10 @@
   },
   "active": "42a1bb09ee705063",
   "lastOpenFiles": [
+    "Summary/image/arthas/dashboard.png",
+    "Summary/image/arthas/dashboard.png.crdownload",
+    "Summary/image/arthas",
+    "Summary/image/新建文件夹",
     "Summary/Concurrent programming.md",
     "Summary/JVM.md",
     "Summary/Java.md",
@@ -241,11 +245,8 @@
     "Summary/image/zookeeper/zk分布式屏障实现.png",
     "Summary/image/zookeeper/zk分布式屏障实现.png.crdownload",
     "Summary/image/zookeeper/zk分布式屏障.png",
-    "Summary/image/zookeeper/zk分布式屏障.png.crdownload",
     "Summary/image/zookeeper/zk-fifo实现.png",
-    "Summary/image/zookeeper/zk-fifo实现.png.crdownload",
     "Summary/image/zookeeper/zk-fifo.png",
-    "Summary/image/zookeeper/zk-fifo.png.crdownload",
     "Summary/Architecture Design.md",
     "Summary/Spring Cloud.md",
     "Summary/Computer Network.md",
@@ -259,7 +260,6 @@
     "Summary/ES.md",
     "Summary/Mysql.md",
     "().md",
-    "停顿时间（或响应时间）.md",
-    "conflict-files-obsidian-git.md"
+    "停顿时间（或响应时间）.md"
   ]
 }
