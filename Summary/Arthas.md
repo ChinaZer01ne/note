@@ -167,9 +167,7 @@ Arthas目前支持Web Console，用户在attach成功之后，可以直接访问
 
 ### 5. dashboard 仪表板
 
-输入dashboard(仪表板)，按回车/enter，会展示当前进程的信息，按ctrl+c可以中断执行。
-
-注：输入前面部分字母，按tab可以自动补全命令
+输入dashboard(仪表板)，按回车`/enter`，会展示当前进程的信息，按`ctrl+c`可以中断执行。
 
 - 1. 第一部分是显示JVM中运行的所有线程：所在线程组，优先级，线程的状态，CPU的占用率，是否是后台进程等
 - 2. 第二部分显示的JVM内存的使用情况
@@ -210,7 +208,7 @@ java.home              /Library/Java/JavaVir
                        e/jre
 ```
 
-### 6. 通过 thread 命令来获取到 arthas-demo 进程的 Main Class
+### 6. 通过 thread 命令来获取到 `math-game` 进程的 Main Class
 
 `thread 1`会打印线程 ID 1 的栈，通常是 main 函数的线程。
 
@@ -218,10 +216,11 @@ java.home              /Library/Java/JavaVir
 $ thread 1 | grep 'main('
     at demo.MathGame.main(MathGame.java:17)
 ```
+
 ### 7. 通过 jad 来反编译 Main Class
 ```sh
 $ jad demo.MathGame
-`````
+```
 
 ```java
 ClassLoader:
@@ -391,7 +390,8 @@ ts=2018-11-28 19:22:35; [cost=29.969732ms] result=@ArrayList[
 ### jvm相关
 #### dashboard
 
-> dashboard 显示当前系统的实时数据面板，按q或ctrl+c退出 ![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118141418.png "QQ截图20201229183512.png")
+> dashboard 显示当前系统的实时数据面板，按q或ctrl+c退出 
+
 
 ##### 数据说明
 
