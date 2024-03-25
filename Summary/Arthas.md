@@ -1105,15 +1105,15 @@ jad java.lang.String
 
 > 反编绎时只显示源代码，默认情况下，反编译结果里会带有ClassLoader信息，通过--source-only选项，可以只打印源代码。方便和mc/redefine命令结合使用。jad --source-only demo.MathGame
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118150614.png "QQ截图20201229183512.png")
-
 ```sh
 # 反编译指定的函数
 jad demo.MathGame main
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118150708.png "QQ截图20201229183512.png")
-
+```sh
+# 反编译时不显示行号
+jad demo.MathGame main --lineNumber false
+```
 #### mc
 
 > mc Memory Compiler/内存编译器，编译.java文件生成.class
@@ -1127,8 +1127,6 @@ mc /root/Hello.java
 # 可以通过-d命令指定输出目录
 mc -d /root/bbb /root/Hello.java
 ```
-
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118150825.png "QQ截图20201229183512.png")
 
 > redefine 加载外部的.class文件，redefine到JVM里
 
@@ -1186,8 +1184,6 @@ mc /root/MathGame.java -d /root
 redefine /root/demo/MathGame.class
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118151335.png "QQ截图20201229183512.png")
-
 #### dump
 
 > dump 将已加载类的字节码文件保存到特定目录：logs/arthas/classdump/
@@ -1212,9 +1208,20 @@ dump java.lang.String
 dump demo.*
 ```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118151537.png "QQ截图20201229183512.png")
+```sh
+$ dump java.lang.String
+ HASHCODE  CLASSLOADER  LOCATION
+ null                   /Users/admin/logs/arthas/classdump/java/lang/String.class
+Affect(row-cnt:1) cost in 119 ms.
+```
 
-![输入图片说明](https://bright-boy.gitee.io/technical-notes/jvm/images/QQ%E6%88%AA%E5%9B%BE20220118151558.png "QQ截图20201229183512.png")
+```sh
+$ dump demo.*
+ HASHCODE  CLASSLOADER                                    LOCATION
+ 3d4eac69  +-sun.misc.Launcher$AppClassLoader@3d4eac69    /Users/admin/logs/arthas/classdump/sun.misc.Launcher$AppClassLoader-3d4eac69/demo/MathGame.class
+             +-sun.misc.Launcher$ExtClassLoader@66350f69
+Affect(row-cnt:1) cost in 39 ms.
+```
 
 #### classloader
 
