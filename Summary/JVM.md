@@ -1657,9 +1657,9 @@ select * from INSTANCEOF java.util.Vector
 2. **定位具体线程**
    > 通过 `top - Hp {PID}` 找到具体线程pid
 3. **将线程pid转换为十六进制**
-   > 通过 `printf "x%\n" {pid}`
+   > 通过 `printf "%x" {pid}`
 4. **定位CPU飙高的代码**
-   > 通过 `jstack {pid} | grep -A {转换后的16进制pid}`
+   > 通过 `jstack {PID} | grep {转换后的16进制pid} -A {向后查看的行数}` 
 
 也可以通过Arthas来定位问题。
 ## 实际案例
