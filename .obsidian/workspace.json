@@ -49,7 +49,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Design Docments.md",
+                "file": "Summary/DDD.md",
                 "mode": "source",
                 "source": false
               }
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Design Docments.md",
+                "file": "Summary/DDD.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Design Docments.md",
+                "file": "Summary/DDD.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Design Docments.md"
+                "file": "Summary/DDD.md"
               }
             }
           },
@@ -227,14 +227,20 @@
   },
   "active": "ce28a95972cc4ce9",
   "lastOpenFiles": [
-    "Summary/JVM.md",
-    "Summary/未命名.md",
-    "Summary/大杂烩.md",
-    "Summary/Design Docments.md",
-    "Summary/Spring.md",
-    "Summary/Build Tool.md",
-    "Summary/TO DO LIST.md",
+    "Summary/Algorithm.md",
+    "Summary/Architecture Design.md",
     "Summary/Arthas.md",
+    "Summary/Build Tool.md",
+    "Summary/Computer Network.md",
+    "Summary/Concurrent programming.md",
+    "Summary/Design Patterns.md",
+    "Summary/Distributed Theory.md",
+    "Summary/Design Docments.md",
+    "Summary/JVM.md",
+    "Summary/DDD.md",
+    "Summary/大杂烩.md",
+    "Summary/Spring.md",
+    "Summary/TO DO LIST.md",
     "Summary/image/arthas/arthas-output-svg.jpg",
     "Summary/image/arthas/arthas-output-svg.jpg.crdownload",
     "Summary/image/arthas/arthas-output.jpg",
@@ -243,10 +249,8 @@
     "Summary/image/arthas/dashboard.png.crdownload",
     "Summary/image/arthas",
     "Summary/image/新建文件夹",
-    "Summary/Concurrent programming.md",
     "Summary/Java.md",
     "Summary/System Design.md",
-    "Summary/Design Patterns.md",
     "Summary/Log.md",
     "Summary/MicroService Design.md",
     "怎么选择垃圾回收器？.md",
@@ -263,13 +267,9 @@
     "Summary/image/zookeeper/单机zk启动流程.png.crdownload",
     "Summary/image/zookeeper/zk架构图.png",
     "Summary/image/zookeeper/zk分布式屏障实现.png",
-    "Summary/Architecture Design.md",
     "Summary/Spring Cloud.md",
-    "Summary/Computer Network.md",
     "Summary/MarkDown.md",
     "daliy_note/2023-09-27.md",
-    "Summary/Distributed Theory.md",
-    "Summary/Algorithm.md",
     "Summary/IO.md",
     "Summary/ES.md",
     "Summary/Mysql.md"
