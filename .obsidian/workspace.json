@@ -49,7 +49,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/DDD.md",
+                "file": "daliy_note/2023-09-27.md",
                 "mode": "source",
                 "source": false
               }
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/DDD.md",
+                "file": "daliy_note/2023-09-27.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/DDD.md",
+                "file": "daliy_note/2023-09-27.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/DDD.md"
+                "file": "daliy_note/2023-09-27.md"
               }
             }
           },
@@ -227,6 +227,8 @@
   },
   "active": "ce28a95972cc4ce9",
   "lastOpenFiles": [
+    "Summary/大杂烩.md",
+    "Summary/DDD.md",
     "Summary/Algorithm.md",
     "Summary/Architecture Design.md",
     "Summary/Arthas.md",
@@ -237,8 +239,6 @@
     "Summary/Distributed Theory.md",
     "Summary/Design Docments.md",
     "Summary/JVM.md",
-    "Summary/DDD.md",
-    "Summary/大杂烩.md",
     "Summary/Spring.md",
     "Summary/TO DO LIST.md",
     "Summary/image/arthas/arthas-output-svg.jpg",
