@@ -1,4 +1,5 @@
 # 战略设计
+## 领域划分
 # 战术设计
 ## 实体
 ### 验证
@@ -60,3 +61,21 @@
 
 ### 规范
 1. 资源库应该有谁调用？实体内还是实体外？
+
+# 分层
+- 接入层  
+	- api  
+- application  
+	- application service  
+- domin  
+	- entity  
+	- vo
+	- aggravate root  
+	- factory  
+		- 创建实体  
+	- domin service  
+- infrastructure  
+	- repository  
+		- 获取实体  
+	- 中间件  
+	- rpc
