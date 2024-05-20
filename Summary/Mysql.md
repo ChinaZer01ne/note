@@ -728,11 +728,15 @@ filesort有两种排序算法：双路排序和单路排序。
 
 除了对回滚段的影响，长事务还占用锁资源，也可能拖垮整个库。
 # Mysql的锁
-锁是实现事务写写隔离性的一种方式。锁存在Innodb的内存的一块区域中，其结构如下：
+锁是实现事务写写隔离性的一种方式。
+
+## 数据结构
+
+锁存在Innodb的内存的一块区域中，其结构如下：
 * 上锁事务的信息：记录哪个事务持有锁
 * 被锁的索引信息：可能锁在聚簇索引/二级索引上
 * 锁的类型和模式信息
-	* lock_mode
+	* **lock_mode**
 		* LOCK_S：共享锁（读锁）
 			* `lock in share mode`
 		* LOCK_X：独占锁（写锁）
@@ -740,20 +744,15 @@ filesort有两种排序算法：双路排序和单路排序。
 		* LOCK_IS：共享意向锁
 		* LOCK_IX：共享独占锁
 		* LOCK_AUTO_INC：自增锁
-	* lock_type
+	* **lock_type**
 		* 行锁 （LOCK_S、LOCK_X）
 		* 表锁 （LOCK_IS、LOCK_IX、LOCK_AUTO_INC）
 		* 页锁（BDB执行引擎）
-	* rec_lock_type
-		* LOCK_REC_NOT_GAP：精准行锁
-			* 只锁行
-		* LOCK_GAP：间隙锁
-			* 锁行与行的间隙
-		* LOCK_ORDINARY：NEXT_KEY锁
-			* LOCK_REC_NOT_GAP + LOCK_GAP
-			* 锁行的同时又锁行的间隙
-		* LOCK_INSERT_INTENTION：插入意向锁
-			* 共享锁
+	* **rec_lock_type**
+		* LOCK_REC_NOT_GAP：精准行锁，只锁行
+		* LOCK_GAP：间隙锁，锁行与行的间隙
+		* LOCK_ORDINARY：NEXT_KEY锁 = LOCK_REC_NOT_GAP + LOCK_GAP；锁行的同时又锁行的间隙
+		* LOCK_INSERT_INTENTION：插入意向锁，共享锁
 * 其他特有信息
 ## 间隙锁和Next-Key Lock
 ### 什么是间隙锁
@@ -767,6 +766,8 @@ next-key lock = 间隙锁 + 行锁
 * 索引上的等值查询，给唯一索引加锁的时候， `next-key lock`退化为行锁。
 * 索引上的等值查询，向右遍历时且最后一个值不满足等值条件的时候，`next-key lock`退化为间隙锁。
 * 唯一索引上的范围查询会访问到不满足条件的第一个值为止。
+
+
 # MVCC
 MVCC（Multi-Version Concurrency Control）是实现事务读写隔离性的另一种方式。
 ## MVCC 如何实现事务隔离性的？
