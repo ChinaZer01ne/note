@@ -639,17 +639,20 @@ explain select id from user order by abs(age);
 
 ### 排序算法
 
-filesort有两种排序算法：双路排序和单路排序。
+filesort有两种排序算法：**双路排序**和**单路排序**。
 
-- 双路排序：需要两次磁盘扫描读取，得到最终数据。第一次将排序字段读取出来，然后排序；第二 次去读取其他字段数据。
+- 双路排序：需要两次磁盘扫描读取，得到最终数据。第一次将排序字段读取出来，然后排序；第二次去读取其他字段数据。
 - 单路排序：从磁盘查询所需的所有列数据，然后在内存排序将结果返回。
-- 如果查询数据超出缓存 sort_buffer，会导致多次磁盘读取操作，并创建临时表，最后产生了多次IO，反而会增加负担。
-- 解决方案：少使用select *；增加sort_buffer_size容量和max_length_for_sort_data容量。
+
+如果查询数据超出缓存 sort_buffer，会导致多次磁盘读取操作，并创建临时表，最后产生了多次IO，反而会增加负担。
+
+解决方案：少使用select ；*增加sort_buffer_size容量和max_length_for_sort_data容量。
 
 > 如果Explain分析SQL时Extra属性显示Using filesort，表示使用了filesort排序方式，需要优化。如果Extra属性显示Using index时，表示覆盖索引，所有操作在索引上完成。
 
 ### 索引下推
-左前缀的模糊查询可以使用索引。还是上面的例子，索引(name, age) ，当我们 WHERE条件中使用 name LIKE '张%' AND age = 10 时。MySQL 5.6 及以后的版本可以对查询做下推的优化，如下图所示：
+
+左前缀的模糊查询可以使用索引。还是上面的例子，索引`(name, age)` ，当我们 WHERE条件中使用 `name LIKE '张%' AND age = 10` 时。MySQL 5.6 及以后的版本可以对查询做下推的优化，如下图所示：
 ![](无索引下推执行流程.jpg)
 
 ![](有索引下推执行流程.jpg)
