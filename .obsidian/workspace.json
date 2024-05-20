@@ -56,6 +56,30 @@
             }
           },
           {
+            "id": "cd72376271d089ca",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Summary/Mysql.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "0e0b8d0421a54c60",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Summary/Mysql.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "aabfd764baf98b4b",
             "type": "leaf",
             "state": {
@@ -228,11 +252,12 @@
   "active": "ce28a95972cc4ce9",
   "lastOpenFiles": [
     "Summary/TO DO LIST.md",
-    "Summary/MarkDown.md",
-    "Summary/Design Docments.md",
-    "Summary/Mysql.md",
     "Summary/Design Patterns.md",
+    "Summary/Mysql.md",
+    "Summary/MarkDown.md",
     "Summary/DDD.md",
+    "Summary/MicroService Design.md",
+    "Summary/Design Docments.md",
     "Summary/压测.md",
     "Summary/稳定性治理.md",
     "Summary/JVM.md",
@@ -257,7 +282,6 @@
     "Summary/Java.md",
     "Summary/System Design.md",
     "Summary/Log.md",
-    "Summary/MicroService Design.md",
     "怎么选择垃圾回收器？.md",
     "Summary/Zookeeper.md",
     "Summary/image/zookeeper/zk选举流程图.png",
