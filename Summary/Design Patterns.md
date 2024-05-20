@@ -251,7 +251,7 @@ Java 类的加载过程包括：加载、验证、准备、解析、初始化。
 public enum  ElvisEnum {
     INSTANCE;
     
-    public void get(){}
+    public void get() {}
 }
 
 ```
@@ -347,6 +347,16 @@ public class User {
 ## 享元模式
 
 ## 代理模式
+### 应用
+- 动态代理相关  
+    - JDK  
+        - Proxy  
+    - cglib  
+    - 相关应用  
+        性能检测、 日志、事务
+        - Spring源码  
+            - AOP  
+        - Mybatis源码
 
 # 行为型模式
 
