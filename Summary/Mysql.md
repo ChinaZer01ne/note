@@ -745,22 +745,14 @@ filesort有两种排序算法：双路排序和单路排序。
 		* LOCK_IX：共享独占锁
 		* LOCK_AUTO_INC：自增锁
 	* **lock_type**
-		* 行锁 （LOCK_S、LOCK_X）
-		* 表锁 （LOCK_IS、LOCK_IX、LOCK_AUTO_INC）
-		* 页锁（BDB执行引擎）
 		* LOCK_TABLE：也就是当第5个比特位置为1时，表示表级锁  
 		- LOCK_REC：也就是当第6个比特位置为1时，表示行级锁  
-		- LOCK_ORDINARY  
-		    - 表示next-key锁  
-		- LOCK_GAP  
-		    - 第10个比特位置为1时，表示gap锁  
-		- LOCK_REC_NOT_GAP  
-		    - 第11个比特位置为1时，表示正经记录锁  
-		- LOCK_INSERT_INTENTION  
-		    - 第12个比特位置为1时，表示插入意向锁  
+		- LOCK_ORDINARY：表示next-key锁  
+		- LOCK_GAP：第10个比特位置为1时，表示gap锁  
+		- LOCK_REC_NOT_GAP：第11个比特位置为1时，表示正经记录锁  
+		- LOCK_INSERT_INTENTION：第12个比特位置为1时，表示插入意向锁  
 		- 其他的类型  
-		- LOCK_WAIT  
-		    - 第9个比特位置为1时，表示is_waiting为true，也就是当前事务尚未获取到锁，处在等待状态；当这个比特位为0时，表示is_waiting为false，也就是当前事务获取锁成功
+		- LOCK_WAIT：第9个比特位置为1时，表示is_waiting为true，也就是当前事务尚未获取到锁，处在等待状态；当这个比特位为0时，表示is_waiting为false，也就是当前事务获取锁成功
 	* **rec_lock_type**
 		* LOCK_REC_NOT_GAP：精准行锁，只锁行
 		* LOCK_GAP：间隙锁，锁行与行的间隙
@@ -768,9 +760,14 @@ filesort有两种排序算法：双路排序和单路排序。
 		* LOCK_INSERT_INTENTION：插入意向锁，共享锁
 * 其他特有信息
 * 一堆比特位
+
+## 意向表锁
+
+IS、IX锁是表级锁，它们的提出仅仅为了在之后加表级别的S锁和X锁时可以快速判断表中的记录是否被上锁，以避免用遍历的方式来查看表中有没有上锁的记录，也就是说其实IS锁和IX锁是兼容的，IX锁和IX锁是兼容的
+
 ## 间隙锁和Next-Key Lock
 ### 什么是间隙锁
-* 左开右避
+* 左开右闭
 ### 什么是next-key lock
 next-key lock = 间隙锁 + 行锁
 
