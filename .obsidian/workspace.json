@@ -49,7 +49,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/JVM.md",
+                "file": "Summary/稳定性治理.md",
                 "mode": "source",
                 "source": false
               }
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/JVM.md",
+                "file": "Summary/稳定性治理.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/JVM.md",
+                "file": "Summary/稳定性治理.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/JVM.md"
+                "file": "Summary/稳定性治理.md"
               }
             }
           },
@@ -227,6 +227,8 @@
   },
   "active": "ce28a95972cc4ce9",
   "lastOpenFiles": [
+    "Summary/JVM.md",
+    "Summary/稳定性治理.md",
     "daliy_note/2023-09-27.md",
     "Summary/大杂烩.md",
     "Summary/DDD.md",
@@ -239,7 +241,6 @@
     "Summary/Design Patterns.md",
     "Summary/Distributed Theory.md",
     "Summary/Design Docments.md",
-    "Summary/JVM.md",
     "Summary/Spring.md",
     "Summary/TO DO LIST.md",
     "Summary/image/arthas/arthas-output-svg.jpg",
@@ -271,7 +272,6 @@
     "Summary/Spring Cloud.md",
     "Summary/MarkDown.md",
     "Summary/IO.md",
-    "Summary/ES.md",
-    "Summary/Mysql.md"
+    "Summary/ES.md"
   ]
 }
