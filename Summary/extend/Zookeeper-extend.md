@@ -1,3 +1,6 @@
+# Zookeeper环境搭建
+
+环境搭建，略
 # Java调用Zookeeper
 ## 原生API
 
