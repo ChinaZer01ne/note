@@ -1903,13 +1903,13 @@ clusterNode数据结构的slots属性和numslot属性记录了节点负责处理
 
 slots属性是一个二进制位数组(bit array)，这个数组的长度为16384/8=2048个字节，共包含16384个二进制位。Master节点用bit来标识对于某个槽自己是否拥有，时间复杂度为O(1)
 
-![](http://images.12345.okgoes.com/blog/images/2021/2/17/160410/20210214015506450.png)
+![](slot示例.jpg)
 
 （4）集群所有槽的指派信息：
 
 当收到集群中其他节点发送的信息时，通过将节点槽的指派信息保存在本地的clusterState.slots数组里面，程序要检查槽i是否已经被指派，又或者取得负责处理槽i的节点，只需要访问clusterState.slots[i]的值即可，时间复杂度仅为O(1)
 
-![](http://images.12345.okgoes.com/blog/images/2021/2/17/189954/20210214015537608.png)
+![](slot数组.jpg)
 
 如上图所示，ClusterState 中保存的 Slots 数组中每个下标对应一个槽，每个槽信息中对应一个 clusterNode 也就是缓存的节点。这些节点会对应一个实际存在的 Redis 缓存服务，包括 IP 和 Port 的信息。Redis Cluster 的通讯机制实际上保证了每个节点都有其他节点和槽数据的对应关系。无论Redis 的客户端访问集群中的哪个节点都可以路由到对应的节点上，因为每个节点都有一份 ClusterState，它记录了所有槽和节点的对应关系。
 
