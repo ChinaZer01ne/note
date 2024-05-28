@@ -251,8 +251,15 @@
   },
   "active": "ce28a95972cc4ce9",
   "lastOpenFiles": [
-    "Summary/面试问题.md",
+    "Summary/image/Redis/AOF重写流程.jpg.crdownload",
+    "Summary/image/Redis/AOF重写.png",
+    "Summary/image/Redis/AOF重写.png.crdownload",
+    "Redis-extend.md",
     "Summary/Redis.md",
+    "Summary/extend/Redis-extend.md",
+    "Summary/image/Redis/RDB持久化.jpg",
+    "Summary/image/Redis/RDB持久化.jpg.crdownload",
+    "Summary/面试问题.md",
     "Summary/大杂烩.md",
     "Summary/Java.md",
     "Summary/Design Patterns.md",
@@ -287,15 +294,8 @@
     "Summary/Concurrent programming.md",
     "Summary/DDD.md",
     "Summary/ES.md",
-    "Summary/IO.md",
-    "Summary/JVM.md",
-    "Summary/MarkDown.md",
-    "Summary/extend",
     "Summary/image/arthas/arthas-output-svg.jpg",
-    "Summary/image/arthas/arthas-output-svg.jpg.crdownload",
     "Summary/image/arthas/arthas-output.jpg",
-    "Summary/image/arthas/dashboard.png",
-    "Summary/image/zookeeper/zk选举流程图.png",
-    "Summary/image/zookeeper/FastLeaderElection类结构.jpg"
+    "Summary/image/arthas/dashboard.png"
   ]
 }
