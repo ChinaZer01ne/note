@@ -251,6 +251,13 @@
   },
   "active": "ce28a95972cc4ce9",
   "lastOpenFiles": [
+    "Summary/image/Redis/混合持久化文件.png",
+    "Summary/image/Redis/混合持久化文件.png.crdownload",
+    "Summary/image/Redis/AOF重写流程.jpg",
+    "Summary/image/Redis/AOF重写流程 .jpg",
+    "Summary/image/Redis/AOF重写流程 (2).jpg",
+    "Summary/image/Redis/u=936723427,1744393062&fm=253&app=138&f=JPEG.jpg",
+    "Summary/image/Redis/u=936723427,1744393062&fm=253&app=138&f=JPEG.jpg.crdownload",
     "Summary/image/Redis/AOF重写流程.jpg.crdownload",
     "Summary/image/Redis/AOF重写.png",
     "Summary/image/Redis/AOF重写.png.crdownload",
@@ -277,13 +284,9 @@
     "Summary/image/Redis/rehash.jpg.crdownload",
     "Summary/image/Redis",
     "Summary/image/redis",
-    "Summary/image/新建文件夹",
     "Summary/Zookeeper.md",
     "Summary/extend/Zookeeper-extend.md",
     "Summary/image/zookeeper/zk实现master选举.png",
-    "Summary/image/zookeeper/zk实现master选举.png.crdownload",
-    "Summary/image/zookeeper/master选举案例.png",
-    "Summary/image/zookeeper/master选举案例.png.crdownload",
     "Summary/TO DO LIST.md",
     "Summary/压测.md",
     "Summary/Algorithm.md",
@@ -293,9 +296,6 @@
     "Summary/Computer Network.md",
     "Summary/Concurrent programming.md",
     "Summary/DDD.md",
-    "Summary/ES.md",
-    "Summary/image/arthas/arthas-output-svg.jpg",
-    "Summary/image/arthas/arthas-output.jpg",
-    "Summary/image/arthas/dashboard.png"
+    "Summary/ES.md"
   ]
 }
