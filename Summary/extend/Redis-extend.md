@@ -157,23 +157,21 @@ void slowlogPushEntryIfNeeded(robj **argv, int argc, long long duration) {
     while (listLength(server.slowlog) > server.slowlog_max_len) /* 如果列表长度 > 指定长度 */
         listDelNode(server.slowlog,listLast(server.slowlog)); /* 移除列表尾部元素*/
 }
-
-
 ```
 
 `slowlogPushEntryIfNeeded`函数的作用有两个:
 
 1. 检查命令的执行时长是否超过 `slowlog-log-slower-than` 选项所设置的时间， 如果是的话， 就为命令创建一个新的日志， 并将新日志添加到 slowlog 链表的表头。
-2. 检查慢查询日志的长度是否超过 slowlog-max-len 选项所设置的长度， 如果是的话， 那么将多出来的日志从 slowlog 链表中删除掉。
+2. 检查慢查询日志的长度是否超过 `slowlog-max-len` 选项所设置的长度， 如果是的话， 那么将多出来的日志从 slowlog 链表中删除掉。
 
 ## 慢查询定位&处理
 
-使用slowlog get 可以获得执行较慢的redis命令，针对该命令可以进行优化:
+使用`slowlog get` 可以获得执行较慢的redis命令，针对该命令可以进行优化:
 
 1. 尽量使用短的key，对于value有些也可精简，能使用int就int。
 2. 避免使用keys \*、hgetall等全量操作。
 3. 减少大key的存取，打散为小key
-4. 将rdb改为aof模式，rdb fork 子进程，数据量过大主进程阻塞，redis大幅下降，关闭持久化 ， (适合于数据量较小) 改aof 命令式
+4. 将rdb改为aof模式，rdb fork 子进程，数据量过大主进程阻塞，redis性能大幅下降，关闭持久化 ， (适合于数据量较小) 改aof 命令式
 5. 想要一次添加多条数据的时候可以使用管道
 6. 尽可能地使用哈希存储
 7. 尽量限制下redis使用的内存大小，这样可以避免redis使用swap分区或者出现OOM错误，避免内存与硬盘的swap
