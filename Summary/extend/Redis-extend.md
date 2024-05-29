@@ -127,39 +127,36 @@ EVAL 命令要求你在每次执行脚本的时候都发送一次脚本主体(sc
 	192.168.24.131:6380> get n2
 	```
 
-- ·：杀死当前正在运行的脚本
+- `SCRIPT KILL`：杀死当前正在运行的脚本
 
 ## 脚本管理命令实现
 
 使用redis-cli直接执行lua脚本。
 
-test.lua脚本内容
+test.lua：
 
 ```lua
 return redis.call('set',KEYS[1],ARGV[1])
-
 ```
 
 ```Bash
-./redis-cli -h 127.0.0.1 -p 6379 --eval test.lua name:6 , 'caocao' #，两边有空格
+# ，两边有空格
+./redis-cli -h 127.0.0.1 -p 6379 --eval test.lua name:6 , 'caocao' 
 ```
 
-list.lua
-
-脚本内容
+list.lua：
 
 ```lua
 local key=KEYS[1]
 local list=redis.call("lrange",key,0,-1);
 return list;
-
 ```
 
 ```Bash
 ./redis-cli --eval list.lua list
 ```
 
-利用Redis整合Lua，主要是为了性能以及事务的原子性。因为redis帮我们提供的事务功能太差。
+利用Redis整合Lua，主要是为了性能以及**事务的原子性**。因为redis帮我们提供的事务功能太差。
 
 ## 脚本复制
 
