@@ -339,19 +339,19 @@ public String discount() throws IOException{
 如果该客户端面对的是一个redis cluster集群，他首先会根据hash节点选择一台机器。 发送lua脚本到redis服务器上，脚本如下:
 
 ```lua
+--看有没有锁
 if (redis.call('exists',KEYS[1])==0) 
 then 
-  --看有没有锁
-  redis.call('hset',KEYS[1],ARGV[2],1) ; 
   --无锁 加锁
+  redis.call('hset',KEYS[1],ARGV[2],1) ;  
   redis.call('pexpire',KEYS[1],ARGV[1]) ; 
   return nil; 
 end ;
+--我加的锁
 if (redis.call('hexists',KEYS[1],ARGV[2]) ==1 ) 
 then 
-  --我加的锁 
-  redis.call('hincrby',KEYS[1],ARGV[2],1) ; 
   --重入锁 
+  redis.call('hincrby',KEYS[1],ARGV[2],1) ; 
   redis.call('pexpire',KEYS[1],ARGV[1]) ; 
   return nil; 
 end ;
@@ -439,14 +439,9 @@ return nil;
 ```
 
 - KEYS[1]：需要加锁的key，这里需要是字符串类型。
-    
 - KEYS[2]：redis消息的ChannelName,一个分布式锁对应唯一的一个channelName:“redisson_lockchannel{” + getName() + “}”
-    
 - ARGV[1] :reids消息体，这里只需要一个字节的标记就可以，主要标记redis的key已经解锁，再结合redis的Subscribe，能唤醒其他订阅解锁消息的客户端线程申请锁。
-    
 - ARGV[2] :锁的超时时间，防止死锁
-    
 - ARGV[3] :锁的唯一标识，也就是刚才介绍的 id(UUID.randomUUID()) + “:” + threadId
-    
 
-如果执行lock.unlock()，就可以释放分布式锁，此时的业务逻辑也是非常简单的。 其实说白了，就是每次都对myLock数据结构中的那个加锁次数减1。 如果发现加锁次数是0了，说明这个客户端已经不再持有锁了，此时就会用: `del myLock`命令，从redis里删除这个key。 然后呢，另外的客户端2就可以尝试完成加锁了。
+如果执行`lock.unlock()`，就可以释放分布式锁，此时的业务逻辑也是非常简单的。 其实说白了，就是每次都对myLock数据结构中的那个加锁次数减1。 如果发现加锁次数是0了，说明这个客户端已经不再持有锁了，此时就会用: `del myLock`命令，从redis里删除这个key。 然后呢，另外的客户端2就可以尝试完成加锁了。

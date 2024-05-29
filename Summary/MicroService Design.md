@@ -173,6 +173,45 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 3. 要是系统 B 执行成功就 ok 了；要是系统 B 执行失败了，那么最大努力通知服务就定时尝试重新调用系统 B，反复 N 次，最后还是不行就放弃。
 
 # 分布式锁
+
+# 分布式锁的实际应用
+
+- 数据并发竞争
+    
+    利用分布式锁可以将处理串行化，前面已经讲过了。
+    
+- 防止库存超卖
+    
+    ![](https://secure2.wostatic.cn/static/tWkbhYRALuQTzUgvnwgTBg/image.png?auth_key=1716829222-dUFULiuuMhBuzHeeBbFCvt-0-f48aeb43063d9a144c25f3de41142597)
+    
+    订单1下单前会先查看库存，库存为10，所以下单5本可以成功; 订单2下单前会先查看库存，库存为10，所以下单8本可以成功;
+    
+    订单1和订单2 同时操作，共下单13本，但库存只有10本，显然库存不够了，这种情况称为库存超卖。 可以采用分布式锁解决这个问题。
+    
+    ![](https://secure2.wostatic.cn/static/bDwQVtFtG7Tnbch15ziZvA/image.png?auth_key=1716829223-eunPVncBEBgqaC4rVkERZf-0-f633340bfe81139a7c7d3944b2186d68)
+    
+    订单1和订单2都从Redis中获得分布式锁(setnx)，谁能获得锁谁进行下单操作，这样就把订单系统下单 的顺序串行化了，就不会出现超卖的情况了。伪码如下:
+    
+
+```java
+//加锁并设置有效期 
+if(redis.lock("RDL",200)){
+    //判断库存
+    if (orderNum<getCount()){ 
+        //加锁成功 ,可以下单 
+        order(5);
+        //释放锁 
+        redis,unlock("RDL");
+    }
+}
+```
+
+```
+注意此种方法会降低处理效率，这样不适合秒杀的场景，秒杀可以使用CAS和Redis队列的方式。 
+```
+
+
+
 ### [Redis 分布式锁](https://github.com/doocs/advanced-java/blob/main/docs/distributed-system/distributed-lock-redis-vs-zookeeper.md#redis-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81)
 
 官方叫做 `RedLock` 算法，是 Redis 官方支持的分布式锁算法。

@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/extend/Redis-extend.md",
+                "file": "Summary/MicroService Design.md",
                 "mode": "source",
                 "source": false
               }
@@ -146,7 +146,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/extend/Redis-extend.md",
+                "file": "Summary/MicroService Design.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -163,7 +163,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/extend/Redis-extend.md",
+                "file": "Summary/MicroService Design.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -186,7 +186,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/extend/Redis-extend.md"
+                "file": "Summary/MicroService Design.md"
               }
             }
           },
@@ -239,10 +239,11 @@
   },
   "active": "42a1bb09ee705063",
   "lastOpenFiles": [
-    "Summary/image/Redis/Redisson.jpg",
-    "Summary/image/Redis/Redisson.jpg.crdownload",
+    "Summary/Distributed Theory.md",
     "Summary/Redis.md",
     "Summary/extend/Redis-extend.md",
+    "Summary/image/Redis/Redisson.jpg",
+    "Summary/image/Redis/Redisson.jpg.crdownload",
     "Summary/Zookeeper.md",
     "Summary/Design Docments.md",
     "Summary/extend/Zookeeper-extend.md",
@@ -259,7 +260,6 @@
     "Summary/image/Redis/客户端跳转过程.jpg",
     "Summary/image/Redis/1716918704799(1).jpg",
     "Summary/image/Redis/slot数组.jpg",
-    "Summary/image/Redis/1716918573858(1).jpg",
     "Summary/image/Redis/aof恢复png.png.crdownload",
     "Summary/image/Redis/混合持久化文件.png.crdownload",
     "Summary/image/Redis/u=936723427,1744393062&fm=253&app=138&f=JPEG.jpg.crdownload",
@@ -270,7 +270,6 @@
     "Summary/大杂烩.md",
     "Summary/Java.md",
     "Summary/Design Patterns.md",
-    "Summary/Distributed Theory.md",
     "Summary/Spring.md",
     "Summary/Spring Cloud.md",
     "Summary/System Design.md",
