@@ -237,13 +237,11 @@ EXEC
 
 # [Redisson](https://redisson.org/)
 
-[Redisson](https://redisson.org/)是架设在[Redis](http://redis.cn/)基础上的一个Java驻内存数据网格（In-Memory Data Grid），简化了分布式环境中程序相互之间的协作，基于NIO的Netty框架上，生产环境使用分布式锁。。
+[Redisson](https://redisson.org/)是架设在[Redis](http://redis.cn/)基础上的一个Java驻内存数据网格（In-Memory Data Grid），基于NIO的Netty框架，简化了分布式环境中程序相互之间的协作。
 
 [https://github.com/redisson/redisson/wiki/目录](https://github.com/redisson/redisson/wiki/%E7%9B%AE%E5%BD%95)
 
-Redisson是架设在Redis基础上的一个Java驻内存数据网格(In-Memory Data Grid)。 Redisson在
-
-# 使用
+## 使用
 
 - 加入jar包的依赖
 
@@ -332,9 +330,9 @@ public String discount() throws IOException{
 }
 ```
 
-# Redisson分布式锁的实现原理
+## Redisson分布式锁的实现原理
 
-![](https://secure2.wostatic.cn/static/3jDbCrYXVMrD4NgozZKpLT/image.png?auth_key=1716829222-214mhHXJbiagGBSVAQFB3w-0-25dc8675134d764a7bf105441b948c88)
+![](Redisson.jpg)
 
 ## 加锁机制
 
