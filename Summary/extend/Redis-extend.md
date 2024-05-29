@@ -4,7 +4,7 @@ Redis客户端通过执行`MONITOR`命令可以将自己变为一个监视器，
 
 此时，当其他客户端向服务器发送一条命令请求时，服务器除了会处理这条命令请求之外，还会将这条命令请求的信息发送给所有监视器。
 
-![](https://secure2.wostatic.cn/static/dm9Qm8jkKgvjoVRyqwhem/image.png?auth_key=1716829397-q6rG6ZKQKXGm9LF4Xoni6L-0-5d442ed7814a45ea0dfc5387cae06807)
+![](Redis监视器.jpg)
 
 Redis客户端1
 
@@ -57,13 +57,13 @@ void call(redisClient *c, int flags) {
 }
 ```
 
-call 主要调用了 replicationFeedMonitors ，这个函数的作用就是将命令打包为协议，发送给监视器。
+call 主要调用了`replicationFeedMonitors`，这个函数的作用就是将命令打包为协议，发送给监视器。
 
 ## Redis监控平台
 
 - **Grafana** 是一个开箱即用的可视化工具，具有功能齐全的度量仪表盘和图形编辑器，有灵活丰富的图形化选项，可以混合多种风格，支持多个数据源特点。
 - **Prometheus**是一个开源的服务监控系统，它通过HTTP协议从远程的机器收集数据并存储在本地的时序数据库上。
-- r**edis_exporter**为Prometheus提供了redis指标的导出，配合Prometheus以及grafana进行可视化及监控。
+- **redis_exporter**为Prometheus提供了redis指标的导出，配合Prometheus以及grafana进行可视化及监控。
 
 ![](https://secure2.wostatic.cn/static/qWhSdkueAWmLCCsCi9y16a/image.png?auth_key=1716829400-wLtjguSGireMAu7M9g1RnJ-0-d532266399549d3574fb047aaadf9bd0)
 
