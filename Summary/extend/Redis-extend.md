@@ -59,43 +59,6 @@ Redis集群是无中心节点的集群架构，依靠Gossip协议协同自动化
 
 lua是一种轻量小巧的**脚本语言**，用标准C语言编写并以源代码形式开放， 其设计目的是为了嵌入应用程序中，从而为应用程序提供灵活的扩展和定制功能。
 
-## 创建并修改lua环境
-
-- 下载
-    
-    地址：[http://www.lua.org/download.html](http://www.lua.org/download.html) 可以本地下载上传到linux，也可以使用curl命令在linux系统中进行在线下载
-    
-
-```bash
-curl -R -O http://www.lua.org/ftp/lua-5.3.5.tar.gz
-```
-
-- 安装
-
-```bash
-yum -y install readline-devel ncurses-devel tar -zxvf lua-5.3.5.tar.gz
-#在src目录下
-make linux
-#或
-make install
-```
-
-如果报错，说找不到readline/readline.h, 可以通过yum命令安装
-
-```bash
-yum -y install readline-devel ncurses-devel
-```
-
-安装完以后再
-
-```bash
-make linux  / make install
-```
-
-```
-最后，直接输入 lua命令即可进入lua的控制台 
-```
-
 ## Lua环境协作组件
 
 从Redis2.6.0版本开始，通过**内置的lua编译/解释器**，可以使用EVAL命令对lua脚本进行求值。
@@ -115,10 +78,14 @@ EVAL script numkeys key [key ...] arg [arg ...]
 
 命令说明:
 
-- script参数：是一段Lua脚本程序，它会被运行在Redis服务器上下文中，这段脚本不必(也不应该)定义为一个Lua函数。
-- numkeys参数：用于指定键名参数的个数。
-- key [key ...]参数：从EVAL的第三个参数开始算起，使用了numkeys个键(key)，表示在脚本中 所用到的那些Redis键(key)，这些键名参数可以在Lua中通过全局变量KEYS数组，用1为基址的形 式访问( KEYS[1] ， KEYS[2] ，以此类推)。
-- arg [arg ...]参数：可以在Lua中通过全局变量ARGV数组访问，访问的形式和KEYS变量类似( ARGV[1] 、 ARGV[2] ，诸如此类)。
+- script参数
+  >是一段Lua脚本程序，它会被运行在Redis服务器上下文中，这段脚本不必(也不应该)定义为一个Lua函数。
+- numkeys参数：
+  >用于指定键名参数的个数。
+- key [key ...]参数：
+  >从EVAL的第三个参数开始算起，使用了numkeys个键(key)，表示在脚本中 所用到的那些Redis键(key)，这些键名参数可以在Lua中通过全局变量KEYS数组，用1为基址的形式访问( KEYS[1] ， KEYS[2] ，以此类推)。
+- arg [arg ...]参数：
+  >可以在Lua中通过全局变量ARGV数组访问，访问的形式和KEYS变量类似( ARGV[1] 、 ARGV[2] ，诸如此类)。
 
 ```bash
 eval "return {KEYS[1],KEYS[2],ARGV[1],ARGV[2]}" 2 key1 key2 first second
@@ -126,14 +93,14 @@ eval "return {KEYS[1],KEYS[2],ARGV[1],ARGV[2]}" 2 key1 key2 first second
 
 ### lua脚本中调用Redis命令
 
-- redis.call()：
+- `redis.call()`：
     - 返回值就是redis命令执行的返回值
     - 如果出错，则返回错误信息，不继续执行
-- redis.pcall()：
+- `redis.pcall()`：
     - 返回值就是redis命令执行的返回值
     - 如果出错，则记录错误信息，继续执行
-- 注意事项
-    - 在脚本中，使用return语句将返回值返回给客户端，如果没有return，则返回nil
+
+> 在脚本中，使用return语句将返回值返回给客户端，如果没有return，则返回nil
 
 ```bash
 eval "return redis.call('set',KEYS[1],ARGV[1])" 1 n1 zhaoyun
@@ -141,28 +108,26 @@ eval "return redis.call('set',KEYS[1],ARGV[1])" 1 n1 zhaoyun
 
 ### EVALSHA
 
-EVAL 命令要求你在每次执行脚本的时候都发送一次脚本主体(script body)。
-
-Redis 有一个内部的缓存机制，因此它不会每次都重新编译脚本，不过在很多场合，付出无谓的带宽来传送脚本主体并不是最佳选择。
+EVAL 命令要求你在每次执行脚本的时候都发送一次脚本主体(script body)。Redis 有一个内部的缓存机制，因此它不会每次都重新编译脚本，不过在很多场合，付出无谓的带宽来传送脚本主体并不是最佳选择。
 
 为了减少带宽的消耗， Redis 实现了 EVALSHA 命令，它的作用和 EVAL 一样，都用于对脚本求值，但它接受的第一个参数不是脚本，而是脚本的 SHA1 校验和(sum)
 
 #### SCRIPT命令
 
-- SCRIPT FLUSH：清除所有脚本缓存
-- SCRIPT EXISTS：根据给定的脚本校验和，检查指定的脚本是否存在于脚本缓存
-- SCRIPT LOAD：将一个脚本装入脚本缓存，返回SHA1摘要，但并不立即运行它
+- `SCRIPT FLUSH`：清除所有脚本缓存
+- `SCRIPT EXISTS`：根据给定的脚本校验和，检查指定的脚本是否存在于脚本缓存
+- `SCRIPT LOAD`：将一个脚本装入脚本缓存，返回SHA1摘要，但并不立即运行它
 
-```bash
-192.168.24.131:6380> script load "return redis.call('set',KEYS[1],ARGV[1])"
-"c686f316aaf1eb01d5a4de1b0b63cd233010e63d"
-192.168.24.131:6380> evalsha c686f316aaf1eb01d5a4de1b0b63cd233010e63d 1 n2
-zhangfei
-OK
-192.168.24.131:6380> get n2
-```
+	```bash
+	192.168.24.131:6380> script load "return redis.call('set',KEYS[1],ARGV[1])"
+	"c686f316aaf1eb01d5a4de1b0b63cd233010e63d"
+	192.168.24.131:6380> evalsha c686f316aaf1eb01d5a4de1b0b63cd233010e63d 1 n2
+	zhangfei
+	OK
+	192.168.24.131:6380> get n2
+	```
 
-- SCRIPT KILL：杀死当前正在运行的脚本
+- ·：杀死当前正在运行的脚本
 
 ## 脚本管理命令实现
 
