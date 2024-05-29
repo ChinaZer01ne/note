@@ -460,21 +460,20 @@ return nil;
 ### key名设计
 
 - 可读性和可管理性 
-  >以业务名(或数据库名)为前缀(防止key冲突)，用冒号分隔，比如业务名:表名:id
-	![](https://secure2.wostatic.cn/static/ccQn9G5a5uFrcGKUd6i5er/image.png?auth_key=1716829497-oW9ZVFf7RKLbX68fLW86eE-0-471e53e784adb7d5ce1ee5d5320f05e7)
+  > 以业务名(或数据库名)为前缀(防止key冲突)，用冒号分隔，比如业务名:表名:id
+```redis key
+ugc:video:1
+```
 	
 - 简洁性
-	
-	保证语义的前提下，控制key的长度，当key较多时，内存占用也不容忽视，例如:
-	![](https://secure2.wostatic.cn/static/4PoEnSMfrhSiKtEFtysPE/image.png?auth_key=1716829497-3wurrohsegfxh2ghwrjLC5-0-15570c91b6483550e274cf5dd6c486a9)
-	
+	>保证语义的前提下，控制key的长度，当key较多时，内存占用也不容忽视
 - 不要包含特殊字符。
+  > 反例:包含空格、换行、单双引号以及其他转义字符
 	
-	反例:包含空格、换行、单双引号以及其他转义字符
-	
-2. value设计
-    
-    拒绝bigkey 防止网卡流量、慢查询，string类型控制在10KB以内，hash、list、set、zset元素个数不要超过5000。 反例:一个包含200万个元素的list。 拆解非字符串的bigkey，不要使用del删除，使用hscan、sscan、zscan方式渐进式删除，同时要注意防止 bigkey过期时间自动删除问题(例如一个200万的zset设置1小时过期，会触发del操作，造成阻塞，而且该操作不会不出现在慢查询中(latency可查))，查找方法和删除方法选择适合的数据类型 例如:实体类型(要合理控制和使用数据结构内存编码优化配置,例如ziplist，但也要注意节省内存和性能之间的平衡) 反例:
+### value设计
+* 拒绝bigkey 
+  >防止网卡流量、慢查询
+* string类型控制在10KB以内，hash、list、set、zset元素个数不要超过5000。 反例:一个包含200万个元素的list。 拆解非字符串的bigkey，不要使用del删除，使用hscan、sscan、zscan方式渐进式删除，同时要注意防止 bigkey过期时间自动删除问题(例如一个200万的zset设置1小时过期，会触发del操作，造成阻塞，而且该操作不会不出现在慢查询中(latency可查))，查找方法和删除方法选择适合的数据类型 例如:实体类型(要合理控制和使用数据结构内存编码优化配置,例如ziplist，但也要注意节省内存和性能之间的平衡) 反例:
     
     ![](https://secure2.wostatic.cn/static/o7Gc4PQeQNYhJvwwMMemRn/image.png?auth_key=1716829497-gtZk671k5kajhPff7hBeMb-0-a1144855fcccad5424c3598397517615)
     
@@ -482,7 +481,7 @@ return nil;
     
     ![](https://secure2.wostatic.cn/static/ax3Hp6voQ2XLBbXr2FEcnb/image.png?auth_key=1716829497-pVEc4ZRa7qspnvJcGT2AKD-0-0c9186d847813b24a83c937a9cc2c9a8)
     
-3. 控制key的生命周期
+1. 控制key的生命周期
     
     redis不是垃圾桶，建议使用expire设置过期时间(条件允许可以打散过期时间，防止集中过期)，不过期的数据重点关注idletime。
     
