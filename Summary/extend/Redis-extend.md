@@ -1,4 +1,3 @@
-
 ## Redis集群的搭建
 
 该部分可以参考这篇文章：[https://juejin.cn/post/6922690589347545102#heading-1](https://juejin.cn/post/6922690589347545102#heading-1)
@@ -234,3 +233,222 @@ EXEC
 - 管道无原子性，命令都是独立的，属于无状态的操作
 - 事务和脚本是有原子性的，其区别在于脚本可借助Lua语言可在服务器端存储的便利性定制和简化操作
 - 脚本的原子性要强于事务，脚本执行期间，另外的客户端其它任何脚本或者命令都无法执行，脚本的执行时间应该尽量短，不能太耗时的脚本
+
+
+# [Redisson](https://redisson.org/)
+
+[Redisson](https://redisson.org/)是架设在[Redis](http://redis.cn/)基础上的一个Java驻内存数据网格（In-Memory Data Grid），简化了分布式环境中程序相互之间的协作，基于NIO的Netty框架上，生产环境使用分布式锁。。
+
+[https://github.com/redisson/redisson/wiki/目录](https://github.com/redisson/redisson/wiki/%E7%9B%AE%E5%BD%95)
+
+Redisson是架设在Redis基础上的一个Java驻内存数据网格(In-Memory Data Grid)。 Redisson在
+
+# 使用
+
+- 加入jar包的依赖
+
+```xml
+<dependency>
+    <groupId>org.redisson</groupId>
+    <artifactId>redisson</artifactId>
+    <version>2.7.0</version>
+</dependency>
+```
+
+- 配置Redisson
+
+```java
+public class RedissonManager {
+    private static Config config = new Config(); //声明redisso对象
+    private static Redisson redisson = null;
+    //实例化redisson 
+    static{
+        config.useClusterServers() 
+        // 集群状态扫描间隔时间，单位是毫秒
+        .setScanInterval(2000) 
+        //cluster方式至少6个节点(3主3从，3主做sharding，3从用来保证主宕机后可以高可用) 
+        .addNodeAddress("redis://127.0.0.1:6379" ) 
+        .addNodeAddress("redis://127.0.0.1:6380") 
+        .addNodeAddress("redis://127.0.0.1:6381") 
+        .addNodeAddress("redis://127.0.0.1:6382") 
+        .addNodeAddress("redis://127.0.0.1:6383") 
+        .addNodeAddress("redis://127.0.0.1:6384");
+        //得到redisson对象
+        redisson = (Redisson) Redisson.create(config);
+    }
+    
+    //获取redisson对象的方法
+    public static Redisson getRedisson(){
+        return redisson;
+    }
+}
+
+```
+
+- 锁的获取和释放
+
+```java
+public class DistributedRedisLock { 
+    //从配置类中获取redisson对象
+    private static Redisson redisson = RedissonManager.getRedisson();
+    private static final String LOCK_TITLE = "redisLock_"; 
+    //加锁
+    public static boolean acquire(String lockName){ 
+        //声明key对象
+        String key = LOCK_TITLE + lockName; 
+        //获取锁对象
+        RLock mylock = redisson.getLock(key); 
+        //加锁，并且设置锁过期时间3秒，防止死锁的产生 uuid+threadId
+        mylock.lock(2,3,TimeUtil.SECOND);
+        //加锁成功
+        return  true;
+    }
+    
+    //锁的释放
+    public static void release(String lockName){
+        //必须是和加锁时的同一个key
+        String key = LOCK_TITLE + lockName;
+        //获取所对象
+        RLock mylock = redisson.getLock(key);
+        //释放锁(解锁) 
+        mylock.unlock();
+    } 
+}
+```
+
+- 业务逻辑中使用分布式锁
+
+```java
+public String discount() throws IOException{
+    String key = "lock001";
+    //加锁 
+    DistributedRedisLock.acquire(key); 
+    //执行具体业务逻辑 
+    dosoming();
+    //释放锁 
+    DistributedRedisLock.release(key);
+    //返回结果 
+    return soming;
+}
+```
+
+# Redisson分布式锁的实现原理
+
+![](https://secure2.wostatic.cn/static/3jDbCrYXVMrD4NgozZKpLT/image.png?auth_key=1716829222-214mhHXJbiagGBSVAQFB3w-0-25dc8675134d764a7bf105441b948c88)
+
+## 加锁机制
+
+如果该客户端面对的是一个redis cluster集群，他首先会根据hash节点选择一台机器。 发送lua脚本到redis服务器上，脚本如下:
+
+```lua
+if (redis.call('exists',KEYS[1])==0) 
+then 
+  --看有没有锁
+  redis.call('hset',KEYS[1],ARGV[2],1) ; 
+  --无锁 加锁
+  redis.call('pexpire',KEYS[1],ARGV[1]) ; 
+  return nil; 
+end ;
+if (redis.call('hexists',KEYS[1],ARGV[2]) ==1 ) 
+then 
+  --我加的锁 
+  redis.call('hincrby',KEYS[1],ARGV[2],1) ; 
+  --重入锁 
+  redis.call('pexpire',KEYS[1],ARGV[1]) ; 
+  return nil; 
+end ;
+--不能加锁，返回锁的时间
+return redis.call('pttl',KEYS[1]) ;
+
+
+```
+
+lua的作用：保证这段复杂业务逻辑执行的原子性。
+
+lua的解释：
+
+- KEYS[1]) : 加锁的key
+- ARGV[1] : key的生存时间，默认为30秒
+- ARGV[2] : 加锁的客户端ID (UUID.randomUUID()
+
+第一段if判断语句，就是用“exists myLock”命令判断一下，如果你要加锁的那个锁key不存在的话，你就进行加锁。如何加锁呢?很简单，用下面的命令:
+
+```bash
+hset myLock 8743c9c0-0795-4907-87fd-6c719a6b4586:1 1
+```
+
+通过这个命令设置一个hash数据结构，这行命令执行后，会出现一个类似下面的数据结构：`myLock:{"8743c9c0-0795-4907-87fd-6c719a6b4586:1":1}`
+
+上述就代表“8743c9c0-0795-4907-87fd-6c719a6b4586:1”这个客户端对“myLock”这个锁key完成了加锁。
+
+接着会执行“`pexpire myLock 30000`”命令，设置myLock这个锁key的生存时间是30秒。
+
+## 锁互斥机制
+
+那么在这个时候，如果客户端2来尝试加锁，执行了同样的一段lua脚本，会咋样呢?
+
+很简单，第一个if判断会执行“exists myLock”，发现myLock这个锁key已经存在了。
+
+接着第二个if判断，判断一下，myLock锁key的hash数据结构中，是否包含客户端2的ID，但是明显不是的，因为那里包含的是客户端1的ID。
+
+所以，客户端2会获取到`pttl myLock`返回的一个数字，这个数字代表了myLock这个锁key的剩余生存时间。比如还剩15000毫秒的生存时间。
+
+此时客户端2会进入一个while循环，不停的尝试加锁。
+
+## 自动延时机制
+
+只要客户端1一旦加锁成功，就会启动一个watch dog看门狗，他是一个后台线程，会每隔10秒检查一 下，如果客户端1还持有锁key，那么就会不断的延长锁key的生存时间。
+
+## 可重入锁机制
+
+第一个if判断肯定不成立，“exists myLock”会显示锁key已经存在了。 第二个if判断会成立，因为myLock的hash数据结构中包含的那个ID，就是客户端1的那个ID，也就是“8743c9c0-0795-4907-87fd-6c719a6b4586:1”
+
+此时就会执行可重入加锁的逻辑，他会用:
+
+```bash
+incrby myLock 8743c9c0-0795-4907-87fd-6c71a6b4586:1 1
+```
+
+通过这个命令，对客户端1的加锁次数，累加1。数据结构会变成: `myLock:{"8743c9c0-0795-4907-87fd-6c719a6b4586:1":2}` 释放锁机制。
+
+执行lua脚本如下:
+
+```lua
+-- 如果key已经不存在，说明已经被解锁，直接发布(publish)redis消息 
+if (redis.call('exists', KEYS[1]) == 0)  then 
+  redis.call('publish', KEYS[2], ARGV[1]); 
+  return 1; 
+end;
+-- key和field不匹配，说明当前客户端线程没有持有锁，不能主动解锁。 不是我加的锁 不能解锁
+if (redis.call('hexists', KEYS[1], ARGV[3]) == 0) then 
+  -- 将value减1
+  return nil;
+end; 
+local counter = redis.call('hincrby', KEYS[1], ARGV[3], -1); 
+-- 如果counter>0说明锁在重入，不能删除key
+if (counter > 0) then 
+  redis.call('pexpire', KEYS[1], ARGV[2]); 
+  return 0; 
+else 
+  -- 删除key并且publish 解锁消息 
+  redis.call('del', KEYS[1]); 
+  -- 删除锁 
+  redis.call('publish', KEYS[2], ARGV[1]); 
+  return 1; 
+end; 
+return nil;
+
+```
+
+- KEYS[1]：需要加锁的key，这里需要是字符串类型。
+    
+- KEYS[2]：redis消息的ChannelName,一个分布式锁对应唯一的一个channelName:“redisson_lockchannel{” + getName() + “}”
+    
+- ARGV[1] :reids消息体，这里只需要一个字节的标记就可以，主要标记redis的key已经解锁，再结合redis的Subscribe，能唤醒其他订阅解锁消息的客户端线程申请锁。
+    
+- ARGV[2] :锁的超时时间，防止死锁
+    
+- ARGV[3] :锁的唯一标识，也就是刚才介绍的 id(UUID.randomUUID()) + “:” + threadId
+    
+
+如果执行lock.unlock()，就可以释放分布式锁，此时的业务逻辑也是非常简单的。 其实说白了，就是每次都对myLock数据结构中的那个加锁次数减1。 如果发现加锁次数是0了，说明这个客户端已经不再持有锁了，此时就会用: `del myLock`命令，从redis里删除这个key。 然后呢，另外的客户端2就可以尝试完成加锁了。
