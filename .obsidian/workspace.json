@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/extend/Redis-extend.md",
+                "file": "Summary/Redis.md",
                 "mode": "source",
                 "source": false
               }
@@ -146,7 +146,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/extend/Redis-extend.md",
+                "file": "Summary/Redis.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -163,7 +163,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/extend/Redis-extend.md",
+                "file": "Summary/Redis.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -186,7 +186,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/extend/Redis-extend.md"
+                "file": "Summary/Redis.md"
               }
             }
           },
@@ -239,9 +239,9 @@
   },
   "active": "42a1bb09ee705063",
   "lastOpenFiles": [
-    "Summary/Mysql.md",
     "Summary/extend/Redis-extend.md",
     "Summary/Redis.md",
+    "Summary/Mysql.md",
     "Summary/MicroService Design.md",
     "Summary/Distributed Theory.md",
     "Summary/image/Redis/Redisson.jpg",

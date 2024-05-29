@@ -545,12 +545,9 @@ ugc:video:1
     
 5. 淘汰策略
     
-    根据自身业务类型，选好maxmemory-policy(最大内存淘汰策略)，设置好过期时间。
-    
-    默认策略是volatile-lru，即超过最大内存后，在过期键中使用lru算法进行key的剔除，保证不过期数据 不被删除，但是可能会出现OOM问题。
+    根据自身业务类型，选好`maxmemory-policy`(最大内存淘汰策略)，设置好过期时间。默认策略是volatile-lru，即超过最大内存后，在过期键中使用lru算法进行key的剔除，保证不过期数据不被删除，但是可能会出现OOM问题。
     
     其他策略如下:
-    
     - allkeys-lru:根据LRU算法删除键，不管数据有没有设置超时属性，直到腾出足够空间为止。
     - allkeys-random:随机删除所有键，直到腾出足够空间为止。
     - volatile-random:随机删除过期键，直到腾出足够空间为止。
@@ -561,14 +558,15 @@ ugc:video:1
 
 1. 数据同步
     
-    redis间数据同步可以使用:redis-port
+    redis间数据同步可以使用：`redis-port`
     
 2. big key搜索
     
     redis大key搜索工具
     
-3. 热点key寻找 内部实现使用monitor，所以建议短时间使用facebook的redis-faina 阿里云Redis已经在内核层面解决热点key问题
-    
+3. 热点key寻找 
+	
+	内部实现使用monitor，所以建议短时间使用facebook的redis-faina 阿里云Redis已经在内核层面解决热点key问题
 
 ## 删除bigkey
 
