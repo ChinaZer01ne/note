@@ -1971,7 +1971,7 @@ gossip协议常见的消息类型包含： ping、pong、meet、fail等等。
 
 作为分布式部署的缓存节点总会遇到缓存扩容和缓存故障的问题。这就会导致缓存节点的上线和下线的问题。由于每个节点中保存着槽数据，因此当缓存节点数出现变动时，这些槽数据会根据对应的虚拟槽算法被迁移到其他的缓存节点上。所以对于redis集群，集群伸缩主要在于槽和数据在节点之间移动。
 
-### **1、扩容：**
+### **扩容：**
 
 - （1）启动新节点
 - （2）使用cluster meet命令将新节点加入到集群
@@ -1998,7 +1998,7 @@ gossip协议常见的消息类型包含： ping、pong、meet、fail等等。
 - （5）重复 3 和 4 两步不断将数据迁移到目标节点。
 - （6）完成数据迁移到目标节点以后，通过 cluster setslot {slot} node {targetNodeId} 命令通知对应的槽被分配到目标节点，并且广播这个信息给全网的其他主节点，更新自身的槽节点对应表。
 
-### **2、收缩：**
+### **收缩：**
 
 - 迁移槽。
 - 忘记节点。通过命令 cluster forget {downNodeId} 通知其他的节点
@@ -2009,7 +2009,7 @@ gossip协议常见的消息类型包含： ping、pong、meet、fail等等。
 
 ## 集群的故障检测与故障转恢复机制：
 
-### **1、集群的故障检测：**
+### **集群的故障检测：**
 
 Redis集群的故障检测是基于gossip协议的，集群中的每个节点都会定期地向集群中的其他节点发送PING消息，以此交换各个节点状态信息，检测各个节点状态：在线状态、疑似下线状态PFAIL、已下线状态FAIL。
 
@@ -2025,7 +2025,7 @@ Redis集群的故障检测是基于gossip协议的，集群中的每个节点都
 
 接着向集群广播一条主节点B的Fail 消息，所有收到消息的节点都会标记节点B为客观下线。
 
-### **2、集群地故障恢复：**
+### **集群地故障恢复：**
 
 当故障节点下线后，如果是持有槽的主节点则需要在其从节点中找出一个替换它，从而保证高可用。此时下线主节点的所有从节点都担负着恢复义务，这些从节点会定时监测主节点是否进入客观下线状态，如果是，则触发故障恢复流程。故障恢复也就是选举一个节点充当新的master，选举的过程是基于Raft协议选举方式来实现的。
 * 从节点过滤：
@@ -2080,7 +2080,7 @@ Redis集群的故障检测是基于gossip协议的，集群中的每个节点都
 
 [Redis集群的搭建](Redis-extend#Redis集群的搭建)
 
-# Redis集群的运维：
+## Redis集群的运维：
 
 [Redis集群的运维](Redis-extend#Redis集群的运维)
 
@@ -2458,235 +2458,6 @@ QUEUED
     1. 大多数事务失败是因为语法错误或者类型错误，这两种错误，在开发阶段都是可以预见的
     2. Redis为了性能方面就忽略了事务回滚。 (回滚记录历史版本)
 
-# Lua脚本
-
-lua是一种轻量小巧的**脚本语言**，用标准C语言编写并以源代码形式开放， 其设计目的是为了嵌入应用程序中，从而为应用程序提供灵活的扩展和定制功能。
-
-Lua应用场景：游戏开发、独立应用脚本、Web应用脚本、扩展和数据库插件。
-
-OpenRestry一个可伸缩的基于Nginx的Web平台，是在nginx之上集成了lua模块的第三方服务器
-
-OpenResty是一个通过Lua扩展Nginx实现的可伸缩的Web平台，内部集成了大量精良的Lua库、第三方 模块以及大多数的依赖项。 用于方便地搭建能够处理超高并发(日活千万级别)、扩展性极高的动态Web应用、Web服务和动态网 关。 功能和nginx类似，就是由于支持lua动态脚本，所以更加灵活，可以实现鉴权、限流、分流、日志记 录、灰度发布等功能。 OpenResty通过Lua脚本扩展nginx功能，可提供负载均衡、请求路由、安全认证、服务鉴权、流量控制与日志监控等服务。
-
-类似的还有Kong(Api Gateway)、tengine(阿里)
-
-## 创建并修改lua环境
-
-- 下载
-    
-    地址：[http://www.lua.org/download.html](http://www.lua.org/download.html) 可以本地下载上传到linux，也可以使用curl命令在linux系统中进行在线下载
-    
-
-```bash
-curl -R -O http://www.lua.org/ftp/lua-5.3.5.tar.gz
-```
-
-- 安装
-
-```bash
-yum -y install readline-devel ncurses-devel tar -zxvf lua-5.3.5.tar.gz
-#在src目录下
-make linux
-#或
-make install
-```
-
-```
-如果报错，说找不到readline/readline.h, 可以通过yum命令安装
-```
-
-```bash
-yum -y install readline-devel ncurses-devel
-```
-
-```
-安装完以后再
-```
-
-```bash
-make linux  / make install
-```
-
-```
-最后，直接输入 lua命令即可进入lua的控制台 
-```
-
-## Lua环境协作组件
-
-从Redis2.6.0版本开始，通过**内置的lua编译/解释器**，可以使用EVAL命令对lua脚本进行求值。
-
-- 脚本的命令是原子的，RedisServer在执行脚本命令中，不允许插入新的命令
-- 脚本的命令可以复制，RedisServer在获得脚本后不执行，生成标识返回，Client根据标识就可以随时执行
-
-## EVAL/EVALSHA命令实现
-
-### EVAL命令
-
-通过执行redis的eval命令，可以运行一段lua脚本。
-
-```Bash
-EVAL script numkeys key [key ...] arg [arg ...]
-```
-
-命令说明:
-
-- script参数：是一段Lua脚本程序，它会被运行在Redis服务器上下文中，这段脚本不必(也不应该)定义为一个Lua函数。
-- numkeys参数：用于指定键名参数的个数。
-- key [key ...]参数：从EVAL的第三个参数开始算起，使用了numkeys个键(key)，表示在脚本中 所用到的那些Redis键(key)，这些键名参数可以在Lua中通过全局变量KEYS数组，用1为基址的形 式访问( KEYS[1] ， KEYS[2] ，以此类推)。
-- arg [arg ...]参数：可以在Lua中通过全局变量ARGV数组访问，访问的形式和KEYS变量类似( ARGV[1] 、 ARGV[2] ，诸如此类)。
-
-```bash
-eval "return {KEYS[1],KEYS[2],ARGV[1],ARGV[2]}" 2 key1 key2 first second
-```
-
-### lua脚本中调用Redis命令
-
-- redis.call()：
-    - 返回值就是redis命令执行的返回值
-    - 如果出错，则返回错误信息，不继续执行
-- redis.pcall()：
-    - 返回值就是redis命令执行的返回值
-    - 如果出错，则记录错误信息，继续执行
-- 注意事项
-    - 在脚本中，使用return语句将返回值返回给客户端，如果没有return，则返回nil
-
-```bash
-eval "return redis.call('set',KEYS[1],ARGV[1])" 1 n1 zhaoyun
-```
-
-### EVALSHA
-
-EVAL 命令要求你在每次执行脚本的时候都发送一次脚本主体(script body)。
-
-Redis 有一个内部的缓存机制，因此它不会每次都重新编译脚本，不过在很多场合，付出无谓的带宽来传送脚本主体并不是最佳选择。
-
-为了减少带宽的消耗， Redis 实现了 EVALSHA 命令，它的作用和 EVAL 一样，都用于对脚本求值，但它接受的第一个参数不是脚本，而是脚本的 SHA1 校验和(sum)
-
-#### SCRIPT命令
-
-- SCRIPT FLUSH：清除所有脚本缓存
-- SCRIPT EXISTS：根据给定的脚本校验和，检查指定的脚本是否存在于脚本缓存
-- SCRIPT LOAD：将一个脚本装入脚本缓存，返回SHA1摘要，但并不立即运行它
-
-```bash
-192.168.24.131:6380> script load "return redis.call('set',KEYS[1],ARGV[1])"
-"c686f316aaf1eb01d5a4de1b0b63cd233010e63d"
-192.168.24.131:6380> evalsha c686f316aaf1eb01d5a4de1b0b63cd233010e63d 1 n2
-zhangfei
-OK
-192.168.24.131:6380> get n2
-```
-
-- SCRIPT KILL：杀死当前正在运行的脚本
-
-## 脚本管理命令实现
-
-使用redis-cli直接执行lua脚本。
-
-test.lua脚本内容
-
-```lua
-return redis.call('set',KEYS[1],ARGV[1])
-
-```
-
-```Bash
-./redis-cli -h 127.0.0.1 -p 6379 --eval test.lua name:6 , 'caocao' #，两边有空格
-```
-
-list.lua
-
-脚本内容
-
-```lua
-local key=KEYS[1]
-local list=redis.call("lrange",key,0,-1);
-return list;
-
-```
-
-```Bash
-./redis-cli --eval list.lua list
-```
-
-利用Redis整合Lua，主要是为了性能以及事务的原子性。因为redis帮我们提供的事务功能太差。
-
-## 脚本复制
-
-Redis 传播 Lua 脚本，在使用主从模式和开启AOF持久化的前提下：当执行lua脚本时，Redis 服务器有两种模式：**脚本传播模式**和**命令传播模式**。
-
-### 脚本传播模式
-
-脚本传播模式是Redis 复制脚本时默认使用的模式，Redis会将被执行的脚本及其参数复制到 AOF 文件以及从服务器里面。 执行以下命令:
-
-```bash
-eval "redis.call('set',KEYS[1],ARGV[1]);redis.call('set',KEYS[2],ARGV[2])" 2 n1
-n2
-zhaoyun1 zhaoyun2
-```
-
-那么主服务器将向从服务器发送完全相同的 eval 命令:
-
-```bash
-eval "redis.call('set',KEYS[1],ARGV[1]);redis.call('set',KEYS[2],ARGV[2])" 2 n1
-n2
-zhaoyun1 zhaoyun2
-```
-
-注意：在这一模式下执行的脚本不能有时间、内部状态、随机函数(spop)等。执行相同的脚本以及参数必须产生相同的效果。在Redis5，也是处于同一个事务中。
-
-### 命令传播模式
-
-处于命令传播模式的主服务器会将执行脚本产生的所有写命令用事务包裹起来，然后将事务复制到 AOF 文件以及从服务器里面。
-
-因为命令传播模式复制的是写命令而不是脚本本身，所以即使脚本本身包含时间、内部状态、随机函数等，主服务器给所有从服务器复制的写命令仍然是相同的。
-
-为了开启命令传播模式，用户在使用脚本执行任何写操作之前，需要先在脚本里面调用以下函数:
-
-```C
-redis.replicate_commands()
-```
-
-redis.replicate_commands() 只对调用该函数的脚本有效：在使用命令传播模式执行完当前脚本之后， 服务器将自动切换回默认的脚本传播模式。
-
-如果我们在主服务器执行以下命令:
-
-```c
-eval "redis.replicate_commands();redis.call('set',KEYS[1],ARGV[1]);redis.call('set',KEYS[2],ARGV[2])" 2 n1 n2 zhaoyun11 zhaoyun22
-```
-
-那么主服务器将向从服务器复制以下命令:
-
-```bash
-EXEC
-*1
-$5
-MULTI
-*3
-$3
-set
-$2
-n1
-$9
-zhaoyun11
-*3
-$3
-set
-$2
-n2
-$9
-zhaoyun22
-*1
-$4
-EXEC
-```
-
-**管道(pipeline),事务和脚本(lua)三者的区别**
-
-- 三者都可以批量执行命令
-- 管道无原子性，命令都是独立的，属于无状态的操作
-- 事务和脚本是有原子性的，其区别在于脚本可借助Lua语言可在服务器端存储的便利性定制和简化操作
-- 脚本的原子性要强于事务，脚本执行期间，另外的客户端其它任何脚本或者命令都无法执行，脚本的执行时间应该尽量短，不能太耗时的脚本
 
 # 慢查询日志
 
