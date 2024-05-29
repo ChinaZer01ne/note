@@ -463,7 +463,7 @@ stream是Redis5.0后新增的数据结构，用于可持久化的消息队列。
 
 Redis作为Key-Value存储系统，数据结构如下:
 
-![](https://secure2.wostatic.cn/static/t3ngk1rd8QUHptbjaJeMfD/image.png?auth_key=1716829454-o2T4qt99hzP5FpSBTsgCks-0-e9e9b680017d191e6c9d291ce47761a0)
+![](Redis数据结构.jpg)
 
 Redis没有表的概念，Redis实例所对应的db以编号区分，db本身就是key的命名空间。 比如:user:1000作为key值，表示在user这个命名空间下id为1000的元素，类似于user表的id=1000的行。
 
@@ -1263,13 +1263,11 @@ dict 用来维护一个 Redis 数据库中包含的所有 Key-Value 键值对，
 
 ## 删除策略
 
-Redis的数据删除有**定时删除**、惰性删除和主动删除三种方式。 Redis目前采用惰性删除+主动删除的方式。
+Redis的数据删除有**定时删除**、**惰性删除**和**主动删除**三种方式。 Redis目前采用惰性删除+主动删除的方式。
 
 ### 定时删除
 
-在设置键的过期时间的同时，创建一个定时器，让定时器在键的过期时间来临时，立即执行对键的删除操作。
-
-需要创建定时器，而且消耗CPU，一般不推荐使用。
+在设置键的过期时间的同时，创建一个定时器，让定时器在键的过期时间来临时，立即执行对键的删除操作。需要创建定时器，而且消耗CPU，一般不推荐使用。
 
 ### 惰性删除
 
@@ -1296,7 +1294,7 @@ int expireIfNeeded(redisDb *db, robj *key) {
 
 ### 主动删除
 
-在redis.conf文件中可以配置主动删除策略,默认是no-enviction(不删除)
+在redis.conf文件中可以配置主动删除策略,默认是`no-enviction`(不删除)
 
 ```text
 maxmemory-policy allkeys-lru
