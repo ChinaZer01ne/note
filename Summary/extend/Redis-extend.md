@@ -15,10 +15,10 @@ Redis使用列表存储慢查询日志，采用队列方式(FIFO)
 
 config set的方式可以临时设置，redis重启后就无效
 
-- config set slowlog-log-slower-than 微秒
-- config set slowlog-max-len 条数
+- `config set slowlog-log-slower-than 微秒`
+- `config set slowlog-max-len 条数`
 
-查看日志：slowlog get [n]
+查看日志：`slowlog get [n]`
 
 ```bash
 127.0.0.1:6379> config set slowlog-log-slower-than 0
@@ -51,7 +51,7 @@ OK
  # set和get都记录，第一条被移除了。
 ```
 
-## 慢查询记录的保存
+## Redis慢查询源码
 
 在redisServer中保存和慢查询日志相关的信息
 
@@ -87,7 +87,7 @@ typedef struct slowlogEntry {
 } slowlogEntry;
 ```
 
-## 慢查询日志的阅览&删除
+### 慢查询日志的获取&删除
 
 初始化日志列表
 
@@ -99,9 +99,7 @@ void slowlogInit(void) {
 }
 ```
 
-获得慢查询日志记录
-
-slowlog get [n]
+获得慢查询日志记录 `slowlog get [n]`
 
 ```c
 def SLOWLOG_GET(number=None):
@@ -121,7 +119,7 @@ def SLOWLOG_GET(number=None):
         printLog(log) 
 ```
 
-查看日志数量的 slowlog len
+查看日志数量的 `slowlog len`
 
 ```c
 def SLOWLOG_LEN():
@@ -129,7 +127,7 @@ def SLOWLOG_LEN():
     return len(redisServer.slowlog)
 ```
 
-清除日志 slowlog reset
+清除日志 `slowlog reset`
 
 ```C
 def SLOWLOG_RESET():
@@ -139,9 +137,9 @@ for log in redisServer.slowlog:
     deleteLog(log)
 ```
 
-## 添加日志实现
+### 添加日志实现
 
-在每次执行命令的之前和之后， 程序都会记录微秒格式的当前 UNIX 时间戳， 这两个时间戳之间的差 就是服务器执行命令所耗费的时长， 服务器会将这个时长作为参数之一传给`slowlogPushEntryIfNeeded`函数， 而`slowlogPushEntryIfNeeded` 函数则负责检查是否需要为这次执行的命令创建慢查询日志
+在每次执行命令的之前和之后， 程序都会记录微秒格式的当前 UNIX 时间戳， 这两个时间戳之间的差就是服务器执行命令所耗费的时长， 服务器会将这个时长作为参数之一传给`slowlogPushEntryIfNeeded`函数， 而`slowlogPushEntryIfNeeded` 函数则负责检查是否需要为这次执行的命令创建慢查询日志
 
 ```c
 // 记录执行命令前的时间
@@ -165,7 +163,7 @@ void slowlogPushEntryIfNeeded(robj **argv, int argc, long long duration) {
 
 `slowlogPushEntryIfNeeded`函数的作用有两个:
 
-1. 检查命令的执行时长是否超过 slowlog-log-slower-than 选项所设置的时间， 如果是的话， 就为命令创建一个新的日志， 并将新日志添加到 slowlog 链表的表头。
+1. 检查命令的执行时长是否超过 `slowlog-log-slower-than` 选项所设置的时间， 如果是的话， 就为命令创建一个新的日志， 并将新日志添加到 slowlog 链表的表头。
 2. 检查慢查询日志的长度是否超过 slowlog-max-len 选项所设置的长度， 如果是的话， 那么将多出来的日志从 slowlog 链表中删除掉。
 
 ## 慢查询定位&处理
