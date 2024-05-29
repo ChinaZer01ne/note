@@ -485,17 +485,12 @@ typedef struct redisDb {
 } redisDb;
 ```
 
-id：id是数据库序号，为0-15(默认Redis有16个数据库)
-
-dict：存储数据库所有的key-value，后面要详细讲解
-
-expires：存储key的过期时间，后面要详细讲解
-
+* `id`：id是数据库序号，为0-15(默认Redis有16个数据库)
+* `dict`：存储数据库所有的key-value
+* `expires`：存储key的过期时间
 ## RedisObject结构
 
 Value是一个对象，包含字符串对象，列表对象，哈希对象，集合对象和有序集合对象
-
-结构信息概览
 
 ```c
 typedef struct redisObject {
@@ -510,45 +505,45 @@ typedef struct redisObject {
 }robj;
 ```
 
-**4位type**：type 字段表示对象的类型，占 4 位;
+* **4位type**：type 字段表示对象的类型，占 4 位;
 
-REDIS_STRING(字符串)、REDIS_LIST (列表)、REDIS_HASH(哈希)、REDIS_SET(集合)、REDIS_ZSET(有序集合)。
+	`REDIS_STRING(字符串)`、`REDIS_LIST (列表)`、`REDIS_HASH(哈希)`、`REDIS_SET(集合)`、`REDIS_ZSET(有序集合)`。
 
-当我们执行 type 命令时，便是通过读取 RedisObject 的 type 字段获得对象的类型。
+	当我们执行 type 命令时，便是通过读取 `RedisObject` 的 `type` 字段获得对象的类型。
 
-```bash
-127.0.0.1:6379> type a1
-string
-```
+	```bash
+	127.0.0.1:6379> type a1
+	string
+	```
 
-**4位encoding**：encoding 表示对象的内部编码，占 4 位
+* **4位encoding**：encoding 表示对象的内部编码，占 4 位
 
-每个对象有不同的实现编码
+	每个对象有不同的实现编码
+	
+	Redis 可以根据不同的使用场景来为对象设置不同的编码，大大提高了 Redis 的灵活性和效率。 通过 object encoding 命令，可以查看对象采用的编码方式
+	
+	```bash
+	127.0.0.1:6379>  object encoding a1
+	"int"
+	```
 
-Redis 可以根据不同的使用场景来为对象设置不同的编码，大大提高了 Redis 的灵活性和效率。 通过 object encoding 命令，可以查看对象采用的编码方式
+* **24位LRU**
 
-```bash
-127.0.0.1:6379>  object encoding a1
-"int"
-```
+	lru 记录的是对象最后一次被命令程序访问的时间，( 4.0 版本占 24 位，2.6 版本占 22 位)。 高16位存储一个分钟数级别的时间戳，低8位存储访问计数(lfu : 最近访问次数)  
+	* 淘汰策略lru---> 高16位： 最后被访问的时间  
+	* 淘汰策略lfu--->低8位：最近访问次数
 
-**24位LRU **
+* **refcount**
 
-lru 记录的是对象最后一次被命令程序访问的时间，( 4.0 版本占 24 位，2.6 版本占 22 位)。 高16位存储一个分钟数级别的时间戳，低8位存储访问计数(lfu : 最近访问次数)  
-淘汰策略lru----> 高16位： 最后被访问的时间  
-淘汰策略lfu----->低8位：最近访问次数
+	refcount 记录的是该对象被引用的次数，类型为整型。
+	
+	refcount 的作用，主要在于对象的引用计数和内存回收。 当对象的refcount>1时，称为共享对象
+	
+	Redis 为了节省内存，当有一些对象重复出现时，新的程序不会创建新的对象，而是仍然使用原来的对象。
 
-**refcount **
+* **ptr**
 
-refcount 记录的是该对象被引用的次数，类型为整型。
-
-refcount 的作用，主要在于对象的引用计数和内存回收。 当对象的refcount>1时，称为共享对象
-
-Redis 为了节省内存，当有一些对象重复出现时，新的程序不会创建新的对象，而是仍然使用原来的对象。
-
-**ptr**
-
-ptr 指针指向具体的数据，比如:set hello world，ptr 指向包含字符串 world 的 SDS。
+	ptr 指针指向具体的数据，比如:set hello world，ptr 指向包含字符串 world 的 SDS。
 
 ## 7种type
 
