@@ -497,31 +497,43 @@ ugc:video:1
     - 原生命令：例如`mget`、`mset`。
     - 非原生命令：可以使用`pipeline`提高效率。 但要注意控制一次批量操作的元素个数(例如500以内，实际也和元素字节数有关)。
     - 注意两者不同:
-        1. 原生是原子操作，pipeline是非原子操作。
-        2. pipeline可以打包不同的命令，原生做不到
-        3. pipeline需要客户端和服务端同时支持。
+        * 原生是原子操作，pipeline是非原子操作。
+        * pipeline可以打包不同的命令，原生做不到
+        * pipeline需要客户端和服务端同时支持。
 5. 不建议过多使用Redis事务功能
     
     Redis的事务功能较弱(不支持回滚)，而且集群版本(自研和官方)要求一次事务操作的key必须在一个slot 上(可以使用hashtag功能解决)
     
 6. Redis集群版本在使用Lua上有特殊要求
     
-    1. 所有key都应该由 KEYS 数组来传递，redis.call/pcall 里面调用的redis命令，key的位置，必须是 KEYS array, 否则直接返回error，"-ERR bad lua script for redis cluster, all the keys that the script uses should be passed using the KEYS arrayrn"
-    2. 所有key，必须在1个slot上，否则直接返回error, "-ERR eval/evalsha command keys must in same slotrn"
+    * 所有key都应该由 KEYS 数组来传递，redis.call/pcall 里面调用的redis命令，key的位置，必须是 KEYS array, 否则直接返回error，"-ERR bad lua script for redis cluster, all the keys that the script uses should be passed using the KEYS arrayrn"
+    * 所有key，必须在1个slot上，否则直接返回error, "-ERR eval/evalsha command keys must in same slotrn"
+      
 7. monitor命令 必要情况下使用monitor命令时，要注意不要长时间使用。
     
 
 ## 客户端使用
 
-1. 避免多个应用使用一个Redis实例
+1. 避免多个应用使用一个Redis实例（共用Redis的问题）
     
     不相干的业务拆分，公共数据做服务化。
     
 2. 使用连接池
     
     可以有效控制连接，同时提高效率，标准使用方式:
-    
-    ![](https://secure2.wostatic.cn/static/uXsk3eEQDqjgZnWWKbnpeG/image.png?auth_key=1716829497-csuA426NtJPgSiMYLV3xuF-0-c6aa1d5741613dedfbc779ae7ba65013)
+    ```java
+    Jedis jedis = null;
+    try {
+        jedis = jedisPool.getResource();
+        // 具体的命令
+        jedis.executeCommand();
+    } catch (Exception e) {
+    } finally {
+        // 注意这里不是关闭连接，在JedisPool模式下，Jedis会被归还给资源池
+        if (jedis != null) 
+            jedis.close();
+    }
+    ```
     
 3. 熔断功能
     
