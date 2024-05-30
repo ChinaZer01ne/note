@@ -170,6 +170,18 @@ typedef struct redisObject {
 
 ## 7种type
 
+底层数据结构共有八种，如下表所示：
+
+| `REDIS_ENCODING_INT`        | `long` 类型的整数        |
+| --------------------------- | ------------------- |
+| `REDIS_ENCODING_EMBSTR`     | `embstr` 编码的简单动态字符串 |
+| `REDIS_ENCODING_RAW`        | 简单动态字符串             |
+| `REDIS_ENCODING_HT`         | 字典                  |
+| `REDIS_ENCODING_LINKEDLIST` | 双端链表                |
+| `REDIS_ENCODING_ZIPLIST`    | 压缩列表                |
+| `REDIS_ENCODING_INTSET`     | 整数集合                |
+| `REDIS_ENCODING_SKIPLIST`   | 跳跃表和字典              |
+ 
 ### 字符串对象
 
 Redis 使用了 SDS(Simple Dynamic String)。用于存储字符串和整型数据。
@@ -397,7 +409,7 @@ Redis字典除了主数据库的K-V数据存储以外，还可以用于：散列
 当数据量巨大时rehash的过程是非常缓慢的，所以需要进行优化。 服务器忙，则只对一个节点进行rehash，服务器闲，可批量rehash(100节点)
 ![](渐进式.jpg)  
 
-￥=#**字典应用场景:**
+#### **字典应用场景**
 
 1. 主数据库的K-V数据存储
 2. 散列表对象(hash)
