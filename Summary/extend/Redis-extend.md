@@ -168,7 +168,7 @@ typedef struct redisObject {
 
 	ptr 指针指向具体的数据，比如:set hello world，ptr 指向包含字符串 world 的 SDS。
 
-## 7种type
+## 底层基本数据结构
 
 底层数据结构共有八种，如下表所示：
 
@@ -593,27 +593,11 @@ Rax 被用在 Redis Stream 结构里面用于存储消息队列，在 Stream 里
 
 应用场景: stream的底层实现
 
-## 10种encoding
+## encoding
 
 * encoding 表示对象的内部编码，占 4 位。
 * Redis通过 encoding 属性为对象设置不同的编码
 * 对于少的和小的数据，Redis采用小的和压缩的存储方式
-
-比如Set对象:
-
-* intset : 元素是64位以内的整数 
-* hashtable:元素是64位以外的整数 如下所示:
-
-```bash
-127.0.0.1:6379> sadd set:001 1  3 5 6 2
-(integer) 5
-127.0.0.1:6379> object encoding set:001
-"intset"
-127.0.0.1:6379> sadd set:004 1 100000000000000000000000000 9999999999
-(integer) 3
-127.0.0.1:6379> object encoding set:004
-"hashtable"
-```
 
 ### **string**
 
