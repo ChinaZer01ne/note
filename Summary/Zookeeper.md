@@ -675,6 +675,6 @@ Zookeeper服务器的启动，⼤致可以分为以下五个步骤
 
 ---
 
-* [环境搭建](Zookeeper-extend#Zookeeper环境搭建)
+* [环境搭建](Zookeeper-extension.md#Zookeeper环境搭建)
 * Zookeeper命令行操作
-* [Java调用Zookeeper](Zookeeper-extend#Java调用Zookeeper)
+* [Java调用Zookeeper](Zookeeper-extension.md#Java调用Zookeeper)
