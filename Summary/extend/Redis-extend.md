@@ -287,37 +287,25 @@ typedef struct zskiplist{
 
 字典dict又称散列表(hash)，是用来存储键值对的一种数据结构。Redis整个数据库是用字典来存储的。(K-V结构)。对Redis进行CURD操作其实就是对字典中的数据进行CURD操作。
 
-#### **数组**
+**数组**：用来存储数据的容器，采用头指针+偏移量的方式能够以O(1)的时间复杂度定位到数据所在的内存地址。
 
-数组：用来存储数据的容器，采用头指针+偏移量的方式能够以O(1)的时间复杂度定位到数据所在的内存地址。
-
-Redis 海量存储 快
-
-#### **Hash函数 **
-
-Hash(散列)，作用是把任意长度的输入通过散列算法转换成固定类型、固定长度的散列值。 hash函数可以把Redis里的key:包括字符串、整数、浮点数统一转换成整数。
-
-key=100.1 String “100.1” 5位长度的字符串
-
-Redis-cli :times 33
-
-Redis-Server : siphash
+**Hash函数**：作用是把任意长度的输入通过散列算法转换成固定类型、固定长度的散列值。 hash函数可以把Redis里的key:包括字符串、整数、浮点数统一转换成整数。
 
 **数组下标**=hash(key)%数组容量(hash值%数组容量得到的余数)
 
-#### **Hash冲突 **
+#### **Hash冲突**
 
 不同的key经过计算后出现数组下标一致，称为Hash冲突。 采用单链表在相同的下标位置处存储原始key和value 当根据key找Value时，找到数组下标，遍历单链表可以找出key相同的value
 
-![](https://secure2.wostatic.cn/static/6hWqGH69bGKi78Z6DYpMhr/image.png?auth_key=1716829456-rDDBYEBb5q3xQCX6XVgbrV-0-2b0c276690a39bfb0773c5e30637ad66)
+![](redis-hash冲突.webp)
 
 #### Redis字典的实现
 
 Redis字典实现包括:字典(dict)、Hash表(dictht)、Hash表节点(dictEntry)。
 
-![](https://secure2.wostatic.cn/static/PniR1CcVS2m5SAMCLeTLN/image.png?auth_key=1716829456-7NsgcphwSKCCAL9wXQ27fb-0-b79cfcedf2af6c4b01b9dd89671c13c8)
+![](redis字典实现类图.webp)
 
-**Hash表**
+##### **Hash表**
 
 ```c
 typedef struct dictht {
@@ -343,16 +331,13 @@ typedef struct dictEntry {
     } v;
     struct dictEntry *next; // 指向下一个哈希表节点，形成单向链表 解决hash冲突
 } dictEntry;
-
-
-
 ```
 
 key字段存储的是键值对中的键 v字段是个联合体，存储的是键值对中的值。 next指向下一个哈希表节点，用于解决hash冲突
 
-![](https://secure2.wostatic.cn/static/kCE3vXzLzpxNA1dVueRgVH/image.png?auth_key=1716829456-bTBhJvQdfmFngfiv5mrpQW-0-9b12fedd770564ac749d8a8abad73552)
+![](redis-hash表.webp)
 
-dict字典
+##### dict字典
 
 ```c
 typedef struct dict {
@@ -364,8 +349,6 @@ typedef struct dict {
                             否则表示正在进行rehash操作，存储的值表示 ht[0]的rehash进行到哪个索引值(数组下标)*/
     int iterators; // 当前运行的迭代器数量
 } dict;
-
-
 
 ```
 
