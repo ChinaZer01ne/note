@@ -301,7 +301,7 @@ typedef struct zskiplist{
 
 #### Redis字典的实现
 
-Redis字典实现包括:字典(dict)、Hash表(dictht)、Hash表节点(dictEntry)。
+Redis字典实现包括：字典(dict)、Hash表(dictht)、Hash表节点(dictEntry)。
 
 ![](redis字典实现类图.webp)
 
@@ -373,57 +373,50 @@ typedef struct dictType {
 
 Redis字典除了主数据库的K-V数据存储以外，还可以用于：散列表对象、哨兵模式中的主从节点管理等在不同的应用中，字典的形态都可能不同，dictType是为了实现各种形态的字典而抽象出来的操作函数 (多态)。
 
-#### 完整的Redis字典数据结构:
+#### Redis字典数据结构:
 
-![](https://secure2.wostatic.cn/static/wrZxJNc4nyviG5nA9vdNpq/image.png?auth_key=1716829456-iGJpVeCe1ZtP2E3rZyLqJA-0-34197c095bebfc0a3c41df1587861e41)
+![](redis完整字典结构.webp)
 
-#### 字典扩容
+#### 字典扩容rehash
 
 字典达到存储上限，需要rehash(扩容) 扩容流程:
 
-![](https://secure2.wostatic.cn/static/t1ix5kvXPRajiNthrPgdNJ/image.png?auth_key=1716829456-tsUjn5utQgftiJeEs9HsQ9-0-04c2e71de641c3f700a118b31bef3f93)
+![](redis字典扩容.webp)
 
 说明:
 
 1. 初次申请默认容量为4个dictEntry，非初次申请为当前hash表容量的一倍。
 2. rehashidx=0表示要进行rehash操作。
-3. 新增加的数据在新的hash表h[1]
-4. 修改、删除、查询在老hash表h[0]、新hash表h[1]中(rehash中)
-5. 将老的hash表h[0]的数据重新计算索引值后全部迁移到新的hash表h[1]中，这个过程称为 rehash。
+3. 新增加的数据在新的hash表`h[1]`
+4. 修改、删除、查询在老hash表`h[0]`、新hash表`h[1]`中(rehash中)
+5. 将老的hash表`h[0]`的数据重新计算索引值后全部迁移到新的hash表`h[1]`中，这个过程称为 rehash。
 
 #### 渐进式rehash
 
 当数据量巨大时rehash的过程是非常缓慢的，所以需要进行优化。 服务器忙，则只对一个节点进行rehash，服务器闲，可批量rehash(100节点)
 
-**字典应用场景: **
+**字典应用场景:**
 
 1. 主数据库的K-V数据存储
 2. 散列表对象(hash)
 3. 哨兵模式中的主从节点管理
 
-## 压缩列表
+### 压缩列表
 
-压缩列表(ziplist)是由一系列特殊编码的连续内存块组成的顺序型数据结构。节省内存
-
-是一个字节数组，可以包含多个节点(entry)。每个节点可以保存一个字节数组或一个整数。
+> 压缩列表(ziplist)是由一系列特殊编码的连续内存块组成的顺序型数据结构，是一个字节数组，可以包含多个节点(entry)。每个节点可以保存一个字节数组或一个整数。
 
 压缩列表的数据结构如下:
 
-![](https://secure2.wostatic.cn/static/fbcxtkF27yqQTsGg7Hsu9Q/image.png?auth_key=1716829456-GDuigF2vJuzBvGsDqVjca-0-dca87514747e857335d0a38428afcf04)
+![](redis压缩列表的数据结构.webp)
 
 - zlbytes：压缩列表的字节长度
-    
 - zltail：压缩列表尾元素相对于压缩列表起始地址的偏移量
-    
 - zllen：压缩列表的元素个数
-    
 - entry1..entryX：压缩列表的各个节点
-    
 - zlend：压缩列表的结尾，占一个字节，恒为0xFF(255)
-    
-- entryX元素的编码结构：
-    
-    ![](https://secure2.wostatic.cn/static/iH8aSoicc1GKPQw3Rj7Z7w/image.png?auth_key=1716829456-s1qPNhEZFX3bVPQrqZvnQk-0-18a0262a3ab3565544af371207f65bb5)
+entryX元素的编码结构：
+
+![](https://secure2.wostatic.cn/static/iH8aSoicc1GKPQw3Rj7Z7w/image.png?auth_key=1716829456-s1qPNhEZFX3bVPQrqZvnQk-0-18a0262a3ab3565544af371207f65bb5)
     
 - previous_entry_length：前一个元素的字节长度
     
