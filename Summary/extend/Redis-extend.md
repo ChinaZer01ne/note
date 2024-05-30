@@ -170,8 +170,6 @@ typedef struct redisObject {
 
 ## 底层基本数据结构
 
-底层数据结构共有八种，如下表所示：
-
 | `REDIS_ENCODING_INT`        | `long` 类型的整数        |
 | --------------------------- | ------------------- |
 | `REDIS_ENCODING_EMBSTR`     | `embstr` 编码的简单动态字符串 |
@@ -181,10 +179,11 @@ typedef struct redisObject {
 | `REDIS_ENCODING_ZIPLIST`    | 压缩列表                |
 | `REDIS_ENCODING_INTSET`     | 整数集合                |
 | `REDIS_ENCODING_SKIPLIST`   | 跳跃表和字典              |
+| ...                         |                     |
  
 ### 字符串对象
 
-Redis 使用了 SDS(Simple Dynamic String)。用于存储字符串和整型数据。
+Redis 使用了 SDS(Simple Dynamic String)。用于存储字符串和整型数据。SDS的底层实现有三种：int、embstr、raw。
 
 ![](reids-sds.png)
 

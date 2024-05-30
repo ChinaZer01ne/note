@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/extend/Redis-extend.md",
+                "file": "Summary/Redis.md",
                 "mode": "source",
                 "source": false
               }
@@ -146,7 +146,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/extend/Redis-extend.md",
+                "file": "Summary/Redis.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -163,7 +163,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/extend/Redis-extend.md",
+                "file": "Summary/Redis.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -186,7 +186,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/extend/Redis-extend.md"
+                "file": "Summary/Redis.md"
               }
             }
           },
@@ -239,8 +239,9 @@
   },
   "active": "42a1bb09ee705063",
   "lastOpenFiles": [
-    "Summary/Redis.md",
     "Summary/extend/Redis-extend.md",
+    "Summary/Redis.md",
+    "Summary/JVM.md",
     "Summary/image/Redis/rax结构.webp",
     "Summary/image/Redis/rax树.webp",
     "Summary/image/Redis/listpack.webp",
@@ -253,7 +254,6 @@
     "Summary/image/Redis/redis字典扩容.webp",
     "Summary/image/Redis/reids-sds.png.crdownload",
     "Summary/image/Redis/Redis-hash.jpg.crdownload",
-    "Summary/JVM.md",
     "Summary/image/Redis/Redis监控.png.crdownload",
     "Summary/image/Redis/Redis监视器.jpg.crdownload",
     "Summary/image/Redis/Redis数据结构.jpg.crdownload",
