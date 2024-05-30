@@ -239,6 +239,8 @@
   },
   "active": "42a1bb09ee705063",
   "lastOpenFiles": [
+    "Summary/image/Redis/reids-sds.png",
+    "Summary/image/Redis/reids-sds.png.crdownload",
     "Summary/Redis.md",
     "Summary/extend/Redis-extend.md",
     "Summary/image/Redis/Redis-hash.jpg",
@@ -268,7 +270,6 @@
     "Summary/image/Redis/客户端ask请求.webp.crdownload",
     "Summary/image/Redis/客户端跳转过程2.webp.crdownload",
     "Summary/image/Redis/aof恢复png.png.crdownload",
-    "Summary/image/Redis/混合持久化文件.png.crdownload",
     "Summary/面试问题.md",
     "Summary/大杂烩.md",
     "Summary/Java.md",

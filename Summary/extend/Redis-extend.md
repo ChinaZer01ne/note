@@ -172,11 +172,9 @@ typedef struct redisObject {
 
 ### 字符串对象
 
-C语言: 字符数组 "\0"
-
 Redis 使用了 SDS(Simple Dynamic String)。用于存储字符串和整型数据。
 
-![](https://secure2.wostatic.cn/static/mqTA13LVh7PiZxT2fgFUpR/image.png?auth_key=1716829454-sa9LLVcavxy7JX5DK6t6Pn-0-3c9c6d45cfedfcb0d69ea2b6aeba08bd)
+![](reids-sds.png)
 
 ```c
 struct sdshdr{ 
@@ -189,7 +187,7 @@ struct sdshdr{
 }
 ```
 
-buf[] 的长度=len+free+1
+> buf[] 的长度=len+free+1
 
 **SDS的优势:**
 
@@ -199,17 +197,15 @@ buf[] 的长度=len+free+1
     C: \0 空字符串 二进制数据包括空字符串，所以没有办法存取二进制数据  
     SDS : 存非二进制 \0作为判断 ，存二进制: 字符串长度作为判断
 
-**使用场景: **
+**使用场景:**
 
 SDS的主要应用在：存储字符串和整型数据、存储key、AOF缓冲区和用户输入缓冲。
 
-### 跳跃表(重点)
+### 跳表(重点)
 
-跳跃表是有序集合(sorted-set)的底层实现，效率高，实现简单。
+跳表是有序集合(sorted-set)的底层实现，效率高，实现简单。
 
-跳跃表的基本思想:
-
-将有序链表中的部分节点分层，每一层都是一个有序链表。
+>跳跃表的基本思想：将有序链表中的部分节点分层，每一层都是一个有序链表。
 
 #### 查找
 
