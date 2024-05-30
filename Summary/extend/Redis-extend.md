@@ -1215,6 +1215,146 @@ EXEC
 - 脚本的原子性要强于事务，脚本执行期间，另外的客户端其它任何脚本或者命令都无法执行，脚本的执行时间应该尽量短，不能太耗时的脚本
 
 
+# 发布与订阅
+
+Redis提供了发布订阅功能，可以用于消息的传输 Redis的发布订阅机制包括三个部分，`publisher`，`subscriber` 和 `Channel`
+
+![](redis发布订阅.png)
+
+发布者和订阅者都是Redis客户端，Channel则为Redis服务器端。 发布者将消息发送到某个的频道，订阅了这个频道的订阅者就能接收到这条消息。
+
+## 频道/模式的订阅与退订
+
+- subscribe：订阅 `subscribe channel1 channel2 ..`
+    
+    Redis客户端1订阅频道1和频道2
+
+```bash
+127.0.0.1:6379> subscribe ch1  ch2
+Reading messages... (press Ctrl-C to quit)
+1) "subscribe"
+2) "ch1"
+3) (integer) 1
+1) "subscribe"
+2) "ch2"
+3) (integer) 2
+```
+
+- publish：发布消息`publish channel message`
+    
+    Redis客户端2将消息发布在频道1和频道2上
+
+```bash
+127.0.0.1:6379> publish ch1 hello
+(integer) 1
+127.0.0.1:6379> publish ch2 world
+(integer) 1
+```
+
+Redis客户端1接收到频道1和频道2的消息
+
+```bash
+1) "message"
+2) "ch1"
+3) "hello"
+1) "message"
+2) "ch2"
+3) "world"
+```
+
+- unsubscribe：退订
+    
+    channel Redis客户端1退订频道1
+
+```bash
+127.0.0.1:6379> unsubscribe ch1
+1) "unsubscribe"
+2) "ch1"
+3) (integer) 0
+```
+
+- psubscribe ：模式匹配 `psubscribe + 模式`
+    
+    Redis客户端1订阅所有以ch开头的频道
+
+```bash
+127.0.0.1:6379> psubscribe ch*
+Reading messages... (press Ctrl-C to quit)
+1) "psubscribe"
+2) "ch*"
+3) (integer) 1
+```
+
+Redis客户端2发布信息在频道5上
+
+```bash
+127.0.0.1:6379> publish ch5 helloworld
+(integer) 1
+```
+
+Redis客户端1收到频道5的信息
+
+```bash
+1) "pmessage"
+2) "ch*"
+3) "ch5"
+4) "helloworld"
+```
+
+- punsubscribe 退订模式
+
+```bash
+127.0.0.1:6379>  punsubscribe ch*
+1) "punsubscribe"
+2) "ch*"
+3) (integer) 0
+```
+
+## 发布订阅的机制
+
+订阅某个频道或模式：
+
+- 客户端(client)：
+    
+    属性为pubsub_channels，该属性表明了该客户端订阅的所有频道
+    
+    属性为pubsub_patterns，该属性表示该客户端订阅的所有模式
+    
+- 服务器端(RedisServer)：
+    
+    属性为pubsub_channels，该服务器端中的所有频道以及订阅了这个频道的客户端
+    
+    属性为pubsub_patterns，该服务器端中的所有模式和订阅了这些模式的客户端
+    
+
+```c
+typedef struct redisClient {
+    ...
+    dict *pubsub_channels; //该client订阅的channels，以channel为key用dict的方式组织 
+    list *pubsub_patterns; //该client订阅的pattern，以list的方式组织
+    ...
+} redisClient;
+
+struct redisServer {
+    ...
+    dict *pubsub_channels;  //redis server进程中维护的channel dict，它以channel 为key，订阅channel的client list为value
+    //redis server进程中维护的pattern list
+    list *pubsub_patterns;
+    int notify_keyspace_events;
+    ...
+};
+```
+
+当客户端向某个频道发送消息时，Redis首先在redisServer中的pubsub_channels中找出键为该频道的结点，遍历该结点的值，即遍历订阅了该频道的所有客户端，将消息发送给这些客户端。
+
+然后，遍历结构体redisServer中的pubsub_patterns，找出包含该频道的模式的结点，将消息发送给订阅了该模式的客户端。
+
+## 使用场景
+
+在Redis哨兵模式中，哨兵通过发布与订阅的方式与Redis主服务器和Redis从服务器进行通信。这个我们将在后面的章节中详细讲解。
+
+Redisson是一个分布式锁框架，在Redisson分布式锁释放的时候，是使用发布与订阅的方式通知的， 这个我们将在后面的章节中详细讲解。
+
 # [Redisson](https://redisson.org/)
 
 [Redisson](https://redisson.org/)是架设在[Redis](http://redis.cn/)基础上的一个Java驻内存数据网格（In-Memory Data Grid），基于NIO的Netty框架，简化了分布式环境中程序相互之间的协作。
