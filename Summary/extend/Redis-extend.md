@@ -409,21 +409,19 @@ Redis字典除了主数据库的K-V数据存储以外，还可以用于：散列
 
 ![](redis压缩列表的数据结构.webp)
 
-- zlbytes：压缩列表的字节长度
-- zltail：压缩列表尾元素相对于压缩列表起始地址的偏移量
-- zllen：压缩列表的元素个数
-- entry1..entryX：压缩列表的各个节点
-- zlend：压缩列表的结尾，占一个字节，恒为0xFF(255)
+- `zlbytes`：压缩列表的字节长度
+- `zltail`：压缩列表尾元素相对于压缩列表起始地址的偏移量
+- `zllen`：压缩列表的元素个数
+- `entry1..entryX`：压缩列表的各个节点
+- `zlend`：压缩列表的结尾，占一个字节，恒为0xFF(255)
+
 entryX元素的编码结构：
 
-![](https://secure2.wostatic.cn/static/iH8aSoicc1GKPQw3Rj7Z7w/image.png?auth_key=1716829456-s1qPNhEZFX3bVPQrqZvnQk-0-18a0262a3ab3565544af371207f65bb5)
+![](entryX数据结构.webp)
     
-- previous_entry_length：前一个元素的字节长度
-    
-- encoding：表示当前元素的编码
-    
-- content：数据内容
-    
+- `previous_entry_length`：前一个元素的字节长度
+- `encoding`：表示当前元素的编码
+- `content`：数据内容
 
 ziplist结构体如下:
 
@@ -440,15 +438,14 @@ typedef struct zlentry {
 
 ```
 
-**应用场景: **
+**应用场景:**
 
-sorted-set和hash元素个数少且是小整数或短字符串(直接使用) list用快速链表(quicklist)数据结构存储，而快速链表是双向列表与压缩列表的组合。(间接使用)
+* sorted-set和hash元素个数少且是小整数或短字符串(直接使用) 
+* list用快速链表(quicklist)数据结构存储，而快速链表是双向列表与压缩列表的组合。(间接使用)
 
-## 整数集合
+### 整数集合
 
-整数集合(intset)是一个有序的(整数升序)、存储整数的连续存储结构。
-
-当Redis集合类型的元素都是整数并且都处在64位有符号整数范围内(2^64)，使用该结构体存储。
+整数集合(intset)是一个有序的(整数升序)、存储整数的连续存储结构。当Redis集合类型的元素都是整数并且都处在64位有符号整数范围内(2^64)，使用该结构体存储。
 
 ```bash
 127.0.0.1:6379> sadd set:001 1  3 5 6 2
@@ -463,7 +460,7 @@ sorted-set和hash元素个数少且是小整数或短字符串(直接使用) lis
 
 intset的结构图如下:
 
-![](https://secure2.wostatic.cn/static/me13p4vsyKaqkaRqz19PY5/image.png?auth_key=1716829456-f9YWR8ammBrawJimL7NxuT-0-77ef2b5259c3418b256d8b23b7f45d75)
+![](inset结构图.webp)
 
 ```c
 typedef struct intset{
@@ -473,11 +470,11 @@ typedef struct intset{
 }intset;
 ```
 
-**应用场景: **
+**应用场景:**
 
 可以保存类型为int16_t、int32_t 或者int64_t 的整数值，并且保证集合中不会出现重复元素。
 
-## 快速列表(重要)
+### 快速列表(重要)
 
 快速列表(quicklist)是Redis底层重要的数据结构。是列表的底层实现。(在Redis3.2之前，Redis采用双向链表(adlist)和压缩列表(ziplist)实现。)在Redis3.2以后结合adlist和ziplist的优势Redis设计出了quicklist。
 
@@ -488,26 +485,20 @@ typedef struct intset{
 "quicklist"
 ```
 
-双向列表(adlist)
+#### 双向列表(adlist)
 
-![](https://secure2.wostatic.cn/static/en76uTJFPypuQYMPyDEADM/image.png?auth_key=1716829456-72gVpzpQHmW968BVb5UJKS-0-98a94be26b4cec9c42a6ea020fcaefad)
+![](adlist.webp)
 
 双向链表优势:
 
 1. 双向：链表具有前置节点和后置节点的引用，获取这两个节点时间复杂度都为O(1)。
-    
 2. 普通链表(单链表)：节点类保留下一节点的引用。链表类只保留头节点的引用，只能从头节点插入删除
-    
 3. 无环:表头节点的 prev 指针和表尾节点的 next 指针都指向 NULL,对链表的访问都是以 NULL 结束。
-    
     环状:头的前一个节点指向尾节点
-    
 4. 带链表长度计数器：通过 len 属性获取链表长度的时间复杂度为 O(1)。
-    
 5. 多态：链表节点使用 void* 指针来保存节点值，可以保存各种不同类型的值。
-    
 
-快速列表
+#### 快速列表
 
 quicklist是一个双向链表，链表中的每个节点时一个ziplist结构。quicklist中的每个节点ziplist都能够存储多个数据元素。
 
