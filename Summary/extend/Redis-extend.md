@@ -605,10 +605,7 @@ Rax 被用在 Redis Stream 结构里面用于存储消息队列，在 Stream 里
 
 int、raw、embstr
 
-- int
-    
-    REDIS_ENCODING_INT(int类型的整数)
-    
+- int：REDIS_ENCODING_INT(int类型的整数)
 
 ```bash
 127.0.0.1:6379> set n1 123
@@ -617,10 +614,9 @@ OK
 "int"
 ```
 
-- embstr
-    
-    REDIS_ENCODING_EMBSTR(编码的简单动态字符串) 小字符串 长度小于44个字节
-    
+- embstr：
+	- REDIS_ENCODING_EMBSTR(编码的简单动态字符串) 
+	- 小字符串 长度小于44个字节
 
 ```bash
 127.0.0.1:6379> set name:001 zhangfei
@@ -630,9 +626,8 @@ OK
 ```
 
 - raw
-    
-    REDIS_ENCODING_RAW (简单动态字符串) 大字符串 长度大于44个字节
-    
+    * REDIS_ENCODING_RAW (简单动态字符串) 
+    * 大字符串 长度大于44个字节
 
 ```bash
 127.0.0.1:6379> set address:001
@@ -645,7 +640,8 @@ OK
 
 ### **list**
 
-列表的编码是quicklist。 REDIS_ENCODING_QUICKLIST(快速列表)
+* 列表的编码是quicklist。 
+* REDIS_ENCODING_QUICKLIST(快速列表)
 
 ```bash
 127.0.0.1:6379> lpush list:001 1 2 5 4 3
@@ -656,12 +652,11 @@ OK
 
 ### **hash**
 
-散列的编码是字典和压缩列表
+散列的编码是字典dict和压缩列表ziplist
 
-- dict
-    
-    REDIS_ENCODING_HT(字典) 当散列表元素的个数比较多或元素不是小整数或短字符串时。
-    
+ * dict
+	* REDIS_ENCODING_HT(字典) 
+	* 当散列表元素的个数比较多或元素不是小整数或短字符串时。
 
 ```bash
 127.0.0.1:6379>  hmset user:003
@@ -673,10 +668,9 @@ OK
 "hashtable"
 ```
 
-- ziplist
-    
-    REDIS_ENCODING_ZIPLIST(压缩列表) 当散列表元素的个数比较少，且元素都是小整数或短字符串时。
-    
+* ziplist
+	* REDIS_ENCODING_ZIPLIST(压缩列表) 
+	* 当散列表元素的个数比较少，且元素都是小整数或短字符串时。
 
 ```bash
 127.0.0.1:6379> hmset user:001  username zhangfei password 111 age 23 sex M
@@ -687,12 +681,11 @@ OK
 
 ### **set**
 
-集合的编码是整形集合和字典
+集合的编码是整形集合intset和字典dict
 
 - intset
-    
-    REDIS_ENCODING_INTSET(整数集合) 当Redis集合类型的元素都是整数并且都处在64位有符号整数范围内(<18446744073709551616)
-    
+	- REDIS_ENCODING_INTSET(整数集合) 
+	- 当Redis集合类型的元素都是整数并且都处在64位有符号整数范围内(<18446744073709551616)
 
 ```bash
 127.0.0.1:6379> sadd set:001 1  3 5 6 2
