@@ -391,11 +391,13 @@ Redis字典除了主数据库的K-V数据存储以外，还可以用于：散列
 4. 修改、删除、查询在老hash表`h[0]`、新hash表`h[1]`中(rehash中)
 5. 将老的hash表`h[0]`的数据重新计算索引值后全部迁移到新的hash表`h[1]`中，这个过程称为 rehash。
 
+![](rehash.jpg)
 #### 渐进式rehash
 
 当数据量巨大时rehash的过程是非常缓慢的，所以需要进行优化。 服务器忙，则只对一个节点进行rehash，服务器闲，可批量rehash(100节点)
+![](渐进式.jpg)  
 
-**字典应用场景:**
+￥=#**字典应用场景:**
 
 1. 主数据库的K-V数据存储
 2. 散列表对象(hash)
@@ -601,9 +603,9 @@ Rax 被用在 Redis Stream 结构里面用于存储消息队列，在 Stream 里
 "hashtable"
 ```
 
-### **String**
+### **string**
 
-int、raw、embstr
+string的编码是int、raw、embstr
 
 - int：REDIS_ENCODING_INT(int类型的整数)
 
@@ -695,9 +697,8 @@ OK
 ```
 
 - dict
-    
-    REDIS_ENCODING_HT(字典) 当Redis集合类型的元素都是整数并且都处在64位有符号整数范围外(>18446744073709551616)
-    
+	- REDIS_ENCODING_HT(字典) 
+	- 当Redis集合类型的元素都是整数并且都处在64位有符号整数范围外(>18446744073709551616)
 
 ```bash
 127.0.0.1:6379> sadd set:004 1 100000000000000000000000000 9999999999
@@ -711,9 +712,8 @@ OK
 有序集合的编码是压缩列表和跳跃表+字典
 
 - ziplist
-    
-    REDIS_ENCODING_ZIPLIST(压缩列表) 当元素的个数比较少，且元素都是小整数或短字符串时。
-    
+	- REDIS_ENCODING_ZIPLIST(压缩列表) 
+	- 当元素的个数比较少，且元素都是小整数或短字符串时。
 
 ```bash
 127.0.0.1:6379> zadd hit:1 100 item1 20 item2 45 item3
@@ -723,9 +723,8 @@ OK
 ```
 
 - skiplist + dict
-    
-    REDIS_ENCODING_SKIPLIST(跳跃表+字典) 当元素的个数比较多或元素不是小整数或短字符串时。
-    
+	- REDIS_ENCODING_SKIPLIST(跳跃表+字典) 
+	- 当元素的个数比较多或元素不是小整数或短字符串时。
 
 ```bash
 127.0.0.1:6379>  zadd hit:2 100
