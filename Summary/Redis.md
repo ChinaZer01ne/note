@@ -12,7 +12,7 @@
     
 - 做Session分离
   
-  登录token存储
+  > 登录token存储
   
 - 做分布式锁(Redis)
 	- 悲观锁
