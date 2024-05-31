@@ -177,22 +177,23 @@ LRU (Least recently used) 最近最少使用，算法根据数据的历史访问
 	
 2. 此时，业务方访问用户5，由于哈希链表中没有用户5的数据，我们从数据库中读取出来，插入到缓存 当中。这时候，链表中最右端是最新访问到的用户5，最左端是最近最少访问的用户1。
 	
-	![](https://secure2.wostatic.cn/static/q1LjAeCTu1FSxt3XmAHTg4/image.png)
+	![](lru演示2.png)
 	
 3. 接下来，业务方访问用户2，哈希链表中存在用户2的数据，我们怎么做呢?我们把用户2从它的前驱 节点和后继节点之间移除，重新插入到链表最右端。这时候，链表中最右端变成了最新访问到的用户 2，最左端仍然是最近最少访问的用户1。
 	
-	![](https://secure2.wostatic.cn/static/Pi5UguCmouEXUfUA2WSJS/image.png)
+	![](lru演示3.jpg)
+	![](lru演示3.png)
 	
 4. 接下来，业务方请求修改用户4的信息。同样道理，我们把用户4从原来的位置移动到链表最右侧，并 把用户信息的值更新。这时候，链表中最右端是最新访问到的用户4，最左端仍然是最近最少访问的用 户1。
 	
-	![](https://secure2.wostatic.cn/static/ww6nz3H2ZPWNbH6dfF4tuG/image.png)
+	![](lru演示4.jpg)
 	
-	![](https://secure2.wostatic.cn/static/tynTHhL8HWLuSe4xTMsJDR/image.png)
+	![](lru演示4.png)
 	
 5. 业务访问用户6，用户6在缓存里没有，需要插入到哈希链表。假设这时候缓存容量已经达到上限，必须先删除最近最少访问的数据，那么位于哈希链表最左端的用户1就会被删除掉，然后再把用户6插入到 最右端。
 	
-	![](https://secure2.wostatic.cn/static/c4xWiyJg8QVmtApxQy4nWr/image.png)
-	
+	![](lru演示5.png)
+	![](lru演示6.png)
 
 **Redis的LRU 数据淘汰机制**
 
