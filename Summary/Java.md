@@ -90,6 +90,11 @@
 ### LinkedHashMap
 LRU
 # 并发
+
+## 线程的生命周期
+
+todo
+
 ## Java中有哪些实现线程安全的方式？::
 1. 使用同步机制：可以使用关键字[ `synchronized`](#synchronized) 或 `ReentrantLock` 类来实现互斥访问，确保同一时间只有一个线程可以访问共享资源。
 2. 使用原子类：Java提供了一系列原子类，如 `AtomicInteger`、`AtomicLong`、`AtomicReference` 等，它们提供了原子操作，保证了操作的原子性，避免了多线程竞争的问题。
