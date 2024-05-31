@@ -6,6 +6,8 @@
 - 本地方法接口（Native Method Interface）（JNI）  
 - 本地方法库(Native Method Liberary
 ![](JVM结构图.png)
+
+> 线程私有的：Java栈、本地方法栈、程序计数器
 # 类加载机制
 
 ## 类加载过程
