@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Design Docments.md",
+                "file": "Summary/Redis.md",
                 "mode": "source",
                 "source": false
               }
@@ -146,7 +146,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Design Docments.md",
+                "file": "Summary/Redis.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -163,7 +163,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Design Docments.md",
+                "file": "Summary/Redis.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -186,7 +186,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Design Docments.md"
+                "file": "Summary/Redis.md"
               }
             }
           },
@@ -239,6 +239,11 @@
   },
   "active": "42a1bb09ee705063",
   "lastOpenFiles": [
+    "Summary/image/Redis/lru演示3.jpg",
+    "Summary/image/Redis/lru演示3.jpg.crdownload",
+    "Summary/image/Redis/lru演示1.jpg",
+    "Summary/image/Redis/lru演示1.jpg.crdownload",
+    "Summary/Design Docments.md",
     "Summary/大杂烩.md",
     "Summary/Redis.md",
     "Summary/extension/Redis-extension.md",
@@ -255,7 +260,6 @@
     "Summary/image/Redis/adlist.webp",
     "Summary/image/Redis/inset结构图.webp",
     "Summary/image/Redis/entryX数据结构.webp",
-    "Summary/image/Redis/redis压缩列表的数据结构.webp",
     "Summary/image/Redis/reids-sds.png.crdownload",
     "Summary/image/Redis/Redis-hash.jpg.crdownload",
     "Summary/image/Redis/Redis监控.png.crdownload",
@@ -266,11 +270,8 @@
     "Summary/Distributed Theory.md",
     "Summary/image/Redis/Redisson.jpg.crdownload",
     "Summary/Zookeeper.md",
-    "Summary/Design Docments.md",
     "Redis-extend.md",
     "Summary/image/Redis/集群缩容.webp.crdownload",
-    "Summary/image/Redis/客户端ask请求.webp.crdownload",
-    "Summary/image/Redis/客户端跳转过程2.webp.crdownload",
     "Summary/面试问题.md",
     "Summary/Java.md",
     "Summary/Design Patterns.md",
