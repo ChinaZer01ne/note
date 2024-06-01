@@ -371,6 +371,10 @@ volatile更加轻量级，他是无锁的一种实现。
 ![](线程生命周期流转.jpg)
 
 > sleep和wait区别？
+> 1、sleep是线程中的方法，但是wait是Object中的方法。
+> 2、sleep方法不会释放lock，但是wait会释放，而且会加入到等待队列中。
+> 3、sleep方法不依赖于同步器synchronized，但是wait需要依赖synchronized。
+> 4、sleep不需要被唤醒，但是wait需要（不指定时间需要被别人中断）。
 ### Java一个线程占多大内存？::
 ### Java线程占的内存是属于JVM还是操作系统内存？::
 ### 主线程如何捕获子线程的异常？
