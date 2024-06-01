@@ -407,7 +407,7 @@ TODO
 
 3、是新生代Minor GC后的存活对象大于Survivor，那么就会进入老年代，此时老年代内存不足，触发Full GC。这里的不足就是判断条件后还是不足或者经过判断后进行YGC后放入老年代此时的空间不足，然后进行Full GC，就会出现频繁Full GC。达到一定情况后，就会OOM了。
 
-4、是如果用的是CMS收集器，老年代可用内存大于历次新生代GC后进入老年代的对象平均大小，但是老年代已经使用的内存空间超过了（"-XX:CMSInitiatingOccupancyFaction=92%"JDK6默认值 ）这个参数指定的比例，也会自动触发Full GC。
+4、是如果用的是CMS收集器，老年代可用内存大于历次新生代GC后进入老年代的对象平均大小，但是老年代已经使用的内存空间超过了（"`-XX:CMSInitiatingOccupancyFaction=92%`"JDK6默认值 ）这个参数指定的比例，也会自动触发Full GC。
 
 ### 什么是G1？特点与弊端？::
 * 区域划分（Eden、S0、S1、Old、Humongous）
