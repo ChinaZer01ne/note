@@ -376,8 +376,14 @@ volatile更加轻量级，他是无锁的一种实现。
 > 3、sleep方法不依赖于同步器synchronized，但是wait需要依赖synchronized。
 > 4、sleep不需要被唤醒，但是wait需要（不指定时间需要被别人中断）。
 ### Java一个线程占多大内存？::
+
+默认1M，可以通过Thread的构造方法指定。
+
 ### Java线程占的内存是属于JVM还是操作系统内存？::
+都有
 ### 主线程如何捕获子线程的异常？
+1. 通过在主线程中设置`thread`对象的`UncaughtExceptionHandler`方法可以实现
+2. 通过Future类也可以实现，
 
 ## 线程池  
 ### 为什么要使用线程池？::
