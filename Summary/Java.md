@@ -338,7 +338,7 @@ volatile更加轻量级，他是无锁的一种实现。
 
 * ABA
 
-#### <a id = "1"></a>ThreadLocal
+#### <a id = "无锁ThreadLocal"></a>ThreadLocal
 [ThreadLocal](##ThreadLocal)
 
 ### 日常使用锁的最佳实践？::
