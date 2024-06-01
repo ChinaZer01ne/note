@@ -338,6 +338,9 @@ volatile更加轻量级，他是无锁的一种实现。
 
 * ABA
 
+#### <a id = "1"></a>ThreadLocal
+[ThreadLocal](##ThreadLocal)
+
 ### 日常使用锁的最佳实践？::
 * 减小锁的持有时间：
 	>减小锁的持有时间是为了降低锁的冲突的可能性，提高体系的并发能力。
@@ -383,7 +386,7 @@ volatile更加轻量级，他是无锁的一种实现。
 都有
 ### 主线程如何捕获子线程的异常？
 1. 通过在主线程中设置`thread`对象的`UncaughtExceptionHandler`方法可以实现
-2. 通过Future类也可以实现，
+2. 通过Future类也可以实现，`future.get()`会抛出异常
 
 ## 线程池  
 ### 为什么要使用线程池？::
