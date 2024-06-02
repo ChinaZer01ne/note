@@ -1656,7 +1656,7 @@ public Object pop() {
    > 通过 `jstack {PID} | grep {转换后的16进制pid} -A {向后查看的行数}` 
 
 也可以通过Arthas来定位问题。
-# 际案例
+## 实际案例
 TODO
 
 ## 生产环境频繁GC如何处理？
