@@ -1636,6 +1636,10 @@ public class MapTest {
 
 需要确保回调立即被当作垃圾回收的最佳方法是只保存它的弱引用，例如将他们保存成为WeakHashMap中的键。
 
+### ThreadLocal未及时清理
+
+由于线程的复用导致，ThreadLocal中的对象无法及时回收。
+
 # 案例分析
 ## 内存泄露案例分析
 
@@ -1760,7 +1764,12 @@ TODO
 	- 内存泄露  
     - 根因  
         - ThreadLocal未清理导致内存泄露，频繁CMS  
-            
+### 内存泄漏
+
+* ThreadLocal未清理导致内存泄露，频繁CMS 
+	* 现象：ci
+		
+
 - 线上节点未拉出执行jmap导致GC  
     
 - 响应体过大的接口导致频繁GC  
