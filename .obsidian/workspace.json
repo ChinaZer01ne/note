@@ -239,6 +239,9 @@
   },
   "active": "42a1bb09ee705063",
   "lastOpenFiles": [
+    "Summary/image/JVM/对象分配流程.jpg",
+    "Summary/image/JVM/1717303196435.jpg",
+    "Summary/image/1717303196435.jpg",
     "Summary/Concurrent programming.md",
     "Summary/JVM.md",
     "Summary/image/JVM/老年代空间分配担保.png",
@@ -260,8 +263,6 @@
     "Summary/MarkDown.md",
     "Summary/image/Java/线程生命周期流转.jpg",
     "Summary/image/Java/1717174100079.jpg",
-    "Summary/image/Pasted image 20240601004814.png",
-    "Summary/image/Java/线程的生命周期.jpg",
     "Summary/Redis.md",
     "Summary/image/Redis/lru演示6.png.crdownload",
     "Summary/image/Redis/lru演示5.png.crdownload",
@@ -283,7 +284,6 @@
     "Summary/TO DO LIST.md",
     "Summary/压测.md",
     "Summary/Algorithm.md",
-    "Summary/Architecture Design.md",
-    "Summary/Arthas.md"
+    "Summary/Architecture Design.md"
   ]
 }
