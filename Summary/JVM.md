@@ -222,6 +222,13 @@
 
 触发Minor GC的时候会根据老年代空间担保等规则分配对象。可能能会将新生代对象晋升到老年代，然后分配新对象；也可能没有足够的空间完成晋升，导致Full GC，Full GC后还是没有足够的空间，就会触发OOM。具体参考[老年代空间担保](#什么是老年代空间分配担保？)
 
+## 方法区
+
+### Metaspace
+
+Metaspace被分为了4个部分，分别是​​used​​​、​​capacity​​​、​​committed​​​、​​reserved​​，同时还多了一个class space，同样被分为了这4个部分
+
+![](virtual&nbsp;space.webp)
 # 执行引擎（Execution Engine）  
 ## 执行引擎包括哪些部分？::
 - 解释器（Interpreter）

@@ -239,6 +239,9 @@
   },
   "active": "42a1bb09ee705063",
   "lastOpenFiles": [
+    "Summary/image/JVM/virtual-space.webp",
+    "Summary/image/JVM/virtual space.webp",
+    "Summary/image/JVM/virtual space.webp.crdownload",
     "Summary/MicroService Design.md",
     "Summary/JVM.md",
     "Summary/extension/JVM-extension.md",
@@ -263,12 +266,10 @@
     "Summary/大杂烩.md",
     "Summary/Java.md",
     "Summary/MarkDown.md",
-    "Summary/image/Java/线程生命周期流转.jpg",
     "Summary/Redis.md",
     "Summary/image/Redis/lru演示6.png.crdownload",
     "Summary/image/Redis/lru演示5.png.crdownload",
     "Summary/image/Redis/lru演示4.png.crdownload",
-    "Summary/image/Redis/lru演示2.png.crdownload",
     "Summary/extension/Redis-extension.md",
     "Summary/extension/Zookeeper-extension.md",
     "Summary/ES.md",
@@ -283,7 +284,6 @@
     "Summary/System Design.md",
     "Summary/TO DO LIST.md",
     "Summary/压测.md",
-    "Summary/Algorithm.md",
-    "Summary/Architecture Design.md"
+    "Summary/Algorithm.md"
   ]
 }
