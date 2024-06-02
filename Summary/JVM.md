@@ -1788,6 +1788,8 @@ Metaspace 可能在两种情况下触发 GC：
 
 > 所以大家千万不要把 MaxMetaspaceSize 设置得太小。
 
+[深入理解metaspace](https://blog.csdn.net/RosaSpSpring/article/details/125549956)
+[深入理解metaspace](https://www.javadoop.com/post/metaspace)
 
 ## 如何排查线上内存过高的问题？  
 
