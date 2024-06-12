@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/JVM.md",
+                "file": "Summary/Spring.md",
                 "mode": "source",
                 "source": false
               }
@@ -146,7 +146,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/JVM.md",
+                "file": "Summary/Spring.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -163,7 +163,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/JVM.md",
+                "file": "Summary/Spring.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -186,7 +186,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/JVM.md"
+                "file": "Summary/Spring.md"
               }
             }
           },
@@ -237,13 +237,13 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "42a1bb09ee705063",
+  "active": "6aa11b407ce3eab2",
   "lastOpenFiles": [
+    "Summary/JVM.md",
     "Summary/image/JVM/virtual-space.webp",
     "Summary/image/JVM/virtual space.webp",
     "Summary/image/JVM/virtual space.webp.crdownload",
     "Summary/MicroService Design.md",
-    "Summary/JVM.md",
     "Summary/extension/JVM-extension.md",
     "Summary/image/JVM/对象分配流程.jpg",
     "Summary/image/JVM/1717303196435.jpg",
@@ -261,7 +261,6 @@
     "Summary/image/JVM/空间分配担保.webp",
     "Summary/image/JVM/空间分配担保.webp.crdownload",
     "Summary/image/JVM/对象进入老年代.webp.crdownload",
-    "Summary/image/JVM/对象进入老年代.webp",
     "Summary/Design Docments.md",
     "Summary/大杂烩.md",
     "Summary/Java.md",
