@@ -154,7 +154,7 @@ Spring设计了三级缓存来解决循环依赖问题。在`DefaultSingletonBea
 * 需要动态代理
 	* JDK
 	* CGLIB
-> 本质是通过创建代理对象将一些公共逻辑作为类的增强处理，这些公共逻辑叫切面，这面有前置，后置，huan'ra
+> 本质是通过创建代理对象将一些公共逻辑作为类的增强处理，这些公共逻辑叫切面，这面有前置，后置，环绕等等，都是基于动态代理的。
 # Spring AOP 原理
 * obtainFreshBeanFactory
 	* loadBeanDefinitions：解析配置文件的`aop`相关标签
