@@ -237,8 +237,12 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "6aa11b407ce3eab2",
+  "active": "42a1bb09ee705063",
   "lastOpenFiles": [
+    "Summary/image/Spring/autowired注入方式.png",
+    "Summary/image/Spring/autowired注入方式.png.crdownload",
+    "Summary/image/Spring",
+    "Summary/image/新建文件夹",
     "Summary/JVM.md",
     "Summary/image/JVM/virtual-space.webp",
     "Summary/image/JVM/virtual space.webp",
@@ -266,9 +270,6 @@
     "Summary/Java.md",
     "Summary/MarkDown.md",
     "Summary/Redis.md",
-    "Summary/image/Redis/lru演示6.png.crdownload",
-    "Summary/image/Redis/lru演示5.png.crdownload",
-    "Summary/image/Redis/lru演示4.png.crdownload",
     "Summary/extension/Redis-extension.md",
     "Summary/extension/Zookeeper-extension.md",
     "Summary/ES.md",

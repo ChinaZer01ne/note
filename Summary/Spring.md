@@ -76,6 +76,12 @@ Spring的初始化流程主要是执行`AbstractApplicationContext`类的`refres
  3. 反射  
  4. factory-method  
  5. supplier
+
+## Autowired和Resource区别
+
+![](autowired注入方式.png)
+
+
 # FactoryBean与BeanFactory
 ## 什么是BeanFactory？::
 BeanFactory是Spring框架中的一个关键接口，用于管理和获取Bean对象。它是Spring IoC（Inversion of Control，控制反转）容器的核心部分之一。BeanFactory负责创建、配置和管理Bean的生命周期。
