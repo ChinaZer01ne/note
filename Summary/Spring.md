@@ -149,6 +149,12 @@ Spring设计了三级缓存来解决循环依赖问题。在`DefaultSingletonBea
 
 用二级缓存可以解决循环依赖问题，但是当存在代理对象的时候就会出现问题。比如A对象和A的代理对象都放在二级缓存中，就会产生覆盖，覆盖后循环依赖赋值不完整，Spring类型比较会报错。二级缓存和三级缓存分开保证了普通对象和代理对象不会产生覆盖问题。
 
+# 对AOP的理解
+* 面向切面编程
+* 需要动态代理
+	* JDK
+	* CGLIB
+> 本质是通过创建代理对象将一些公共逻辑作为类的增强处理，这些公共逻辑叫切面，这面有前置，后置，huan'ra
 # Spring AOP 原理
 * obtainFreshBeanFactory
 	* loadBeanDefinitions：解析配置文件的`aop`相关标签
@@ -166,6 +172,7 @@ Spring设计了三级缓存来解决循环依赖问题。在`DefaultSingletonBea
 						* `SimpleBeanFactoryAwareAspectInstanceFactory`
 			* 同样会解析`@Aspect`注解修饰的类
 		* 执行`BeanPostProcessor#postProcessAfterInitialization`
+			* `wrapIfNecessary`
 			* 如果目标对象需要被代理，则匹配相应的advisor，创建代理对象
 
 # Spring有哪些重要的BeanFactoryPostProcessor？::
