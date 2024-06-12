@@ -79,9 +79,13 @@ Spring的初始化流程主要是执行`AbstractApplicationContext`类的`refres
 
 ## Autowired和Resource区别
 
+`@Autowired` 是先根据类型（byType）查找，如果存在多个 Bean 再根据名称（byName）进行查找，它的具体查找流程如下：
+
 ![](autowired注入方式.png)
 
+`@Resource` 是先根据名称（byName）查找，如果（byType）查找不到，再根据类型进行查找，它的具体流程如下图所示：
 
+![](resource注入方式.png)
 # FactoryBean与BeanFactory
 ## 什么是BeanFactory？::
 BeanFactory是Spring框架中的一个关键接口，用于管理和获取Bean对象。它是Spring IoC（Inversion of Control，控制反转）容器的核心部分之一。BeanFactory负责创建、配置和管理Bean的生命周期。
