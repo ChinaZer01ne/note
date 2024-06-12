@@ -11,7 +11,7 @@ Spring的初始化流程主要是执行`AbstractApplicationContext`类的`refres
                 - 以BeanDefinition的形式注册到容器`DefaultListableBeanFactory#beanDefinitionMap`中  
                     `BeanDefinitionNames`：beanName  
                     `BeanDefinitionMap`: beanName -> BeanDefinition
-    - prepareBeanFactory：BeanFactory初始化
+    - prepareBeanFactory：
         - 主要是属性值的设置，比如SPEL，Aware接口，监听器
     - postProcessBeanFactory  
     - invokeBeanFactoryPostProcessors：执行[BeanFactoryPostProcessor](#Spring有哪些重要的BeanFactoryPostProcessor？)
