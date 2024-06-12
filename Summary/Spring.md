@@ -77,7 +77,7 @@ Spring的初始化流程主要是执行`AbstractApplicationContext`类的`refres
  4. factory-method  
  5. supplier
 
-## Autowired和Resource区别
+# Autowired和Resource区别
 
 `@Autowired` 是先根据类型（byType）查找，如果存在多个 Bean 再根据名称（byName）进行查找，它的具体查找流程如下：
 
@@ -101,6 +101,33 @@ FactoryBean包含三个方法
 * getObject：延迟初始化的对象  
 * isSingleton：延迟对象是不是单例的，单例的会单独放到缓存  
 * getObjectType：获取对象类型
+
+# BeanFactory和ApplicationContext 
+
+**基本区别**
+
+BeanFactory：BeanFacotry是Spring中最原始的Factory，里面最低层的接口，提供了最简单的容器的功能，只提供了实例化对象和拿对象的功能。它没有AOP功能、Web应用功能等等。
+
+ApplicationContext：应用上下文，继承BeanFactory接口（因而提供BeanFactory所有的功能），ApplicationContext以一种更面向框架的方式工作以及对上下文进行分层和实现继承。它是Spring的一各更高级的容器，提供了更多的有用的功能：
+
+- 国际化（MessageSource）（ApplicationContext.getMessage()拿到国际化消息）
+- 访问资源，如URL和文件（ResourceLoader） （ApplicationContext acxt =new ClassPathXmlApplicationContext("/applicationContext.xml");能直接读取文件内容）
+- 载入多个（有继承关系）上下文 ，使得每一个上下文都专注于一个特定的层次，比如应用的web层
+- 消息发送、响应机制（ApplicationEventPublisher）
+- AOP（拦截器）
+
+**两者装载bean的区别**
+
+BeanFactory在启动的时候不会去实例化Bean，只有从容器中拿Bean的时候才会去实例化；（它只去加载Bean的定义信息，显示调用getBean()才会真正去实例化），这样懒加载的优点是：启动快，启动时占用资源少。
+
+ApplicationContext在启动的时候就把所有的Bean全部实例化了。它还可以为Bean配置`lazy-init=true`来让Bean延迟实例化（所有的单例、非懒加载的Bean都会容器启动时候立马实例化）；
+
+立马加载好的优点有：
+
+- 启动时都初始化完成了，所以运行时会更快。
+- 我们能在系统启动的时候，尽早的发现系统中的配置问题 （因为启动时就得实例化处理）
+- 可以（建议）把费时的操作放到系统启动中完成（比如初始化本地缓存、获取连接池的链接等等操作
+
 # Spring循环依赖::
 ## 什么是Spring循环依赖问题？
 
