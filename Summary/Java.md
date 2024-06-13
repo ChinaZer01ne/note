@@ -346,6 +346,8 @@ volatile更加轻量级，他是无锁的一种实现。
 
 ##### 为什么有了MESI协议还要又volatile关键字? ::
 
+https://blog.csdn.net/pengxurui/article/details/127932108
+
 #### CAS
 
 通过`compareAndSwap`，也就是`CAS`，来保证了对数据操作的原子性。先把当前值和底层的值（线程工作空间的值）进行比较，如果相等，也就是说该值未被其他线程改变，则执行更新的操作，否则那么就不停的循环判断。这是靠一条底层指令`cmpxchg`来实现的。
