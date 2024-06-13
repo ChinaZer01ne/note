@@ -73,8 +73,13 @@
 	- hash=-1是ForwardingNode；容器正在扩容  
 	- hash = -3是ReservationNode，在调用computeIfAbsent方法时可能会使用的占位对象  
 #### ConcurrentHashMap是如何扩容的？::
+* 可能的触发时机
+	* 链表长度到8，数组长度没有到64
+	* 超过负载因子阈值（0.75）
+	* putAll方法
 - 扩容  
 	- 辅助扩容  
+		- 计算bu'chang
 	- 数据迁移  
 		- lastRun  
 	- 扩容期间读写问题  
