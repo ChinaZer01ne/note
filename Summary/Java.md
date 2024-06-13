@@ -79,7 +79,11 @@
 	* putAll方法
 - 扩容  
 	- 辅助扩容  
-		- 计算bu'chang
+		- 计算步长
+		- 创建新数组
+		- 领取任务
+		- 迁移数据
+		- 核查
 	- 数据迁移  
 		- lastRun  
 	- 扩容期间读写问题  
@@ -89,7 +93,7 @@
         迁移完毕  
         读跳转
 - 红黑树并发读写问题  
-
+#### ConcurrentHashMap在红黑树上为什么又双向链表指针？
 ### ConcurrentSkipListMap
 跳表  
 ### LinkedHashMap
