@@ -234,7 +234,7 @@ new Thread(() -> {
 }, "read").start();
 ```
 ##### 为什么这么加不可以？
-这么加，a变量在循环中只会读取一次，因为synchronized只会执行一次；如果synchronized加载循环里面，由于synchronized执行多次，那么变量a就会多次从主存读取。
+
 ```java
 synchronized (ThreadTest.class) {  
 	while (tmp < 50) {  
@@ -249,6 +249,7 @@ synchronized (ThreadTest.class) {
 	}  
 }  
 ```
+这么加，a变量在循环中只会读取一次，因为synchronized只会执行一次；如果synchronized加在循环里面，由于synchronized执行多次，那么变量a就会多次从主存读取。
 ## AQS
 ### AQS是如何实现的？::
 #### AQS的数据结构
