@@ -251,6 +251,10 @@
   },
   "active": "aac1729a4d7f9d71",
   "lastOpenFiles": [
+    "Summary/image/Mybatis/mybatis执行流程图.jpg",
+    "Summary/image/Mybatis/mybatis执行流程图.jpg.crdownload",
+    "Summary/image/Mybatis",
+    "Summary/image/新建文件夹",
     "Summary/Java.md",
     "Summary/Mybatis.md",
     "Summary/Mysql.md",
@@ -260,7 +264,6 @@
     "Summary/image/Spring/autowired注入方式.png",
     "Summary/image/Spring/autowired注入方式.png.crdownload",
     "Summary/image/Spring",
-    "Summary/image/新建文件夹",
     "Summary/JVM.md",
     "Summary/image/JVM/virtual-space.webp",
     "Summary/image/JVM/virtual space.webp",
@@ -278,8 +281,6 @@
     "Summary/image/JVM/中间人攻击.png.crdownload",
     "Summary/image/JVM/https交互.png",
     "Summary/image/JVM/https交互.png.crdownload",
-    "Summary/image/JVM/HandlePromotionFailure.webp.crdownload",
-    "Summary/image/JVM/空间分配担保.webp.crdownload",
     "Summary/Design Docments.md",
     "Summary/大杂烩.md",
     "Summary/MarkDown.md",
@@ -295,7 +296,6 @@
     "Summary/Spring Cloud.md",
     "Summary/System Design.md",
     "Summary/TO DO LIST.md",
-    "Summary/压测.md",
-    "Summary/Algorithm.md"
+    "Summary/压测.md"
   ]
 }

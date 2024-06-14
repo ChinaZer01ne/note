@@ -6,3 +6,5 @@
 * ParameterHandler
 * StatementHandler
 * ResultSetHandler
+
+![](mybatis执行流程图.jpg)
