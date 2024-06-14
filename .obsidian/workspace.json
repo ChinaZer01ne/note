@@ -49,7 +49,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Spring.md",
+                "file": "Summary/JVM.md",
                 "mode": "source",
                 "source": false
               }
@@ -158,7 +158,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Spring.md",
+                "file": "Summary/JVM.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -175,7 +175,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Spring.md",
+                "file": "Summary/JVM.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -198,7 +198,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Spring.md"
+                "file": "Summary/JVM.md"
               }
             }
           },
@@ -251,6 +251,9 @@
   },
   "active": "aac1729a4d7f9d71",
   "lastOpenFiles": [
+    "Summary/Java.md",
+    "Summary/JVM.md",
+    "Summary/Spring.md",
     "Summary/Mybatis.md",
     "Summary/image/Spring/spring流程.png",
     "Summary/image/Spring/spring流程.png.crdownload",
@@ -258,15 +261,12 @@
     "Summary/image/Mybatis/mybatis执行流程图.jpg.crdownload",
     "Summary/image/Mybatis",
     "Summary/image/新建文件夹",
-    "Summary/Java.md",
     "Summary/Mysql.md",
-    "Summary/Spring.md",
     "Summary/image/Spring/resource注入方式.png",
     "Summary/image/Spring/resource注入方式.png.crdownload",
     "Summary/image/Spring/autowired注入方式.png",
     "Summary/image/Spring/autowired注入方式.png.crdownload",
     "Summary/image/Spring",
-    "Summary/JVM.md",
     "Summary/image/JVM/virtual-space.webp",
     "Summary/image/JVM/virtual space.webp",
     "Summary/image/JVM/virtual space.webp.crdownload",
