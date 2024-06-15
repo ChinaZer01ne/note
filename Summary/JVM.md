@@ -1325,7 +1325,7 @@ GCViewer是一款离线的GC日志分析器，用于可视化Java VM选项 -verb
 ## "Real time"、"user time"和"sys time"
 ### Real time（实际时间）
 
-Real time是指从程序开始执行到结束所经过的实际时间，也称为墙钟时间（wall clock time）。  它包括了程序执行过程中的所有时间，包括**CPU执行时间**、**I/O等待时间**和**其他等待时间**。  Real time是最终完成任务所需的总时间，它是**用户所感知到的时间**。  
+Real time是指从程序开始执行到结束所经过的实际时间，也称为墙钟时间（wall clock time）。  它包括了程序执行过程中的所有时间，包括**CPU执行时间**、**I/O等待时间**和**其他等待时间**。  Real time是最终完成任务所需的总时间，它是**用户所感知到的时间**。在JVM中Real Time就是GC的耗时时间。  
 
 > ps：如果GC从8点开始，8点30结束，real time就是30分钟）。  
 
