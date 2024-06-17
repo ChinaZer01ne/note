@@ -49,7 +49,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Computer Network.md",
+                "file": "Summary/ES.md",
                 "mode": "source",
                 "source": false
               }
@@ -158,7 +158,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Computer Network.md",
+                "file": "Summary/ES.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -175,7 +175,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Computer Network.md",
+                "file": "Summary/ES.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -198,7 +198,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Computer Network.md"
+                "file": "Summary/ES.md"
               }
             }
           },
@@ -249,8 +249,15 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "aac1729a4d7f9d71",
+  "active": "6aa11b407ce3eab2",
   "lastOpenFiles": [
+    "Summary/IO.md",
+    "Summary/Distributed Theory.md",
+    "Summary/Design Patterns.md",
+    "Summary/Design Docments.md",
+    "Summary/DDD.md",
+    "Summary/Concurrent programming.md",
+    "Summary/Computer Network.md",
     "Summary/Arthas.md",
     "Summary/Architecture Design.md",
     "Summary/Mysql.md",
@@ -277,25 +284,18 @@
     "Summary/image/JVM/对象分配流程.jpg",
     "Summary/image/JVM/1717303196435.jpg",
     "Summary/image/1717303196435.jpg",
-    "Summary/Concurrent programming.md",
     "Summary/image/JVM/老年代空间分配担保.png",
     "Summary/image/JVM/老年代空间分配担保.png.crdownload",
-    "Summary/Computer Network.md",
     "Summary/image/JVM/中间人攻击.png.crdownload",
-    "Summary/Design Docments.md",
     "Summary/大杂烩.md",
     "Summary/MarkDown.md",
     "Summary/Redis.md",
     "Summary/extension/Redis-extension.md",
     "Summary/extension/Zookeeper-extension.md",
     "Summary/ES.md",
-    "Summary/Distributed Theory.md",
     "Summary/Zookeeper.md",
     "Redis-extend.md",
     "Summary/面试问题.md",
-    "Summary/Design Patterns.md",
-    "Summary/Spring Cloud.md",
-    "Summary/System Design.md",
-    "Summary/TO DO LIST.md"
+    "Summary/Spring Cloud.md"
   ]
 }
