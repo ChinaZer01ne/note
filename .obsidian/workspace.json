@@ -49,7 +49,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/ES.md",
+                "file": "Summary/Spring Cloud.md",
                 "mode": "source",
                 "source": false
               }
@@ -158,7 +158,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/ES.md",
+                "file": "Summary/Spring Cloud.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -175,7 +175,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/ES.md",
+                "file": "Summary/Spring Cloud.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -198,7 +198,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/ES.md"
+                "file": "Summary/Spring Cloud.md"
               }
             }
           },
@@ -249,8 +249,15 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "6aa11b407ce3eab2",
+  "active": "aac1729a4d7f9d71",
   "lastOpenFiles": [
+    "Summary/System Design.md",
+    "Summary/Spring Cloud.md",
+    "Summary/Redis.md",
+    "Summary/Mybatis.md",
+    "Summary/MQ.md",
+    "Summary/MicroService Design.md",
+    "Summary/ES.md",
     "Summary/IO.md",
     "Summary/Distributed Theory.md",
     "Summary/Design Patterns.md",
@@ -264,7 +271,6 @@
     "Summary/JVM.md",
     "Summary/Java.md",
     "Summary/Spring.md",
-    "Summary/Mybatis.md",
     "Summary/image/Spring/spring流程.png",
     "Summary/image/Spring/spring流程.png.crdownload",
     "Summary/image/Mybatis/mybatis执行流程图.jpg",
@@ -279,7 +285,6 @@
     "Summary/image/JVM/virtual-space.webp",
     "Summary/image/JVM/virtual space.webp",
     "Summary/image/JVM/virtual space.webp.crdownload",
-    "Summary/MicroService Design.md",
     "Summary/extension/JVM-extension.md",
     "Summary/image/JVM/对象分配流程.jpg",
     "Summary/image/JVM/1717303196435.jpg",
@@ -289,13 +294,8 @@
     "Summary/image/JVM/中间人攻击.png.crdownload",
     "Summary/大杂烩.md",
     "Summary/MarkDown.md",
-    "Summary/Redis.md",
     "Summary/extension/Redis-extension.md",
     "Summary/extension/Zookeeper-extension.md",
-    "Summary/ES.md",
-    "Summary/Zookeeper.md",
-    "Redis-extend.md",
-    "Summary/面试问题.md",
-    "Summary/Spring Cloud.md"
+    "Summary/Zookeeper.md"
   ]
 }
