@@ -271,6 +271,8 @@
   },
   "active": "aac1729a4d7f9d71",
   "lastOpenFiles": [
+    "Summary/image/Java/threadlocal结构.png",
+    "Summary/image/Java/threadlocal结构.png.crdownload",
     "Summary/image/Java/重量级锁monitor.webp",
     "Summary/image/Java/重量级锁monitor.webp.crdownload",
     "Summary/image/Java/synchronized原理.jpg",
@@ -311,8 +313,6 @@
     "Summary/extension/JVM-extension.md",
     "Summary/image/JVM/对象分配流程.jpg",
     "Summary/image/JVM/1717303196435.jpg",
-    "Summary/image/1717303196435.jpg",
-    "Summary/image/JVM/老年代空间分配担保.png.crdownload",
     "Summary/大杂烩.md",
     "Summary/MarkDown.md",
     "Summary/extension/Redis-extension.md",

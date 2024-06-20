@@ -490,7 +490,9 @@ ThreadLocal的实现原理可以简单概括为以下几点：
 * 当通过ThreadLocal的get()方法获取线程局部变量时，会先获取当前线程的ThreadLocalMap对象。然后，根据ThreadLocal对象作为键，在ThreadLocalMap中查找对应的值。
 * 当通过ThreadLocal的set()方法设置线程局部变量时，会先获取当前线程的ThreadLocalMap对象。然后，使用ThreadLocal对象作为键，将线程局部变量存储在ThreadLocalMap中。
 * 当线程结束时，ThreadLocalMap中的所有以ThreadLocal对象为键的条目会被自动清除，防止内存泄漏（弱引用）。
-> ThreadLocal其实是操作Thread类中ThreadLocalMap变量的一个工具类
+> ThreadLocal其实是操作Thread类中ThreadLocalMap变量的一个工具类，每个ThreadLocal相当于ThreadLocalMap中的一个entry。
+
+![](threadlocal结构.png)
 ### ThreadLocal的应用场景
 * 线程安全的对象：
 >当某个对象不是线程安全的，但又需要在多线程环境下使用时，可以将该对象存储在ThreadLocal中，使每个线程拥有独立的对象副本，避免了线程安全问题。
