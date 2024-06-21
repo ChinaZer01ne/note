@@ -271,8 +271,10 @@
   },
   "active": "aac1729a4d7f9d71",
   "lastOpenFiles": [
-    "Summary/Distributed Theory.md",
+    "Summary/TO DO LIST.md",
     "Summary/MicroService Design.md",
+    "Summary/Zookeeper.md",
+    "Summary/Distributed Theory.md",
     "Summary/Spring Cloud.md",
     "Summary/面试问题.md",
     "Summary/Java.md",
@@ -314,8 +316,6 @@
     "Summary/extension/JVM-extension.md",
     "Summary/image/JVM/对象分配流程.jpg",
     "Summary/大杂烩.md",
-    "Summary/MarkDown.md",
-    "Summary/extension/Redis-extension.md",
-    "Summary/extension/Zookeeper-extension.md"
+    "Summary/MarkDown.md"
   ]
 }

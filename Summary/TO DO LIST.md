@@ -17,4 +17,5 @@
 - [x] [[ES#什么是倒排索引？]]
 - [ ] [[Java#集合]]
 - [ ] [[Java#并发]]
-- [ ] 
+- [ ] [[MicroService Design#分布式事务]]
+- [ ] [[MicroService Design#分布式锁]]

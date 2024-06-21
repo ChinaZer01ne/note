@@ -179,6 +179,10 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 - 数据并发竞争
 - 防止库存超卖
 
+### 数据库
+
+通过唯一索引实现。
+
 ### [Redis 分布式锁](https://github.com/doocs/advanced-java/blob/main/docs/distributed-system/distributed-lock-redis-vs-zookeeper.md#redis-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81)
 
 官方叫做 `RedLock` 算法，是 Redis 官方支持的分布式锁算法。
