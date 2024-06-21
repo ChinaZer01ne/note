@@ -1719,7 +1719,7 @@ public class MapTest {
 
 > 关于dump文件的下载
 > * 自动dump: 设置JVM参数 `-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=`
-> * 手动dump: jmap -dump:format=b. file=dump.hporf
+> * 手动dump: jmap -dump:format=b. file=dump.hporf PID 或者通过arthas的dump命令
 # 案例分析
 ## 内存泄露案例分析
 
