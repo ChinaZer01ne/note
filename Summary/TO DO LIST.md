@@ -19,3 +19,4 @@
 - [ ] [[Java#并发]]
 - [ ] [[MicroService Design#分布式事务]]
 - [ ] [[MicroService Design#分布式锁]]
+- [ ] [[MicroService Design#SETA的XA和AT模式]]]
