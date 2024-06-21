@@ -1799,6 +1799,7 @@ TODO
 2、 导出堆内存文件快照
 * `jmap -dump:live,format=b,file=/home/dump.hprof PID`
 
+3、通过工具分析dump文件
 
 
 ## 线上STW过长问题排查案例  
