@@ -1712,10 +1712,14 @@ public class MapTest {
 * 内存过小
 	* 比如服务器降配导致
 * 一次性申请内存过多
+	* 循环添加对象，序列化等等
 * 内存泄漏
 	* 比如缓存、连接长时间不回收
 	* ThreadLocal未remove
 
+> 关于dump文件的下载
+> * 自动dump: 设置JVM参数 `-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=`
+> * 手动dump: jmap -dump:format=b. file=dump.hporf
 # 案例分析
 ## 内存泄露案例分析
 
