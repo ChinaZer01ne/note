@@ -1714,6 +1714,7 @@ public class MapTest {
 * 一次性申请内存过多
 * 内存泄漏
 	* 比如缓存、连接长时间不回收
+	* ThreadLocal未remove
 
 # 案例分析
 ## 内存泄露案例分析
