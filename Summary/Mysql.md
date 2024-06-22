@@ -798,7 +798,6 @@ ALTER TABLE single_table drop index idx_key1, idx_key3, add index idx_key1_key3(
 
 # 索引在哪些情况下会失效？
 
-- 查询条件包含or，可能导致索引失效
 - 如何字段类型是字符串，where时一定用引号。（隐式转换）
 - like通配符可能导致索引失效。（前模糊）
 - 联合索引，查询时的条件列不是联合索引中的第一个列，索引失效。（最左匹配）
@@ -808,13 +807,6 @@ ALTER TABLE single_table drop index idx_key1, idx_key3, add index idx_key1_key3(
 - 索引字段上使用is null， is not null，可能导致索引失效。
 - 连接查询查询关联的字段编码格式不一样，可能导致索引失效。（编码）
 - mysql估计使用全表扫描要比使用索引快，则不使用索引。
-
-  
-  
-作者：Henry_王  
-链接：https://www.jianshu.com/p/dce30c3ac448  
-来源：简书  
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 # Mysql的事务
 ## 事务的基本特性
