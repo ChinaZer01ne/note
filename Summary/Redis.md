@@ -944,7 +944,9 @@ Redis集群的故障检测是基于gossip协议的，集群中的每个节点都
 
 [Redis发布订阅](Redis-extension.md#发布与订阅)
 
-## Redis主从、shao'b
+## Redis主从、哨兵、集群比较
+todo
+
 # 事务
 
 所谓事务(Transaction) ，是指作为单个逻辑工作单元执行的一系列操作
