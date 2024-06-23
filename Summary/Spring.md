@@ -191,7 +191,14 @@ Spring设计了三级缓存来解决循环依赖问题。在`DefaultSingletonBea
 * 方法内自调用
 	* this对象不是代理对象
 * 方法是private的
-	* spring事务会基于cglib来进行aop
+	* spring事务会基于cglib来进行aop，cglib是通过重写子类的方式生成代理对象，由于方法是private，导致子类无法重写方法
+* 方法是final
+	* 同private
+* 单独的线程调用方法
+	* spring会从ThreadLocal中获取连接对象，如果新开启了线程，由于ThreadLocal的隔离，会导致拿不到连接，进而新创建一个来连接，这个新连接是自动提交的模式，无法回滚
+* 异常被catch
+* 类没有被spring管理
+* 数据库不支持事务
 # Spring有哪些重要的BeanFactoryPostProcessor？::
 * `ConfigurationClassPostProcessor`
 	* 是比较重要的`BeanFactoryPostProcessor`，它和SpringBoot的自动装配息息相关。他负责`Configuration`、`Import`、`ImportResource`、`Component`、`ComponentScan`、`Bean`等注解的处理，和SpringBoot的自动装配息息相关，此类还会对配置类进行代理操作，解决@Bean 的单例问题
