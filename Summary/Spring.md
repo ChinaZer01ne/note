@@ -239,6 +239,9 @@ Spring设计了三级缓存来解决循环依赖问题。在`DefaultSingletonBea
 * JSONP
 	* 前后端都要增加代码，耦合性高
 * CORS
+	* 低版本浏览器不支持
+* Nginx
+	* 配置转发
 # Spring MVC的执行流程
 1. 客户端发起请求：
 >客户端通过浏览器等方式发送 HTTP 请求到 Spring MVC 应用程序。
