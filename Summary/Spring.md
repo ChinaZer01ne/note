@@ -228,6 +228,15 @@ Spring设计了三级缓存来解决循环依赖问题。在`DefaultSingletonBea
 * Environment#getProperty
 * @PropertySource
 * PropertySourcesPlaceholderConfigurer
+* Pproperties
+> 前三种较常用，后三种主要获取外部配置文件
+
+## Springboot解决跨域问题
+
+跨域问题是由于浏览器同源策略导致的，只有前端会存在。
+
+如何解决：
+* 
 # Spring MVC的执行流程
 1. 客户端发起请求：
 >客户端通过浏览器等方式发送 HTTP 请求到 Spring MVC 应用程序。
