@@ -208,11 +208,20 @@ Spring设计了三级缓存来解决循环依赖问题。在`DefaultSingletonBea
 
 * 设置bean的懒加载
 * 创建扫描索引`@Index`以及`spring-context-indexer`
-* 减少`@ComponentScan`、`@SpringBootApplication`扫描类的范围
+* 减少`@ComponentScan`、`@SpringBootApplication`扫描类的范围，以及其他组件的扫描范围，比如swagger、feign等等。
 * 关闭SpringBoot的JMX监控，`spirng.jmx.enabled=false`
 * 设置JVM参数 `-noverify`，不对类进行验证
 * AOP切面尽量不要使用注解，这会导致启动时扫描全部方法
-* 关闭endpoint的一些监控
+* 关闭endpoint的一些监控功能
+* 排除项目多余的依赖jar
+
+以上方法可以提高20%-30%的启动速度。
+
+* 升级JDK17
+* 升级SpringBoot3，支持本地化特性，将程序编译成可执行镜像，显著提升启动速度
+
+以上方法可以提高200%-300%的启动速度。
+
 # Spring MVC的执行流程
 1. 客户端发起请求：
 >客户端通过浏览器等方式发送 HTTP 请求到 Spring MVC 应用程序。
