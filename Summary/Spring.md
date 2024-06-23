@@ -204,6 +204,7 @@ Spring设计了三级缓存来解决循环依赖问题。在`DefaultSingletonBea
 				* 读取spring.factories下的配置
 * spring.factories -> EnableAutoConfiguration配置
 
+# 
 # Spring MVC的执行流程
 1. 客户端发起请求：
 >客户端通过浏览器等方式发送 HTTP 请求到 Spring MVC 应用程序。
