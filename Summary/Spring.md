@@ -185,6 +185,13 @@ Spring设计了三级缓存来解决循环依赖问题。在`DefaultSingletonBea
 > 创建代理对象的两个位置：
 > 1. 如果循环依赖需要赋值代理对象，导致代理对象需要提前创建，getSingleton#singletonFactory.getObject()#getEarlyBeanReference
 > 2. BeanPostProcessor#postProcessAfterInitialization根据必要性创建，如果代理对象没有提前创建，此处可能创建，AbstractAutoProxyCreator#postProcessAfterInitialization#wrapIfNecessary，没有循环依赖的时候会在这创建，spring开发者应该更倾向于在这创建，而不是提前创建
+
+# Spring事务失效的场景
+
+* 方法内自调用
+	* this对象不是代理对象
+* 方法是private的
+	* spring事务会基于cglib来进行aop
 # Spring有哪些重要的BeanFactoryPostProcessor？::
 * `ConfigurationClassPostProcessor`
 	* 是比较重要的`BeanFactoryPostProcessor`，它和SpringBoot的自动装配息息相关。他负责`Configuration`、`Import`、`ImportResource`、`Component`、`ComponentScan`、`Bean`等注解的处理，和SpringBoot的自动装配息息相关，此类还会对配置类进行代理操作，解决@Bean 的单例问题
