@@ -49,7 +49,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Redis.md",
+                "file": "Summary/Algorithm.md",
                 "mode": "source",
                 "source": false
               }
@@ -178,7 +178,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Redis.md",
+                "file": "Summary/Algorithm.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -195,7 +195,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Redis.md",
+                "file": "Summary/Algorithm.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -218,7 +218,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Redis.md"
+                "file": "Summary/Algorithm.md"
               }
             }
           },
@@ -271,8 +271,8 @@
   },
   "active": "aac1729a4d7f9d71",
   "lastOpenFiles": [
-    "Summary/Spring.md",
     "Summary/Redis.md",
+    "Summary/Spring.md",
     "Summary/Architecture Design.md",
     "Summary/Distributed Theory.md",
     "Summary/MicroService Design.md",
