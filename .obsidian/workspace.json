@@ -44,18 +44,6 @@
             }
           },
           {
-            "id": "aac1729a4d7f9d71",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/System Design.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "9853eeb54748babc",
             "type": "leaf",
             "state": {
@@ -93,26 +81,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Mysql.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "aabfd764baf98b4b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/MicroService Design.md",
+                "file": "Summary/System Design.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -269,8 +245,15 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "aac1729a4d7f9d71",
+  "active": "0e0b8d0421a54c60",
   "lastOpenFiles": [
+    "Summary/Spring.md",
+    "Summary/image/系统设计/数据存量同步设计.png",
+    "Summary/System Design.md",
+    "Summary/MicroService Design.md",
+    "Summary/image/系统设计/数据增量同步设计.png",
+    "Summary/image/系统设计",
+    "Summary/image/1717303196435.jpg",
     "Summary/未命名.md",
     "Summary/大杂烩.md",
     "Summary/面试问题.md",
@@ -292,11 +275,7 @@
     "Summary/JVM.md",
     "Summary/Log.md",
     "Summary/MarkDown.md",
-    "Summary/MicroService Design.md",
     "Summary/MQ.md",
-    "Summary/Mybatis.md",
-    "Summary/Mysql.md",
-    "Summary/Redis.md",
     "Summary/image/Java/threadlocal结构.png",
     "Summary/image/Java/threadlocal结构.png.crdownload",
     "Summary/image/Java/重量级锁monitor.webp",
@@ -312,10 +291,6 @@
     "Summary/image/Spring/resource注入方式.png.crdownload",
     "Summary/image/Spring/autowired注入方式.png",
     "Summary/image/Spring/autowired注入方式.png.crdownload",
-    "Summary/image/Spring",
-    "Summary/image/JVM/virtual-space.webp",
-    "Summary/image/JVM/virtual space.webp",
-    "Summary/image/JVM/virtual space.webp.crdownload",
-    "Summary/image/JVM/对象分配流程.jpg"
+    "Summary/image/Spring"
   ]
 }
