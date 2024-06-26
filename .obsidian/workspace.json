@@ -81,7 +81,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/JVM.md",
+                "file": "Summary/TO DO LIST.md",
                 "mode": "source",
                 "source": false
               }
@@ -154,7 +154,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/JVM.md",
+                "file": "Summary/TO DO LIST.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -171,7 +171,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/JVM.md",
+                "file": "Summary/TO DO LIST.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -194,7 +194,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/JVM.md"
+                "file": "Summary/TO DO LIST.md"
               }
             }
           },
@@ -245,18 +245,20 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "0e0b8d0421a54c60",
+  "active": "6aa11b407ce3eab2",
   "lastOpenFiles": [
+    "Summary/Architecture Design.md",
+    "Summary/Algorithm.md",
+    "Summary/Zookeeper.md",
+    "Summary/JVM.md",
+    "Summary/Spring.md",
     "Summary/Java.md",
     "Summary/Build Tool.md",
-    "Summary/Architecture Design.md",
     "Summary/稳定性治理.md",
     "Summary/未命名.md",
     "Summary/面试问题.md",
     "Summary/大杂烩.md",
     "Summary/Redis.md",
-    "Summary/Spring.md",
-    "Summary/Zookeeper.md",
     "Summary/System Design.md",
     "Summary/image/1717303196435.jpg",
     "Summary/image/系统设计/数据订正流程.jpg",
@@ -271,7 +273,6 @@
     "Summary/MicroService Design.md",
     "Summary/image/系统设计",
     "Summary/压测.md",
-    "Summary/Algorithm.md",
     "Summary/Arthas.md",
     "Summary/Computer Network.md",
     "Summary/Concurrent programming.md",
@@ -281,7 +282,6 @@
     "Summary/Distributed Theory.md",
     "Summary/ES.md",
     "Summary/IO.md",
-    "Summary/JVM.md",
     "Summary/Log.md",
     "Summary/MarkDown.md",
     "Summary/image/Java/threadlocal结构.png.crdownload",
