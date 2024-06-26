@@ -1021,7 +1021,7 @@ type按照效率由高到底排序：
 以下是常用的Extra表示的含义：
 - **Using index**：表示查询使用了覆盖索引（Covering Index），即只需通过索引就可以满足查询需求，无需回表访问数据行。
 - **Using index condition**：表示查询使用了索引条件（[Index Condition Pushdown]()），即对于某些过滤条件，MySQL会通过索引先进行过滤，然后再进行进一步的处理。
-- **Using where**：表示查询使用了WHERE子句进行过滤。（需要优化）
+- **Using where**：表示查询使用了WHERE子句进行过滤。（**需要优化**）
 - Using MRR（Multi-Range Read）：说明该查询使用了多范围读取优化策略来执行范围查询，并且使用了MRR算法来提高查询性能。
 - **Using join buffer (Block Nested Loop)**：表示查询使用了连接缓冲区，这种情况下使用了块嵌套循环算法进行连接操作。例如：A表有索引的字段和B表无索引的字段关联
 - **Using join buffer (Batch Key Access)**：表示使用批量键访问算法进行联接操作。 
