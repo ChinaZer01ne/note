@@ -49,7 +49,7 @@
 * 自适应哈希索引（Adaptive Hash Index）
 * 日志缓存区（Log Buffer）
 * 锁信息区
-### Buffer Pool
+ ### Buffer Pool
 
 #### Page管理机制
 
@@ -578,7 +578,7 @@ MySQL查询支持filesort和index两种方式的排序，
 
 ### 排序方式的选择
 
-#### **「使用index方式的排序的场景」**
+ #### **「使用index方式的排序的场景」**
 
 ORDER BY 子句索引列组合满足索引最左前列
 
