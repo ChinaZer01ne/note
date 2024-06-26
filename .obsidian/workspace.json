@@ -81,7 +81,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/TO DO LIST.md",
+                "file": "Summary/Mysql.md",
                 "mode": "source",
                 "source": false
               }
@@ -154,7 +154,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/TO DO LIST.md",
+                "file": "Summary/Mysql.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -171,7 +171,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/TO DO LIST.md",
+                "file": "Summary/Mysql.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -194,7 +194,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/TO DO LIST.md"
+                "file": "Summary/Mysql.md"
               }
             }
           },
@@ -245,8 +245,9 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "6aa11b407ce3eab2",
+  "active": "0e0b8d0421a54c60",
   "lastOpenFiles": [
+    "Summary/TO DO LIST.md",
     "Summary/Architecture Design.md",
     "Summary/Algorithm.md",
     "Summary/Zookeeper.md",
@@ -283,7 +284,6 @@
     "Summary/ES.md",
     "Summary/IO.md",
     "Summary/Log.md",
-    "Summary/MarkDown.md",
     "Summary/image/Java/threadlocal结构.png.crdownload",
     "Summary/image/Java/重量级锁monitor.webp.crdownload",
     "Summary/image/Spring/spring流程.png.crdownload",
