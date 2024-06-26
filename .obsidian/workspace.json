@@ -81,7 +81,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/System Design.md",
+                "file": "Summary/JVM.md",
                 "mode": "source",
                 "source": false
               }
@@ -154,7 +154,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/System Design.md",
+                "file": "Summary/JVM.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -171,7 +171,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/System Design.md",
+                "file": "Summary/JVM.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -194,7 +194,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/System Design.md"
+                "file": "Summary/JVM.md"
               }
             }
           },
@@ -247,8 +247,18 @@
   },
   "active": "0e0b8d0421a54c60",
   "lastOpenFiles": [
-    "Summary/image/1717303196435.jpg",
+    "Summary/Java.md",
+    "Summary/Build Tool.md",
+    "Summary/Architecture Design.md",
+    "Summary/稳定性治理.md",
+    "Summary/未命名.md",
+    "Summary/面试问题.md",
+    "Summary/大杂烩.md",
+    "Summary/Redis.md",
+    "Summary/Spring.md",
+    "Summary/Zookeeper.md",
     "Summary/System Design.md",
+    "Summary/image/1717303196435.jpg",
     "Summary/image/系统设计/数据订正流程.jpg",
     "Summary/image/系统设计/1719412432852.jpg",
     "Summary/image/Pasted image 20240626223346.png",
@@ -258,19 +268,11 @@
     "Summary/image/Pasted image 20240626223157.png",
     "Summary/image/系统设计/数据逆向同步过程.jpg",
     "Summary/image/系统设计/1719412251627.jpg",
-    "Summary/image/系统设计/数据增量正向同步设计.jpg",
-    "Summary/Spring.md",
     "Summary/MicroService Design.md",
     "Summary/image/系统设计",
-    "Summary/未命名.md",
-    "Summary/大杂烩.md",
-    "Summary/面试问题.md",
-    "Summary/稳定性治理.md",
     "Summary/压测.md",
     "Summary/Algorithm.md",
-    "Summary/Architecture Design.md",
     "Summary/Arthas.md",
-    "Summary/Build Tool.md",
     "Summary/Computer Network.md",
     "Summary/Concurrent programming.md",
     "Summary/DDD.md",
@@ -279,11 +281,9 @@
     "Summary/Distributed Theory.md",
     "Summary/ES.md",
     "Summary/IO.md",
-    "Summary/Java.md",
     "Summary/JVM.md",
     "Summary/Log.md",
     "Summary/MarkDown.md",
-    "Summary/MQ.md",
     "Summary/image/Java/threadlocal结构.png.crdownload",
     "Summary/image/Java/重量级锁monitor.webp.crdownload",
     "Summary/image/Spring/spring流程.png.crdownload",
