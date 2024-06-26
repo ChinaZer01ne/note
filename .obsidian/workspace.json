@@ -81,7 +81,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Mysql.md",
+                "file": "Summary/MQ.md",
                 "mode": "source",
                 "source": false
               }
@@ -154,7 +154,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Mysql.md",
+                "file": "Summary/MQ.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -171,7 +171,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Mysql.md",
+                "file": "Summary/MQ.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -194,7 +194,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Mysql.md"
+                "file": "Summary/MQ.md"
               }
             }
           },
@@ -247,6 +247,7 @@
   },
   "active": "0e0b8d0421a54c60",
   "lastOpenFiles": [
+    "Summary/Mysql.md",
     "Summary/TO DO LIST.md",
     "Summary/Architecture Design.md",
     "Summary/Algorithm.md",
@@ -283,7 +284,6 @@
     "Summary/Distributed Theory.md",
     "Summary/ES.md",
     "Summary/IO.md",
-    "Summary/Log.md",
     "Summary/image/Java/threadlocal结构.png.crdownload",
     "Summary/image/Java/重量级锁monitor.webp.crdownload",
     "Summary/image/Spring/spring流程.png.crdownload",
