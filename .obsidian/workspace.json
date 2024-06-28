@@ -93,7 +93,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Dubbo.md",
+                "file": "Summary/Nacos.md",
                 "mode": "source",
                 "source": false
               }
@@ -166,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Dubbo.md",
+                "file": "Summary/Nacos.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Dubbo.md",
+                "file": "Summary/Nacos.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Dubbo.md"
+                "file": "Summary/Nacos.md"
               }
             }
           },
@@ -259,9 +259,10 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
+    "Summary/Dubbo.md",
+    "Summary/Nacos.md",
     "Summary/Sentinel.md",
     "Summary/Spring.md",
-    "Summary/Dubbo.md",
     "Summary/DDD.md",
     "Summary/Spring Cloud.md",
     "Summary/MQ.md",
@@ -295,7 +296,6 @@
     "Summary/Computer Network.md",
     "Summary/Concurrent programming.md",
     "Summary/Design Docments.md",
-    "Summary/Design Patterns.md",
     "Summary/image/Java/threadlocal结构.png.crdownload",
     "Summary/image/Java/重量级锁monitor.webp.crdownload",
     "Summary/image/Spring/spring流程.png.crdownload",
