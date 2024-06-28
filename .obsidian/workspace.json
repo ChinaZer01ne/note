@@ -86,9 +86,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "032342cbdcd1a9d4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Summary/Dubbo.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 6
+        "currentTab": 7
       }
     ],
     "direction": "vertical"
@@ -154,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/IO.md",
+                "file": "Summary/Dubbo.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -171,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/IO.md",
+                "file": "Summary/Dubbo.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -194,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/IO.md"
+                "file": "Summary/Dubbo.md"
               }
             }
           },
@@ -245,8 +257,10 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "0e0b8d0421a54c60",
+  "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
+    "Summary/DDD.md",
+    "Summary/Spring Cloud.md",
     "Summary/MQ.md",
     "Summary/Mysql.md",
     "Summary/TO DO LIST.md",
@@ -258,7 +272,7 @@
     "Summary/Java.md",
     "Summary/Build Tool.md",
     "Summary/稳定性治理.md",
-    "Summary/未命名.md",
+    "Summary/Dubbo.md",
     "Summary/面试问题.md",
     "Summary/大杂烩.md",
     "Summary/Redis.md",
@@ -279,11 +293,9 @@
     "Summary/Arthas.md",
     "Summary/Computer Network.md",
     "Summary/Concurrent programming.md",
-    "Summary/DDD.md",
     "Summary/Design Docments.md",
     "Summary/Design Patterns.md",
     "Summary/Distributed Theory.md",
-    "Summary/ES.md",
     "Summary/image/Java/threadlocal结构.png.crdownload",
     "Summary/image/Java/重量级锁monitor.webp.crdownload",
     "Summary/image/Spring/spring流程.png.crdownload",
