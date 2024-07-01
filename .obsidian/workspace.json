@@ -259,6 +259,8 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
+    "Summary/image/Mysql/数据库连接管理.jpeg",
+    "Summary/image/Mysql/数据库连接管理.jpeg.crdownload",
     "Summary/System Design.md",
     "Summary/Concurrent programming.md",
     "Summary/MicroService Design.md",
@@ -295,7 +297,6 @@
     "Summary/image/系统设计/1719412251627.jpg",
     "Summary/image/系统设计",
     "Summary/Arthas.md",
-    "Summary/Computer Network.md",
     "Summary/image/Java/threadlocal结构.png.crdownload",
     "Summary/image/Java/重量级锁monitor.webp.crdownload",
     "Summary/image/Spring/spring流程.png.crdownload",
@@ -303,7 +304,6 @@
     "Summary/image/Mybatis",
     "Summary/image/新建文件夹",
     "Summary/image/Spring/resource注入方式.png.crdownload",
-    "Summary/image/Spring/autowired注入方式.png.crdownload",
-    "Summary/image/Spring"
+    "Summary/image/Spring/autowired注入方式.png.crdownload"
   ]
 }

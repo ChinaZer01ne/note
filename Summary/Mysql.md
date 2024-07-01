@@ -2214,3 +2214,6 @@ TODO
 	>空闲连接的最小可空闲时间，单位为毫秒，当超过这个时间时，会将该空闲连接释放掉  
 * **timeBetweenEvictionRunsMillis / minEvictableIdleTimeMillis**  
 	>每timeBetweenEvictionRunsMillis时间检查一遍连接池中的空闲连接，单位为毫秒，将超出 minEvictableIdleTimeMillis的连接释放掉，直到连接个数到minIdle为止
+
+![](数据库连接管理.jpeg)
+
