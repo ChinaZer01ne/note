@@ -14,8 +14,8 @@
 		* 短链接
 		* MQ
 	* 尝试分块
-		* stateful  有状态
-		* statless 无状态
+		* stateful  有状态， 缓存（redis, zk）记录状态
+		* statless 无状态， 负载均衡水平扩展
 
 ### 高并发系统设计思路
 * 系统拆分
