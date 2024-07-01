@@ -93,7 +93,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/System Design.md",
+                "file": "Summary/Mysql.md",
                 "mode": "source",
                 "source": false
               }
@@ -166,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/System Design.md",
+                "file": "Summary/Mysql.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/System Design.md",
+                "file": "Summary/Mysql.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/System Design.md"
+                "file": "Summary/Mysql.md"
               }
             }
           },
@@ -259,10 +259,10 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
+    "Summary/System Design.md",
     "Summary/Concurrent programming.md",
     "Summary/MicroService Design.md",
     "Summary/Architecture Design.md",
-    "Summary/System Design.md",
     "daliy_note/2023-09-27.md",
     "Summary/Spring.md",
     "Summary/Spring Cloud.md",
