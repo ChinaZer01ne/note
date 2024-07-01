@@ -2197,20 +2197,20 @@ TODO
 # 数据库连接池配置
 
 * **maxActive**  
-数据库连接池的最大连接数，一般是根据系统并发量来设置，设置为0表示无限制  
+	>数据库连接池的最大连接数，一般是根据系统并发量来设置，设置为0表示无限制 
 * **maxIdle**  
-表示数据库的最大空闲连接数，表示即使没有数据库连接时，连接池中的连接数量最大也可以保持在maxIdle,设置为0表示无限制  
-**minIdle**  
-表述数据库的最小空闲连接数，表示数据库中连接池中应该保存的最小的连接个数，当小于这个个数时，数据库会创建连接补充进去  
-**initialSize**  
-数据库初始化连接的个数，在系统第一次对数据库进行操作时初始化连接个数，因此一般第一次连接都比较满  
-**maxWait**  
-等待连接的最长时间，单位为毫秒，当超过这个时间时系统会抛异常，设置为-1时表示无限制等待，直到超时为止  
-**removeAbandonedTimeout**  
-活动连接的最大空闲时间，单位为秒，当超过这个空闲时间时，会由removeAbandoned释放到连接池中，针对那些没有正常close的连接  
-**7）removeAbandoned**  
-是否清楚已超过removeAbandonedTimeout的无效连接，如果设置为true，则会将哪些超出活动连接的最大空闲时间的连接释放到连接池中  
-**8） minEvictableIdleTimeMillis**  
-空闲连接的最小可空闲时间，单位为毫秒，当超过这个时间时，会将该空闲连接释放掉  
-**9） timeBetweenEvictionRunsMillis / minEvictableIdleTimeMillis**  
-每ti
+	>表示数据库的最大空闲连接数，表示即使没有数据库连接时，连接池中的连接数量最大也可以保持在maxIdle,设置为0表示无限制  
+* **minIdle**  
+	>表述数据库的最小空闲连接数，表示数据库中连接池中应该保存的最小的连接个数，当小于这个个数时，数据库会创建连接补充进去  
+* **initialSize**  
+	>数据库初始化连接的个数，在系统第一次对数据库进行操作时初始化连接个数，因此一般第一次连接都比较慢 
+* **maxWait**  
+	>等待连接的最长时间，单位为毫秒，当超过这个时间时系统会抛异常，设置为-1时表示无限制等待，直到超时为止  
+* **removeAbandonedTimeout**  
+	>活动连接的最大空闲时间，单位为秒，当超过这个空闲时间时，会由removeAbandoned释放到连接池中，针对那些没有正常close的连接  
+* **removeAbandoned**  
+	>是否清楚已超过removeAbandonedTimeout的无效连接，如果设置为true，则会将那些超出活动连接的最大空闲时间的连接释放到连接池中  
+* **minEvictableIdleTimeMillis**  
+	>空闲连接的最小可空闲时间，单位为毫秒，当超过这个时间时，会将该空闲连接释放掉  
+* **timeBetweenEvictionRunsMillis / minEvictableIdleTimeMillis**  
+	>每timeBetweenEvictionRunsMillis时间检查一遍连接池中的空闲连接，单位为毫秒，将超出 minEvictableIdleTimeMillis的连接释放掉，直到连接个数到minIdle为止
