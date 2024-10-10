@@ -2178,9 +2178,4 @@ Redis监控平台: grafana、prometheus以及redis_exporter。
 
 ## 缓存倾斜
 https://blog.csdn.net/GoGleTech/article/details/137931259
-# Redis的Key的设计
 
-1. 用:分割
-2. 把表名转换为key前缀, 比如: user:
-3. 第二段放置主键值
-4. 第三段放置列名

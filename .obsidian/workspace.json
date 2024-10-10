@@ -260,6 +260,7 @@
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
     "Summary/Redis.md",
+    "Summary/extension/Redis-extension.md",
     "Summary/线上问题分享.md",
     "Summary/Mysql.md",
     "Summary/Mybatis.md",
@@ -270,7 +271,6 @@
     "Summary/System Design.md",
     "Summary/TO DO LIST.md",
     "Summary/Zookeeper.md",
-    "Summary/extension/Redis-extension.md",
     "Summary/extension/JVM-extension.md",
     "Summary/缓存.md",
     "Summary/面试问题.md",
