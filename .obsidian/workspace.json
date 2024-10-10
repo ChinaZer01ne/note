@@ -259,6 +259,8 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
+    "Summary/image/Redis/Redis命令执行流程图.png",
+    "Summary/image/Redis/Redis命令执行流程图.png.crdownload",
     "Summary/image/Redis/Redis命令处理流程.png",
     "Summary/image/Redis/Redis命令处理流程.png.crdownload",
     "Summary/extension/Redis-extension.md",
@@ -299,11 +301,9 @@
     "Summary/image/系统设计/1719412432852.jpg",
     "Summary/image/Pasted image 20240626223346.png",
     "Summary/image/系统设计/数据存量同步详细设计.jpg",
-    "Summary/image/系统设计/1719412333792.jpg",
     "Summary/image/系统设计",
     "Summary/image/Java/threadlocal结构.png.crdownload",
     "Summary/image/Java/重量级锁monitor.webp.crdownload",
-    "Summary/image/Spring/spring流程.png.crdownload",
-    "Summary/image/Mybatis/mybatis执行流程图.jpg.crdownload"
+    "Summary/image/Spring/spring流程.png.crdownload"
   ]
 }
