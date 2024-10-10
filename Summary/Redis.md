@@ -3,23 +3,14 @@
 # 为什么要使用Redis
 
 - DB缓存，减轻DB服务器压力
-    
     >热点数据先查询Redis，查不到再查DB
-    
 - 提高系统响应
-    
     >Redis支持高并发访问。写能到达11万，读请求 8万。
-    
-- 做Session分离
-  
-  > 登录token存储
-  
+- 做Session共享
+  > 登录token存储，可利用`spring-session-data-redis`
 - 做分布式锁(Redis)
-	- 悲观锁
-		- setnx
-	- 乐观锁
-		- watch + incr
-		    
+	>悲观锁：`setnx`
+	>乐观锁：`watch` + `incr`
 # Redis单线程架构
 
 ### 单线程模型
@@ -2178,10 +2169,9 @@ Redis监控平台: grafana、prometheus以及redis_exporter。
 - 序列化后的图片
 - 没有及时处理的垃圾数据
 - .....
-
 ## 大key的影响:
 
-- 大key会大量占用内存，在集群中无法均衡 （倾斜）
+- 大key会大量占用内存，在集群中无法均衡 （倾斜）.
 - Redis的性能下降，主从复制异常
 - 在主动删除或过期删除时会操作时间过长而引起服务阻塞
 
@@ -2487,7 +2477,7 @@ id, name, address\n     \n        from tusert\x00\x15SqlSessionFactoryBeanx"
 
 # 分布式锁
 
-分布式锁
+TODO 分布式锁
 
 # Redis的Key的设计
 
@@ -2495,9 +2485,3 @@ id, name, address\n     \n        from tusert\x00\x15SqlSessionFactoryBeanx"
 2. 把表名转换为key前缀, 比如: user:
 3. 第二段放置主键值
 4. 第三段放置列名
-
-传统的session是由tomcat自己进行维护和管理，但是对于集群或分布式环境，不同的tomcat管理各自 的session，很难进行session共享，通过传统的模式进行session共享，会造成session对象在各个 tomcat之间，通过网络和Io进行复制，极大的影响了系统的性能。
-
-可以将登录成功后的Session信息，存放在Redis中，这样多个服务器(Tomcat)可以共享Session信息。 利用spring-session-data-redis(SpringSession)，可以实现基于redis来实现的session分离。这个
-
-知识点在讲Spring的时候可以讲过了，这里就不再赘述了。
