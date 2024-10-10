@@ -1779,3 +1779,70 @@ return nil;
 
 #  与Mybatis整合做二级缓存
 略。
+
+
+# key数量
+
+官方说Redis单例能处理key：2.5亿个
+
+一个key或是value大小最大是512M
+
+# 读写峰值
+
+Redis采用的是基于内存的采用的是单进程单线程模型的 KV 数据库，由C语言编写，官方提供的数据是可以达到110000+的QPS(每秒内查询次数)。80000的写
+
+# 命中率
+
+- 命中：可以直接通过缓存获取到需要的数据。
+- 不命中：无法直接通过缓存获取到想要的数据，需要再次查询数据库或者执行其它的操作。原因可能是由于缓存中根本不存在，或者缓存已经过期。
+
+通常来讲，缓存的命中率越高则表示使用缓存的收益越高，应用的性能越好(响应时间越短、吞吐量越高)，抗并发的能力越强。 由此可见，在高并发的互联网系统中，缓存的命中率是至关重要的指标。
+
+通过info命令可以监控服务器状态
+
+```bash
+127.0.0.1:6379> info
+# Server
+redis_version:5.0.5
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:e188a39ce7a16352
+redis_mode:standalone
+os:Linux 3.10.0-229.el7.x86_64 x86_64 arch_bits:64
+#缓存命中
+keyspace_hits:1000
+#缓存未命中 
+keyspace_misses:20 
+used_memory:433264648 
+expired_keys:1333536 
+evicted_keys:1547380
+```
+
+命中率=1000/1000+20=83% 一个缓存失效机制，和过期时间设计良好的系统，命中率可以做到95%以上。
+
+影响缓存命中率的因素:
+
+1. 缓存的数量越少命中率越高，比如缓存单个对象的命中率要高于缓存集合
+2. 过期时间越长命中率越高
+3. 缓存越大缓存的对象越多，则命中的越多
+
+# 性能监控指标
+
+利用info命令就可以了解Redis的状态了，主要监控指标有:
+
+```.properties
+connected_clients:68 #连接的客户端数量 
+used_memory_rss_human:847.62M #系统给redis分配的内存 
+used_memory_peak_human:794.42M #内存使用的峰值大小 
+total_connections_received:619104 #服务器已接受的连接请求数量 
+instantaneous_ops_per_sec:1159 #服务器每秒钟执行的命令数量 qps 
+instantaneous_input_kbps:55.85 #redis网络入口kps 
+instantaneous_output_kbps:3553.89 #redis网络出口kps 
+rejected_connections:0 #因为最大客户端数量限制而被拒绝的连接请求数量 
+expired_keys:0 #因为过期而被自动删除的数据库键数量
+evicted_keys:0 #因为最大内存容量限制而被驱逐(evict)的键数量 
+keyspace_hits:0 #查找数据库键成功的次数
+keyspace_misses:0 #查找数据库键失败的次数
+```
+
+Redis监控平台: grafana、prometheus以及redis_exporter。
