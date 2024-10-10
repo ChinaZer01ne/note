@@ -132,6 +132,38 @@ select，poll，epoll都是IO多路复用机制，即可以监视多个描述符
 - select，poll实现需要自己不断轮询所有fd集合，直到设备就绪，期间可能要睡眠和唤醒多次交替。而epoll其实也需要调用epoll_wait不断轮询就绪链表，期间也可能多次睡眠和唤醒交替，但是它是设备就绪时，调用回调函数，把就绪fd放入就绪链表中，并唤醒在epoll_wait中进入睡眠的进程。虽然都要睡眠和交替，但是select和poll在“醒着”的时候要遍历整个fd集合，而epoll在“醒着”的时候只要判断一下就绪链表是否为空就行了，这节省了大量的CPU时间。这就是回调机制带来的性能提升。
 - select，poll每次调用都要把fd集合从用户态往内核态拷贝一次，并且要把current往设备等待队列中挂一次，而epoll只要一次拷贝，而且把current往等待队列上挂也只挂一次（在epoll_wait的开始，注意这里的等待队列并不是设备等待队列，只是一个epoll内部定义的等待队列）。这也能节省不少的开销。
 
+
+## Reactor
+
+Reactor模式，属于I/O多路复用的一种常见模式。 IO多路复用( I/O multiplexing )指的通过单个线程管理多个Socket。
+
+Reactor pattern(反应器设计模式)是一种为处理并发服务请求，并将请求提交到一个或者多个服务处理程序的事件设计模式。
+
+Reactor模式是事件驱动的有一个或多个并发输入源(文件事件)。有一个Service Handler，有多个Request Handlers。
+
+这个Service Handler会同步的将输入的请求(Event)多路复用的分发给相应的Request Handler
+
+![](https://secure2.wostatic.cn/static/q3svttSYJV8mbnfu9suqkv/image.png?auth_key=1716829338-2N7HtHFTNR6joSBkRiVNR5-0-f4f77fee27dc55e9e923f8ad839efd6d)
+
+![](https://secure2.wostatic.cn/static/qcKmW5eD16mvnMr6mpYQE9/image.png?auth_key=1716829339-iYsGxoCrBtMPV6yyTNSzrS-0-912bc7df82c1d3341ad1d6f20a5e5ac4)
+
+- Handle：I/O操作的基本文件句柄，在linux下就是fd(文件描述符)
+- Synchronous Event Demultiplexer：同步事件分离器，阻塞等待Handles中的事件发生。(系统)
+- Reactor：事件分派器，负责事件的注册，删除以及对所有注册到事件分派器的事件进行监控， 当事件发生时会调用Event Handler接口来处理事件。
+- Event Handler： 事件处理器接口，这里需要Concrete Event Handler来实现该接口
+- Concrete Event Handler：真实的事件处理器，通常都是绑定了一个handle，实现对可读事件 进行读 取或对可写事件进行写入的操作。
+
+![](https://secure2.wostatic.cn/static/63SD6imMvRiaf6tqNBiHsK/image.png?auth_key=1716829338-ua7QWVWKoxL4K4BxXVEnAs-0-d336414f5c4ad6b910156d12f16a07cd)
+
+1. 主程序向事件分派器(Reactor)注册要监听的事件
+2. Reactor调用OS提供的事件处理分离器，监听事件(wait)
+3. 当有事件产生时，Reactor将事件派给相应的处理器来处理 handle_event()
+
+4种IO多路复用模型与选择 `select`，`poll`，`epoll`、`kqueue`都是IO多路复用的机制。
+
+I/O多路复用就是通过一种机制，一个进程可以监视多个描述符(socket)，一旦某个描述符就绪(一 般是读就绪或者写就绪)，能够通知程序进行相应的读写操作。
+
+select、poll、epoll
 ## 零拷贝::
 ### 什么是零拷贝？::
 零拷贝（Zero-copy）技术指在计算机执行操作时，CPU 不需要先将数据从一个内存区域复制到另一个内存区域，从而可以减少上下文切换以及 CPU 的拷贝时间。
