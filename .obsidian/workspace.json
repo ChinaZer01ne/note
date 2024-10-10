@@ -259,6 +259,10 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
+    "Summary/image/Redis/串行请求模式.png",
+    "Summary/image/Redis/串行请求模式.png.crdownload",
+    "Summary/image/Redis/Redis请求响应模式.png",
+    "Summary/image/Redis/Redis请求响应模式.png.crdownload",
     "Summary/Redis.md",
     "Summary/IO.md",
     "Summary/Mysql.md",
@@ -286,7 +290,6 @@
     "Summary/MQ.md",
     "Summary/Algorithm.md",
     "Summary/JVM.md",
-    "Summary/Java.md",
     "Summary/image/1717303196435.jpg",
     "Summary/image/系统设计/数据订正流程.jpg",
     "Summary/image/系统设计/1719412432852.jpg",
@@ -295,15 +298,12 @@
     "Summary/image/系统设计/1719412333792.jpg",
     "Summary/image/Pasted image 20240626223205.png",
     "Summary/image/Pasted image 20240626223157.png",
-    "Summary/image/系统设计/数据逆向同步过程.jpg",
     "Summary/image/系统设计",
     "Summary/image/Java/threadlocal结构.png.crdownload",
     "Summary/image/Java/重量级锁monitor.webp.crdownload",
     "Summary/image/Spring/spring流程.png.crdownload",
     "Summary/image/Mybatis/mybatis执行流程图.jpg.crdownload",
     "Summary/image/Mybatis",
-    "Summary/image/新建文件夹",
-    "Summary/image/Spring/resource注入方式.png.crdownload",
-    "Summary/image/Spring/autowired注入方式.png.crdownload"
+    "Summary/image/新建文件夹"
   ]
 }
