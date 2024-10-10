@@ -93,8 +93,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/大杂烩.md",
-                "mode": "source",
+                "file": "Summary/Sentinel.md",
+                "mode": "preview",
                 "source": false
               }
             }
@@ -166,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/大杂烩.md",
+                "file": "Summary/Sentinel.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/大杂烩.md",
+                "file": "Summary/Sentinel.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/大杂烩.md"
+                "file": "Summary/Sentinel.md"
               }
             }
           },
@@ -259,34 +259,34 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
-    "Summary/Redis.md",
+    "Summary/Spring.md",
+    "Summary/System Design.md",
     "Summary/Zookeeper.md",
-    "Summary/面试问题.md",
-    "Summary/extension/Redis-extension.md",
+    "Summary/稳定性治理.md",
     "Summary/线上问题分享.md",
+    "Summary/面试问题.md",
+    "Summary/缓存.md",
+    "Summary/IO.md",
+    "Summary/ES.md",
+    "Summary/Design Docments.md",
+    "Summary/DDD.md",
+    "Summary/Concurrent programming.md",
+    "Summary/Computer Network.md",
+    "Summary/Arthas.md",
+    "Summary/Architecture Design.md",
+    "Summary/Algorithm.md",
+    "Summary/压测.md",
+    "Summary/大杂烩.md",
+    "Summary/Redis.md",
+    "Summary/extension/Redis-extension.md",
     "Summary/Mysql.md",
     "Summary/Mybatis.md",
     "Summary/MQ.md",
-    "Summary/Spring.md",
     "Summary/Sentinel.md",
     "Summary/Spring Cloud.md",
-    "Summary/System Design.md",
     "Summary/TO DO LIST.md",
-    "Summary/extension/JVM-extension.md",
-    "Summary/缓存.md",
-    "Summary/大杂烩.md",
-    "daliy_note/2023-09-27.md",
     "Summary/image/Mysql/数据库连接管理.jpeg",
     "Summary/image/Mysql/数据库连接管理.jpeg.crdownload",
-    "Summary/Concurrent programming.md",
-    "Summary/MicroService Design.md",
-    "Summary/Architecture Design.md",
-    "Summary/压测.md",
-    "Summary/稳定性治理.md",
-    "Summary/Nacos.md",
-    "Summary/Dubbo.md",
-    "Summary/DDD.md",
-    "Summary/Algorithm.md",
     "Summary/image/1717303196435.jpg",
     "Summary/image/系统设计/数据订正流程.jpg",
     "Summary/image/系统设计/1719412432852.jpg",
