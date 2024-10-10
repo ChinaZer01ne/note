@@ -93,7 +93,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Mysql.md",
+                "file": "Summary/Redis.md",
                 "mode": "source",
                 "source": false
               }
@@ -150,7 +150,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "3d4e2dd6527cd4e7",
@@ -166,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Mysql.md",
+                "file": "Summary/Redis.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Mysql.md",
+                "file": "Summary/Redis.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Mysql.md"
+                "file": "Summary/Redis.md"
               }
             }
           },
@@ -243,7 +243,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 517.5
+    "width": 258.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -259,27 +259,27 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
+    "Summary/面试问题.md",
+    "Summary/大杂烩.md",
+    "daliy_note/2023-09-27.md",
+    "Summary/Mysql.md",
     "Summary/image/Mysql/数据库连接管理.jpeg",
     "Summary/image/Mysql/数据库连接管理.jpeg.crdownload",
     "Summary/System Design.md",
     "Summary/Concurrent programming.md",
     "Summary/MicroService Design.md",
     "Summary/Architecture Design.md",
-    "daliy_note/2023-09-27.md",
     "Summary/Spring.md",
     "Summary/Spring Cloud.md",
     "Summary/TO DO LIST.md",
     "Summary/Zookeeper.md",
     "Summary/压测.md",
     "Summary/稳定性治理.md",
-    "Summary/面试问题.md",
-    "Summary/大杂烩.md",
     "Summary/Nacos.md",
     "Summary/Dubbo.md",
     "Summary/Sentinel.md",
     "Summary/DDD.md",
     "Summary/MQ.md",
-    "Summary/Mysql.md",
     "Summary/Algorithm.md",
     "Summary/JVM.md",
     "Summary/Java.md",
@@ -294,7 +294,6 @@
     "Summary/image/Pasted image 20240626223205.png",
     "Summary/image/Pasted image 20240626223157.png",
     "Summary/image/系统设计/数据逆向同步过程.jpg",
-    "Summary/image/系统设计/1719412251627.jpg",
     "Summary/image/系统设计",
     "Summary/Arthas.md",
     "Summary/image/Java/threadlocal结构.png.crdownload",
