@@ -93,7 +93,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/缓存.md",
+                "file": "Summary/面试问题.md",
                 "mode": "source",
                 "source": false
               }
@@ -166,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/缓存.md",
+                "file": "Summary/面试问题.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/缓存.md",
+                "file": "Summary/面试问题.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/缓存.md"
+                "file": "Summary/面试问题.md"
               }
             }
           },
@@ -259,6 +259,7 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
+    "Summary/缓存.md",
     "Summary/Redis.md",
     "Summary/extension/Redis-extension.md",
     "Summary/image/Redis/Redis命令执行流程图.png",
@@ -273,7 +274,6 @@
     "Summary/image/Redis/Redis请求响应模式.png.crdownload",
     "Summary/IO.md",
     "Summary/Mysql.md",
-    "Summary/缓存.md",
     "Summary/线上问题分享.md",
     "Summary/image/Mysql/数据库连接管理.jpeg",
     "Summary/image/Mysql/数据库连接管理.jpeg.crdownload",
