@@ -926,9 +926,6 @@ Redis集群的故障检测是基于gossip协议的，集群中的每个节点都
 
 > 备注：如果集群中某个节点的master和slave节点都宕机了，那么集群就会进入fail状态，因为集群的slot映射不完整。如果集群超过半数以上的master挂掉，无论是否有slave，集群都会进入fail状态。
 
-## Redis集群的搭建：
-
-[Redis集群的搭建](Redis-extension.md#Redis集群的搭建)
 
 ## Redis集群的运维：
 
