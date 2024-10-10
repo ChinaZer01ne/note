@@ -926,25 +926,6 @@ Redis集群的故障检测是基于gossip协议的，集群中的每个节点都
 
 > 备注：如果集群中某个节点的master和slave节点都宕机了，那么集群就会进入fail状态，因为集群的slot映射不完整。如果集群超过半数以上的master挂掉，无论是否有slave，集群都会进入fail状态。
 
-
-## Redis集群的运维：
-
-[Redis集群的运维](Redis-extension.md#Redis集群的运维)
-
-* 数据迁移问题
-* 带宽消耗问题
-* Pub/Sub广播问题
-* 集群倾斜
-* 集群读写分离
-
-# Lua脚本  
-
-[Lua脚本](Redis-extension.md#Lua脚本)
-
-# 发布与订阅
-
-[Redis发布订阅](Redis-extension.md#发布与订阅)
-
 ## Redis主从、哨兵、集群比较
 todo
 
@@ -968,11 +949,11 @@ todo
 
 ## 事务命令
 
-- multi：用于标记事务块的开始,Redis会将后续的命令逐个放入队列中，然后使用exec原子化地执行这个命令队列
-- exec：执行命令队列
-- discard：清除命令队列
-- watch：监视key
-- unwatch：清除监视key
+- `multi`：用于标记事务块的开始,Redis会将后续的命令逐个放入队列中，然后使用exec原子化地执行这个命令队列
+- `exec`：执行命令队列
+- `discard`：清除命令队列
+- `watch`：监视key
+- `unwatch`：清除监视key
 
 ![](https://secure2.wostatic.cn/static/jPwGSZE9guoqnsfieXnchz/image.png?auth_key=1716829395-aKG5Th4tNKHRwqcVQvSs2s-0-aa24c231033690492f637c9d30738b70)
 
