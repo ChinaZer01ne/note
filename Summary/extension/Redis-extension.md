@@ -1846,3 +1846,116 @@ keyspace_misses:0 #查找数据库键失败的次数
 ```
 
 Redis监控平台: grafana、prometheus以及redis_exporter。
+
+# 通信协议
+
+Redis是单进程单线程的。 应用系统和Redis通过Redis协议(RESP)进行交互。
+
+## 请求响应模式
+
+![](https://secure2.wostatic.cn/static/b4BxPMEGGxf2nSoLpAaWys/image.png?auth_key=1716829337-6teSD6SdX3WPRTNyUEZUsg-0-7af03c46f607dcd99e9801433de2a1a7)
+
+### 串行的请求响应模式(ping-pong)
+
+串行化是最简单模式，客户端与服务器端建立长连接。连接通过心跳机制检测(ping-pong)，ack应答 客户端发送请求，服务端响应，客户端收到响应后，再发起第二个请求，服务器端再响应。
+
+![](https://secure2.wostatic.cn/static/m38aN8PKRsQQFxnFUjT6h4/image.png?auth_key=1716829337-oZbYLCzKpNnVrVDg85i6y7-0-0e843aa8559c441809b68d506e1e75b8)
+
+telnet和redis-cli 发出的命令都属于该种模式
+
+特点:
+
+- 有问有答
+- 耗时在网络传输命令
+- 性能较低
+
+## 双工的请求响应模式(pipeline)
+
+![](https://secure2.wostatic.cn/static/82CPydxhLH5FV3VGVsP8vF/image.png?auth_key=1716829337-gWxnzh7FKun8ox5PosJyed-0-1ce05866f96174f77aace04e5ca7824d)
+
+- pipeline的作用是将一批命令进行打包，然后发送给服务器，服务器执行完按顺序打包返回。
+- 通过pipeline，一次pipeline(n条命令)=一次网络时间 + n次命令时间
+
+通过Jedis可以很方便的使用pipeline
+
+```java
+Jedis redis = new Jedis("192.168.1.111", 6379); 
+//授权密码 对应redis.conf的requirepass密码 
+redis.auth("12345678");
+Pipeline pipe = jedis.pipelined();
+for (int i = 0; i <50000; i++) {
+    pipe.set("key_"+String.valueOf(i),String.valueOf(i));
+}
+//将封装后的PIPE一次性发给redis 
+pipe.sync();
+```
+
+## 原子化的批量请求响应模式(事务)
+
+Redis可以利用事务机制批量执行命令。后面会详细讲解。
+
+## 发布订阅模式(pub/sub)
+
+发布订阅模式是：一个客户端触发，多个客户端被动接收，通过服务器中转。后面会详细讲解。
+
+## 脚本化的批量执行(lua)
+
+客户端向服务器端提交一个lua脚本，服务器端执行该脚本。后面会详细讲解。
+
+# 请求数据格式
+
+Redis客户端与服务器交互采用序列化协议(RESP)。 请求以字符串数组的形式来表示要执行命令的参数，Redis使用命令特有(command-specific)数据类型作为回复。
+
+Redis通信协议的主要特点有:
+
+客户端和服务器通过 TCP 连接来进行数据交互， 服务器默认的端口号为 6379 。 客户端和服务器发送的命令或数据一律以 \r\n (CRLF)结尾。
+
+在这个协议中， 所有发送至 Redis 服务器的参数都是二进制安全(binary safe)的。 简单，高效，易读。
+
+## 内联格式
+
+可以使用telnet给Redis发送命令，首字符为Redis命令名的字符，格式为 str1 str2 str3...
+
+```bash
+[root@localhost bin]# telnet 127.0.0.1 6379
+Trying 127.0.0.1...
+Connected to 127.0.0.1.
+Escape character is '^]'.
+ping
++PONG
+exists name
+:1
+```
+
+## 规范格式(redis-cli) RESP
+
+1. 间隔符号，在Linux下是\r\n，在Windows下是\n
+2. 简单字符串 Simple Strings, 以 "+"加号 开头
+3. 错误 Errors, 以"-"减号 开头
+4. 整数型 Integer， 以 ":" 冒号开头
+5. 大字符串类型 Bulk Strings, 以 "$"美元符号开头，长度限制512M
+6. 数组类型 Arrays，以 "*"星号开头 用SET命令来举例说明RESP协议的格式。
+
+```bash
+redis> SET mykey Hello
+"OK"
+```
+
+实际发送的请求数据:
+
+```text
+*3\r\n$3\r\nSET\r\n$5\r\nmykey\r\n$5\r\nHello\r\n
+*3
+$3
+SET
+$5
+mykey
+$5
+Hello
+```
+
+实际收到的响应数据:
+
+```text
++OK\r\n
+```
