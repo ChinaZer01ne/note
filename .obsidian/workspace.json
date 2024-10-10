@@ -93,7 +93,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Redis.md",
+                "file": "Summary/extension/Redis-extension.md",
                 "mode": "source",
                 "source": false
               }
@@ -166,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Redis.md",
+                "file": "Summary/extension/Redis-extension.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Redis.md",
+                "file": "Summary/extension/Redis-extension.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Redis.md"
+                "file": "Summary/extension/Redis-extension.md"
               }
             }
           },
@@ -259,18 +259,18 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
+    "Summary/Redis.md",
+    "Summary/extension/Redis-extension.md",
     "Summary/image/Redis/Redis命令执行流程图.png",
     "Summary/image/Redis/Redis命令执行流程图.png.crdownload",
     "Summary/image/Redis/Redis命令处理流程.png",
     "Summary/image/Redis/Redis命令处理流程.png.crdownload",
-    "Summary/extension/Redis-extension.md",
     "Summary/image/Redis/双工请求响应模式.png",
     "Summary/image/Redis/双工请求响应模式.png.crdownload",
     "Summary/image/Redis/串行请求模式.png",
     "Summary/image/Redis/串行请求模式.png.crdownload",
     "Summary/image/Redis/Redis请求响应模式.png",
     "Summary/image/Redis/Redis请求响应模式.png.crdownload",
-    "Summary/Redis.md",
     "Summary/IO.md",
     "Summary/Mysql.md",
     "Summary/缓存.md",
@@ -300,7 +300,6 @@
     "Summary/image/系统设计/数据订正流程.jpg",
     "Summary/image/系统设计/1719412432852.jpg",
     "Summary/image/Pasted image 20240626223346.png",
-    "Summary/image/系统设计/数据存量同步详细设计.jpg",
     "Summary/image/系统设计",
     "Summary/image/Java/threadlocal结构.png.crdownload",
     "Summary/image/Java/重量级锁monitor.webp.crdownload",
