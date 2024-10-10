@@ -93,7 +93,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Redis.md",
+                "file": "Summary/大杂烩.md",
                 "mode": "source",
                 "source": false
               }
@@ -166,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Redis.md",
+                "file": "Summary/大杂烩.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Redis.md",
+                "file": "Summary/大杂烩.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Redis.md"
+                "file": "Summary/大杂烩.md"
               }
             }
           },
@@ -259,8 +259,10 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
-    "Summary/extension/Redis-extension.md",
     "Summary/Redis.md",
+    "Summary/Zookeeper.md",
+    "Summary/面试问题.md",
+    "Summary/extension/Redis-extension.md",
     "Summary/线上问题分享.md",
     "Summary/Mysql.md",
     "Summary/Mybatis.md",
@@ -270,10 +272,8 @@
     "Summary/Spring Cloud.md",
     "Summary/System Design.md",
     "Summary/TO DO LIST.md",
-    "Summary/Zookeeper.md",
     "Summary/extension/JVM-extension.md",
     "Summary/缓存.md",
-    "Summary/面试问题.md",
     "Summary/大杂烩.md",
     "daliy_note/2023-09-27.md",
     "Summary/image/Mysql/数据库连接管理.jpeg",
