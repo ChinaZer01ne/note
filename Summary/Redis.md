@@ -2211,6 +2211,10 @@ Redis监控平台: grafana、prometheus以及redis_exporter。
 	(integer) 2
 	```
 
+> 思路：
+> * 大key做拆分
+> * 把大key放到单独的文档数据库中
+> * 大key需要做隔离
 ### 缓存与数据库一致性
 
 #### 缓存更新策略
