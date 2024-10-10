@@ -1392,16 +1392,15 @@ Redis服务器是典型的事件驱动系统。Redis将事件分为两大类：*
 
 文件事件即Socket的读写事件，也就是IO事件。 客户端的连接、命令请求、数据回复、连接断开。
 
-
 ### 文件事件分派器
 
 在redis中，对于文件事件的处理采用了Reactor模型。采用的是epoll的实现方式。
 
 ![](https://secure2.wostatic.cn/static/raoSnsaTgVexEg6Zoj2xGq/image.png?auth_key=1716829338-evUG5MYubrhFCvZ163mxb7-0-e050b016257d8354629143731f27fcd4)
 
-Redis在主循环中统一处理文件事件和时间事件，信号事件则由专门的handler来处理。
+**Redis在主循环中统一处理文件事件和时间事件，信号事件则由专门的handler来处理。**
 
-主循环
+### 主循环
 
 ```c
 void aeMain(aeEventLoop *eventLoop) { 
@@ -1421,7 +1420,7 @@ void aeMain(aeEventLoop *eventLoop) {
 
 #### 连接处理函数 acceptTCPHandler
 
-当客户端向 Redis 建立 socket时，aeEventLoop 会调用 acceptTcpHandler 处理函数，服务器会为每个链接创建一个 Client 对象，并创建相应文件事件来监听socket的可读事件，并指定事件处理函数。
+当客户端向 Redis 建立 socket时，`aeEventLoop` 会调用 `acceptTcpHandler` 处理函数，服务器会为每个链接创建一个 Client 对象，并创建相应文件事件来监听socket的可读事件，并指定事件处理函数。
 
 ```c
 // 当客户端建立链接时进行的eventloop处理函数 networking.c
