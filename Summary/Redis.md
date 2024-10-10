@@ -2171,14 +2171,14 @@ Redis监控平台: grafana、prometheus以及redis_exporter。
 - .....
 ## 大key的影响:
 
-- 大key会大量占用内存，在集群中无法均衡 （倾斜）.
-- Redis的性能下降，主从复制异常
+- 大key会大量占用内存，在集群中无法均衡，导致数据倾斜。
+- Redis的性能下降，主从复制异常。
 - 在主动删除或过期删除时会操作时间过长而引起服务阻塞
 
 ## 如何发现大key:
 
-1. redis-cli --bigkeys命令。可以找到某个实例5种数据类型(String、hash、list、set、zset)的最大 key。但如果Redis 的key比较多，执行该命令会比较慢
-2. 获取生产Redis的rdb文件，通过rdbtools分析rdb生成csv文件，再导入MySQL或其他数据库中进行分析统计，根据size_in_bytes统计bigkey
+1. `redis-cli --bigkeys`命令。可以找到某个实例5种数据类型(String、hash、list、set、zset)的最大 key。但如果Redis 的key比较多，执行该命令会比较慢。
+2. 获取生产Redis的RDB文件，通过rdbtools分析RDB生成csv文件，再导入MySQL或其他数据库中进行分析统计，根据`size_in_bytes`统计bigkey
 
 ## 大key的处理:
 
@@ -2188,30 +2188,28 @@ Redis监控平台: grafana、prometheus以及redis_exporter。
 2. 单个简单的key存储的value很大，可以尝试将对象分拆成几个key-value， 使用mget获取值，这样分拆的意义在于分拆单次操作的压力，将操作压力平摊到多次操作中，降低对redis的IO影响。
 3. hash， set，zset，list 中存储过多的元素，可以将这些元素分拆。(常见)
 
-```text
-以hash类型举例来说，对于field过多的场景，可以根据field进行hash取模，生成一个新的key，例如原来的  
-hash_key:{filed1:value, filed2:value, filed3:value ...}，可以hash取模后形成如下 key:value形式
-
-hash_key:1:{filed1:value}  
-hash_key:2:{filed2:value}  
-hash_key:3:{filed3:value}  
-...  
-取模后，将原先单个key分成多个key，每个key filed个数为原先的1/N
-```
+	```text
+	以hash类型举例来说，对于field过多的场景，可以根据field进行hash取模，生成一个新的key，例如原来的  
+	hash_key:{filed1:value, filed2:value, filed3:value ...}，可以hash取模后形成如下 key:value形式
+	
+	hash_key:1:{filed1:value}  
+	hash_key:2:{filed2:value}  
+	hash_key:3:{filed3:value}  
+	...  
+	取模后，将原先单个key分成多个key，每个key filed个数为原先的1/N
+	```
 
 4. 使用 lazy delete (unlink命令)
     
     删除指定的key(s),若key不存在则该key被跳过。但是，相比DEL会产生阻塞，该命令会在另一个线程中回收内存，因此它是非阻塞的。 这也是该命令名字的由来：仅将keys从key空间中删除，真正的数据删除会在后续异步操作。
-    
-
-```bash
-redis> SET key1 "Hello"
-"OK"
-redis> SET key2 "World"
-"OK"
-redis> UNLINK key1 key2 key3
-(integer) 2
-```
+	```bash
+	redis> SET key1 "Hello"
+	"OK"
+	redis> SET key2 "World"
+	"OK"
+	redis> UNLINK key1 key2 key3
+	(integer) 2
+	```
 
 ### 缓存与数据库一致性
 
