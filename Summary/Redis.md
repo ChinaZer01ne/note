@@ -1163,51 +1163,7 @@ QUEUED
 5、3，4点有点违背redis储中
 
 
-# 缓存的读写模式
 
-缓存有三种读写模式
-* Cache Aside Pattern
-* Read/Write Through Pattern
-* Write Behind Caching Pattern
-
-## Cache Aside Pattern(常用)
-
-Cache Aside Pattern(旁路缓存)，是最经典的缓存+数据库读写模式。 读的时候，先读缓存，缓存没有的话，就读数据库，然后取出数据后放入缓存，同时返回响应。更新的时候，先更新数据库，然后再删除缓存。
-
-
-**为什么是删除缓存，而不是更新缓存呢?** 
-
-1. 缓存的值是一个结构：hash、list，更新数据需要遍历
-    
-    先遍历(耗时)后修改
-    
-2. 懒加载，使用的时候才更新缓存
-    
-    使用的时候才从DB中加载 也可以采用异步的方式填充缓存，开启一个线程定时将DB的数据刷到缓存中
-    
-
-**高并发脏读的三种情况** 
-
-1. 先更新数据库，再更新缓存 update与commit之间，更新缓存，commit失败，则DB与缓存数据不一致
-    
-2. 先删除缓存，再更新数据库 update与commit之间，有新的读，缓存空，读DB数据到缓存，数据是旧的数据，commit后 DB为新数据 ,则DB与缓存数据不一致
-    
-3. 先更新数据库，再删除缓存(推荐) update与commit之间，有新的读，缓存空，读DB数据到缓存 数据是旧的数据 commit后 DB为新数据，则DB与缓存数据不一致
-    
-    **采用延时双删策略**
-    
-
-## Read/Write Through Pattern
-
-应用程序只操作缓存，缓存操作数据库。
-
-Read-Through(穿透读模式/直读模式)：应用程序读缓存，缓存没有，由缓存回源到数据库，并写入缓存。(guavacache)
-
-Write-Through(穿透写模式/直写模式)：应用程序写缓存，缓存写数据库。 该种模式需要提供数据库的handler，开发较为复杂。
-
-## Write Behind Caching Pattern
-
-应用程序只更新缓存。 缓存通过异步的方式将数据批量或合并后更新到DB中不能时时同步，甚至会丢数据
 
 # 数据分区算法
 
