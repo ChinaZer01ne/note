@@ -1520,6 +1520,10 @@ void readQueryFromClient(aeEventLoop *el, int fd, void *privdata, int mask) {
 	} aeTimeEvent;
 	```
 
+> 编者注：关于时间事件这部分内容主要关注三点：
+> 1. serverCron函数
+> 2. 定时事件
+> 3. 周期性事件
 ### serverCron
 
 时间事件的最主要的应用是在redis服务器需要对自身的资源与配置进行定期的调整，从而确保服务器的长久运行，这些操作由`redis.c`中的`serverCron`函数实现。该时间事件主要进行以下操作:
@@ -1570,7 +1574,7 @@ aeTimeProc(时间处理器)的返回值是AE_NOMORE
 
 aeTimeProc(时间处理器)的返回值不是AE_NOMORE
 
-当一个时间事件到达后，服务器会根据时间处理器的返回值，对时间事件的 when 属性进行更新，让这 个事件在一段时间后再次达到。
+当一个时间事件到达后，服务器会根据时间处理器的返回值，对时间事件的 when 属性进行更新，让这个事件在一段时间后再次达到。
 
 serverCron就是一个典型的周期性事件。
 
