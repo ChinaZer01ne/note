@@ -77,7 +77,7 @@ typedef struct redisDb {
 
 上面的代码是Redis 中关于数据库的结构体定义，这个结构体定义中除了 id 以外都是指向字典的指针， 其中我们只看 dict 和 expires。
 
-dict 用来维护一个 Redis 数据库中包含的所有 Key-Value 键值对，expires则用于维护一个 Redis 数据 库中设置了失效时间的键(即key与失效时间的映射)。
+dict 用来维护一个 Redis 数据库中包含的所有 Key-Value 键值对，expires则用于维护一个 Redis 数据库中设置了失效时间的键(即key与失效时间的映射)。
 
 当我们使用 expire命令设置一个key的失效时间时，Redis 首先到 dict 这个字典表中查找要设置的key 是否存在，如果存在就将这个key和失效时间添加到 expires 这个字典表。
 
@@ -85,6 +85,7 @@ dict 用来维护一个 Redis 数据库中包含的所有 Key-Value 键值对，
 
 简单地总结来说就是，设置了失效时间的key和具体的失效时间全部都维护在 expires 这个字典表中。
 
+> 注：Redis维护两个字典，
 ## 删除策略
 
 Redis的数据删除有**定时删除**、**惰性删除**和**主动删除**三种方式。 Redis目前采用惰性删除+主动删除的方式。
