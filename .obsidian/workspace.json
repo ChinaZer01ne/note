@@ -93,7 +93,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Redis.md",
+                "file": "Summary/缓存.md",
                 "mode": "source",
                 "source": false
               }
@@ -166,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Redis.md",
+                "file": "Summary/缓存.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Redis.md",
+                "file": "Summary/缓存.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Redis.md"
+                "file": "Summary/缓存.md"
               }
             }
           },
@@ -259,8 +259,9 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
-    "Summary/extension/Redis-extension.md",
     "Summary/Redis.md",
+    "Summary/缓存.md",
+    "Summary/extension/Redis-extension.md",
     "Summary/面试问题.md",
     "Summary/大杂烩.md",
     "daliy_note/2023-09-27.md",
@@ -296,7 +297,6 @@
     "Summary/image/Pasted image 20240626223157.png",
     "Summary/image/系统设计/数据逆向同步过程.jpg",
     "Summary/image/系统设计",
-    "Summary/Arthas.md",
     "Summary/image/Java/threadlocal结构.png.crdownload",
     "Summary/image/Java/重量级锁monitor.webp.crdownload",
     "Summary/image/Spring/spring流程.png.crdownload",
