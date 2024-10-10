@@ -93,8 +93,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Mysql.md",
-                "mode": "preview",
+                "file": "Summary/Redis.md",
+                "mode": "source",
                 "source": false
               }
             }
@@ -166,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Mysql.md",
+                "file": "Summary/Redis.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Mysql.md",
+                "file": "Summary/Redis.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Mysql.md"
+                "file": "Summary/Redis.md"
               }
             }
           },
@@ -259,6 +259,7 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
+    "Summary/Mysql.md",
     "Summary/Mybatis.md",
     "Summary/MQ.md",
     "Summary/Spring.md",
@@ -274,7 +275,6 @@
     "Summary/面试问题.md",
     "Summary/大杂烩.md",
     "daliy_note/2023-09-27.md",
-    "Summary/Mysql.md",
     "Summary/image/Mysql/数据库连接管理.jpeg",
     "Summary/image/Mysql/数据库连接管理.jpeg.crdownload",
     "Summary/Concurrent programming.md",
