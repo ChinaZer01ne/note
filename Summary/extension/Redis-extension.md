@@ -1777,3 +1777,241 @@ ugc:video:1
 4. SortedSet删除: zscan + zrem
     
     ![](https://secure2.wostatic.cn/static/8RgwqiPMmP6EnRh6MtaE21/image.png?auth_key=1716829502-wt3hg5iobqKoVbxk9u4Bd4-0-4dd3d1df1b27183dd7735e46c6c675ec)
+
+#  与Mybatis整合做二级缓存
+
+可以使用Redis做Mybatis的二级缓存，在分布式环境下可以使用。 框架采用springboot+Mybatis+Redis。
+
+1. 在pom.xml中添加Redis依赖
+	```xml
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-data-redis</artifactId>
+	</dependency>
+	```
+
+2. 在application.yml中添加Redis配置
+	```yaml
+	#开发配置 
+	spring:
+	#数据源配置 
+	  datasource:
+	    url: jdbc:mysql://192.168.127.128:3306/test?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+	    username: root
+	    password: root
+	    driver-class-name: com.mysql.jdbc.Driver
+	    type: com.alibaba.druid.pool.DruidDataSource
+	  redis:
+	    host: 192.168.127.128
+	    port: 6379
+	    jedis:
+	      pool:
+	        min-idle: 0
+	        max-idle: 8
+	        max-active: 8
+	        max-wait: -1ms
+	  #公共配置与profiles选择无关 
+	  mybatis:
+	    typeAliasesPackage: com.lagou.rcache.entity
+	    mapperLocations: classpath:mapper/*.xml
+	```
+3. 缓存实现
+    
+    `ApplicationContextHolder` `用于注入RedisTemplate`
+    
+
+```java
+@Component
+public class ApplicationContextHolder implements ApplicationContextAware {
+    private static ApplicationContext ctx;
+    @Override
+    //向工具类注入applicationContext
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        ctx = applicationContext; //ctx就是注入的applicationContext 
+    }
+    
+    //外部调用ctx
+    public static ApplicationContext getCtx() {
+        return ctx; 
+    }
+    
+    public static <T> T getBean(Class<T> tClass) {
+        return ctx.getBean(tClass);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public static <T> T getBean(String name) {
+        return (T) ctx.getBean(name);
+    }
+}
+```
+
+```
+RedisCache 使用redis实现mybatis二级缓存
+```
+
+```java
+/**
+ * 使用redis实现mybatis二级缓存 
+ */
+public class RedisCache implements Cache {
+    //缓存对象唯一标识
+    private final String id; //orm的框架都是按对象的方式缓存，而每个对象都需要一个唯一标识.
+    //用于事务性缓存操作的读写锁
+    private static ReadWriteLock readWriteLock = new ReentrantReadWriteLock(); //处理事务性缓存中做的
+    //操作数据缓存的--跟着线程走的
+    private RedisTemplate redisTemplate; //Redis的模板负责将缓存对象写到redis服务器里面去
+    //缓存对象的是失效时间，30分钟
+    private static final long EXPRIRE_TIME_IN_MINUT = 30;
+    //构造方法---把对象唯一标识传进来 
+    public RedisCache(String id) {
+        if (id == null) {
+            throw new IllegalArgumentException("缓存对象id是不能为空的");
+        }
+        this.id = id;
+    }
+    
+    @Override
+    public String getId() {
+        return this.id;
+    }
+    //给模板对象RedisTemplate赋值，并传出去 
+    private RedisTemplate getRedisTemplate() {
+        if (redisTemplate == null) { 
+            //每个连接池的连接都要获得RedisTemplate 
+            redisTemplate = ApplicationContextHolder.getBean("redisTemplate");
+        }
+        return redisTemplate;
+    }
+    /*
+    保存缓存对象的方法
+    */
+    @Override
+    public void putObject(Object key, Object value) {
+        try {
+            RedisTemplate redisTemplate = getRedisTemplate(); 
+            //使用redisTemplate得到值操作对象
+            ValueOperations operation = redisTemplate.opsForValue(); 
+            //使用值操作对象operation设置缓存对象
+            operation.set(key, value, EXPRIRE_TIME_IN_MINUT, TimeUnit.MINUTES); //TimeUnit.MINUTES系统当前时间的分钟数
+            System.out.println("缓存对象保存成功"); 
+        } catch (Throwable t) {
+            System.out.println("缓存对象保存失败" + t); 
+        }
+    }
+    /*
+      获取缓存对象的方法
+    */
+    @Override
+    public Object getObject(Object key) {
+        try {
+            RedisTemplate redisTemplate = getRedisTemplate(); 
+            ValueOperations operations = redisTemplate.opsForValue(); 
+            Object result = operations.get(key); System.out.println("获取缓存对象");
+            return result;
+            
+        } catch (Throwable t) { 
+            System.out.println("缓存对象获取失败" + t); 
+            return null;
+        } 
+    }
+    /*
+    删除缓存对象
+
+    */
+    @Override
+    public Object  (Object key) {
+        try {
+            RedisTemplate redisTemplate = getRedisTemplate(); 
+            redisTemplate.delete(key); 
+            System.out.println("删除缓存对象成功!");
+        } catch (Throwable t) { 
+            System.out.println("删除缓存对象失败!" + t);
+        }
+        return null;
+    }
+    /*
+    清空缓存对象
+当缓存的对象更新了的化，就执行此方法
+    */
+    @Override
+    public void clear() {
+        RedisTemplate redisTemplate = getRedisTemplate(); //回调函数
+        redisTemplate.execute((RedisCallback) collection -> {
+            collection.flushDb();
+            return null;
+        });
+        System.out.println("清空缓存对象成功!"); 
+    }
+    //可选实现的方法 
+    @Override
+    public int getSize() {
+        return 0; 
+    }
+    
+    @Override
+    public ReadWriteLock getReadWriteLock() {
+        return readWriteLock;
+    } 
+}
+
+```
+
+4. 在mapper中增加二级缓存开启(默认不开启)
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lagou.rcache.dao.UserDao" >
+    <cache type="com.lagou.rcache.utils.RedisCache" />
+    <resultMap id="BaseResultMap" type="com.lagou.rcache.entity.TUser" >
+
+   <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, name, address
+    </sql>
+    <select id="selectUser" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tuser
+    </select>
+</mapper> 
+```
+
+5. 在启动时允许缓存
+
+```java
+@SpringBootApplication
+@MapperScan("com.lagou.rcache.dao")
+@EnableCaching
+public class RcacheApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(RcacheApplication.class, args);
+    } 
+}
+```
+
+6. 运行结果: 控制台:
+    
+    ![](https://secure2.wostatic.cn/static/da2RPVUQVvL8eZ2k3tPD1g/image.png?auth_key=1716829497-nQg2ywDbJ72vixPkKX62Zm-0-e2ef4155b71cfae20b3d965c8279c417)
+    
+7. Redis客户端:
+    
+
+```bash
+127.0.0.1:6379> keys *
+1) "\xac\xed\x00\x05sr\x00
+org.apache.ibatis.cache.CacheKey\x0f\xe9\xd5\xb4\xcd3\xa8\x82\x02\x00\x05J\x00\b
+checksumI\x00\x05countI\x00\bhashcodeI\x00\nmultiplierL\x00\nupdateListt\x00\x10
+Ljava/util/List;xp\x00\x00\x00\x00\x87\xd8u%\x00\x00\x00\x05\xb0\xf6RU\x00\x00\x
+00%sr\x00\x13java.util.ArrayListx\x81\xd2\x1d\x99\xc7a\x9d\x03\x00\x01I\x00\x04s
+izexp\x00\x00\x00\x05w\x04\x00\x00\x00\x05t\x00'com.lagou.rcache.dao.UserDao.sel
+ectUsersr\x00\x11java.lang.Integer\x12\xe2\xa0\xa4\xf7\x81\x878\x02\x00\x01I\x00
+\x05valuexr\x00\x10java.lang.Number\x86\xac\x95\x1d\x0b\x94\xe0\x8b\x02\x00\x00x
+p\x00\x00\x00\x00sq\x00~\x00\x06\x7f\xff\xff\xfft\x00Cselect\n         \n
+id, name, address\n     \n        from tusert\x00\x15SqlSessionFactoryBeanx"
+```
