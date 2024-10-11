@@ -1036,20 +1036,6 @@ Redis Hash Slot算法是Redis分布式中使用的分布式数据存储算法，
 
 [慢查询日志](Redis-extension.md#Redis慢日志查询)
 
-
-
-### 主从不一致的问题？
-
-1、redis的的确是弱一致性，异步的同步
-
-2、锁不能用主从，要用单实例/分片集群/redlock →redisson
-
-3、在配置中提供必须有多少个Client连接能同步，你可以配置同步因子；趋向于强一致性
-
-4、wait 2 0 小心
-
-5、3，4点有点违背redis储中
-
 # Redis的Scan和Keys命令
 
 ## Keys
@@ -1070,17 +1056,13 @@ Redis Hash Slot算法是Redis分布式中使用的分布式数据存储算法，
 ### SCAN 内部探究
 
 1. Redis 的全局就是使用的是key-value形式存储，使用的也就是他底层的数据结构dict字典。字典内部存储和java中的hashmap差不多，其底层都是通过数组和链表实现的。
-    
 2. 在dict中我们所存储的key就是底下的数组下标，数组下表是通过计算hash值出来的。正是因为有了hash冲突也就有了链表。
-    
 3. 在使用scan的时候我们其中scan的游标就是数组的下标，因为在存储的时候进行的是计算hash后进行存储，所以在数组上不是顺序存储，所以在一段数组上有可能有值也有可能没有值。也有可能一个slot上有多个值。所以这就是scan为什么会在增量式的过程中出现多个和0个的原因，如下图
     
     ![](https://secure2.wostatic.cn/static/mv5WFoKx5kzLJwPMEs73xN/image.png?auth_key=1716829170-eV9WU98NZ4sykB66CoCadA-0-09f1f71ba48b675540d5cae4793fea94)
     
 4. 如果说按数组的下标顺序便利下去那要是扩容了怎么办，因为**扩容之后需要进行进行重新hash**，数组下标的位置就会改变，那么这个过程中我们我们在扩容之前scan返回的游标就不准确了吗？
-    
 5. **Redis处理扩容下表的方案是**：它不是从第一维数组的第 0 位一直遍历到末尾，而是采用了高位进位加法来遍历。之所以使用这样特殊的方式进行遍历，是考虑到字典的扩容和缩容时避免槽位的遍历重复和遗漏。
-    
 6. 选择高位进位加法的主要原因还是他进行扩容的特点，和hashMap的差不多，采用的是： *Java 中的 HashMap 有扩容的概念，当 loadFactor 达到阈值时，需要重新分配一个新的2 倍大小的数组，然后将所有的元素全部 rehash 挂到新的数组下面。rehash 就是将元素的hash 值对数组长度进行取模运算，因为长度变了，所以每个元素挂接的槽位可能也发生了变化。又因为数组的长度是 2n（我们在进行扩容的时候其容量都为2n的原因） 次方，所以取模运算等价于位与操作。
     
     ![](https://secure2.wostatic.cn/static/9eUqWQmrPuLN7dcVCZ6CRn/image.png?auth_key=1716829170-bAmBWWbLnGpNxPLRudUAfY-0-a30a6b96aaca1419ff300a0a0e075bf7)
