@@ -93,7 +93,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Design Patterns.md",
+                "file": "Summary/Concurrent programming.md",
                 "mode": "source",
                 "source": false
               }
@@ -166,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Design Patterns.md",
+                "file": "Summary/Concurrent programming.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Design Patterns.md",
+                "file": "Summary/Concurrent programming.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Design Patterns.md"
+                "file": "Summary/Concurrent programming.md"
               }
             }
           },
@@ -259,6 +259,10 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
+    "Summary/DDD.md",
+    "Summary/Design Docments.md",
+    "Summary/Distributed Theory.md",
+    "Summary/Design Patterns.md",
     "Summary/ES.md",
     "Summary/Java.md",
     "Summary/MarkDown.md",
@@ -283,10 +287,7 @@
     "Summary/Spring.md",
     "Summary/Spring Cloud.md",
     "Summary/System Design.md",
-    "Summary/TO DO LIST.md",
     "Summary/image/MQ/kafka生产消费流程图.png",
-    "Summary/extension/Redis-extension.md",
-    "Summary/缓存.md",
     "Summary/image/Redis/双工请求响应模式.png",
     "Summary/image/Redis/串行请求模式.png",
     "Summary/image/Redis/Redis请求响应模式.png",
