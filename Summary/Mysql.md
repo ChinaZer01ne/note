@@ -189,13 +189,13 @@ mysql> insert into t(id,k) values(id1,k1),(id2,k2);
 “**段**”是一个逻辑的概念，其包括**非叶子节点段**（对应索引树的非叶子节点用来存放索引）和**叶子节点段**（对应索引树的叶子节点用来发存放数据）。从逻辑上讲，表空间由非叶子节点段、叶子节点段等段构成。其他段例如：回滚段（Rollback Segment）、系统段（System Segment）、描述符段（Descriptor Segment）等
 
 ## 行格式
-* DYNAMIC（默认）
+* `DYNAMIC`（默认）
 	* 使用bit位来表示null值，逆序放置，因为指针是从右往左遍历的
 	* 通过删除标识表示数据是否删除，删除的数据会到垃圾链表中
 	* 如果text，blob行数据过大，那么就会放到“溢出页”的独立空间中，记录中存放溢出页的地址
-* REDUNDANT（淘汰了）
-* COMPACT（与DYNAMIC在超长字段处理上有所区别）
-* COMPRESSED（在DYNAMIC基础上增加了压缩功能）
+* `REDUNDANT`（淘汰了）
+* `COMPACT`（与DYNAMIC在超长字段处理上有所区别）
+* `COMPRESSED`（在DYNAMIC基础上增加了压缩功能）
 
 ## 磁盘和内存的交互
 

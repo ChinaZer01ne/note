@@ -93,7 +93,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Computer Network.md",
+                "file": "Summary/MicroService Design.md",
                 "mode": "source",
                 "source": false
               }
@@ -166,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Computer Network.md",
+                "file": "Summary/MicroService Design.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Computer Network.md",
+                "file": "Summary/MicroService Design.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Computer Network.md"
+                "file": "Summary/MicroService Design.md"
               }
             }
           },
@@ -259,6 +259,24 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
+    "Summary/Mybatis.md",
+    "Summary/Mysql.md",
+    "Summary/Nacos.md",
+    "Summary/Redis.md",
+    "Summary/Sentinel.md",
+    "Summary/Spring.md",
+    "Summary/Spring Cloud.md",
+    "Summary/System Design.md",
+    "Summary/TO DO LIST.md",
+    "Summary/Zookeeper.md",
+    "Summary/面试问题.md",
+    "Summary/缓存.md",
+    "Summary/image/Pasted image 20241014142412.png",
+    "Summary/Algorithm.md",
+    "Summary/Architecture Design.md",
+    "Summary/Arthas.md",
+    "Summary/Build Tool.md",
+    "Summary/Computer Network.md",
     "Summary/Concurrent programming.md",
     "Summary/DDD.md",
     "Summary/Design Docments.md",
@@ -267,26 +285,8 @@
     "Summary/ES.md",
     "Summary/Java.md",
     "Summary/MarkDown.md",
-    "Summary/image/Pasted image 20241014142412.png",
-    "Summary/Architecture Design.md",
     "Summary/压测.md",
-    "Summary/线上问题分享.md",
-    "Summary/稳定性治理.md",
-    "Summary/面试问题.md",
-    "Summary/Zookeeper.md",
     "Summary/image/MQ/kafka生产消费流程图 1.png",
-    "Summary/Dubbo.md",
-    "Summary/JVM.md",
-    "Summary/Log.md",
-    "Summary/MicroService Design.md",
-    "Summary/MQ.md",
-    "Summary/Mybatis.md",
-    "Summary/Mysql.md",
-    "Summary/Nacos.md",
-    "Summary/Redis.md",
-    "Summary/Sentinel.md",
-    "Summary/Spring.md",
-    "Summary/Spring Cloud.md",
     "Summary/image/MQ/kafka生产消费流程图.png",
     "Summary/image/Redis/双工请求响应模式.png",
     "Summary/image/Redis/串行请求模式.png",
