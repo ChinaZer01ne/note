@@ -58,8 +58,13 @@
 - 二次散列  
 - 扰动函数  
 > 编者注：需了解：
+> * HashMap的底层数据结构
+> 	* 负载因子
+> 	* hash冲突
+> 	* 树化与链化
 > * HashMap的put执行流程
-> * Ha'sh'Map
+> * HashMap的扩容机制
+> * HashMap在多线程下存在什么问题
 ### ConcurrentHashMap
 #### ConcurrentHashMap如何解决并发问题的？::
 - 并发处理  
@@ -101,6 +106,10 @@
 
 保证ConcurrentHashMap在写的时候，红黑树发生宣战，不影响对ConcurrentHashMap的读操作。在扩容的时候是通过双向链表来迁移数据的。
 
+> 编者注：需了解：
+> * ConcurrentHashMap如何解决并发问题
+> * ConcurrentHashMap是如何扩容的
+> * ConcurrentHashMap中sizeCtrl的含义
 ### ConcurrentSkipListMap
 跳表  
 ### LinkedHashMap
