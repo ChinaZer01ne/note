@@ -93,7 +93,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Nacos.md",
+                "file": "Summary/大杂烩.md",
                 "mode": "source",
                 "source": false
               }
@@ -166,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Nacos.md",
+                "file": "Summary/大杂烩.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Nacos.md",
+                "file": "Summary/大杂烩.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Nacos.md"
+                "file": "Summary/大杂烩.md"
               }
             }
           },
@@ -259,6 +259,10 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
+    "Summary/缓存.md",
+    "Summary/大杂烩.md",
+    "Summary/Mysql.md",
+    "Summary/Nacos.md",
     "Summary/Redis.md",
     "Summary/Sentinel.md",
     "Summary/Spring.md",
@@ -272,12 +276,8 @@
     "Summary/稳定性治理.md",
     "Summary/前端.md",
     "Summary/面试问题.md",
-    "Summary/大杂烩.md",
     "Summary/MicroService Design.md",
     "Summary/Mybatis.md",
-    "Summary/Mysql.md",
-    "Summary/Nacos.md",
-    "Summary/缓存.md",
     "Summary/image/Pasted image 20241014142412.png",
     "Summary/Architecture Design.md",
     "Summary/Arthas.md",
