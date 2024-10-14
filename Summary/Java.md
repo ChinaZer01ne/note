@@ -117,7 +117,7 @@ LRU
 # 并发
 
 ## Java中有哪些实现线程安全的方式？::
-1. 使用同步机制：可以使用关键字[ `synchronized`](#synchronized) 或 `ReentrantLock` 类来实现互斥访问，确保同一时间只有一个线程可以访问共享资源。
+1. 使用同步机制：可以使用关键字[`synchronized`](#synchronized) 或 `ReentrantLock` 类来实现互斥访问，确保同一时间只有一个线程可以访问共享资源。
 2. 使用原子类：Java提供了一系列原子类，如 `AtomicInteger`、`AtomicLong`、`AtomicReference` 等，它们提供了原子操作，保证了操作的原子性，避免了多线程竞争的问题。
 3. 使用线程安全的集合类：Java提供了线程安全的集合类，如 `ConcurrentHashMap`、`CopyOnWriteArrayList` 等，它们在内部实现上使用了同步机制，可以安全地在多线程环境下使用。
 4. 使用volatile关键字：`volatile` 关键字可以确保共享变量的可见性，即对一个 `volatile` 变量的写操作对于其他线程是立即可见的，从而避免了多线程之间的数据不一致问题。
@@ -504,12 +504,12 @@ ThreadLocal是实现线程安全的方式之一。他的作用有两点：
 * 线程隔离：在多线程环境下，使用ThreadLocal可以实现线程间的数据隔离。每个线程都拥有自己独立的变量副本，不同线程之间的操作不会互相干扰，避免了线程安全问题。
 * 线程上下文传递：ThreadLocal可以作为一种线程上下文传递的方式。通过将数据存储在ThreadLocal中，可以在同一个线程内的不同方法或组件之间传递数据，而无需显式传递参数。
 
-### ThreadLocal的实现原理
-ThreadLocal的实现原理可以简单概括为以下几点：
-* 每个Thread对象中都有一个ThreadLocalMap对象，用于存储线程局部变量。ThreadLocalMap是ThreadLocal的内部类，它以ThreadLocal对象作为键，线程局部变量作为值存储在HashMap中。
-* 当通过ThreadLocal的get()方法获取线程局部变量时，会先获取当前线程的ThreadLocalMap对象。然后，根据ThreadLocal对象作为键，在ThreadLocalMap中查找对应的值。
-* 当通过ThreadLocal的set()方法设置线程局部变量时，会先获取当前线程的ThreadLocalMap对象。然后，使用ThreadLocal对象作为键，将线程局部变量存储在ThreadLocalMap中。
-* 当线程结束时，ThreadLocalMap中的所有以ThreadLocal对象为键的条目会被自动清除，防止内存泄漏（弱引用）。
+### ThreadLocal的实现原理::
+`ThreadLocal`的实现原理可以简单概括为以下几点：
+* 每个`Thread`对象中都有一个`ThreadLocalMap`对象，用于存储线程局部变量。`ThreadLocalMap`是`ThreadLocal`的内部类，它以`ThreadLocal`对象作为键，线程局部变量作为值存储在`HashMap`中。
+* 当通过`ThreadLocal`的get()方法获取线程局部变量时，会先获取当前线程的`ThreadLocalMap`对象。然后，根据`ThreadLocal`对象作为键，在`ThreadLocalMap`中查找对应的值。
+* 当通过`ThreadLocal`的set()方法设置线程局部变量时，会先获取当前线程的`ThreadLocalMap`对象。然后，使用`ThreadLocal`对象作为键，将线程局部变量存储在`ThreadLocalMap`中。
+* 当线程结束时，`ThreadLocalMap`中的所有以`ThreadLocal`对象为键的条目会被自动清除，防止内存泄漏（弱引用）。
 > ThreadLocal其实是操作Thread类中ThreadLocalMap变量的一个工具类，每个ThreadLocal相当于ThreadLocalMap中的一个entry。
 
 ![](threadlocal结构.png)
