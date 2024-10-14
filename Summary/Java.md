@@ -30,6 +30,7 @@
 	读多写少场景  
 	内存消耗大  
 	数据一致性，可能读不到刚写的数据
+> 编者注：需了解ArrayList和LinkedList的底层原理与区别。
 ## Map
 ### HashMap
 #### HashMap的数据结构是什么样的？::  
@@ -56,6 +57,9 @@
 	8树化，6链化
 - 二次散列  
 - 扰动函数  
+> 编者注：需了解：
+> * HashMap的put执行流程
+> * Ha'sh'Map
 ### ConcurrentHashMap
 #### ConcurrentHashMap如何解决并发问题的？::
 - 并发处理  
