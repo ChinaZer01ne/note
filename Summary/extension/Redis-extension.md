@@ -90,11 +90,11 @@ Redis作为Key-Value存储系统，数据结构如下:
 
 ![](Redis数据结构.jpg)
 
-Redis没有表的概念，Redis实例所对应的db以编号区分，db本身就是key的命名空间。 比如:user:1000作为key值，表示在user这个命名空间下id为1000的元素，类似于user表的id=1000的行。
+Redis没有表的概念，Redis实例所对应的db以编号区分，db本身就是key的命名空间。 比如:`user:1000`作为key值，表示在user这个命名空间下id为1000的元素，类似于user表的id=1000的行。
 
 ## RedisDB结构
 
-Redis中存在“数据库”的概念，该结构由redis.h中的redisDb定义。 当redis 服务器初始化时，会预先分配 16 个数据库，所有数据库保存到结构 redisServer 的一个成员 redisServer.db 数组中，redisClient中存在一个名叫db的指针指向当前使用的数据库
+Redis中存在“数据库”的概念，该结构由`redis.h`中的redisDb定义。 当redis 服务器初始化时，会预先分配 16 个数据库，所有数据库保存到结构 redisServer 的一个成员 redisServer.db 数组中，redisClient中存在一个名叫db的指针指向当前使用的数据库
 
 RedisDB结构体源码:
 

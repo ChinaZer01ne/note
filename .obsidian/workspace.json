@@ -93,7 +93,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/extension/Redis-extension.md",
+                "file": "Summary/MQ.md",
                 "mode": "source",
                 "source": false
               }
@@ -166,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/extension/Redis-extension.md",
+                "file": "Summary/MQ.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/extension/Redis-extension.md",
+                "file": "Summary/MQ.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/extension/Redis-extension.md"
+                "file": "Summary/MQ.md"
               }
             }
           },
@@ -259,6 +259,7 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
+    "Summary/extension/Redis-extension.md",
     "Summary/Redis.md",
     "Summary/缓存.md",
     "Summary/前端.md",
@@ -272,7 +273,6 @@
     "Summary/Architecture Design.md",
     "Summary/大杂烩.md",
     "Summary/extension/Zookeeper-extension.md",
-    "Summary/extension/Redis-extension.md",
     "Summary/extension/JVM-extension.md",
     "Summary/Dubbo.md",
     "Summary/System Design.md",
