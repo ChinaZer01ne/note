@@ -1,12 +1,6 @@
 # Dubbo 架构概述
 
-## 什么是Dubbo
-
-Apache Dubbo是一款高性能的Java RPC框架。其前身是阿里巴巴公司开源的一个高性能、轻量级的开源Java RPC框架，可以和Spring框架无缝集成。
-
-## dubbo 的特性
-
-参考官网首页 [特性一览](https://dubbo.apache.org/zh/#td-block-1)
+参考官网首页 [Dubbo 介绍 | Apache Dubbo](https://cn.dubbo.apache.org/zh-cn/overview/what/)
 
 ## Dubbo 的服务治理
 

@@ -93,7 +93,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Nacos.md",
+                "file": "Summary/Architecture Design.md",
                 "mode": "source",
                 "source": false
               }
@@ -166,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Nacos.md",
+                "file": "Summary/Architecture Design.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Nacos.md",
+                "file": "Summary/Architecture Design.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Nacos.md"
+                "file": "Summary/Architecture Design.md"
               }
             }
           },
@@ -259,17 +259,30 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
+    "Summary/压测.md",
+    "Summary/线上问题分享.md",
+    "Summary/稳定性治理.md",
+    "Summary/面试问题.md",
+    "Summary/Zookeeper.md",
+    "Summary/image/MQ/kafka生产消费流程图 1.png",
+    "Summary/Dubbo.md",
+    "Summary/ES.md",
+    "Summary/Java.md",
+    "Summary/JVM.md",
+    "Summary/Log.md",
+    "Summary/MarkDown.md",
+    "Summary/MicroService Design.md",
+    "Summary/MQ.md",
+    "Summary/Mybatis.md",
+    "Summary/Mysql.md",
+    "Summary/Nacos.md",
     "Summary/Redis.md",
     "Summary/Sentinel.md",
     "Summary/Spring.md",
     "Summary/Spring Cloud.md",
     "Summary/System Design.md",
     "Summary/TO DO LIST.md",
-    "Summary/Zookeeper.md",
-    "Summary/MQ.md",
-    "Summary/image/kafka生产消费流程图.png",
     "Summary/image/MQ/kafka生产消费流程图.png",
-    "Summary/面试问题.md",
     "Summary/extension/Redis-extension.md",
     "Summary/缓存.md",
     "Summary/前端.md",
@@ -279,18 +292,6 @@
     "Summary/image/Redis/Redis命令执行流程图.png",
     "Summary/image/Redis/Redis命令处理流程.png",
     "Summary/Algorithm.md",
-    "Summary/Architecture Design.md",
-    "Summary/大杂烩.md",
-    "Summary/extension/Zookeeper-extension.md",
-    "Summary/extension/JVM-extension.md",
-    "Summary/Dubbo.md",
-    "Summary/稳定性治理.md",
-    "Summary/线上问题分享.md",
-    "Summary/IO.md",
-    "Summary/ES.md",
-    "Summary/Design Docments.md",
-    "Summary/DDD.md",
-    "Summary/Concurrent programming.md",
     "Summary/image/Mysql/数据库连接管理.jpeg",
     "Summary/image/Mysql/数据库连接管理.jpeg.crdownload",
     "Summary/image/1717303196435.jpg",

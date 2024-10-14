@@ -255,7 +255,7 @@ KafkaProducer有两个基本线程：
     - 这些消息底层用Segment存储，默认1G
 ## Kafka消息消费流程
 TODO
-![kafka生产消费流程图.png](kafka生产消费流程图.png)
+![kafka生产消费流程图 1.png](kafka生产消费流程图%201.png)
 ## Kafka为什么这么快？::
 - 分区技术  
     - 并行度高  
