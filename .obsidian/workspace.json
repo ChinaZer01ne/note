@@ -93,7 +93,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/前端.md",
+                "file": "Summary/System Design.md",
                 "mode": "source",
                 "source": false
               }
@@ -166,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/前端.md",
+                "file": "Summary/System Design.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/前端.md",
+                "file": "Summary/System Design.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/前端.md"
+                "file": "Summary/System Design.md"
               }
             }
           },
@@ -259,9 +259,9 @@
   },
   "active": "032342cbdcd1a9d4",
   "lastOpenFiles": [
+    "Summary/前端.md",
     "Summary/image/MQ/kafka生产消费流程图.png",
     "Summary/大杂烩.md",
-    "Summary/前端.md",
     "Summary/面试问题.md",
     "Summary/Redis.md",
     "conflict-files-obsidian-git.md",
@@ -300,7 +300,6 @@
     "Summary/image/1717303196435.jpg",
     "Summary/image/系统设计/数据订正流程.jpg",
     "Summary/image/系统设计/1719412432852.jpg",
-    "Summary/image/Pasted image 20240626223346.png",
     "Summary/image/系统设计",
     "Summary/image/Java/threadlocal结构.png.crdownload",
     "Summary/image/Java/重量级锁monitor.webp.crdownload",
