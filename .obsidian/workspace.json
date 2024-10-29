@@ -4,103 +4,20 @@
     "type": "split",
     "children": [
       {
-        "id": "66b299b4ad7dcf7a",
+        "id": "63088524407c589c",
         "type": "tabs",
         "children": [
           {
-            "id": "312c29067cf17634",
+            "id": "9565818dc7d2239a",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/Concurrent programming.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "14a0451441558df1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/Spring.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "42a1bb09ee705063",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/Spring.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "9853eeb54748babc",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "Summary/image/Java/synchronized原理.jpg"
-              }
-            }
-          },
-          {
-            "id": "8911a4ef808e3e47",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "Summary/image/Java/synchronized原理.jpg"
-              }
-            }
-          },
-          {
-            "id": "cd72376271d089ca",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/Mysql.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "0e0b8d0421a54c60",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/IO.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "032342cbdcd1a9d4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/System Design.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
             }
           }
-        ],
-        "currentTab": 7
+        ]
       }
     ],
     "direction": "vertical"
@@ -120,7 +37,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
             }
           },
           {
@@ -135,7 +54,9 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
             }
           },
           {
@@ -143,10 +64,13 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -166,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/System Design.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -174,7 +97,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "反向链接"
             }
           },
           {
@@ -183,10 +108,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/System Design.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "出链"
             }
           },
           {
@@ -197,7 +123,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
             }
           },
           {
@@ -205,9 +133,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Summary/System Design.md"
-              }
+              "state": {},
+              "icon": "lucide-list",
+              "title": "大纲"
             }
           },
           {
@@ -215,7 +143,9 @@
             "type": "leaf",
             "state": {
               "type": "calendar",
-              "state": {}
+              "state": {},
+              "icon": "lucide-file",
+              "title": "插件不再活动"
             }
           },
           {
@@ -223,7 +153,9 @@
             "type": "leaf",
             "state": {
               "type": "review-queue-list-view",
-              "state": {}
+              "state": {},
+              "icon": "lucide-file",
+              "title": "插件不再活动"
             }
           },
           {
@@ -235,7 +167,19 @@
                 "sortOrder": "frequency",
                 "showSearch": false,
                 "searchQuery": ""
-              }
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "234ea4a8d435a84e",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "笔记复习序列"
             }
           }
         ],
@@ -257,13 +201,17 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "032342cbdcd1a9d4",
+  "active": "9565818dc7d2239a",
   "lastOpenFiles": [
+    "Summary/面试问题.md",
+    "Summary/TO DO LIST.md",
+    "Summary/Zookeeper.md",
+    "Summary/Redis.md",
+    "Summary/Nacos.md",
+    "Summary/System Design.md",
     "Summary/前端.md",
     "Summary/image/MQ/kafka生产消费流程图.png",
     "Summary/大杂烩.md",
-    "Summary/面试问题.md",
-    "Summary/Redis.md",
     "conflict-files-obsidian-git.md",
     "Summary/缓存.md",
     "Summary/extension/Redis-extension.md",
@@ -282,18 +230,14 @@
     "Summary/线上问题分享.md",
     "Summary/image/Mysql/数据库连接管理.jpeg",
     "Summary/image/Mysql/数据库连接管理.jpeg.crdownload",
-    "Summary/System Design.md",
     "Summary/Concurrent programming.md",
     "Summary/MicroService Design.md",
     "Summary/Architecture Design.md",
     "daliy_note/2023-09-27.md",
     "Summary/Spring.md",
     "Summary/Spring Cloud.md",
-    "Summary/TO DO LIST.md",
-    "Summary/Zookeeper.md",
     "Summary/压测.md",
     "Summary/稳定性治理.md",
-    "Summary/Nacos.md",
     "Summary/Dubbo.md",
     "Summary/Sentinel.md",
     "Summary/DDD.md",
