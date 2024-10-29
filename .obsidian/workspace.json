@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Redis.md",
+                "file": "Summary/Sentinel.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Redis"
+              "title": "Sentinel"
             }
           }
         ]
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Redis.md",
+                "file": "Summary/Sentinel.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +103,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Redis 的反向链接列表"
+              "title": "Sentinel 的反向链接列表"
             }
           },
           {
@@ -112,12 +112,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/Redis.md",
+                "file": "Summary/Sentinel.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Redis 的出链列表"
+              "title": "Sentinel 的出链列表"
             }
           },
           {
@@ -139,10 +139,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Redis.md"
+                "file": "Summary/Sentinel.md"
               },
               "icon": "lucide-list",
-              "title": "Redis 的大纲"
+              "title": "Sentinel 的大纲"
             }
           },
           {
@@ -210,11 +210,12 @@
   },
   "active": "9565818dc7d2239a",
   "lastOpenFiles": [
+    "Summary/MicroService Design.md",
+    "Summary/MQ.md",
+    "Summary/Redis.md",
     "Summary/Nacos.md",
     "Summary/Mysql.md",
     "Summary/Mybatis.md",
-    "Summary/MQ.md",
-    "Summary/MicroService Design.md",
     "Summary/JVM.md",
     "Summary/Java.md",
     "Summary/System Design.md",
@@ -228,7 +229,6 @@
     "未命名.canvas",
     "Summary/面试问题.md",
     "Summary/TO DO LIST.md",
-    "Summary/Redis.md",
     "Summary/前端.md",
     "Summary/image/MQ/kafka生产消费流程图.png",
     "conflict-files-obsidian-git.md",

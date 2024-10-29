@@ -1,125 +1,13 @@
-# Sentinel 介绍
+## Sentinel 介绍
 
 Sentinel是一个面向云原生微服务的流量控制、熔断降级组件。
 
-替代Hystrix，针对问题:服务雪崩、服务降级、服务熔断、服务限流
+## 为什么选择Sentinel而不是Hystrix
 
-- Hystrix:
-    
-    服务消费者(自动投递微服务)—>调用服务提供者(简历微服务)
-    
-    在调用方引入Hystrix—> 单独搞了一个Dashboard项目—>Turbine
-    
-    - 自己搭建监控平台 dashboard
-    - 没有提供UI界面进行服务熔断、服务降级等配置(而是写代码，入侵了我们源程 序环境)
-- Sentinel:
-    
-    - 独立可部署Dashboard/控制台组件
-    - 减少代码开发，通过UI界面配置即可完成细粒度控制(自动投递微服务)
+TODO
+## Sentinel 部署
 
-![](https://secure2.wostatic.cn/static/7xgfqB9QZamGKf64VCpnig/image.png?auth_key=1719565506-9PvhpYjbREsdSgMRHAs463-0-0d735e5c5ed2d17a5e7919b38e9e8fbd)
-
-Sentinel 分为两个部分:
-
-- 核心库:(Java 客户端)不依赖任何框架/库，能够运行于所有 Java 运行时环 境，同时对 Dubbo/Spring Cloud 等框架也有较好的支持。
-- 控制台:(Dashboard)基于 Spring Boot 开发，打包后可以直接运行，不需 要额外的 Tomcat 等应用容器。
-
-Sentinel 具有以下特征:
-
-- 丰富的应用场景:Sentinel 承接了阿里巴巴近 10 年的双十一大促流量的核心场 景，例如秒杀(即突发流量控制在系统容量可以承受的范围)、消息削峰填谷、 集群流量控制、实时熔断下游不可用应用等。
-- 完备的实时监控:Sentinel 同时提供实时的监控功能。您可以在控制台中看到 接入应用的单台机器秒级数据，甚至 500 台以下规模的集群的汇总运行情况。 广泛的开源生态:Sentinel 提供开箱即用的与其它开源框架/库的整合模块，例 如与 Spring Cloud、Dubbo的整合。您只需要引入相应的依赖并进行简单的配 置即可快速地接入 Sentinel。
-- 完善的 SPI 扩展点:Sentinel 提供简单易用、完善的 SPI 扩展接口。您可以通过 实现扩展接口来快速地定制逻辑。例如定制规则管理、适配动态数据源等。
-
-Sentinel 的主要特性
-
-![](https://secure2.wostatic.cn/static/ti426Dz8X6aszkGPwxQuZ/image.png?auth_key=1719565506-w2dfnLcymN9vBrw4sRCbTr-0-e673bf4238b3b029d0a46da9ec089864)
-
-Sentinel 的开源生态
-
-![](https://secure2.wostatic.cn/static/nGMZXB1TczR8Djf3C3Bgv7/image.png?auth_key=1719565507-eW323EfbXCoBdFzRdnDA57-0-fd653ecbc211408580b2ee7f6804d3b1)
-
-# Sentinel 部署
-
-下载地址:[https://github.com/alibaba/Sentinel/releases](https://github.com/alibaba/Sentinel/releases) 我们使用v1.7.1
-
-启动:java -jar sentinel-dashboard-1.7.1.jar &
-
-用户名/密码:sentinel/sentinel
-
-![](https://secure2.wostatic.cn/static/fD4qazmen85LTg1AYYcfD5/image.png?auth_key=1719565506-eQJKwBoqBMfwCpsAakVaMW-0-65860510f99b40b382ff6f898d24ebd5)
-
-# 服务改造
-
-在我们已有的业务场景中，“自动投递微服务”调用了“简历微服务”，我们在自动投递微 服务进行的熔断降级等控制，那么接下来我们改造自动投递微服务，引入Sentinel 核心包。
-
-为了不污染之前的代码，复制一个自动投递微服务 lagou-service-autodeliver- 8098-sentinel
-
-- pom.xml引入依赖
-
-```xml
-<!--sentinel 核心环境 依赖--> 
-<dependency>
-  <groupId>com.alibaba.cloud</groupId>
-  <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-</dependency>
-```
-
-- application.yml修改(配置sentinel dashboard，暴露断点依然要有，删除原 有hystrix配置，删除原有OpenFeign的降级配置)
-
-```yaml
-server:
-  port: 8098
-spring:
-  application:
-    name: lagou-service-autodeliver
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
-    sentinel:
-      transport:
-        dashboard: 127.0.0.1:8080 # sentinel dashboard/console地址
-        port: 8719 # sentinel会在该端口启动http server，那么这样的话，控制台定义的一些限流等规则才能发送传递过来，
-         #如果8719端口被占用，那么会依次+1
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  # 暴露健康接⼝的细节
-  endpoint:
-    health:
-      show-details: always
-#针对的被调⽤⽅微服务名称,不加就是全局⽣效
-lagou-service-resume:
-  ribbon:
-    #请求连接超时时间
-    ConnectTimeout: 2000
-    #请求处理超时时间
-    ##########################################Feign超时时⻓设置
-    ReadTimeout: 3000
-    #对所有操作都进行重试
-    OkToRetryOnAllOperations: true 
-    ####根据如上配置，当访问到故障请求的时候，它会再尝试访问一次当前实例(次数由MaxAutoRetries配置)， 
-    ####如果不行，就换一个实例进行访问，如果还不行，再换一次实例访问(更换次数由MaxAutoRetriesNextServer配置)， 
-    ####如果依然不行，返回失败信息。
-    MaxAutoRetries: 0 #对当前选中实例重试次数，不包括第一次调用 
-    MaxAutoRetriesNextServer: 0 #切换实例的重试次数 
-    NFLoadBalancerRuleClassName:
-      com.netflix.loadbalancer.RoundRobinRule #负载策略调整 
-logging:
-  level:
-    # Feign日志只会对日志级别为debug的做出响应 com.lagou.edu.controller.service.ResumeServiceFeignClient:
-    debug 
-```
-
-- 上述配置之后，启动自动投递微服务，使用 Sentinel 监控自动投递微服务
-    
-    此时我们发现控制台没有任何变化，因为懒加载，我们只需要发起一次请求触发即可
-    
-    ![](https://secure2.wostatic.cn/static/k1oZcG1k7yvmScBHUMWAAf/image.png?auth_key=1719565506-9xcEtTkFTfQqR5ycBryENp-0-8a18e7d1db98980f8ec08f7423194e95)
-    
-
+略
 # Sentinel 关键概念
 
 |概 念 名 称|概念描述|
