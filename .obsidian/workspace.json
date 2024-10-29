@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/extension/SpringCloud-extension.md",
+                "file": "Summary/Spring Cloud.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "SpringCloud-extension"
+              "title": "Spring Cloud"
             }
           }
         ]
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/extension/SpringCloud-extension.md",
+                "file": "Summary/Spring Cloud.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +103,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "SpringCloud-extension 的反向链接列表"
+              "title": "Spring Cloud 的反向链接列表"
             }
           },
           {
@@ -112,12 +112,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/extension/SpringCloud-extension.md",
+                "file": "Summary/Spring Cloud.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "SpringCloud-extension 的出链列表"
+              "title": "Spring Cloud 的出链列表"
             }
           },
           {
@@ -139,10 +139,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/extension/SpringCloud-extension.md"
+                "file": "Summary/Spring Cloud.md"
               },
               "icon": "lucide-list",
-              "title": "SpringCloud-extension 的大纲"
+              "title": "Spring Cloud 的大纲"
             }
           },
           {
@@ -210,8 +210,9 @@
   },
   "active": "9565818dc7d2239a",
   "lastOpenFiles": [
-    "Summary/Spring Cloud.md",
     "Summary/extension/SpringCloud-extension.md",
+    "Summary/extension/Zookeeper-extension.md",
+    "Summary/Spring Cloud.md",
     "Summary/缓存.md",
     "Summary/大杂烩.md",
     "daliy_note/2024-10-29.md",
@@ -249,7 +250,6 @@
     "Summary/压测.md",
     "Summary/稳定性治理.md",
     "Summary/Dubbo.md",
-    "Summary/Sentinel.md",
     "Summary/image/1717303196435.jpg",
     "Summary/image/系统设计/数据订正流程.jpg",
     "Summary/image/系统设计/1719412432852.jpg",
