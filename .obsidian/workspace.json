@@ -11,10 +11,14 @@
             "id": "9565818dc7d2239a",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "daliy_note/2024-10-29.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "2024-10-29"
             }
           }
         ]
@@ -69,8 +73,7 @@
               "title": "书签"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -90,6 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "daliy_note/2024-10-29.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,7 +103,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "反向链接"
+              "title": "2024-10-29 的反向链接列表"
             }
           },
           {
@@ -108,11 +112,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "daliy_note/2024-10-29.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "出链"
+              "title": "2024-10-29 的出链列表"
             }
           },
           {
@@ -133,9 +138,11 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {},
+              "state": {
+                "file": "daliy_note/2024-10-29.md"
+              },
               "icon": "lucide-list",
-              "title": "大纲"
+              "title": "2024-10-29 的大纲"
             }
           },
           {
@@ -203,6 +210,8 @@
   },
   "active": "9565818dc7d2239a",
   "lastOpenFiles": [
+    "未命名.canvas",
+    "daliy_note/2024-10-29.md",
     "Summary/面试问题.md",
     "Summary/TO DO LIST.md",
     "Summary/Zookeeper.md",
@@ -240,7 +249,6 @@
     "Summary/稳定性治理.md",
     "Summary/Dubbo.md",
     "Summary/Sentinel.md",
-    "Summary/DDD.md",
     "Summary/image/1717303196435.jpg",
     "Summary/image/系统设计/数据订正流程.jpg",
     "Summary/image/系统设计/1719412432852.jpg",
