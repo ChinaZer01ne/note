@@ -89,8 +89,6 @@ management:
 
 - 启动微服务，观察nacos控制台
     
-    ![](https://secure2.wostatic.cn/static/iVdEvdP2GCWR5MXYAydqEz/image.png?auth_key=1719568334-mHFks2YpRD2hGihsvBuG3r-0-9571d8f60f53326cf863801491c60a62)
-    
     保护阈值:可以设置为0-1之间的浮点数，它其实是一个比例值(当前服务健康实例 数/当前服务总实例数)
     
     场景:
@@ -106,17 +104,6 @@ management:
     注意:阿里内部在使用nacos的时候，也经常调整这个保护阈值参数。
     
 
-## 服务消费者从Nacos获取服务提供者
-
-- 同服务提供者
-    
-- 测试
-    
-    ![](https://secure2.wostatic.cn/static/35zWMmDRtFHR8T9esXZ3Mb/image.png?auth_key=1719568334-oV4bArPjufGroCfMeGeuK6-0-d24493596204eb60c04a5a74de58be06)
-    
-    ![](https://secure2.wostatic.cn/static/mfya28TenEiWyPwVszLQpJ/image.png?auth_key=1719568334-sf3FeMUB2sCtMccWbrWiyn-0-56575ac013d12e94b4f1b896f011b005)
-    
-
 ## 负载均衡
 
 Nacos客户端引入的时候，会关联引入Ribbon的依赖包，我们使用OpenFiegn的时候也会引入Ribbon的依赖，Ribbon包括Hystrix都按原来方式进行配置即可。此处，我们将简历微服务，又启动了一个8083端口，注册到Nacos上，便于测试负载均衡，我们通过后台也可以看出。
@@ -124,8 +111,6 @@ Nacos客户端引入的时候，会关联引入Ribbon的依赖包，我们使用
 ## Nacos 数据模型(领域模型)
 
 Namespace命名空间、Group分组、集群这些都是为了进行归类管理，把服务和配置文件进行归类，归类之后就可以实现一定的效果，比如隔离 比如，对于服务来说，不同命名空间中的服务不能够互相访问调用
-
-![](https://secure2.wostatic.cn/static/n8cEDcVQmMC4AtgjGydnXr/image.png?auth_key=1719568334-5YpQ1HfuCUvEbboLU1UuA2-0-5d6ac996198736ed4673d549320fa146)
 
 - Namespace：命名空间，对不同的环境进行隔离，比如隔离开发环境、测试环境和 生产环境
 - Group：分组，将若干个服务或者若干个配置集归为一组，通常习惯一个系统归为 一个组
@@ -148,9 +133,6 @@ Nacos抽象出了Namespace、Group、Service、DataId等概念，具体代表什
 |DataId|某个项目中具体的xxx配置文件|
 
 - Nacos服务的分级模型
-    
-    ![](https://secure2.wostatic.cn/static/xrKvB75DEdz2gSCvT73JiF/image.png?auth_key=1719568334-t5XagLHmf2LsSqRnCrPSWr-0-6aa21be02420fc783d2962becda7e7bf)
-    
 
 ## Nacos Server 数据持久化
 
@@ -221,8 +203,6 @@ sh startup.sh -m cluster
     
 
 ### Nacos server 添加配置集
-
-![](https://secure2.wostatic.cn/static/dXPnpCDEtajRdrkihD3wjo/image.png?auth_key=1719568334-22NUyB8Nbir5Ug7oeEWoA8-0-a70a444899c99b867dc9b4fb22fc6874)
 
 Nacos 服务端已经搭建完毕，那么我们可以在我们的微服务中开启 Nacos 配置管理
 
