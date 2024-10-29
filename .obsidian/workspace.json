@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/System Design.md",
+                "file": "Summary/Nacos.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "System Design"
+              "title": "Nacos"
             }
           }
         ]
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/System Design.md",
+                "file": "Summary/Nacos.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +103,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "System Design 的反向链接列表"
+              "title": "Nacos 的反向链接列表"
             }
           },
           {
@@ -112,12 +112,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Summary/System Design.md",
+                "file": "Summary/Nacos.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "System Design 的出链列表"
+              "title": "Nacos 的出链列表"
             }
           },
           {
@@ -139,10 +139,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/System Design.md"
+                "file": "Summary/Nacos.md"
               },
               "icon": "lucide-list",
-              "title": "System Design 的大纲"
+              "title": "Nacos 的大纲"
             }
           },
           {
@@ -210,10 +210,15 @@
   },
   "active": "9565818dc7d2239a",
   "lastOpenFiles": [
+    "Summary/Mysql.md",
     "Summary/Mybatis.md",
+    "Summary/MQ.md",
+    "Summary/MicroService Design.md",
     "Summary/Nacos.md",
-    "Summary/Spring Cloud.md",
+    "Summary/JVM.md",
+    "Summary/Java.md",
     "Summary/System Design.md",
+    "Summary/Spring Cloud.md",
     "Summary/Zookeeper.md",
     "Summary/extension/SpringCloud-extension.md",
     "Summary/extension/Zookeeper-extension.md",
@@ -239,17 +244,12 @@
     "Summary/image/Redis/Redis请求响应模式.png",
     "Summary/image/Redis/Redis请求响应模式.png.crdownload",
     "Summary/IO.md",
-    "Summary/Mysql.md",
     "Summary/线上问题分享.md",
     "Summary/image/Mysql/数据库连接管理.jpeg",
     "Summary/image/Mysql/数据库连接管理.jpeg.crdownload",
     "Summary/Concurrent programming.md",
-    "Summary/MicroService Design.md",
     "Summary/Architecture Design.md",
     "daliy_note/2023-09-27.md",
-    "Summary/Spring.md",
-    "Summary/压测.md",
-    "Summary/稳定性治理.md",
     "Summary/image/1717303196435.jpg",
     "Summary/image/系统设计/数据订正流程.jpg",
     "Summary/image/系统设计/1719412432852.jpg",
