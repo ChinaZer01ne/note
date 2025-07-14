@@ -275,6 +275,12 @@ synchronized (ThreadTest.class) {
 }  
 ```
 这么加，a变量在循环中只会读取一次，因为synchronized只会执行一次；如果synchronized加在循环里面，由于synchronized执行多次，那么变量a就会多次从主存读取。
+## 阻塞队列
+* BlockingQueue
+	* ArrayBlockingQueue
+		* 数组有界队列
+	* LinkedBlockingQueue
+		* 链表有界队列，zui
 ## AQS
 ### AQS是如何实现的？::
 #### AQS的数据结构

@@ -77,7 +77,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "阻塞队列",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -275,7 +275,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "5e864337a27c30f7",
+  "active": "d4b7c9ad3456c250",
   "lastOpenFiles": [
     "Summary/MQ.md",
     "Summary/Redis.md",
