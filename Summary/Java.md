@@ -288,7 +288,13 @@ release方法：当线程释放同步状态时，会调用AQS的release方法。
 * ReentrantLock
 * ReentrantReadWriteLock
 * CountDownLatch
+	* 所有线程countDown，变成0，最后线程才执行
+	* 做减法
+* CyclicBarrier
+	* 所有线程await，变成某值，最后await的线程一起执行
+	* 做加法
 * Semaphore
+	* 多个共享资源互斥
 ### AQS主要的面试点有哪些？::
 TODO 
 
