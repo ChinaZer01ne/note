@@ -404,7 +404,9 @@ https://blog.csdn.net/pengxurui/article/details/127932108
 
 特点：不断比较更新，直到成功。
 
-缺点：高并发cpu压力大；ABA问题。
+缺点
+* 高并发的场景会导致一直自旋，cpu压力大；
+* ABA问题
 
 ##### 底层原理
 * 自旋 + UnSafe
