@@ -251,12 +251,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
+              "icon": "lucide-file",
+              "title": "插件不再活动"
+            }
+          },
+          {
+            "id": "7de1f31d33e7b868",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
           }
         ],
-        "currentTab": 11
+        "currentTab": 12
       }
     ],
     "direction": "horizontal",
@@ -275,7 +285,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "d4b7c9ad3456c250",
+  "active": "7de1f31d33e7b868",
   "lastOpenFiles": [
     "Summary/MQ.md",
     "Summary/Redis.md",
