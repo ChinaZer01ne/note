@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "63088524407c589c",
+        "id": "fabc74d4c47f8ba1",
         "type": "tabs",
         "children": [
           {
-            "id": "9565818dc7d2239a",
+            "id": "cf43f02e84228d67",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -215,8 +215,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -230,11 +229,12 @@
       "obsidian-spaced-repetition:Review flashcards": false
     }
   },
-  "active": "9565818dc7d2239a",
+  "active": "cf43f02e84228d67",
   "lastOpenFiles": [
+    "Untitled.canvas",
+    "Summary/Java.md",
     "Summary/Concurrent programming.md",
     "Summary/面试问题.md",
-    "Summary/Java.md",
     "Summary/Computer Network.md",
     "Summary/Sentinel.md",
     "Summary/MicroService Design.md",
@@ -269,7 +269,6 @@
     "Summary/image/Redis/Redis请求响应模式.png",
     "Summary/image/Redis/Redis请求响应模式.png.crdownload",
     "Summary/IO.md",
-    "Summary/线上问题分享.md",
     "Summary/image/Mysql/数据库连接管理.jpeg",
     "Summary/image/Mysql/数据库连接管理.jpeg.crdownload",
     "Summary/image/1717303196435.jpg",
