@@ -36,7 +36,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Java.md"
+                "file": "Summary/Java.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-list",
               "title": "Java 的大纲"
@@ -228,12 +231,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "icon": "lucide-file",
+              "title": "插件不再活动"
             }
           },
           {
             "id": "e8bdc0bc89e1f389",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "插件不再活动"
+            }
+          },
+          {
+            "id": "5e864337a27c30f7",
             "type": "leaf",
             "state": {
               "type": "review-queue-list-view",
@@ -243,7 +256,7 @@
             }
           }
         ],
-        "currentTab": 10
+        "currentTab": 11
       }
     ],
     "direction": "horizontal",
@@ -262,7 +275,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "d4b7c9ad3456c250",
+  "active": "5e864337a27c30f7",
   "lastOpenFiles": [
     "Summary/MQ.md",
     "Summary/Redis.md",
