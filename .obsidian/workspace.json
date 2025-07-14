@@ -14,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Java.md",
+                "file": "Summary/大杂烩.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Java"
+              "title": "大杂烩"
             },
             "group": "fae0257f6d238719"
           }
@@ -36,13 +36,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Java.md",
+                "file": "Summary/大杂烩.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Java 的大纲"
+              "title": "大杂烩 的大纲"
             },
             "group": "fae0257f6d238719"
           }
@@ -65,7 +65,8 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "alphabetical",
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
@@ -77,7 +78,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "阻塞队列",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -98,8 +99,7 @@
               "title": "书签"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -285,8 +285,11 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "7de1f31d33e7b868",
+  "active": "9565818dc7d2239a",
   "lastOpenFiles": [
+    "daliy_note/2024-10-29.md",
+    "daliy_note/2023-09-27.md",
+    "Summary/Java.md",
     "Summary/MQ.md",
     "Summary/Redis.md",
     "Summary/JVM.md",
@@ -301,7 +304,6 @@
     "Summary/MicroService Design.md",
     "Summary/Nacos.md",
     "Summary/Mybatis.md",
-    "Summary/Java.md",
     "Summary/System Design.md",
     "Summary/Spring Cloud.md",
     "Summary/Zookeeper.md",
@@ -309,7 +311,6 @@
     "Summary/extension/Zookeeper-extension.md",
     "Summary/缓存.md",
     "Summary/大杂烩.md",
-    "daliy_note/2024-10-29.md",
     "未命名.canvas",
     "Summary/TO DO LIST.md",
     "Summary/前端.md",
@@ -325,7 +326,6 @@
     "Summary/image/Redis/串行请求模式.png.crdownload",
     "Summary/image/Redis/Redis请求响应模式.png",
     "Summary/image/Redis/Redis请求响应模式.png.crdownload",
-    "Summary/IO.md",
     "Summary/image/Mysql/数据库连接管理.jpeg",
     "Summary/image/Mysql/数据库连接管理.jpeg.crdownload",
     "Summary/image/1717303196435.jpg",
