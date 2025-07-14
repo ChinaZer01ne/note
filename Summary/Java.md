@@ -280,7 +280,14 @@ synchronized (ThreadTest.class) {
 	* ArrayBlockingQueue
 		* 数组有界队列
 	* LinkedBlockingQueue
-		* 链表有界队列，zui
+		* 链表有界队列，最大值Integer.Max
+	* PriorityBlockingQueue
+		* 支持优先级无界队列
+	* DelayQueue
+		* 优先级的延迟无界队列
+	* SynchronousQueue
+		* 不存储元素的阻塞队列，就是单个元素的队列
+	* ...
 ## AQS
 ### AQS是如何实现的？::
 #### AQS的数据结构
