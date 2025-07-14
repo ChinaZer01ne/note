@@ -6,6 +6,7 @@
       {
         "id": "63088524407c589c",
         "type": "tabs",
+        "dimension": 65.48223350253807,
         "children": [
           {
             "id": "9565818dc7d2239a",
@@ -19,7 +20,28 @@
               },
               "icon": "lucide-file",
               "title": "Spring"
-            }
+            },
+            "group": "fae0257f6d238719"
+          }
+        ]
+      },
+      {
+        "id": "365c7840b1c0cd20",
+        "type": "tabs",
+        "dimension": 34.51776649746193,
+        "children": [
+          {
+            "id": "47669875a8753f5f",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Summary/Spring.md"
+              },
+              "icon": "lucide-list",
+              "title": "Spring 的大纲"
+            },
+            "group": "fae0257f6d238719"
           }
         ]
       }
@@ -224,7 +246,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -238,10 +261,10 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "6aa11b407ce3eab2",
+  "active": "47669875a8753f5f",
   "lastOpenFiles": [
-    "Untitled.canvas",
     "conflict-files-obsidian-git.md",
+    "Untitled.canvas",
     "Summary/Spring.md",
     "Summary/Computer Network.md",
     "Summary/Sentinel.md",
