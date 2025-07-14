@@ -389,6 +389,9 @@ monitor
 TODO
 ### ReentrantLock
 TODO
+
+#### ReentrantLock和synchronized有什么区别
+TODO
 ### 无锁机制的实现方式
 
 #### final
