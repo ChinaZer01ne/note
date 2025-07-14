@@ -25,7 +25,8 @@
 根据查找index的位置决定从前往后查找还是从后往前查找
 
 > 编者注：需了解ArrayList和LinkedList的底层原理与区别。
-
+### HashSet
+HashSet底层是HashMap，map.put(e, new Object())，Key是Set的元素，Value是一个
 ### CopyOnWriteArrayList
 
 其set方法很有意思，如果set的元素和原来元素相同，他会重新复制一下原数组的引用，这是为了保证volatile的语义，否则如果set不一样的元素会刷新内存，保存一样的元素不刷新内存，这会导致set方法之前的语句是否具有可见性表现出两种不同的现象，这样会导致代码很奇怪
@@ -37,7 +38,10 @@
 
 #### 原理
 * 每次添加元素的时候，操作者需要获取锁，也就意味着不能同时添加，添加的人会在原数组的基础上copy出新的数组，在新数组上写操作，最后变换引用。
+* 读操作如何做的？
 
+#### 其他
+* `CopyOnWriteArraySet`底层是`CopyOnWriteArrayList`
 
 ## Map
 ### HashMap
