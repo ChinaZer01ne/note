@@ -195,12 +195,32 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
+              "icon": "lucide-file",
+              "title": "插件不再活动"
+            }
+          },
+          {
+            "id": "1606f950be65bd19",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "笔记复习序列"
+            }
+          },
+          {
+            "id": "e8bdc0bc89e1f389",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
           }
         ],
-        "currentTab": 8
+        "currentTab": 10
       }
     ],
     "direction": "horizontal",
@@ -218,7 +238,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "9565818dc7d2239a",
+  "active": "e8bdc0bc89e1f389",
   "lastOpenFiles": [
     "Summary/Sentinel.md",
     "Summary/MicroService Design.md",
