@@ -14,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Redis.md",
+                "file": "Summary/MQ.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Redis"
+              "title": "MQ"
             },
             "group": "fae0257f6d238719"
           }
@@ -36,10 +36,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Redis.md"
+                "file": "Summary/MQ.md"
               },
               "icon": "lucide-list",
-              "title": "Redis 的大纲"
+              "title": "MQ 的大纲"
             },
             "group": "fae0257f6d238719"
           }
@@ -263,9 +263,9 @@
   },
   "active": "9565818dc7d2239a",
   "lastOpenFiles": [
+    "Summary/Redis.md",
     "Summary/JVM.md",
     "Summary/Mysql.md",
-    "Summary/Redis.md",
     "Summary/面试问题.md",
     "Summary/Linux.md",
     "Summary/Spring.md",
