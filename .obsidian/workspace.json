@@ -261,12 +261,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
+              "icon": "lucide-file",
+              "title": "插件不再活动"
+            }
+          },
+          {
+            "id": "f7cf189c037b8fc5",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
           }
         ],
-        "currentTab": 12
+        "currentTab": 13
       }
     ],
     "direction": "horizontal",
@@ -285,7 +295,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "9565818dc7d2239a",
+  "active": "f7cf189c037b8fc5",
   "lastOpenFiles": [
     "daliy_note/2024-10-29.md",
     "daliy_note/2023-09-27.md",
