@@ -1,5 +1,7 @@
 # CAP与BASE理论
+
 ## 什么是CAP理论？
+
 CAP理论，也称为Brewer's theorem，是计算机科学中用于描述分布式系统设计的一条基本原则。CAP指的是以下三个特性：**一致性（Consistency）**、**可用性（Availability）**和**分区容忍性（Partition tolerance）**。
 
 1. **一致性（Consistency）**
