@@ -281,12 +281,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
+              "icon": "lucide-file",
+              "title": "插件不再活动"
+            }
+          },
+          {
+            "id": "47f31790ef738a47",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
           }
         ],
-        "currentTab": 14
+        "currentTab": 15
       }
     ],
     "direction": "horizontal",
@@ -305,7 +315,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "16b32719fc756ad5",
+  "active": "47f31790ef738a47",
   "lastOpenFiles": [
     "Summary/IO.md",
     "Summary/image/IO/非阻塞IO.jpg",
