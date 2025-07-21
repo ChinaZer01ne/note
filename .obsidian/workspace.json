@@ -6,7 +6,6 @@
       {
         "id": "63088524407c589c",
         "type": "tabs",
-        "dimension": 65.48223350253807,
         "children": [
           {
             "id": "9565818dc7d2239a",
@@ -20,8 +19,7 @@
               },
               "icon": "lucide-file",
               "title": "Concurrent programming"
-            },
-            "group": "fae0257f6d238719"
+            }
           },
           {
             "id": "14e0094191dc1fe5",
@@ -29,23 +27,24 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Java.md",
+                "file": "Summary/Concurrent programming.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Java"
-            }
+              "title": "Concurrent programming"
+            },
+            "group": "6c53711e8d29fdbb"
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
-        "id": "365c7840b1c0cd20",
+        "id": "058bb0d87aa5006c",
         "type": "tabs",
-        "dimension": 34.51776649746193,
         "children": [
           {
-            "id": "47669875a8753f5f",
+            "id": "f663c701b85bb681",
             "type": "leaf",
             "state": {
               "type": "outline",
@@ -58,7 +57,7 @@
               "icon": "lucide-list",
               "title": "Concurrent programming 的大纲"
             },
-            "group": "fae0257f6d238719"
+            "group": "6c53711e8d29fdbb"
           }
         ]
       }
@@ -318,9 +317,19 @@
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
+          },
+          {
+            "id": "528b431c2cc3f534",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "笔记复习序列"
+            }
           }
         ],
-        "currentTab": 16
+        "currentTab": 17
       }
     ],
     "direction": "horizontal",
@@ -339,15 +348,15 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "9565818dc7d2239a",
+  "active": "14e0094191dc1fe5",
   "lastOpenFiles": [
     "Summary/Java.md",
+    "Summary/Concurrent programming.md",
     "Summary/IO.md",
     "Summary/Distributed Theory.md",
     "Summary/Design Patterns.md",
     "Summary/Design Docments.md",
     "Summary/DDD.md",
-    "Summary/Concurrent programming.md",
     "Summary/Computer Network.md",
     "Summary/Build Tool.md",
     "Summary/Arthas.md",
