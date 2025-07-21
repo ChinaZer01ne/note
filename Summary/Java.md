@@ -20,7 +20,9 @@
 	- LinkedHashMap
 ## Collection
 ### ArrayList
-懒加载的思想
+* 懒加载的思想
+* 初始化10
+* 1.5倍扩容
 ### LinkedList
 根据查找index的位置决定从前往后查找还是从后往前查找
 
