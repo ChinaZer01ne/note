@@ -305,7 +305,7 @@ CompletableFuture<Integer> cf = CompletableFuture.supplyAsync(() -> {
 - 这样就能利用 `CompletableFuture` 的链式调用、组合、非阻塞回调等高级特性来处理原本由 `Callable` 定义的任务逻辑和结果。
         
 
-## 总结关键点
+### 总结关键点
 
 - **日常：**
     
@@ -346,9 +346,9 @@ CompletableFuture<Integer> cf = CompletableFuture.supplyAsync(() -> {
 
 以下是需要掌握的核心内容：
 
----
 
-## 一、核心概念与角色
+
+###  核心概念与角色
 
 1. **是什么？**
     
@@ -375,13 +375,13 @@ CompletableFuture<Integer> cf = CompletableFuture.supplyAsync(() -> {
 
 ---
 
-## 二、日常开发使用
+###  日常开发使用
 
 1. **创建 FutureTask：**
     
-    java
     
-    // 1. 用 Callable 创建 (最直接)
+```java
+// 1. 用 Callable 创建 (最直接)
     Callable<Integer> callable = () -> { ... return 42; };
     FutureTask<Integer> futureTask1 = new FutureTask<>(callable);
     
@@ -389,6 +389,9 @@ CompletableFuture<Integer> cf = CompletableFuture.supplyAsync(() -> {
     Runnable runnable = () -> { ... }; // 无返回值操作
     Integer resultValue = null; // 或预设的默认值
     FutureTask<Integer> futureTask2 = new FutureTask<>(runnable, resultValue);
+```
+    
+    
     
 2. **执行 FutureTask：**
     
@@ -403,27 +406,45 @@ executor.execute(futureTask); // 利用其 Runnable 特性
         
         
         
-    - **方式 2：直接启动新线程执行**
-        
-        java
-        
-        Thread thread = new Thread(futureTask); // 利用其 Runnable 特性
+- **方式 2：直接启动新线程执行**
+```java
+Thread thread = new Thread(futureTask); // 利用其 Runnable 特性
         thread.start();
+```
+
         
-3. **获取结果与状态控制：** (通过 `Future` 接口)
+        
+1. **获取结果与状态控制：** (通过 `Future` 接口)
     
     ```java
+    // 1. 阻塞获取结果 (和 Future 一样)
+    try {
+        Integer result = futureTask.get(); // 阻塞直到完成或异常
+        // 或带超时
+        // Integer result = futureTask.get(5, TimeUnit.SECONDS);
+    } catch (InterruptedException | ExecutionException e) {
+        // 处理中断或任务执行异常 (e.getCause() 获取原始异常)
+    } // catch (TimeoutException e) { ... } // 如果用了带超时的 get
+    
+    // 2. 查询状态
+    boolean isDone = futureTask.isDone(); // 任务是否完成 (正常、取消、异常都算完成)
+    boolean isCancelled = futureTask.isCancelled(); // 任务是否在完成前被取消
+    
+    // 3. 尝试取消任务
+    boolean mayInterruptIfRunning = true; // true: 尝试中断正在执行任务的线程; false: 仅标记取消
+    boolean cancelSuccess = futureTask.cancel(mayInterruptIfRunning);
+    ```
     
     
     
-4. **手动运行（通常不推荐，了解即可）：**
+2. **手动运行（通常不推荐，了解即可）：**
     
     - 可以直接调用 `futureTask.run()`。这会在**当前线程**中同步执行任务（而不是异步）。通常只在特定场景（如自定义调度）或测试中使用。
         
 
----
 
-## 三、面试深入 (原理、设计、场景、陷阱)
+
+### 面试深入 (原理、设计、场景、陷阱)
 
 1. **与 `Future` / `Callable` / `Runnable` 的关系：**
     
@@ -562,25 +583,16 @@ executor.execute(futureTask); // 利用其 Runnable 特性
 
 ---
 
-## 四、总结关键点
+### 总结关键点
 
 - **核心身份：** `FutureTask` 是 `Runnable` + `Future` 的实现 (`RunnableFuture`)。它将 `Callable` 或 `Runnable` 任务包装成一个可执行、可取消、可获取结果/状态的对象。
-    
 - **状态机：** 理解其内部状态 (`NEW`, `COMPLETING`, `NORMAL`, `EXCEPTIONAL`, `CANCELLED`, `INTERRUPTING`, `INTERRUPTED`) 及其变迁是深入掌握其原理的关键。
-    
 - **执行：** 通过 `Thread.start()` 或 `Executor.execute/submit()` 执行其 `run()` 方法。
-    
 - **结果获取：** 通过 `Future.get()` (阻塞) 获取结果或异常。
-    
 - **取消：** 通过 `cancel(mayInterruptIfRunning)` 尝试取消任务，效果取决于任务是否响应中断。
-    
 - **一次性：** **设计为一次性执行！** 完成后无法重新运行（除非用 `runAndReset()`，但慎用）。
-    
 - **与 `CompletableFuture` 区别：** `FutureTask` 是**基础任务执行单元**，提供基本执行和结果管理；`CompletableFuture` 是**高级异步组合框架**，提供链式调用、组合、非阻塞回调。`CompletableFuture` 在功能和易用性上远超 `FutureTask`。
-    
 - **适用场景：** 手动控制任务执行、自定义执行器/调度器底层实现、需要 `runAndReset()` 的特定高级场景（罕见）。
-    
 - **面试重点：** 状态机原理、`run()`/`get()`/`cancel()` 的工作机制、与 `CompletableFuture` 的核心区别、一次性特性、取消的语义。
-    
 
 **简单来说：** 当你想把一个耗时的计算（`Callable`）或操作（`Runnable`）打包成一个既能扔给线程池/线程去跑（`Runnable`），又能在跑完后拿到结果或知道为什么没跑完（`Future`）的对象时，`FutureTask` 就是这个打包好的“任务包裹”。它是 JDK 并发工具链中承上启下的重要一环。但在日常异步编程中，`CompletableFuture` 通常是更现代、更强大的选择。
