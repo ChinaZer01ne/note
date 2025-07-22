@@ -657,4 +657,16 @@ TODO
 		String name = "Alice";
 		String message = STR."Hello, \{name}!";  // 替代String.format()
 		```
+* Java 24-25
+	* 简单源文件与实例主方法
+  ```java
+	  void main() {  // 无public static修饰
+	    println("Hello, World!");
+	  }
+	```
+	* Scoped Values
+		* 替代`ThreadLocal`，安全共享不可变数据（虚拟线程友好）
+	* 模块导入声明
+		* 简化包导入：`import java.xml.*;` → 单行模块声明
+	
 	
