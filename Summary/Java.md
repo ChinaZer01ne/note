@@ -620,12 +620,41 @@ TODO
 		* 亚毫秒级暂停，适合大内存应用（如数据分析系统）
 * Java 17
 	* 文本块（Text Blocks）
-		```
-String json = """
-    { 
-      "name": "Java", 
-      "version": 17 
-    }
-""";  // 多行字符串免转义:cite[0]
+	  
+		```java
+		String json = """
+		    { 
+		      "name": "Java", 
+		      "version": 17 
+		    }
+		""";
 		```
 	* 密封类（Sealed Classes）
+	  ```java
+	  // 限制子类范围
+	  public sealed class Shape permits Circle, Square { ... }  
+		```
+	* 模式匹配 `instanceof`
+	  ```java
+	  if (obj instanceof String s) {
+			System.out.println(s.length());  // 自动类型转换
+	  }
+		```
+* Java 21
+	* 虚拟线程（Virtual Threads）
+	    - 轻量级线程（协程），支持百万级并发，替代线程池
+    - 结构化并发
+	    - 多任务原子化管理，避免线程泄漏
+	- 记录模式（Record Patterns）
+	  ```java
+		record Point(int x, int y) {}
+		if (p instanceof Point(int x, int y)) {
+		    System.out.println(x + y);  // 解构Record类
+		}
+		```
+	* 字符串模板
+	  ```java
+		String name = "Alice";
+		String message = STR."Hello, \{name}!";  // 替代String.format()
+		```
+	
