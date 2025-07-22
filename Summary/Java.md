@@ -594,3 +594,38 @@ TODO
 > * ThreadLocal应用场景，可以解决什么问题？
 > * ThreadLocal底层实现原理
 > * ThreadLocal解决hash冲突的方式
+
+
+## 新特性
+* Java 8
+	* Lambda 表达式
+	* Stream API
+	* 新日期时间 API（java.time）
+	* 接口默认方法与静态方法
+	* 并发工具增强
+		* CompletableFuture：链式异步任务编排
+		* StampedLock：乐观读锁提升并发性能
+	* 其他关键更新
+		* Optional 类：优雅处理空值，避免NullPointerException
+		* HashMap 优化
+		* 安全性：默认启用TLS 1.2，支持ECC加密算法
+* Java 11
+	* 局部变量类型推断（var）
+		* 仅限局部变量：`var list = new ArrayList<String>();`
+	* HTTP/2 客户端
+		* 原生支持异步HTTP/2请求，替代HttpURLConnection。
+	* 字符串 API 增强
+		* `" ".isBlank() → true`，`"a\nb".lines().count() → 2`
+	* ZGC 垃圾收集器
+		* 亚毫秒级暂停，适合大内存应用（如数据分析系统）
+* Java 17
+	* 文本块（Text Blocks）
+		```
+String json = """
+    { 
+      "name": "Java", 
+      "version": 17 
+    }
+""";  // 多行字符串免转义:cite[0]
+		```
+	* 密封类（Sealed Classes）
