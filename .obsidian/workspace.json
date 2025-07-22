@@ -314,12 +314,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "icon": "lucide-file",
+              "title": "插件不再活动"
             }
           },
           {
             "id": "528b431c2cc3f534",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "插件不再活动"
+            }
+          },
+          {
+            "id": "11d6e2d0ceb2d870",
             "type": "leaf",
             "state": {
               "type": "review-queue-list-view",
@@ -329,7 +339,7 @@
             }
           }
         ],
-        "currentTab": 17
+        "currentTab": 18
       }
     ],
     "direction": "horizontal",
@@ -348,7 +358,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "14e0094191dc1fe5",
+  "active": "11d6e2d0ceb2d870",
   "lastOpenFiles": [
     "Summary/Java.md",
     "Summary/Concurrent programming.md",
