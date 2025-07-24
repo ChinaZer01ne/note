@@ -343,12 +343,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
+              "icon": "lucide-file",
+              "title": "插件不再活动"
+            }
+          },
+          {
+            "id": "e920fd331ee4bb06",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
           }
         ],
-        "currentTab": 19
+        "currentTab": 20
       }
     ],
     "direction": "horizontal",
@@ -367,7 +377,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "9565818dc7d2239a",
+  "active": "e920fd331ee4bb06",
   "lastOpenFiles": [
     "Summary/Concurrent programming.md",
     "Summary/面试问题.md",
