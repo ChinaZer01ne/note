@@ -960,7 +960,8 @@ TODO
 	        }
 	        
 	```
-
+> ThreadLocal 的 Key 被回收后，Value 不会被回收是因为它仍然被 ThreadLocalMap 的 Entry 强引用着，而 ThreadLocalMap 又被 Thread 对象强引用。具体引用链如下：
+> Thread 对象（强引用）→ ThreadLocalMap（强引用）→ Entry[] 数组（强引用）→ Entry 对象（强引用）→ Value（强引用）
 ### ThreadLocal的应用场景
 * 线程隔离：
 >当某个对象不是线程安全的，但又需要在多线程环境下使用时，可以将该对象存储在ThreadLocal中，使每个线程拥有独立的对象副本，避免了线程安全问题。
@@ -1026,6 +1027,52 @@ TODO
 
 ### ThreadLocal为何要声明为 `static`？    
 - 减少实例数量：`static` 保证一个类仅有一个 `ThreadLocal` 实例，避免重复创建 Key。
+
+### 不调用`remove`方法一定会发生内存泄漏吗？
+**在固定线程池中，即使线程数量有限，只要未调用 `remove()`，ThreadLocal 的 Value 一定会发生内存泄漏**。
+#### 内存泄漏的必然性
+
+假设线程池配置：
+
+
+```java
+ExecutorService pool = Executors.newFixedThreadPool(5); 
+```
+##### 内存泄漏发生过程：
+1. **任务提交**  
+    每次任务执行时使用 ThreadLocal 存储数据（如用户会话对象）：
+	```java
+	    
+	    pool.submit(() -> {
+	        threadLocal.set(new BigObject(10 * 1024 * 1024)); // 10MB对象
+	        // ... 业务逻辑
+	        // 未调用 threadLocal.remove()！
+	    });
+	```    
+2. **线程复用**
+    - 线程池中 **5 个线程反复复用**执行任务。
+    - 每次任务结束后，线程不会销毁，其 `ThreadLocalMap` 持续存在。
+3. **Value 堆积**
+    - 每次任务结束，`ThreadLocal` 实例被回收（Key → `null`），但 **Value（10MB 对象）仍被 `ThreadLocalMap` 强引用**。
+    - 多次执行后，每个线程的 `ThreadLocalMap` 中堆积多个 `<null, BigObject>` 的 Entry。
+4. **内存占用持续增长**
+    
+    |任务执行次数|单线程残留 Value 数|总内存占用（假设每个 Value 10MB）|
+    |---|---|---|
+    |100|20个/线程|5线程 × 20 × 10MB = 1000MB|
+    |1000|200个/线程|5 × 200 × 10MB = 10,000MB|
+    |**最终触发 OOM**，即使线程数固定为 5！|
+#### 为什么线程数量有限仍会泄漏？
+
+##### 根本原因
+
+**Entry 在 ThreadLocalMap 中无限累积**
+
+- **每个线程的 `ThreadLocalMap` 相当于一个哈希表**，存储该线程所有 ThreadLocal 数据。
+    
+- **未调用 `remove()` 时**，每次新任务执行 `threadLocal.set()` 都会新增一个 Entry：
+    - 旧 Entry（Key=null）未被清理 → 残留。
+    - 新 Entry 加入 → 内存占用持续增长。
 
 ### ThreadLocal其他
 * 解决hash冲突
