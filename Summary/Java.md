@@ -521,86 +521,55 @@ Java并发包 (`java.util.concurrent.locks`) 中构建锁（如 `ReentrantLock`
 - **独占 vs 共享模式：** AQS 支持两种模式。
 	- **独占模式：** 同一时刻只有一个线程能成功获取资源（如 `ReentrantLock`）。
 	- **共享模式：** 同一时刻可以有多个线程成功获取资源（如 `Semaphore`, `CountDownLatch`）。对应的方法如 `acquireShared`, `releaseShared`, `tryAcquireShared`, `tryReleaseShared`。
-#### 主要方法
+- **公平性 vs 非公平性：** 由子类在 `tryAcquire`/`tryAcquireShared` 中实现。
+	- **非公平锁：** 新来的线程可以“插队”直接尝试获取锁（`tryAcquire` 中先检查 `state` 再尝试 CAS），无需先查看队列。可能导致饥饿，但吞吐量高。
+		
+	- **公平锁：** `tryAcquire` 中会先检查队列中是否有等待的节点（`hasQueuedPredecessors()`），如果有则直接失败，老老实实排队。保证顺序，减少饥饿。
+- **可重入性：** 由子类管理（如 `ReentrantLock` 在 `state` 中记录持有锁的线程和重入次数，`tryAcquire` 检查当前线程是否是持有者）。
+- **中断处理：** `acquire` 方法支持中断，但中断不会直接让线程退出获取流程，只是设置标志，线程醒来后会检查中断并可能抛出 `InterruptedException`（`lockInterruptibly()` 就是基于支持中断的 `acquire` 方法）。`acquire` 本身不抛异常。
+- **超时机制：** `tryAcquireNanos` 等。
+#### 核心方法
 acquire方法：当线程尝试获取同步状态时，会调用AQS的acquire方法。该方法首先通过CAS操作尝试获取同步状态，如果成功则返回；如果失败，则线程会被加入到等待队列中，并进入阻塞状态。
 release方法：当线程释放同步状态时，会调用AQS的release方法。该方法会释放同步状态，并尝试唤醒等待队列中的线程。
 
+##### `acquire(int arg)` (获取资源- 独占模式为例)
+
+1. 调用子类实现的 `tryAcquire(arg)` 尝试直接获取资源。
+2. 如果成功，直接返回。
+3. 如果失败，将当前线程包装成独占模式的 `Node.SIGNAL` 节点，**通过 CAS 安全地加入同步队列尾部**。
+4. 调用 `acquireQueued(node, arg)`：在队列中自旋或阻塞。
+	- 检查前驱节点是否是 `head`（表示轮到它了），如果是则再次尝试 `tryAcquire(arg)`。
+	- 如果成功，将自己设为 `head`（原`head`出队），返回。
+	- 如果失败或前驱不是 `head`，则根据前驱的 `waitStatus` 决定是否需要阻塞（通常调用 `LockSupport.park(this)`）。阻塞会被前驱节点释放资源时唤醒或线程中断唤醒。
+5. 如果在阻塞等待中被中断，`acquireQueued` 返回 `true`，则 `acquire` 方法中会调用 `selfInterrupt()` 重新设置中断标志。
             
-1. **核心流程（重点！面试常问流程）：**
-    
-    - **获取资源 (`acquire(int arg)` - 独占模式为例)：**
-        
-        1. 调用子类实现的 `tryAcquire(arg)` 尝试直接获取资源。
-            
-        2. 如果成功，直接返回。
-            
-        3. 如果失败，将当前线程包装成独占模式的 `Node.SIGNAL` 节点，**通过 CAS 安全地加入同步队列尾部**。
-            
-        4. 调用 `acquireQueued(node, arg)`：在队列中自旋或阻塞。
-            
-            - 检查前驱节点是否是 `head`（表示轮到它了），如果是则再次尝试 `tryAcquire(arg)`。
-                
-            - 如果成功，将自己设为 `head`（原`head`出队），返回。
-                
-            - 如果失败或前驱不是 `head`，则根据前驱的 `waitStatus` 决定是否需要阻塞（通常调用 `LockSupport.park(this)`）。阻塞会被前驱节点释放资源时唤醒或线程中断唤醒。
-                
-        5. 如果在阻塞等待中被中断，`acquireQueued` 返回 `true`，则 `acquire` 方法中会调用 `selfInterrupt()` 重新设置中断标志。
-            
-    - **释放资源 (`release(int arg)` - 独占模式为例)：**
-        
-        1. 调用子类实现的 `tryRelease(arg)` 尝试释放资源。
-            
-        2. 如果释放成功（`state` 变为 0，表示完全释放），检查当前 `head` 节点（通常是持有资源的节点或虚拟节点）。
-            
-        3. 如果 `head` 不为 `null` 且 `head.waitStatus != 0`（通常为 `SIGNAL`，表示它有责任唤醒后继），则调用 `unparkSuccessor(head)`。
-            
-        4. `unparkSuccessor` 找到 `head` 后面第一个有效的（非取消的）后继节点（如果直接后继无效，则从队尾向前找），调用 `LockSupport.unpark(s.thread)` 唤醒它。
-            
-    - **共享模式的流程 (`acquireShared`, `releaseShared`)：** 核心思想类似，但允许多个线程获取成功。`tryAcquireShared` 返回负数表示失败，非负数表示成功（返回值可能表示剩余资源量）。释放资源后，唤醒传播的方式不同（`PROPAGATE` 状态用于确保唤醒能传播下去）。
+##### `release(int arg)` (释放资源 - 独占模式为例)
+1. 调用子类实现的 `tryRelease(arg)` 尝试释放资源。
+2. 如果释放成功（`state` 变为 0，表示完全释放），检查当前 `head` 节点（通常是持有资源的节点或虚拟节点）。
+3. 如果 `head` 不为 `null` 且 `head.waitStatus != 0`（通常为 `SIGNAL`，表示它有责任唤醒后继），则调用 `unparkSuccessor(head)`。
+4. `unparkSuccessor` 找到 `head` 后面第一个有效的（非取消的）后继节点（如果直接后继无效，则从队尾向前找），调用 `LockSupport.unpark(s.thread)` 唤醒它。
+	
+> 共享模式的流程 (`acquireShared`, `releaseShared`)：核心思想类似，但允许多个线程获取成功。`tryAcquireShared` 返回负数表示失败，非负数表示成功（返回值可能表示剩余资源量）。释放资源后，唤醒传播的方式不同（`PROPAGATE` 状态用于确保唤醒能传播下去）。
 ### AQS有哪些应用？::
-* ReentrantLock
-* ReentrantReadWriteLock
-* CountDownLatch
+* `ReentrantLock`
+	* 独占模式，可重入，支持公平/非公平。`state` 表示持有锁的线程的重入次数。
+* `ReentrantReadWriteLock`
+	* 内部包含两个AQS子类（读锁共享模式，写锁独占模式），通过巧妙共享 `state` 变量（高16位读计数，低16位写计数）实现读写分离。
+* `CountDownLatch`
 	* 所有线程countDown，变成0，最后线程才执行
 	* 做减法
-* CyclicBarrier
+	* 共享模式。`state` 表示初始计数值。`await()` 等待 `state` 减到 0（所有线程调用 `countDown()`，每次减1）。不可重置。
+* `CyclicBarrier`
 	* 所有线程await，变成某值，最后await的线程一起执行
 	* 做加法
-* Semaphore
+* `Semaphore`
 	* 多个共享资源互斥
+	* 共享模式。`state` 表示可用的许可数。`acquire()` 是获取许可（可能阻塞），`release()` 是释放许可。
+* `FutureTask` (部分实现)： 内部使用AQS管理任务状态（未开始、完成、取消）。
 ### AQS主要的面试点有哪些？::
-TODO 
-关于AQS（AbstractQueuedSynchronizer）在面试中需要掌握的内容以及“完全通过”的理解，我来帮你系统梳理一下核心要点。**面试官真正关注的是你是否理解其设计思想、核心机制和应用场景，而不是死记硬背源码细节。**
 
 #### 一、必须掌握的核心内容（理解原理和思想）
 
-
-        
-2. **关键特性：**
-    
-    - **公平性 vs 非公平性：** 由子类在 `tryAcquire`/`tryAcquireShared` 中实现。
-        
-        - **非公平锁：** 新来的线程可以“插队”直接尝试获取锁（`tryAcquire` 中先检查 `state` 再尝试 CAS），无需先查看队列。可能导致饥饿，但吞吐量高。
-            
-        - **公平锁：** `tryAcquire` 中会先检查队列中是否有等待的节点（`hasQueuedPredecessors()`），如果有则直接失败，老老实实排队。保证顺序，减少饥饿。
-            
-    - **可重入性：** 由子类管理（如 `ReentrantLock` 在 `state` 中记录持有锁的线程和重入次数，`tryAcquire` 检查当前线程是否是持有者）。
-        
-    - **中断处理：** `acquire` 方法支持中断，但中断不会直接让线程退出获取流程，只是设置标志，线程醒来后会检查中断并可能抛出 `InterruptedException`（`lockInterruptibly()` 就是基于支持中断的 `acquire` 方法）。`acquire` 本身不抛异常。
-        
-    - **超时机制：** `tryAcquireNanos` 等。
-        
-3. **理解典型实现（应用场景）：**
-    
-    - **`ReentrantLock`：** 独占模式，可重入，支持公平/非公平。`state` 表示持有锁的线程的重入次数。
-        
-    - **`ReentrantReadWriteLock`：** 内部包含两个AQS子类（读锁共享模式，写锁独占模式），通过巧妙共享 `state` 变量（高16位读计数，低16位写计数）实现读写分离。
-        
-    - **`Semaphore`：** 共享模式。`state` 表示可用的许可数。`acquire()` 是获取许可（可能阻塞），`release()` 是释放许可。
-        
-    - **`CountDownLatch`：** 共享模式。`state` 表示初始计数值。`await()` 等待 `state` 减到 0（所有线程调用 `countDown()`，每次减1）。不可重置。
-        
-    - **`FutureTask` (部分实现)：** 内部使用AQS管理任务状态（未开始、完成、取消）。
         
 4. **“完全通过”的含义 - 关键理解点！**
     
