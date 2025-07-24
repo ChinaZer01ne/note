@@ -503,10 +503,12 @@ synchronized (ThreadTest.class) {
  
 Java并发包 (`java.util.concurrent.locks`) 中构建锁（如 `ReentrantLock`）和同步器（如 `Semaphore`, `CountDownLatch`, `ReentrantReadWriteLock`）的**基础框架**。
 ### AQS是如何实现的？::
-#### AQS的数据结构
+#### 核心设计
+##### AQS的数据结构
 * volatile修饰的state
-	* 状态管理：表示共享资源的状态（例如：锁的持有计数、信号量的许可数、计数器的剩余计数）。
+	* **状态管理**：表示共享资源的状态（例如：锁的持有计数、信号量的许可数、计数器的剩余计数）。
 * Node组成的双向链表
+	* **CLH 变体队列：** 使用一个 **FIFO 双向队列**（CLH锁的变种）来管理未能立即获取资源的线程。这些线程会被包装成 `Node` 对象入队等待。
 * Condition单链表
 #### 主要方法
 acquire方法：当线程尝试获取同步状态时，会调用AQS的acquire方法。该方法首先通过CAS操作尝试获取同步状态，如果成功则返回；如果失败，则线程会被加入到等待队列中，并进入阻塞状态。
