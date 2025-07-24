@@ -941,12 +941,10 @@ TODO
     - **synchronized/AtomicXXX**：通过锁或 CAS 保证共享变量原子性。
     - **ThreadLocal**：空间换时间，每个线程独立操作副本，无竞争69。
 
-### 🧨 ThreadLocalwei内存泄漏问题（高频考点❗）
+### ThreadLocal为什么会有内存泄漏问题
 
 1. **根本原因**
-    
     - **弱引用 Key**：`Entry` 的 Key（`ThreadLocal` 实例）是弱引用，GC 时会被回收，导致 `Entry` 变成 `<null, Value>`。
-        
     - **强引用 Value**：Value 仍被强引用，若线程未终止（如线程池线程），Value 永远无法回收，引发内存泄漏124。
         
 2. **解决方案**
@@ -962,8 +960,6 @@ TODO
 	        }
 	        
 	```
-
-> ⚠️ **总结**：重点掌握 **弱引用导致的内存泄漏**、**remove() 的必要性**、**static 的作用**，并结合实际场景（如日期格式化、上下文传递）理解其价值。
 
 ### ThreadLocal的应用场景
 * 线程隔离：
@@ -1000,6 +996,42 @@ TODO
 ### 为什么 ThreadLocalMap 的 Key 是弱引用？Value 可不可以弱引用？
 若 Key 是强引用：即使 `ThreadLocal` 实例不再使用，仍被 `ThreadLocalMap` 引用，导致 `ThreadLocal` 无法回收，而弱引用可避免此问题1410。
 
+#### 当前设计（Key 弱引用 + Value 强引用）的合理性：
+
+1. **Key 弱引用解决 `ThreadLocal` 对象泄漏问题**
+    - 当开发者将 `ThreadLocal tl = new ThreadLocal()` 置为 `null` 后，由于 Key 是弱引用，下次 GC 时 Key 会被回收（Entry 变成 `<null, Value>`）。
+    - 这确保了 `ThreadLocal` 实例本身不会因线程长期存活（如线程池）而泄漏。
+2. **Value 强引用确保业务逻辑稳定**
+    - 只要线程存活且未调用 `remove()`，Value 会一直存在，**业务代码可安全使用**，不会因 GC 导致数据突然消失。
+#### 若 Value 设计为弱引用会发生什么？
+
+| **场景**             | **Key 弱引用 + Value 强引用** | **Value 弱引用（假设）**      |
+| ------------------ | ----------------------- | ---------------------- |
+| 线程执行中发生 GC         | Value 安全，业务逻辑正常         | Value 可能被回收 → 空指针/数据丢失 |
+| 线程池复用线程            | 需手动 `remove()` 避免泄漏     | Value 自动回收，但可能导致后续调用崩溃 |
+| `ThreadLocal` 实例回收 | Key 被回收，Value 需主动清除     | Key 和 Value 均被回收       |
+| **可靠性**            | **高**（数据安全）             | **极低**（业务不可控）          |
+> Value如果设计成弱引用，调用set之后，在执行过程中会出现Value不会被强引用指向的问题，所以会回收, 导致后续取值空指针；而Key设计成弱引用，传递过程中不会出现Key被回收的情况，除非ThreadLocal已经不再使用了，才会回收key.
+> 1. Value 若设计为弱引用（危险）
+    业务代码执行时，Value **没有其他强引用指向它**（仅被 ThreadLocalMap 的弱引用指向）。
+        
+    - **GC 随时可能回收 Value** → 后续 `get()` 返回 `null` → **空指针异常**。
+        
+    - **结果**：业务逻辑崩溃（数据突然消失）。
+        
+2. **Key 设计为弱引用（安全）**
+    
+    - **回收触发条件**：仅当外部**没有强引用指向 ThreadLocal 对象**时（例如 `threadLocalRef = null`）。
+        
+    - **回收时机**：发生在开发者**不再需要该 ThreadLocal 对象**后（业务已不再访问它）。
+        
+    - **业务影响**：
+        
+        - Key 回收后，业务代码**无法通过原 ThreadLocal 变量访问到 Value**（因为 `threadLocalRef = null`）。
+            
+        - 残留的 Value 是**不可达状态**（业务无法主动获取），不会导致空指针。
+            
+        - 内存泄漏风险可通过 `remove()` 解决。
 ### ThreadLocal为何要声明为 `static`？    
 - 减少实例数量：`static` 保证一个类仅有一个 `ThreadLocal` 实例，避免重复创建 Key458。
 
@@ -1014,6 +1046,10 @@ TODO
 > * ThreadLocal应用场景，可以解决什么问题？
 > * ThreadLocal底层实现原理
 > * ThreadLocal解决hash冲突的方式
+> *  **弱引用导致的内存泄漏**
+> * **remove() 的必要性**
+> * **static 的作用**
+> * 结合实际场景（如日期格式化、上下文传递）理解其价值。
 
 
 ## 新特性
