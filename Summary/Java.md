@@ -505,65 +505,28 @@ Java并发包 (`java.util.concurrent.locks`) 中构建锁（如 `ReentrantLock`
 ### AQS是如何实现的？::
 #### 核心设计
 ##### AQS的数据结构
-* volatile修饰的state
+* **volatile修饰的state**
 	* **状态管理**：表示共享资源的状态（例如：锁的持有计数、信号量的许可数、计数器的剩余计数）。
-* Node组成的双向链表
+* **Node组成的双向链表**
 	* **CLH 变体队列：** 使用一个 **FIFO 双向队列**（CLH锁的变种）来管理未能立即获取资源的线程。这些线程会被包装成 `Node` 对象入队等待。
-* Condition单链表
+	* `Node` 类：代表等待线程的封装。
+		* `waitStatus`：表示节点状态（`CANCELLED`, `SIGNAL`, `CONDITION`, `PROPAGATE`, `0`）。`SIGNAL` 是最常见的，表示后继节点需要被唤醒。
+		- `prev`, `next`：指向前驱和后继节点。
+		- `thread`：指向等待的线程。
+		- `nextWaiter`：在条件队列或共享模式下有特殊用途。
+* **Condition单链表**
+##### 设计思想
+
+- **模板方法模式：** AQS 定义了获取/释放资源的核心流程（如 `acquire(int arg)`, `release(int arg)`），但将**具体的资源获取/释放策略**留给子类通过实现 `tryAcquire(int arg)`, `tryRelease(int arg)` 等**protected**方法来实现（这是AQS灵活性的关键）。
+- **独占 vs 共享模式：** AQS 支持两种模式。
+	- **独占模式：** 同一时刻只有一个线程能成功获取资源（如 `ReentrantLock`）。
+	- **共享模式：** 同一时刻可以有多个线程成功获取资源（如 `Semaphore`, `CountDownLatch`）。对应的方法如 `acquireShared`, `releaseShared`, `tryAcquireShared`, `tryReleaseShared`。
 #### 主要方法
 acquire方法：当线程尝试获取同步状态时，会调用AQS的acquire方法。该方法首先通过CAS操作尝试获取同步状态，如果成功则返回；如果失败，则线程会被加入到等待队列中，并进入阻塞状态。
 release方法：当线程释放同步状态时，会调用AQS的release方法。该方法会释放同步状态，并尝试唤醒等待队列中的线程。
-### AQS有哪些应用？::
-* ReentrantLock
-* ReentrantReadWriteLock
-* CountDownLatch
-	* 所有线程countDown，变成0，最后线程才执行
-	* 做减法
-* CyclicBarrier
-	* 所有线程await，变成某值，最后await的线程一起执行
-	* 做加法
-* Semaphore
-	* 多个共享资源互斥
-### AQS主要的面试点有哪些？::
-TODO 
-关于AQS（AbstractQueuedSynchronizer）在面试中需要掌握的内容以及“完全通过”的理解，我来帮你系统梳理一下核心要点。**面试官真正关注的是你是否理解其设计思想、核心机制和应用场景，而不是死记硬背源码细节。**
 
-#### 一、必须掌握的核心内容（理解原理和思想）
-
-1. **AQS 的定位和核心思想：**
-   
-        
-    - **核心思想：**
-        
-        - **状态管理：** 使用一个 `volatile int state` 变量表示共享资源的状态（例如：锁的持有计数、信号量的许可数、计数器的剩余计数）。
             
-        - **CLH 变体队列：** 使用一个 **FIFO 双向队列**（CLH锁的变种）来管理未能立即获取资源的线程。这些线程会被包装成 `Node` 对象入队等待。
-            
-        - **模板方法模式：** AQS 定义了获取/释放资源的核心流程（如 `acquire(int arg)`, `release(int arg)`），但将**具体的资源获取/释放策略**留给子类通过实现 `tryAcquire(int arg)`, `tryRelease(int arg)` 等**protected**方法来实现（这是AQS灵活性的关键）。
-            
-        - **独占 vs 共享模式：** AQS 支持两种模式。
-            
-            - **独占模式：** 同一时刻只有一个线程能成功获取资源（如 `ReentrantLock`）。
-                
-            - **共享模式：** 同一时刻可以有多个线程成功获取资源（如 `Semaphore`, `CountDownLatch`）。对应的方法如 `acquireShared`, `releaseShared`, `tryAcquireShared`, `tryReleaseShared`。
-                
-2. **核心组件：**
-    
-    - **`state` 字段：** `volatile int`，是理解所有基于AQS同步器的核心。不同的同步器赋予 `state` 不同的含义（锁重入次数、信号量许可数、倒计数器初始值）。
-        
-    - **同步队列：** 由 `Node` 节点组成的 FIFO 双向链表（CLH 变体）。`head` 节点通常表示当前持有资源的线程（或一个虚拟节点），`tail` 指向队尾。
-        
-    - **`Node` 类：** 代表等待线程的封装。关键属性：
-        
-        - `waitStatus`：表示节点状态（`CANCELLED`, `SIGNAL`, `CONDITION`, `PROPAGATE`, `0`）。`SIGNAL` 是最常见的，表示后继节点需要被唤醒。
-            
-        - `prev`, `next`：指向前驱和后继节点。
-            
-        - `thread`：指向等待的线程。
-            
-        - `nextWaiter`：在条件队列或共享模式下有特殊用途。
-            
-3. **核心流程（重点！面试常问流程）：**
+1. **核心流程（重点！面试常问流程）：**
     
     - **获取资源 (`acquire(int arg)` - 独占模式为例)：**
         
@@ -594,8 +557,26 @@ TODO
         4. `unparkSuccessor` 找到 `head` 后面第一个有效的（非取消的）后继节点（如果直接后继无效，则从队尾向前找），调用 `LockSupport.unpark(s.thread)` 唤醒它。
             
     - **共享模式的流程 (`acquireShared`, `releaseShared`)：** 核心思想类似，但允许多个线程获取成功。`tryAcquireShared` 返回负数表示失败，非负数表示成功（返回值可能表示剩余资源量）。释放资源后，唤醒传播的方式不同（`PROPAGATE` 状态用于确保唤醒能传播下去）。
+### AQS有哪些应用？::
+* ReentrantLock
+* ReentrantReadWriteLock
+* CountDownLatch
+	* 所有线程countDown，变成0，最后线程才执行
+	* 做减法
+* CyclicBarrier
+	* 所有线程await，变成某值，最后await的线程一起执行
+	* 做加法
+* Semaphore
+	* 多个共享资源互斥
+### AQS主要的面试点有哪些？::
+TODO 
+关于AQS（AbstractQueuedSynchronizer）在面试中需要掌握的内容以及“完全通过”的理解，我来帮你系统梳理一下核心要点。**面试官真正关注的是你是否理解其设计思想、核心机制和应用场景，而不是死记硬背源码细节。**
+
+#### 一、必须掌握的核心内容（理解原理和思想）
+
+
         
-4. **关键特性：**
+2. **关键特性：**
     
     - **公平性 vs 非公平性：** 由子类在 `tryAcquire`/`tryAcquireShared` 中实现。
         
@@ -609,7 +590,7 @@ TODO
         
     - **超时机制：** `tryAcquireNanos` 等。
         
-5. **理解典型实现（应用场景）：**
+3. **理解典型实现（应用场景）：**
     
     - **`ReentrantLock`：** 独占模式，可重入，支持公平/非公平。`state` 表示持有锁的线程的重入次数。
         
@@ -621,7 +602,7 @@ TODO
         
     - **`FutureTask` (部分实现)：** 内部使用AQS管理任务状态（未开始、完成、取消）。
         
-6. **“完全通过”的含义 - 关键理解点！**
+4. **“完全通过”的含义 - 关键理解点！**
     
     - **AQS 本身是一个抽象类，不能直接 `new AQS()` 来使用。** 它的设计目的是**被继承**。
         
