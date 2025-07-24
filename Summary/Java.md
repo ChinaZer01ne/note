@@ -931,6 +931,116 @@ TODO
 
 ## ThreadLocal
 
+### 基础概念与作用
+
+1. **线程隔离机制**
+    - ThreadLocal 为每个线程提供独立的变量副本，避免多线程共享变量时的竞争问题，实现线程安全（无需加锁）169。
+    - 典型代码：`private static final ThreadLocal<SimpleDateFormat> format = ThreadLocal.withInitial(SimpleDateFormat::new)`68。
+        
+2. **与同步机制的区别**
+    - **synchronized/AtomicXXX**：通过锁或 CAS 保证共享变量原子性。
+    - **ThreadLocal**：空间换时间，每个线程独立操作副本，无竞争69。
+
+### 🧨 三、内存泄漏问题（高频考点❗）
+
+1. **根本原因**
+    
+    - **弱引用 Key**：`Entry` 的 Key（`ThreadLocal` 实例）是弱引用，GC 时会被回收，导致 `Entry` 变成 `<null, Value>`。
+        
+    - **强引用 Value**：Value 仍被强引用，若线程未终止（如线程池线程），Value 永远无法回收，引发内存泄漏124。
+        
+2. **解决方案**
+    
+    - **主动调用 `remove()`**：使用完 `ThreadLocal` 后必须调用 `remove()` 清除 Entry1410。
+        
+    - **最佳实践**：结合 `try-finally` 确保清理：
+        
+        java
+        
+        try {
+            threadLocal.set(value);
+            // ...业务逻辑
+        } finally {
+            threadLocal.remove(); // 强制清理
+        }
+        
+
+---
+
+### 🛠️ 四、应用场景
+
+1. **线程上下文管理**
+    
+    - 传递用户身份、请求 ID 等跨方法参数，避免透传259。
+        
+    - 示例：Spring 的 `TransactionSynchronizationManager` 管理事务上下文7。
+        
+2. **非线程安全对象隔离**
+    
+    - 如 `SimpleDateFormat`：每个线程独立实例，解决并发格式错误68。
+        
+    
+    
+```java
+    
+    // 错误：多线程共享 SimpleDateFormat → 报错
+    // 正确：ThreadLocal 为每个线程提供独立实例
+    private static ThreadLocal<SimpleDateFormat> format = 
+        ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd"));
+    ```
+3. **资源隔离**
+    
+    - 数据库连接管理：每个线程持独立 `Connection`，避免交叉关闭25。
+        
+
+---
+
+### 🔍 五、设计细节与最佳实践
+
+1. **Key 为何设计为弱引用？**
+    
+    - 若 Key 是强引用：即使 `ThreadLocal` 实例不再使用，仍被 `ThreadLocalMap` 引用，导致 `ThreadLocal` 无法回收，而弱引用可避免此问题1410。
+        
+2. **为何声明为 `static`？**
+    
+    - 减少实例数量：`static` 保证一个类仅有一个 `ThreadLocal` 实例，避免重复创建 Key458。
+        
+3. **Hash 冲突解决**
+    
+    - **线性探测法**：冲突时顺序查找下一个空槽（非链表法），源码通过 `nextIndex()` 实现16。
+        
+
+---
+
+### 💬 六、面试常见问题形式
+
+1. **基础题**
+    
+    - “ThreadLocal 是什么？解决了什么问题？”
+        
+    - “ThreadLocal 和 synchronized 的区别？”
+        
+2. **原理深挖**
+    
+    - “为什么 ThreadLocalMap 的 Key 是弱引用？Value 为何不强引用？”
+        
+    - “描述一次 `get()`/`set()` 的流程。”
+        
+3. **陷阱与优化**
+    
+    - “什么情况下会内存泄漏？如何避免？”
+        
+    - “线程池中使用 ThreadLocal 要注意什么？”（必须 `remove()`！）210。
+        
+4. **场景设计**
+    
+    - “如何用 ThreadLocal 实现数据库连接管理？”25。
+        
+
+---
+
+> ⚠️ **总结**：重点掌握 **弱引用导致的内存泄漏**、**remove() 的必要性**、**static 的作用**，并结合实际场景（如日期格式化、上下文传递）理解其价值。面试时遇到源码级问题（如 `ThreadLocalMap` 结构）可参考线性探测和 Entry 设计146。
+
 ### ThreadLocal的应用场景
 * 线程隔离：
 >当某个对象不是线程安全的，但又需要在多线程环境下使用时，可以将该对象存储在ThreadLocal中，使每个线程拥有独立的对象副本，避免了线程安全问题。
@@ -950,6 +1060,18 @@ TODO
 * 当通过`ThreadLocal`的set()方法设置线程局部变量时，会先获取当前线程的`ThreadLocalMap`对象。然后，使用`ThreadLocal`对象作为键，将线程局部变量存储在`ThreadLocalMap`中。
 * 当线程结束时，`ThreadLocalMap`中的所有以`ThreadLocal`对象为键的条目会被自动清除，防止内存泄漏（弱引用）。
 > ThreadLocal其实是操作Thread类中ThreadLocalMap变量的一个工具类，每个ThreadLocal相当于ThreadLocalMap中的一个entry。
+> 
+>1. 存储结构：ThreadLocalMap
+    - 每个 `Thread` 内部维护一个 `ThreadLocalMap`（键值对集合），Key 为 `ThreadLocal` 实例（弱引用），Value 为变量副本。
+    - 数据读写流程：
+        - `set(T value)` → 以当前 `ThreadLocal` 为 Key，存入当前线程的 `ThreadLocalMap`。
+        - `get()` → 从当前线程的 `ThreadLocalMap` 中按 Key 取值。
+>线程隔离的实现
+    
+    - 不同线程访问同一 `ThreadLocal` 时，实际操作各自线程的 `ThreadLocalMap`，互不干扰。
+        
+    - 示例：线程 A 设置 `local.set("A")`，线程 B 设置 `local.set("B")`，各自 `get()` 得到自己的值。
+
 
 ![](threadlocal结构.png)
 
