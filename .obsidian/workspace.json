@@ -419,6 +419,8 @@
   },
   "active": "9565818dc7d2239a",
   "lastOpenFiles": [
+    "Summary/image/Redis/aeEventLoop.jpg",
+    "Summary/image/Redis/Unconfirmed 848706.crdownload",
     "Summary/image/Redis/Redis文件事件分派器.png",
     "Summary/image/Redis/Unconfirmed 306096.crdownload",
     "Summary/image/Redis/SCAN内部探究3.png",
@@ -458,14 +460,12 @@
     "Summary/前端.md",
     "Summary/大杂烩.md",
     "Summary/缓存.md",
-    "Summary/image/IO/非阻塞IO.jpg",
     "Summary/image/IO/未确认 17679.crdownload",
     "Summary/Nacos.md",
     "Summary/MarkDown.md",
     "Summary/Linux.md",
     "Summary/Zookeeper.md",
     "Untitled.canvas",
-    "未命名.canvas",
-    "Summary/image/Redis/Redis命令执行流程图.png.crdownload"
+    "未命名.canvas"
   ]
 }

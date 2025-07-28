@@ -1378,7 +1378,7 @@ serverCron就是一个典型的周期性事件。
 
 aeEventLoop 是整个事件驱动的核心，Redis自己的事件处理机制，它管理着文件事件表和时间事件列表， 不断地循环处理着就绪的文件事件和到期的时间事件。
 
-![](https://secure2.wostatic.cn/static/brkew4FPXRHWqEy8igDPYQ/image.png?auth_key=1716829338-hnTAyaASB7xU9xCA6Bz9A7-0-e049df83e49d7bdcd469965d419b13c4)
+![](aeEventLoop.jpg)
 
 ```c
  
@@ -1454,7 +1454,7 @@ typedef struct aeFiredEvent {
 } aeFiredEvent;
 ```
 
-void *apidata: 在ae创建的时候，会被赋值为aeApiState结构体，结构体的定义如下:
+`void *apidata`: 在ae创建的时候，会被赋值为aeApiState结构体，结构体的定义如下:
 
 ```c
 typedef struct aeApiState { 
