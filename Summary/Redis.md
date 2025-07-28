@@ -997,9 +997,9 @@ gossip协议常见的消息类型包含： ping、pong、meet、fail等等。
 
 hash算法的数据存储过程图解：
 
-![](https://secure2.wostatic.cn/static/pKaQRcM9dSsGiusH9e8C2f/image.png?auth_key=1716829063-uoLseP6r16bh3jid2Eff3d-0-b81f5208538928a6f80f83239720147d)
+![](hash算法数据存储过程1.png)
 
-![](https://secure2.wostatic.cn/static/mi99MNwZbL4ufrZpxPA45E/image.png?auth_key=1716829063-6i2zsSHqfpn3J5MmmKmxrM-0-4fa9e0ad0bf980c099595bbbc6ac197f)
+![](hash算法数据存储过程2.png)
 
 ##### 缺点和使用现状
 
@@ -1018,7 +1018,7 @@ hash算法的数据存储过程图解：
 
 服务器分布样式图解：
 
-![](https://secure2.wostatic.cn/static/adgHTn4qGystLjDCMQR5Vm/image.png?auth_key=1716829063-vb41Y6ikFt5PjxriKNK9g4-0-c8d8d206c7bbdb14db672eb990315e3d)
+![](redis服务器分布样式.png)
 
 ##### 一致性hash算法的优点
 
@@ -1034,7 +1034,7 @@ hash算法的数据存储过程图解：
 
 基于虚拟节点的一致性hash算法图解：
 
-![](https://secure2.wostatic.cn/static/sMUvZdX2cQCsiSBUJfx2QU/image.png?auth_key=1716829063-oSYhvZsVRkCcemXJ9HagFT-0-6c69ad5e8006abae05a67e6ab668ce04)
+![](基于虚拟节点的一致性hash算法图解.png)
 
 ### Redis Hash Slot算法
 
@@ -1081,7 +1081,7 @@ Redis Hash Slot算法是Redis分布式中使用的分布式数据存储算法，
 2. 在dict中我们所存储的key就是底下的数组下标，数组下表是通过计算hash值出来的。正是因为有了hash冲突也就有了链表。
 3. 在使用scan的时候我们其中scan的游标就是数组的下标，因为在存储的时候进行的是计算hash后进行存储，所以在数组上不是顺序存储，所以在一段数组上有可能有值也有可能没有值。也有可能一个slot上有多个值。所以这就是scan为什么会在增量式的过程中出现多个和0个的原因，如下图
     
-    ![](https://secure2.wostatic.cn/static/mv5WFoKx5kzLJwPMEs73xN/image.png?auth_key=1716829170-eV9WU98NZ4sykB66CoCadA-0-09f1f71ba48b675540d5cae4793fea94)
+    ![](SCAN内部探究1.png)
     
 4. 如果说按数组的下标顺序便利下去那要是扩容了怎么办，因为**扩容之后需要进行进行重新hash**，数组下标的位置就会改变，那么这个过程中我们我们在扩容之前scan返回的游标就不准确了吗？
 5. **Redis处理扩容下表的方案是**：它不是从第一维数组的第 0 位一直遍历到末尾，而是采用了高位进位加法来遍历。之所以使用这样特殊的方式进行遍历，是考虑到字典的扩容和缩容时避免槽位的遍历重复和遗漏。
