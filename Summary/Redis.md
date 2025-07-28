@@ -1087,7 +1087,7 @@ Redis Hash Slot算法是Redis分布式中使用的分布式数据存储算法，
 5. **Redis处理扩容下表的方案是**：它不是从第一维数组的第 0 位一直遍历到末尾，而是采用了高位进位加法来遍历。之所以使用这样特殊的方式进行遍历，是考虑到字典的扩容和缩容时避免槽位的遍历重复和遗漏。
 6. 选择高位进位加法的主要原因还是他进行扩容的特点，和hashMap的差不多，采用的是： *Java 中的 HashMap 有扩容的概念，当 loadFactor 达到阈值时，需要重新分配一个新的2 倍大小的数组，然后将所有的元素全部 rehash 挂到新的数组下面。rehash 就是将元素的hash 值对数组长度进行取模运算，因为长度变了，所以每个元素挂接的槽位可能也发生了变化。又因为数组的长度是 2n（我们在进行扩容的时候其容量都为2n的原因） 次方，所以取模运算等价于位与操作。
     
-    ![](https://secure2.wostatic.cn/static/9eUqWQmrPuLN7dcVCZ6CRn/image.png?auth_key=1716829170-bAmBWWbLnGpNxPLRudUAfY-0-a30a6b96aaca1419ff300a0a0e075bf7)
+    ![](SCAN内部探究2.png)
     
     抽象一点说，假设开始槽位的二进制数是 xxx，那么该槽位中的元素将被 rehash 到 0xxx 和 1xxx(xxx+8) 中。 如果字典长度由 16 位扩容到 32 位，那么对于二进制槽位 xxxx 中的元素将被 rehash 到 0xxxx 和 1xxxx(xxxx+16) 中。*
     
@@ -1098,13 +1098,12 @@ a mod 16 = a & (16-1) = a & 15
 a mod 32 = a & (32-1) = a & 31
 ```
 
-```
+
 如下图就是缩容和扩容的一个对比
 
-![](https://secure2.wostatic.cn/static/xnKBHaneiye1HoEqFHa49R/image.png?auth_key=1716829170-fdsJq74NGMCCJEFX4fkbyb-0-61189a6fc50cf150e47490fe1c0ffa17)
+![](SCAN内部探究3.png)
 
 所以说redis采用了高位进位加法来遍历的。
-```
 
 ```java
 return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16); Java 1.8计算hash的方法
@@ -1193,7 +1192,7 @@ Redis服务器是典型的事件驱动系统。Redis将事件分为两大类：*
 
 在redis中，对于文件事件的处理采用了Reactor模型。采用的是epoll的实现方式。
 
-![](https://secure2.wostatic.cn/static/raoSnsaTgVexEg6Zoj2xGq/image.png?auth_key=1716829338-evUG5MYubrhFCvZ163mxb7-0-e050b016257d8354629143731f27fcd4)
+![](Redis文件事件分派器.png)
 
 **Redis在主循环中统一处理文件事件和时间事件，信号事件则由专门的handler来处理。**
 

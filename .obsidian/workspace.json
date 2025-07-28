@@ -419,6 +419,14 @@
   },
   "active": "9565818dc7d2239a",
   "lastOpenFiles": [
+    "Summary/image/Redis/Redis文件事件分派器.png",
+    "Summary/image/Redis/Unconfirmed 306096.crdownload",
+    "Summary/image/Redis/SCAN内部探究3.png",
+    "Summary/image/Redis/Unconfirmed 587891.crdownload",
+    "Summary/image/Redis/SCAN内部探究2.png",
+    "Summary/image/Redis/SCAN 内部探究2.png",
+    "Summary/image/Redis/Unconfirmed 924573.crdownload",
+    "Summary/image/Redis/SCAN内部探究1.png",
     "Summary/image/Redis/SCAN 内部探究1.png",
     "Summary/image/Redis/Unconfirmed 45896.crdownload",
     "Summary/image/Redis/基于虚拟节点的一致性hash算法图解.png",
@@ -452,20 +460,12 @@
     "Summary/缓存.md",
     "Summary/image/IO/非阻塞IO.jpg",
     "Summary/image/IO/未确认 17679.crdownload",
-    "Summary/image/IO/阻塞IO.jpg",
-    "Summary/image/IO/1752592095264(1).jpg",
-    "Summary/image/IO/阻塞IO.png",
     "Summary/Nacos.md",
     "Summary/MarkDown.md",
     "Summary/Linux.md",
     "Summary/Zookeeper.md",
     "Untitled.canvas",
     "未命名.canvas",
-    "Summary/image/MQ/kafka生产消费流程图.png",
-    "Summary/image/Redis/Redis命令执行流程图.png",
-    "Summary/image/Redis/Redis命令执行流程图.png.crdownload",
-    "Summary/image/Redis/Redis命令处理流程.png.crdownload",
-    "Summary/image/Redis/双工请求响应模式.png.crdownload",
-    "Summary/image/Redis/串行请求模式.png.crdownload"
+    "Summary/image/Redis/Redis命令执行流程图.png.crdownload"
   ]
 }
