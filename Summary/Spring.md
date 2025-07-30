@@ -274,7 +274,7 @@ Spring设计了三级缓存来解决循环依赖问题。在`DefaultSingletonBea
 
 - **读未提交**：READ UNCOMMITTED
 允许`Transaction01`读取`Transaction02`未提交的修改。
-![img_5.png](Image%2Fimg_5.png)
+![img_5.png](img_5.png)
 - **读已提交(Oracle默认隔离级别)**：READ COMMITTED
 ​ 要求Transaction01只能读取`Transaction02`已提交的修改。
 ![img_6.png](Image%2Fimg_6.png)
