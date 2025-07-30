@@ -3,5 +3,6 @@
   "calendar",
   "obsidian-outliner",
   "obsidian-spaced-repetition",
-  "obsidian-git"
+  "obsidian-git",
+  "obsidian-plantuml"
 ]

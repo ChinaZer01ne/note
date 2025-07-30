@@ -277,7 +277,7 @@
 
 #### 整体架构图
 
-```Diagram
+```plantuml
 graph LR
     A[客户端] --> B(API Gateway)
     B --> C[发布服务]
