@@ -1713,3 +1713,155 @@ profiler stop --format html
 |profiler status|查看profiler的状态，运行的时间|
 |profiler stop|停止profiler，生成火焰图的结果，指定输出目录和输出格式：svg或html|
 
+### Arthas
+
+上述工具都必须在服务端项目进程中配置相关的监控参数，然后工具通过远程连接到项目进程，获取相关的数据。这样就会带来一些不便，比如线上环境的网络是隔离的，本地的监控工具根本连不上线上环境。并且类似于Jprofiler这样的商业工具，是需要付费的。
+
+  
+
+那么有没有一款工具不需要远程连接，也不需要配置监控参数，同时也提供了丰富的性能监控数据呢？
+
+  
+
+阿里巴巴开源的性能分析神器Arthas应运而生。
+
+  
+
+Arthas是Alibaba开源的Java诊断工具，深受开发者喜爱。在线排查问题，无需重启；动态跟踪Java代码；实时监控JVM状态。Arthas 支持JDK 6＋，支持Linux／Mac／Windows，采用命令行交互模式，同时提供丰富的 Tab 自动补全功能，进一步方便进行问题的定位和诊断。当你遇到以下类似问题而束手无策时，Arthas可以帮助你解决：
+
+  
+
+- 这个类从哪个 jar 包加载的？为什么会报各种类相关的 Exception？
+
+- 我改的代码为什么没有执行到？难道是我没 commit？分支搞错了？
+
+- 遇到问题无法在线上 debug，难道只能通过加日志再重新发布吗？
+
+- 线上遇到某个用户的数据处理有问题，但线上同样无法 debug，线下无法重现！
+
+- 是否有一个全局视角来查看系统的运行状况？
+
+- 有什么办法可以监控到JVM的实时运行状态？
+
+- 怎么快速定位应用的热点，生成火焰图？
+
+  
+
+官方地址：[https://arthas.aliyun.com/doc/quick-start.html](https://arthas.aliyun.com/doc/quick-start.html)
+
+  
+
+安装方式：如果速度较慢，可以尝试国内的码云Gitee下载。
+
+```bash
+wget https://io/arthas/arthas-boot.jar
+wget https://arthas/gitee/io/arthas-boot.jar
+```
+Arthas只是一个java程序，所以可以直接用java -jar运行。  
+  
+除了在命令行查看外，Arthas目前还支持 Web Console。在成功启动连接进程之后就已经自动启动,可以直接访问 [http://127.0.0.1:8563/](http://127.0.0.1:8563/) 访问，页面上的操作模式和控制台完全一样。  
+  
+#### 基础指令
+* quit/exit 
+	>退出当前 Arthas客户端，其他 Arthas喜户端不受影响
+* stop/shutdown 
+	>关闭 Arthas服务端，所有 Arthas客户端全部退出
+* help 
+	>查看命令帮助信息
+* cat 
+	>打印文件内容，和linux里的cat命令类似
+* echo 
+	>打印参数，和linux里的echo命令类似
+* grep 
+	>匹配查找，和linux里的gep命令类似
+* tee 
+	>复制标隹输入到标准输出和指定的文件，和linux里的tee命令类似
+* pwd 
+	>返回当前的工作目录，和linux命令类似
+* cls 
+	>清空当前屏幕区域
+* session 
+	>查看当前会话的信息
+* reset 
+	>重置增强类，将被 Arthas增强过的类全部还原, Arthas服务端关闭时会重置所有增强过的类
+* version 
+	>输出当前目标Java进程所加载的 Arthas版本号
+* history 
+	>打印命令历史
+* keymap 
+	>Arthas快捷键列表及自定义快捷键
+#### jvm相关
+* dashboard 
+	>当前系统的实时数据面板
+* thread 
+	>查看当前JVM的线程堆栈信息
+* jvm 
+	>查看当前JVM的信息
+* sysprop 
+	>查看和修改JVM的系统属性
+* sysem 
+	>查看JVM的环境变量
+* vmoption 
+	>查看和修改JVM里诊断相关的option
+* perfcounter 
+	>查看当前JVM的 Perf Counter信息
+* logger 
+	>查看和修改logger
+* getstatic 
+	>查看类的静态属性
+* ognl 
+	>执行ognl表达式
+* mbean 
+	>查看 Mbean的信息
+* heapdump 
+	>dump java heap，类似jmap命令的 heap dump功能
+#### class/classloader相关
+* sc 
+	>查看JVM已加载的类信息
+	* -d 输出当前类的详细信息，包括这个类所加载的原始文件来源、类的声明、加载的Classloader等详细信息。如果一个类被多个Classloader所加载，则会出现多次
+	* -E 开启正则表达式匹配，默认为通配符匹配
+	* -f 输出当前类的成员变量信息（需要配合参数-d一起使用）
+	* -X 指定输出静态变量时属性的遍历深度，默认为0，即直接使用toString输出
+* sm 
+	>查看已加载类的方法信息
+	* -d 展示每个方法的详细信息
+	* -E 开启正则表达式匹配,默认为通配符匹配
+* jad 
+	>反编译指定已加载类的源码
+* mc 
+	>内存编译器，内存编译.java文件为.class文件
+* retransform 
+	>加载外部的.class文件, retransform到JVM里
+* redefine 
+	>加载外部的.class文件，redefine到JVM里
+* dump 
+	>dump已加载类的byte code到特定目录
+* classloader 
+	>查看classloader的继承树，urts，类加载信息，使用classloader
+* getResource
+	* -t 查看classloader的继承树
+	* -l 按类加载实例查看统计信息
+	* -c 用classloader对应的hashcode来查看对应的 Jar urls
+#### monitor/watch/trace相关
+* monitor 方法执行监控，调用次数、执行时间、失败率
+	* -c 统计周期，默认值为120秒
+* watch 方法执行观测，能观察到的范围为：返回值、抛出异常、入参，通过编写groovy表达式进行对应变量的查看
+	* -b 在方法调用之前观察(默认关闭)
+	* -e 在方法异常之后观察(默认关闭)
+	* -s 在方法返回之后观察(默认关闭)
+	* -f 在方法结束之后(正常返回和异常返回)观察(默认开启)
+	* -x 指定输岀结果的属性遍历深度,默认为0
+* trace 方法内部调用路径,并输出方法路径上的每个节点上耗时
+	* -n 执行次数限制
+* stack 输出当前方法被调用的调用路径
+* tt 方法执行数据的时空隧道,记录下指定方法每次调用的入参和返回信息,并能对这些不同的时间下调用进行观测
+#### 其他
+* jobs 列出所有job
+* kill 强制终止任务
+* fg 将暂停的任务拉到前台执行
+* bg 将暂停的任务放到后台执行
+* grep 搜索满足条件的结果
+* plaintext 将命令的结果去除ANSI颜色
+* wc 按行统计输出结果
+* options 查看或设置Arthas全局开关
+* profiler 使用async-profiler对应用采样，生成火焰图
