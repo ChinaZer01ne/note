@@ -1,6 +1,16 @@
 ## 架构设计原则
 * 关注点分离 (Separation of Concerns - SoC)
 * 模块化 (Modularity)
+* 高内聚、低耦合 (High Cohesion, Low Coupling)
+* 定义明确的接口 (Well-Defined Interfaces)
+* **可伸缩性 (Scalability)**
+* **可用性与容错性 (Availability & Fault Tolerance)**
+* **性能 (Performance)**
+* **可观察性 (Observability)**
+* **安全性与隐私 (Security & Privacy)**
+* **可部署性与可维护性 (Deployability & Maintainability)**
+* **简单性 (Simplicity - KISS Principle)**
+* **演化能力 (Evolvability / Extensibility)**
 ## 系统可用性
 
 现如今，我们开发一个软件系统，对其要求越来越高，如果你了解一些「架构设计」的要求，就知道一个好的软件架构应该遵循以下 3 个原则：
