@@ -12,15 +12,16 @@
 * 简单性 (Simplicity - KISS Principle)
 * 演化能力 (Evolvability / Extensibility)
 * 关注成本
-* SOLID 原则 (面向对象设计的微观原则，但思想适用于更高层设计)：
-    - S: 单一职责原则 (Single Responsibility Principle)
-    - O: 开放封闭原则 (Open/Closed Principle)
-    - L: 里氏替换原则 (Liskov Substitution Principle)
-    - I: 接口隔离原则 (Interface Segregation Principle)
-    - D: 依赖倒置原则 (Dependency Inversion Principle)
-- DRY 原则 (Don't Repeat Yourself)： 避免重复代码或逻辑。提高可维护性。
+
 - YAGNI (You Ain't Gonna Need It)： 仅在需要时实现功能，避免过早优化和过度工程化。
 >十二要素应用 (The Twelve-Factor App)： 针对构建现代 SaaS 应用的特定实践原则集合（如配置、无状态、后端服务等）。
+>* SOLID 原则 (面向对象设计的微观原则，但思想适用于更高层设计)：
+>	* S: 单一职责原则 (Single Responsibility Principle)
+>	* O: 开放封闭原则 (Open/Closed Principle)
+>	* L: 里氏替换原则 (Liskov Substitution Principle)
+>	* I: 接口隔离原则 (Interface Segregation Principle)
+>	* D: 依赖倒置原则 (Dependency Inversion Principle)
+>* DRY 原则 (Don't Repeat Yourself)： 避免重复代码或逻辑。提高可维护性。
 ## 系统可用性
 
 现如今，我们开发一个软件系统，对其要求越来越高，如果你了解一些「架构设计」的要求，就知道一个好的软件架构应该遵循以下 3 个原则：
