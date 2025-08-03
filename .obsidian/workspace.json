@@ -14,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Dubbo.md",
+                "file": "Summary/ES.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Dubbo"
+              "title": "ES"
             },
             "group": "c3f1cb9ce061c5ec"
           },
@@ -50,13 +50,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Dubbo.md",
+                "file": "Summary/ES.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Dubbo 的大纲"
+              "title": "ES 的大纲"
             },
             "group": "c3f1cb9ce061c5ec"
           }
@@ -461,6 +461,11 @@
   },
   "active": "9565818dc7d2239a",
   "lastOpenFiles": [
+    "Summary/Dubbo.md",
+    "Summary/image/Dubbo/dubbo-负载均衡.png",
+    "Summary/image/Dubbo/Unconfirmed 914640.crdownload",
+    "Summary/image/Dubbo/dubbo-spi.png",
+    "Summary/image/Dubbo/Unconfirmed 531285.crdownload",
     "Summary/image/Dubbo/dubbo.png",
     "Summary/image/Dubbo/Unconfirmed 160265.crdownload",
     "Summary/image/Dubbo",
@@ -477,11 +482,7 @@
     "Summary/image/DistributedTheory/冲突时的basicPaxos.png",
     "Summary/image/DistributedTheory/Unconfirmed 756559.crdownload",
     "Summary/image/DistributedTheory/Proposer失败时的basicPaxos.png",
-    "Summary/image/DistributedTheory/Unconfirmed 634769.crdownload",
     "Summary/image/DistributedTheory/Acceptor失败时的basicPaxos.png",
-    "Summary/image/DistributedTheory/Unconfirmed 936158.crdownload",
-    "Summary/image/DistributedTheory/无故障的basicPaxos.png",
-    "Summary/image/DistributedTheory/paxos.png",
     "Summary/Design Patterns.md",
     "Summary/Design Docments.md",
     "Summary/DDD.md",
@@ -505,7 +506,6 @@
     "Summary/JVM.md",
     "Summary/Spring.md",
     "Summary/Mysql.md",
-    "Summary/image/Redis/redis发现热key.jpg",
     "Summary/Java.md",
     "Untitled.canvas",
     "未命名.canvas"

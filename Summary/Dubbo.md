@@ -44,11 +44,11 @@ SPI
 
 dubbo中大量的使用了SPI来作为扩展点，通过实现同一接口的前提下，可以进行定制自己的实现类。比如比较常见的协议，负载均衡，都可以通过SPI的方式进行定制化，自己扩展。Dubbo中已经存在的所有已经实现好的扩展点。
 
-![](https://secure2.wostatic.cn/static/bfmLAYQNB3LvEJLoupGCmz/image.png?auth_key=1719565522-k5vkSGamjV4gYj9XpvDyon-0-1490731b52ac2ba5483ac5210689e187)
+![](dubbo-spi.png)
 
 下图中则是Dubbo中默认提供的负载均衡策略。
 
-![](https://secure2.wostatic.cn/static/nC524yZQxDe7bEJV8cjVpW/image.png?auth_key=1719565522-4ZV192Eo424ApWzri6xQc9-0-843259aa4601e1a8ccd7d0d10cc40551)
+![](dubbo-负载均衡.png)
 
 ### Dubbo中扩展点使用方式
 
@@ -411,8 +411,6 @@ ReadyRestartInstances.create().addRestartingInstance("service-provider", "正在
     
     表示消费方对该服务的方法调用在失败后，再返回 null 值，不抛异常。用来容忍不重要服务不稳定时对调用方的影响。
     
-
-![](https://secure2.wostatic.cn/static/g5atwJS84Sws2H1L8XhHva/image.png?auth_key=1719565523-rZ1pzuicGujvACd7h2h1nN-0-7b7c6c15abf8dd29135293d39272de8f)
 
 #### 第二种 指定返回简单值或者null
 
