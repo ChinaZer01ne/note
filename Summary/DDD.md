@@ -52,7 +52,7 @@
 
 ## 聚合和实体有什么区别？
 
-### 一、本质区别：角色与定位
+### 角色与定位
 
 | 对比维度  | 实体（Entity）       | 聚合根（Aggregate Root）  |
 | ----- | ---------------- | -------------------- |
@@ -61,7 +61,7 @@
 | 访问权限  | 可被外部直接访问（非聚合内实体） | 唯一外部访问点，屏蔽对内部对象的直接操作 |
 | 一致性边界 | 仅维护自身状态有效性       | 维护整个聚合内所有对象的一致性      |
 
-> **聚合根是一种特殊的实体**，每个聚合有且仅有一个聚合根，聚合根下可包含多个实体或值对象。
+> **聚合根是一种特殊的实体，每个聚合有且仅有一个聚合根，聚合根下可包含多个实体或值对象。**
 
 ### 二、深入剖析：职责差异
 
@@ -70,27 +70,19 @@
 - **业务身份标识**：  
     通过唯一ID区分不同实例（即使属性相同，ID不同即不同对象）。
     
-    java
-    
+	```java
     public class Product { // 实体
         private ProductId id; // 唯一标识
         private String name;
         private Price price;
     }
-    
-- **状态可变性**：  
-    属性可随时间变化（如用户修改收货地址）。
-    
-- **自身完整性校验**：  
-    在方法内维护自身状态有效性（如邮箱格式校验）。
-    
+    ```
 
 #### 2. **聚合根（Aggregate Root）的核心职责**
 
-- **一致性守卫者**：  
-    确保聚合内所有对象遵守业务规则（事务最小单元）。
+确保聚合内所有对象遵守业务规则（事务最小单元），外部只能通过聚合根方法修改内部对象。
     
-    java
+```java
     
     public class Order { // 聚合根
         private OrderId id;
@@ -104,29 +96,53 @@
             items.add(new OrderItem(product, quantity));
         }
     }
+    ```
+**访问控制门面**：  
+
+```java
+
+// 正确：通过聚合根方法修改
+order.updateItemQuantity(productId, newQuantity);
+
+// 错误：直接操作内部实体
+order.getItems().get(0).setQuantity(10); // 破坏封装性！
+```
     
-- **访问控制门面**：  
-    外部只能通过聚合根方法修改内部对象。
-    
-    java
-    
-    // ✅ 正确：通过聚合根方法修改
-    order.updateItemQuantity(productId, newQuantity);
-    
-    // ❌ 错误：直接操作内部实体
-    order.getItems().get(0).setQuantity(10); // 破坏封装性！
-    
-- **持久化单元**：  
-    整个聚合作为一个整体进行保存/加载（如Order和OrderItem一并存储）。
-    
+**持久化单元**：  
+
+整个聚合作为一个整体进行保存/加载（如Order和OrderItem一并存储）。
 
 ---
 
-### 三、经典案例：电商订单聚合
+### 经典案例：电商订单聚合
 
-Diagram
-
-Code
+```
+classDiagram
+    class Order {
+        -id: OrderId
+        -userId: UserId
+        -status: OrderStatus
+        -items: List~OrderItem~
+        +addItem()
+        +removeItem()
+        +pay() 
+    }
+    
+    class OrderItem {
+        -productId: ProductId
+        -quantity: int
+        -price: Money
+    }
+    
+    class Product {
+        -id: ProductId
+        -name: String
+        -price: Money
+    }
+    
+    Order "1" *-- "*" OrderItem : 包含
+    OrderItem --> ProductId : 引用
+```
 
 - **聚合根**：`Order`
     
