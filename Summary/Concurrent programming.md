@@ -32,9 +32,7 @@ CompletableFuture‌是Java 8中引入的一个类，它实现了Future和Comple
 ### 完成控制 (手动设置结果/异常)
 
 - `complete(T value)`: 如果尚未完成，则手动设置结果并完成 Future。
-	
 - `completeExceptionally(Throwable ex)`: 如果尚未完成，则手动设置异常并完成 Future（异常结束）。
-	
 - `obtrudeValue(T value)` / `obtrudeException(Throwable ex)`: 强制设置结果或异常，**即使已经完成**。**慎用！**
         
 ### 线程池管理
@@ -95,26 +93,22 @@ CompletableFuture‌是Java 8中引入的一个类，它实现了Future和Comple
 - **日常：** 熟练创建 (`supplyAsync/runAsync`)、链式调用 (`thenApply/Accept/Run[Async]`)、组合 (`thenCompose/thenCombine/allOf/anyOf`)、异常处理 (`exceptionally/handle`)、**务必使用自定义线程池处理阻塞操作**、谨慎使用 `get/join`。
     
 - **面试：** 深入理解其与 `Future` 的区别、线程模型（回调执行线程、默认线程池问题）、异常传播机制、组合操作原理 (`thenCompose` 解嵌套)、常见陷阱（阻塞回调、未处理异常）、手动完成的应用、以及与响应式编程的关系。能清晰解释为什么需要自定义线程池。
+
 ## Callable
 `Callable` 是 Java 并发编程中另一个**极其重要**的基础接口，与 `Runnable` 类似，用于表示**一个需要执行的任务**。但它比 `Runnable` 更强大，主要体现在以下两点：
 1. **返回值：** `Callable` 的 `call()` 方法可以**返回一个结果**（类型由泛型参数 `V` 指定）。
 2. **抛出异常：** `call()` 方法**可以抛出受检异常 (`Exception`)**，调用方可以捕获并处理这些异常。
-    
-
-**核心内容：**
 
 ### 日常开发使用
 
 1. **定义与核心方法：**
     
     - `interface Callable<V> { V call() throws Exception; }`
-        
     - 你需要实现 `call()` 方法，在其中编写任务逻辑，并返回一个类型为 `V` 的值（如果不需要返回值，可以返回 `null`）。
-        
     - 可以在 `call()` 方法中抛出任何 `Exception`（包括受检异常）。
         
 2. **创建 Callable 任务：**
-```
+```java
     // 方式1：显式实现类
     Callable<Integer> myTask = new Callable<>() {
         @Override
@@ -135,8 +129,6 @@ CompletableFuture‌是Java 8中引入的一个类，它实现了Future和Comple
     public Integer computeAnswer() throws Exception { ... }
     Callable<Integer> myTask = this::computeAnswer;
 ```
-    
-    
     
     
 3. **执行 Callable 任务：**
