@@ -8,7 +8,7 @@
 
 # Dubbo 处理流程
 
-![](https://secure2.wostatic.cn/static/m3whAKQ7oczKYQGykWmBmJ/image.png?auth_key=1719565522-ApDa9to2wCrDbvs7zPVVf-0-29e3099baf02d37f375dffc1aee0df1d)
+![](dubbo.png)
 
 |节点|角色名称|
 |---|---|
