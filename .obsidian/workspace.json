@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/面试问题.md",
+                "file": "Summary/稳定性治理.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "面试问题"
+              "title": "稳定性治理"
             },
             "group": "c3f1cb9ce061c5ec"
           },
@@ -48,13 +48,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/面试问题.md",
+                "file": "Summary/稳定性治理.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "面试问题 的大纲"
+              "title": "稳定性治理 的大纲"
             },
             "group": "c3f1cb9ce061c5ec"
           }
@@ -459,10 +459,11 @@
   },
   "active": "9565818dc7d2239a",
   "lastOpenFiles": [
-    "Summary/大杂烩.md",
-    "Summary/面试问题.md",
-    "Summary/缓存.md",
+    "Summary/方法论.md",
     "Summary/前端.md",
+    "Summary/缓存.md",
+    "Summary/面试问题.md",
+    "Summary/大杂烩.md",
     "Summary/MQ.md",
     "Summary/Redis.md",
     "Summary/JVM.md",
@@ -492,7 +493,6 @@
     "Summary/image/Redis/Unconfirmed 188629.crdownload",
     "Summary/Java.md",
     "Summary/Concurrent programming.md",
-    "Summary/未命名.md",
     "Summary/IO.md",
     "Summary/Distributed Theory.md",
     "Summary/Design Patterns.md",
