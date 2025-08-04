@@ -92,7 +92,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "```me",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -113,7 +113,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -469,7 +470,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "4fb3b0e07492fb53",
+  "active": "d4b7c9ad3456c250",
   "lastOpenFiles": [
     "Summary/Dubbo.md",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
