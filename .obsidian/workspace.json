@@ -6,7 +6,7 @@
       {
         "id": "63088524407c589c",
         "type": "tabs",
-        "dimension": 49.93654822335024,
+        "dimension": 59.70812182741116,
         "children": [
           {
             "id": "9565818dc7d2239a",
@@ -42,7 +42,7 @@
       {
         "id": "2a8c8c4affce576d",
         "type": "tabs",
-        "dimension": 50.06345177664976,
+        "dimension": 40.29187817258883,
         "children": [
           {
             "id": "f5515e11d01fa963",
@@ -92,7 +92,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "```me",
+                "query": "mermaid",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -470,8 +470,11 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "d4b7c9ad3456c250",
+  "active": "9565818dc7d2239a",
   "lastOpenFiles": [
+    "Summary/DDD.md",
+    "Summary/System Design.md",
+    "Summary/ES.md",
     "Summary/Dubbo.md",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
     "Summary/image/Dubbo/Unconfirmed 914640.crdownload",
@@ -496,8 +499,6 @@
     "Summary/image/DistributedTheory/Acceptor失败时的basicPaxos.png",
     "Summary/Design Patterns.md",
     "Summary/Design Docments.md",
-    "Summary/DDD.md",
-    "Summary/System Design.md",
     "Summary/Concurrent programming.md",
     "Summary/Computer Network.md",
     "Summary/Build Tool.md",
@@ -517,7 +518,6 @@
     "Summary/JVM.md",
     "Summary/Spring.md",
     "Summary/Mysql.md",
-    "Summary/Java.md",
     "Untitled.canvas",
     "未命名.canvas"
   ]

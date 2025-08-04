@@ -28,16 +28,19 @@
 5. 副本保存数据然后返回  
 6. 主分片返回  
 7. 协调节点返回客户端
-```mehr
-graph LR
-A[客户端写入] --> B[Coordinating节点]
-B --> C[路由到主分片]
-C --> D[写入内存Buffer]
-D --> E[写入Translog磁盘日志]
-E --> F[同步副本分片]
-F --> G{满足Quorum?}
-G -- Yes --> H[返回ACK]
-G -- No --> I[重试/报错]
+```mermaid
+flowchart TD
+A[客户端] --> B[Coordinating节点]
+B --> C{路由计算}
+C -->|主分片定位| D[Primary Shard]
+D --> E[写入内存Buffer]
+E --> F[写入Translog]
+F --> G[同步副本Replicas]
+G --> H{Quorum确认?}
+H -->|是| I[返回ACK]
+H -->|否| J[重试/报错]
+I --> K[Refresh内存生成新Segment]
+K --> L[数据可搜索]
 ```
 
 > 客户端 → Coordinating Node → 路由到主分片 → 同步副本 → 返回响应
@@ -51,6 +54,16 @@ G -- No --> I[重试/报错]
 - 每个分片返回各自优先队列中 所有文档的 ID 和排序值 给协调节点，它合并这些值到自己的优先队列中来产生一个全局排序后的结果列表。  
 - 接下来就是取回阶段， 协调节点辨别出哪些文档需要被取回并向相关的分片提交多个 GET 请求。每个分片加载并丰富文档，如果有需要的话，接着返回文档给协调节点。一旦所有的文档都被取回了，协调节点返回结果给客户端。  
 - Query Then Fetch 的搜索类型在文档相关性打分的时候参考的是本分片的数据，这样在文档数量较少的时候可能不够准确， DFS Query Then Fetch 增加了一个预查询的处理，询问 Term 和 Document frequency，这个评分更准确，但是性能会变差。
+```mermaid
+flowchart TD
+A[客户端] --> B[Coordinating节点]
+B --> C[广播Query阶段]
+C --> D[各分片本地检索]
+D --> E[返回文档ID和排序值]
+E --> F[归并排序]
+F --> G[Fetch阶段取详情]
+G --> H[返回完整结果]
+```
 
 > Query 阶段（各分片本地检索）→ Fetch 阶段（Coordinating Node 归并结果）
 ## 为什么说ES是近实时搜索? ::
@@ -119,4 +132,27 @@ flush 操作主要通过以下几个参数控制
 
 ## 深度分页问题
 
-- 避免深度分页：改用 `search_after` 或滚动查询（Scroll）。
+避免深度分页：改用 `search_after` 或滚动查询（Scroll）。
+
+- **问题**：  
+    `from+size` 方式（如 `from=10000, size=10`）需在协调节点归并 **10010 条数据**，内存易 OOM。
+    
+解决方案：
+    
+- **Scroll API**：
+	```json
+	POST /index/_search?scroll=1m
+	{ "size": 100, "query": {...} }
+	```
+	创建快照，适合海量数据导出（不支持实时查询）。
+- **Search After**：
+	```json
+	GET /index/_search
+	{
+	  "size": 10,
+	  "query": {...},
+	  "sort": [{"_id": "desc"}], 
+	  "search_after": ["last_id"]
+	}
+	```
+	基于上一页最后一条排序值翻页，**无内存瓶颈**（推荐生产使用）。
