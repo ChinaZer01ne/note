@@ -6,7 +6,7 @@
       {
         "id": "63088524407c589c",
         "type": "tabs",
-        "dimension": 59.70812182741116,
+        "dimension": 84.70812182741116,
         "children": [
           {
             "id": "9565818dc7d2239a",
@@ -42,7 +42,7 @@
       {
         "id": "2a8c8c4affce576d",
         "type": "tabs",
-        "dimension": 40.29187817258883,
+        "dimension": 15.291878172588833,
         "children": [
           {
             "id": "f5515e11d01fa963",
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Summary/Sentinel.md",
+                "file": "Summary/ES.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -144,7 +144,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Sentinel 的反向链接列表"
+              "title": "ES 的反向链接列表"
             }
           },
           {
@@ -450,8 +450,7 @@
               "title": "笔记复习序列"
             }
           }
-        ],
-        "currentTab": 29
+        ]
       }
     ],
     "direction": "horizontal",

@@ -76,6 +76,27 @@ G --> H[返回完整结果]
 **ES 的近实时性：当数据存在 Memory Buffer 时是搜索不到的，只有数据被 refresh 到 Filesystem Cache 之后才能被搜索到，而 refresh 是每秒一次， 所以称 es 是近实时的，或者可以通过手动调用 es 的 api 触发一次 refresh 操作，让数据马上可以被搜索到；**  
 
 Memory Buffer，也称为 Indexing Buffer，这个区域默认的内存大小是 10% heap size。
+
+```mermaid
+flowchart TD
+A[新数据写入] --> B[内存 Buffer]
+B --> C{是否触发 refresh?}
+C -->|是| D[生成新的 Lucene Segment]
+D --> E[Segment 写入 OS Cache]
+E --> F[数据可被搜索]
+```
+触发条件：
+- 默认每 1 秒 自动执行一次（通过 `refresh_interval` 配置）。
+- 手动触发：`POST /index/_refresh`
+- 写入时带 `?refresh=true` 参数（生产环境慎用）。
+
+| **场景**         | **问题**                   | **优化方案**                          |
+| -------------- | ------------------------ | --------------------------------- |
+| **高频写入**（如日志）  | 每秒生成大量小 Segment → 查询性能下降 | 增大 `refresh_interval`（如 30s）      |
+| **低延迟搜索**（如电商） | 默认 1 秒延迟太高               | 调小 `refresh_interval`（如 500ms）    |
+| **索引重建**       | 导入历史数据无需实时搜索             | 关闭刷新：`index.refresh_interval: -1` |
+
+>将内存缓冲区（In-memory Buffer）中的数据转换成 Lucene 段（Segment） 并放入 OS Cache，使**新写入的数据在 1 秒内可被搜索到（NRT 特性）。注意：此时数据仍在内存/OS Cache 中，未落盘！宕机会丢失**。
 ### translog
 
 由于 Memory Buffer 和 Filesystem Cache 都是基于内存，假设服务器宕机，那么数据就会丢失，所以 ES 通过 translog 日志文件来保证数据的可靠性，在数据写入 memory buffer 的同时，将数据写入 translog 日志文件中，在机器宕机重启时，es 会从磁盘中读取 translog 日志文件中最后一个提交点 commit point 之后的数据，恢复到 Memory Buffer 和 Filesystem cache 中去。  
