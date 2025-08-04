@@ -132,19 +132,56 @@ flush 操作主要通过以下几个参数控制
 
 ## 深度分页问题
 
-避免深度分页：改用 `search_after` 或滚动查询（Scroll）。
+避免深度分页：改用 `search_after` 或滚动查询（`Scroll`）。
 
-- **问题**：  
-    `from+size` 方式（如 `from=10000, size=10`）需在协调节点归并 **10010 条数据**，内存易 OOM。
-    
+问题：
+
+`from+size` 方式（如 `from=10000, size=10`）需在协调节点归并 10010 条数据，内存易 OOM。
+```mermaid
+flowchart TD
+A[Coordinating节点] --> B[广播查询请求]
+B --> C[分片1]
+B --> D[分片2]
+B --> E[分片3]
+C --> F[本地计算Top 10010结果]
+D --> G[本地计算Top 10010结果]
+E --> H[本地计算Top 10010结果]
+F --> I[返回10010条文档ID+排序值]
+G --> I
+H --> I
+I --> J[合并30030条数据]
+J --> K[全局排序取10000-10009的10条]
+K --> L[向分片请求这10条的详细数据]
+L --> M[返回最终结果]
+```
+
 解决方案：
     
 - **Scroll API**：
 	```json
 	POST /index/_search?scroll=1m
 	{ "size": 100, "query": {...} }
+
+	// 初始化快照
+	POST /order/_search?scroll=5m 
+	{
+	  "size": 1000,
+	  "query": { "match_all": {} }
+	}
+	
+	// 后续获取
+	GET _search/scroll
+	{
+	  "scroll": "5m",
+	  "scroll_id": "DXF1ZXJ5QW5kRmV0Y2gBAAAAAA..."
+	}
 	```
 	创建快照，适合海量数据导出（不支持实时查询）。
+	- 适用场景：  
+	    全量数据导出（如ETL），**不适用于实时分页**
+	- 特点：
+	    - 创建查询时的数据快照
+	    - 每次返回下一批结果，无深度分页问题
 - **Search After**：
 	```json
 	GET /index/_search
@@ -154,5 +191,27 @@ flush 操作主要通过以下几个参数控制
 	  "sort": [{"_id": "desc"}], 
 	  "search_after": ["last_id"]
 	}
+	
+	GET /order/_search
+	{
+	  "size": 10,
+	  "query": { "match_all": {} },
+	  "sort": [ 
+	    {"order_date": "desc"},  // 必须包含唯一值字段（如_id）防重复
+	    {"_id": "asc"} 
+	  ],
+	  "search_after": ["2023-08-01T00:00:00", "order_9999"] // 上页最后一条的排序值
+	}
 	```
-	基于上一页最后一条排序值翻页，**无内存瓶颈**（推荐生产使用）。
+	基于上一页最后一条排序值翻页，无内存瓶颈（**推荐生产使用**）。
+	- 原理：  
+	    将上一页最后一条的排序值作为参数，各分片直接定位到该位置后取size条数据。
+	- 优势：
+	    - 每个分片只返回精确的size条数据（10条）
+	    - 协调节点只需归并 `分片数 × size` 条数据（10分片仅需处理100条）
+	    - 内存消耗恒定，与翻页深度无关
+- **最大分页限制保护**
+	```yml
+	# elasticsearch.yml 保护配置
+	max_result_window: 10000  # 禁止 from+size > 10000 的请求
+	```
