@@ -1,31 +1,35 @@
 # 什么是ZooKeeper
 
-Zookeeper是⼀个开源的分布式协调服务，其设计⽬标是将那些复杂的且容易出错的分布式⼀致性服务封装起来，构成⼀个⾼效可靠的原语集，并以⼀些简单的接⼝提供给⽤户使⽤。 zookeeper是⼀个典型的分布式数据⼀致性的解决⽅案，分布式应⽤程序可以基于它实现诸如数据订阅/发布、负载均衡、命名服务、集群管理、分布式锁和分布式队列等功能
+Zookeeper是⼀个开源的分布式协调服务，封装了分布式⼀致性服务，是⼀个典型的分布式数据⼀致性的解决⽅案，分布式应⽤程序可以基于它实现诸如数据订阅/发布、负载均衡、命名服务、集群管理、分布式锁和分布式队列等功能。
 
 ## 基本概念
 
 ### 集群⻆⾊
-通常在分布式系统中，构成⼀个集群的每⼀台机器都有⾃⼰的⻆⾊，最典型的集群就是Master/Slave模式（主备模式），此情况下把所有能够处理写操作的机器称为Master机器，把所有通过异步复制⽅式获取最新数据，并提供读服务的机器为Slave机器。
-    
-⽽在Zookeeper中，这些概念被颠覆了。它没有沿⽤传递的Master/Slave概念，⽽是引⼊了**Leader**、 **Follower**、 **Observer**三种⻆⾊。 Zookeeper集群中的所有机器通过Leader选举来选定⼀台被称为Leader的机器， Leader服务器为客户端提供读和写服务，除Leader外，其他机器包括Follower和Observer,Follower和Observer都能提供读服务，唯⼀的区别在于Observer不参与Leader选举过程，不参与写操作的过半写成功策略，因此Observer可以在不影响写性能的情况下提升集群的性能。
+
+在Zookeeper中，它没有沿⽤传递的Master/Slave概念，⽽是引⼊了**Leader**、 **Follower**、 **Observer**三种⻆⾊。 Leader服务器为客户端提供读和写服务，除Leader外，其他机器包括Follower和Observer,Follower和Observer都能提供读服务，唯⼀的区别在于Observer不参与Leader选举过程，不参与写操作的过半写成功策略，因此Observer可以在不影响写性能的情况下提升集群的性能。
 
 ### 会话（session）
+
 Session指客户端会话， ⼀个客户端连接是指客户端和服务端之间的⼀个TCP⻓连接， Zookeeper对外的服务端⼝默认为2181，客户端启动的时候，⾸先会与服务器建⽴⼀个TCP连接，从第⼀次连接建⽴开始，客户端会话的⽣命周期也开始了，通过这个连接，客户端能够⼼跳检测与服务器保持有效的会话，也能够向Zookeeper服务器发送请求并接受响应，同时还能够通过该连接接受来⾃服务器的Watch事件通知。
 
 ### 数据节点（Znode）
 
-是指数据模型中的数据单元，我们称之为数据节点——ZNode。 ZooKeeper将所有数据存储在内存中，数据模型是⼀棵树（ZNode Tree），由斜杠（/）进⾏分割的路径，就是⼀个Znode，例如/app/path1。每个ZNode上都会保存⾃⼰的数据内容，同时还会保存⼀系列属性信息。
+是指数据模型中的数据单元，我们称之为数据节点——**ZNode**。 ZooKeeper将所有数据存储在内存中，数据模型是⼀棵树（ZNode Tree），由斜杠（/）进⾏分割的路径，就是⼀个Znode，例如/app/path1。每个ZNode上都会保存⾃⼰的数据内容，同时还会保存⼀系列属性信息。
 
 ### 版本
-刚刚我们提到， Zookeeper的每个Znode上都会存储数据，对于每个ZNode， Zookeeper都会为其维护⼀个叫作Stat的数据结构， Stat记录了这个ZNode的三个数据版本，分别是`version`（当前ZNode的版本）、 `cversion`（当前ZNode⼦节点的版本）、 `aversion`（当前ZNode的ACL版本）。
+
+刚刚我们提到， Zookeeper的每个ZNode上都会存储数据，对于每个ZNode， Zookeeper都会为其维护⼀个叫作Stat的数据结构， Stat记录了这个ZNode的三个数据版本，分别是`version`（当前ZNode的版本）、 `cversion`（当前ZNode⼦节点的版本）、 `aversion`（当前ZNode的ACL版本）。
     
 ### Watcher（事件监听器）
+
 Wathcer（事件监听器），是Zookeeper中⼀个很重要的特性， Zookeeper允许⽤户在指定节点上注册⼀些Watcher，并且在⼀些特定事件触发的时候， Zookeeper服务端会将事件通知到感兴趣的客户端，该机制是Zookeeper实现分布式协调服务的重要特性
-- **核心特性**：
-    - **一次性触发**：事件触发后立即失效，需重新注册（减轻服务端压力）。
-    - **轻量级设计**：仅通知事件类型（如 `NodeDeleted`），不传递数据内容。
-    - **异步通知**：网络延迟可能导致事件接收顺序与发生顺序不一致。
-- **使用场景**：配置动态更新、服务发现68。
+- 核心特性：
+    - 一次性触发：事件触发后立即失效，需重新注册（减轻服务端压力）。
+    - 轻量级设计：仅通知事件类型（如 `NodeDeleted`），不传递数据内容。
+    - 异步通知：网络延迟可能导致事件接收顺序与发生顺序不一致。
+- 使用场景：配置动态更新、服务发现。
+
+> Watcher：观察者模式
 ### ACL
 Zookeeper采⽤ACL（Access Control Lists）策略来进⾏权限控制，其定义了如下五种权限：
 - CREATE：创建⼦节点的权限。
@@ -39,7 +43,7 @@ Zookeeper采⽤ACL（Access Control Lists）策略来进⾏权限控制，其定
 
 ### Znode
 
-在ZooKeeper中，数据信息被保存在⼀个个数据节点上，这些节点被称为znode。 ZNode 是Zookeeper 中最⼩数据单位，在 ZNode 下⾯⼜可以再挂 ZNode，这样⼀层层下去就形成了⼀个层次化命名空间 ZNode 树，我们称为 ZNode Tree，它采⽤了类似⽂件系统的层级树状结构进⾏管理。⻅下图
+在ZooKeeper中，数据信息被保存在⼀个个数据节点上，这些节点被称为ZNode。 ZNode 是Zookeeper 中最⼩数据单位，在 ZNode 下⾯⼜可以再挂 ZNode，这样⼀层层下去就形成了⼀个层次化命名空间 ZNode 树，我们称为 ZNode Tree，它采⽤了类似⽂件系统的层级树状结构进⾏管理。⻅下图
 
 ![](znode.png)
 
