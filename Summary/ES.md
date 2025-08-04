@@ -269,11 +269,11 @@ L --> M[返回最终结果]
 	```
 
 ## 生产调优
-### **生产调优实战**
 
 #### 场景 1：写入吞吐优先（日志采集）
 
-json
+
+```json
 
 PUT /logs/_settings
 {
@@ -281,13 +281,12 @@ PUT /logs/_settings
   "index.translog.durability": "async",   // 异步刷盘
   "index.translog.flush_threshold_size": "1gb" // 增大刷盘阈值
 }
-
+```
 - **效果**：写入吞吐量提升 5-10 倍，但数据延迟 30 秒可见，宕机可能丢失 1 秒数据。
-    
 
 #### 场景 2：数据安全优先（金融交易）
 
-json
+```json
 
 PUT /transactions/_settings
 {
@@ -295,31 +294,27 @@ PUT /transactions/_settings
   "index.translog.durability": "request", // 每次写操作同步刷盘
   "index.number_of_replicas": 2           // 多副本保障
 }
+```
 
 - **代价**：写入性能下降 50%，需更高配置硬件支撑。
-    
 
 #### 场景 3：大规模数据导入
 
 1. 导入前关闭刷新和副本：
-    
-    json
-    
+	```json
     PUT /temp_index/_settings
     {
       "index.refresh_interval": "-1",
       "index.number_of_replicas": 0
     }
-    
+    ```
 2. 批量导入数据（如用 `_bulk` API）。
-    
 3. 导入完成后恢复设置并强制刷新：
-    
-    json
-    
+	```json
     PUT /temp_index/_settings
     {
       "index.refresh_interval": "1s",
       "index.number_of_replicas": 1
     }
     POST /temp_index/_refresh
+    ```
