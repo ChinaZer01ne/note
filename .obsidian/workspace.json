@@ -471,6 +471,7 @@
   "active": "9565818dc7d2239a",
   "lastOpenFiles": [
     "Summary/ES.md",
+    "Summary/Zookeeper.md",
     "Summary/DDD.md",
     "Summary/System Design.md",
     "Summary/Dubbo.md",
@@ -515,7 +516,6 @@
     "Summary/Redis.md",
     "Summary/JVM.md",
     "Summary/Spring.md",
-    "Summary/Mysql.md",
     "Untitled.canvas",
     "未命名.canvas"
   ]
