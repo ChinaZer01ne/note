@@ -95,6 +95,12 @@ E --> F[数据可被搜索]
 | **高频写入**（如日志）  | 每秒生成大量小 Segment → 查询性能下降 | 增大 `refresh_interval`（如 30s）      |
 | **低延迟搜索**（如电商） | 默认 1 秒延迟太高               | 调小 `refresh_interval`（如 500ms）    |
 | **索引重建**       | 导入历史数据无需实时搜索             | 关闭刷新：`index.refresh_interval: -1` |
+```JSON
+PUT /logs/_settings
+{
+  "index.refresh_interval": "30s"  // 日志类索引降低刷新频率
+}
+```
 
 >将内存缓冲区（In-memory Buffer）中的数据转换成 Lucene 段（Segment） 并放入 OS Cache，使**新写入的数据在 1 秒内可被搜索到（NRT 特性）。注意：此时数据仍在内存/OS Cache 中，未落盘！宕机会丢失**。
 ### translog
@@ -108,7 +114,14 @@ ES 数据丢失的问题：translog 也是先写入 Filesystem cache，然后默
 1. 将 memory buffer 中的数据 refresh 到 Filesystem Cache 中的一个新的 segment 文件中去，然后清空 Memory Buffer；  
 2. 创建一个新的 commit point（提交点），同时强行将 Filesystem Cache 中目前所有的数据都 fsync 到磁盘文件中；  
 3. 删除旧的 translog 日志文件并创建一个新的 translog 日志文件，此时 flush 操作完成  
-        
+```mermaid
+flowchart TD
+A[触发 Flush] --> B[持久化所有内存 Buffer 到磁盘]
+B --> C[清空当前 Translog 文件]
+C --> D[生成新 Translog 文件]
+D --> E[更新磁盘提交点 Commit Point]
+```
+
 flush 操作主要通过以下几个参数控制  
 - index.translog.flush_threshold_period  
 	>每隔多长时间执行一次flush，默认30m  
@@ -116,7 +129,25 @@ flush 操作主要通过以下几个参数控制
 	>当事务日志大小到达此预设值，则执行flush，默认512mb  
 - index.translog.flush_threshold_ops  
 	>当事务日志累积到多少条数据后flush一次
+- 手动触发
+	>`POST /index/_flush`
 
+核心作用：
+
+> * 将内存 Buffer 和 OS Cache 中的 Segment **持久化到磁盘**。
+> * **清空 Translog**（事务日志），释放磁盘空间。
+> * **确保宕机后数据不丢失**。
+
+**Refresh vs Flush 关键区别**
+
+| 维度          | Refresh            | Flush               |
+| --------------- | ---------------------- | ----------------------- |
+| 目的          | 让数据可搜索（NRT）        | 保证数据持久化（不丢失）        |
+| 数据位置        | 内存 → OS Cache          | OS Cache → 磁盘           |
+| 是否写磁盘       | ❌ 否                    | ✅ 是                     |
+| Translog 处理 | 不清理 Translog           | 清空当前 Translog       |
+| 频率          | 高（默认 1 秒 1 次）          | 低（默认 512MB 或 30 分钟 1 次） |
+| 手动命令        | `POST /index/_refresh` | `POST /index/_flush`    |
 ### 段合并  
 - 将多个小 segment 文件合并成一个 segment，在合并时被标识为 deleted 的 doc（或被更新文档的旧版本）不会被写入到新的 segment 中。  
 - 合并完成后，然后将新的 segment 文件 flush 写入磁盘；然后创建一个新的 commit point 文件，标识所有新的 segment 文件，并排除掉旧的 segement 和已经被合并的小 segment；  
@@ -236,3 +267,59 @@ L --> M[返回最终结果]
 	# elasticsearch.yml 保护配置
 	max_result_window: 10000  # 禁止 from+size > 10000 的请求
 	```
+
+## 生产调优
+### **生产调优实战**
+
+#### 场景 1：写入吞吐优先（日志采集）
+
+json
+
+PUT /logs/_settings
+{
+  "index.refresh_interval": "30s",        // 减少刷新频率
+  "index.translog.durability": "async",   // 异步刷盘
+  "index.translog.flush_threshold_size": "1gb" // 增大刷盘阈值
+}
+
+- **效果**：写入吞吐量提升 5-10 倍，但数据延迟 30 秒可见，宕机可能丢失 1 秒数据。
+    
+
+#### 场景 2：数据安全优先（金融交易）
+
+json
+
+PUT /transactions/_settings
+{
+  "index.refresh_interval": "1s",         // 快速可查
+  "index.translog.durability": "request", // 每次写操作同步刷盘
+  "index.number_of_replicas": 2           // 多副本保障
+}
+
+- **代价**：写入性能下降 50%，需更高配置硬件支撑。
+    
+
+#### 场景 3：大规模数据导入
+
+1. 导入前关闭刷新和副本：
+    
+    json
+    
+    PUT /temp_index/_settings
+    {
+      "index.refresh_interval": "-1",
+      "index.number_of_replicas": 0
+    }
+    
+2. 批量导入数据（如用 `_bulk` API）。
+    
+3. 导入完成后恢复设置并强制刷新：
+    
+    json
+    
+    PUT /temp_index/_settings
+    {
+      "index.refresh_interval": "1s",
+      "index.number_of_replicas": 1
+    }
+    POST /temp_index/_refresh
