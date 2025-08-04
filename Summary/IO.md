@@ -185,17 +185,14 @@ Reactor负责接收连接，通过dispath分发任务，每个连接分配一个
 
 ### Reactor模式的流程
 
-1、当应用向`Initiaion Dispatcher`注册具体的事件处理器时，应用会标识出该事件处理器感兴趣的事件（将事件和处理器关联起来了）。
+![](reactor原理.png)
 
-2、`Initiaion Dispatcher`会要求每个事件处理器向其传递内部的`Handle`，该`Handle`向操作系统标识了事件处理器。
-
-3、当所有的事件处理器注册完毕后，应用会调用`handle_events`方法来启动`Initiaion Dispatcher`的事件循环。这时，`Initiaion Dispatcher`会将每个注册的事件管理器的`handle`放到一起，并使用同步事件分离器来等待事件的发生。比如说，TCP协议层会使用select同步事件分离器操作来等待客户端发送的数据到达连接的socket的事件。
-
-4、当与某个事件源对应的`Handle`变为ready状态时，比如说TCP Socket变为等待读事件时，同步事件分离器就会通知`Initiaion Dispatcher`。
-
-5、`Initiaion Dispatcher`会触发事件处理器的回调方法，从而响应这个处于ready状态的`Handle`。当事件发生时，`Initiaion Dispatcher`会将被事件源出发的`Handle`作为key来寻找并分发恰当的事件处理器回调方法（之前`Initiaion Dispatcher`把`Handle`和事件处理器的关系都保存好了，只需要遍历获取指定事件的事件处理器进行回调）。
-
-6、`Initiaion Dispatcher`回调事件处理器的`handle_event(type)`回调方法来执行特定于应用的功能（开发者自己写的代码），从而相应这个事件。所发生的事件类型可以作为给方法参数并被该方法内部使用来执行额外的特定于服务的分离与分发。
+1. 当应用向`Initiaion Dispatcher`注册具体的事件处理器时，应用会标识出该事件处理器感兴趣的事件（将事件和处理器关联起来了）。
+2. `Initiaion Dispatcher`会要求每个事件处理器向其传递内部的`Handle`，该`Handle`向操作系统标识了事件处理器。
+3. 当所有的事件处理器注册完毕后，应用会调用`handle_events`方法来启动`Initiaion Dispatcher`的事件循环。这时，`Initiaion Dispatcher`会将每个注册的事件管理器的`handle`放到一起，并使用同步事件分离器来等待事件的发生。比如说，TCP协议层会使用select同步事件分离器操作来等待客户端发送的数据到达连接的socket的事件。
+4. 当与某个事件源对应的`Handle`变为ready状态时，比如说TCP Socket变为等待读事件时，同步事件分离器就会通知`Initiaion Dispatcher`。
+5. `Initiaion Dispatcher`会触发事件处理器的回调方法，从而响应这个处于ready状态的`Handle`。当事件发生时，`Initiaion Dispatcher`会将被事件源出发的`Handle`作为key来寻找并分发恰当的事件处理器回调方法（之前`Initiaion Dispatcher`把`Handle`和事件处理器的关系都保存好了，只需要遍历获取指定事件的事件处理器进行回调）。
+6. `Initiaion Dispatcher`回调事件处理器的`handle_event(type)`回调方法来执行特定于应用的功能（开发者自己写的代码），从而相应这个事件。所发生的事件类型可以作为给方法参数并被该方法内部使用来执行额外的特定于服务的分离与分发。
 
 ## 零拷贝::
 ### 什么是零拷贝？::
