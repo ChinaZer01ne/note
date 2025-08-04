@@ -6,7 +6,7 @@
       {
         "id": "63088524407c589c",
         "type": "tabs",
-        "dimension": 49.93654822335025,
+        "dimension": 49.93654822335024,
         "children": [
           {
             "id": "9565818dc7d2239a",
@@ -42,7 +42,7 @@
       {
         "id": "2a8c8c4affce576d",
         "type": "tabs",
-        "dimension": 50.06345177664975,
+        "dimension": 50.06345177664976,
         "children": [
           {
             "id": "f5515e11d01fa963",
@@ -435,12 +435,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
+              "icon": "lucide-file",
+              "title": "插件不再活动"
+            }
+          },
+          {
+            "id": "4fb3b0e07492fb53",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
           }
         ],
-        "currentTab": 28
+        "currentTab": 29
       }
     ],
     "direction": "horizontal",
@@ -459,7 +469,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "9565818dc7d2239a",
+  "active": "4fb3b0e07492fb53",
   "lastOpenFiles": [
     "Summary/Dubbo.md",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
