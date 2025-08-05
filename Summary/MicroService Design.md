@@ -106,9 +106,9 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 
 #### 使用场景
 
-对于一致性要求高、短流程、并发高 的场景，如：金融核心系统，会优先考虑 TCC 方案。而在另外一些场景下，我们并不需要这么强的一致性，只需要保证最终一致性即可。
+对于一致性要求高、短流程、并发高的场景，如：金融核心系统，会优先考虑 TCC 方案。而在另外一些场景下，我们并不需要这么强的一致性，只需要保证最终一致性即可。
 
-比如 很多金融核心以上的业务（渠道层、产品层、系统集成层），这些系统的特点是最终一致即可、流程多、流程长、还可能要调用其它公司的服务。这种情况如果选择 TCC 方案开发的话，一来成本高，二来无法要求其它公司的服务也遵循 TCC 模式。同时流程长，事务边界太长，加锁时间长，也会影响并发性能。
+比如很多金融核心以上的业务（渠道层、产品层、系统集成层），这些系统的特点是最终一致即可、流程多、流程长、还可能要调用其它公司的服务。这种情况如果选择 TCC 方案开发的话，一来成本高，二来无法要求其它公司的服务也遵循 TCC 模式。同时流程长，事务边界太长，加锁时间长，也会影响并发性能。
 
 所以 Saga 模式的适用场景是：
 
@@ -126,10 +126,6 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 
 ### 本地消息表
 
-本地消息表其实是国外的 ebay 搞出来的这么一套思想。
-
-这个大概意思是这样的：
-
 1. A 系统在自己本地一个事务里操作同时，插入一条数据到消息表；
 2. 接着 A 系统将这个消息发送到 MQ 中去；
 3. B 系统接收到消息之后，在一个事务里，往自己本地消息表里插入一条数据，同时执行其他的业务操作，如果这个消息已经被处理过了，那么此时这个事务会回滚，这样**保证不会重复处理消息**；
@@ -137,28 +133,17 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 5. 如果 B 系统处理失败了，那么就不会更新消息表状态，那么此时 A 系统会定时扫描自己的消息表，如果有未处理的消息，会再次发送到 MQ 中去，让 B 再次处理；
 6. 这个方案保证了最终一致性，哪怕 B 事务失败了，但是 A 会不断重发消息，直到 B 那边成功为止。
 
-这个方案说实话最大的问题就在于**严重依赖于数据库的消息表来管理事务**啥的，如果是高并发场景咋办呢？咋扩展呢？所以一般确实很少用。
+**严重依赖于数据库的消息表来管理事务**，不适合高并发场景。
 
-[![distributed-transaction-local-message-table](https://github.com/doocs/advanced-java/raw/main/docs/distributed-system/images/distributed-transaction-local-message-table.png)](https://github.com/doocs/advanced-java/blob/main/docs/distributed-system/images/distributed-transaction-local-message-table.png)
+[![distributed-transaction-local-message-table](distributed-transaction-local-message-table.png)
 
 ## 可靠消息最终一致性方案
 
-这个的意思，就是干脆不要用本地的消息表了，直接基于 MQ 来实现事务。比如阿里的 RocketMQ 就支持消息事务。
+基于 MQ 来实现事务。比如 RocketMQ 就支持消息事务。
 
-大概的意思就是：
-
-1. A 系统先发送一个 prepared 消息到 mq，如果这个 prepared 消息发送失败那么就直接取消操作别执行了；
-2. 如果这个消息发送成功过了，那么接着执行本地事务，如果成功就告诉 mq 发送确认消息，如果失败就告诉 mq 回滚消息；
-3. 如果发送了确认消息，那么此时 B 系统会接收到确认消息，然后执行本地的事务；
-4. mq 会自动**定时轮询**所有 prepared 消息回调你的接口，问你，这个消息是不是本地事务处理失败了，所有没发送确认的消息，是继续重试还是回滚？一般来说这里你就可以查下数据库看之前本地事务是否执行，如果回滚了，那么这里也回滚吧。这个就是避免可能本地事务执行成功了，而确认消息却发送失败了。
-5. 这个方案里，要是系统 B 的事务失败了咋办？重试咯，自动不断重试直到成功，如果实在是不行，要么就是针对重要的资金类业务进行回滚，比如 B 系统本地回滚后，想办法通知系统 A 也回滚；或者是发送报警由人工来手工回滚和补偿。
-6. 这个还是比较合适的，目前国内互联网公司大都是这么玩儿的，要不你就用 RocketMQ 支持的，要不你就自己基于类似 ActiveMQ？RabbitMQ？自己封装一套类似的逻辑出来，总之思路就是这样子的。
-
-[![distributed-transaction-reliable-message](https://github.com/doocs/advanced-java/raw/main/docs/distributed-system/images/distributed-transaction-reliable-message.png)](https://github.com/doocs/advanced-java/blob/main/docs/distributed-system/images/distributed-transaction-reliable-message.png)
+[[MQ#RocketMQ如何实现的分布式事务？]]
 
 ## 最大努力通知方案
-
-这个方案的大致意思就是：
 
 1. 系统 A 本地事务执行完之后，发送个消息到 MQ；
 2. 这里会有个专门消费 MQ 的**最大努力通知服务**，这个服务会消费 MQ 然后写入数据库中记录下来，或者是放入个内存队列也可以，接着调用系统 B 的接口；
@@ -167,11 +152,6 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 ## SETA的XA和AT模式
 TODO
 # 分布式锁
-
-### 实际应用
-
-- 数据并发竞争
-- 防止库存超卖
 
 ### 数据库
 
@@ -187,13 +167,9 @@ TODO
 - 不能死锁
 - 容错（只要大部分 Redis 节点创建了这把锁就可以）
 
-#### [Redis 最普通的分布式锁](https://github.com/doocs/advanced-java/blob/main/docs/distributed-system/distributed-lock-redis-vs-zookeeper.md#redis-%E6%9C%80%E6%99%AE%E9%80%9A%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81)
+#### Redis 最普通的分布式锁
 
-第一个最普通的实现方式，就是在 Redis 里使用 `SET key value [EX seconds] [PX milliseconds] NX` 创建一个 key，这样就算加锁。其中：
-
-- `NX`：表示只有 `key` 不存在的时候才会设置成功，如果此时 redis 中存在这个 `key`，那么设置失败，返回 `nil`。
-- `EX seconds`：设置 `key` 的过期时间，精确到秒级。意思是 `seconds` 秒后锁自动释放，别人创建的时候如果发现已经有了就不能加锁了。
-- `PX milliseconds`：同样是设置 `key` 的过期时间，精确到毫秒级。
+第一个最普通的实现方式，就是在 Redis 里使用 `SET key value [EX seconds] [PX milliseconds] NX` 创建一个 key，这样就算加锁。
 
 比如执行以下命令：
 
