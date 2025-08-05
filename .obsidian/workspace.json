@@ -619,8 +619,9 @@
   },
   "active": "14e0094191dc1fe5",
   "lastOpenFiles": [
-    "Summary/MQ.md",
+    "Summary/ES.md",
     "Summary/MicroService Design.md",
+    "Summary/MQ.md",
     "Summary/image/microservice/distributed-transaction-local-message-table.png",
     "Summary/image/microservice/Unconfirmed 429806.crdownload",
     "Summary/image/microservice/distributed-transaction-saga.png",
@@ -634,7 +635,6 @@
     "Summary/TO DO LIST.md",
     "kafka生产消费流程图 1.png.md",
     "Summary/JVM.md",
-    "Summary/ES.md",
     "Summary/Algorithm.md",
     "Summary/Mysql.md",
     "daliy_note/2023-09-27.md",
