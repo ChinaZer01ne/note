@@ -470,7 +470,7 @@ public class ZooKeeperDistributedLock implements Watcher {
 
 针对这种情况，可以通过 JVM 调优，尽量避免长时间 GC 的情况发生。
 
-### redis 分布式锁和 zk 分布式锁的对比
+### Redis 分布式锁和 zk 分布式锁的对比
 
 - Redis 分布式锁，其实**需要自己不断去尝试获取锁**，比较消耗性能。
 - zk 分布式锁，获取不到锁，注册个监听器即可，不需要不断主动尝试获取锁，性能开销较小。
