@@ -93,17 +93,16 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 > 业务侵入性大，事务回滚依赖于开发者来回滚和补偿，代码量大，复杂度高。
 
 
-[![distributed-transacion-TCC](https://github.com/doocs/advanced-java/raw/main/docs/distributed-system/images/distributed-transaction-TCC.png)](https://github.com/doocs/advanced-java/blob/main/docs/distributed-system/images/distributed-transaction-TCC.png)
-
+[![distributed-transacion-TCC](distributed-transaction-TCC.png)
 ## Saga 方案
 
-金融核心等业务可能会选择 TCC 方案，以追求强一致性和更高的并发量，而对于更多的金融核心以上的业务系统 往往会选择补偿事务，补偿事务处理在 30 多年前就提出了 Saga 理论，随着微服务的发展，近些年才逐步受到大家的关注。目前业界比较公认的是采用 Saga 作为长事务的解决方案。
+金融核心等业务可能会选择 TCC 方案，以追求强一致性和更高的并发量，而对于更多的金融核心以上的业务系统往往会选择补偿事务，补偿事务处理在 30 多年前就提出了 Saga 理论。目前业界比较公认的是采用 Saga 作为长事务的解决方案。
 
 #### 基本原理
 
 业务流程中每个参与者都提交本地事务，若某一个参与者失败，则补偿前面已经成功的参与者。下图左侧是正常的事务流程，当执行到 T3 时发生了错误，则开始执行右边的事务补偿流程，反向执行 T3、T2、T1 的补偿服务 C3、C2、C1，将 T3、T2、T1 已经修改的数据补偿掉。
 
-[![distributed-transacion-TCC](https://github.com/doocs/advanced-java/raw/main/docs/distributed-system/images/distributed-transaction-saga.png)](https://github.com/doocs/advanced-java/blob/main/docs/distributed-system/images/distributed-transaction-saga.png)
+[![distributed-transacion-TCC](distributed-transaction-saga.png)]
 
 #### 使用场景
 
