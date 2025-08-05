@@ -14,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/面试问题.md",
+                "file": "Summary/MicroService Design.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "面试问题"
+              "title": "MicroService Design"
             }
           },
           {
@@ -175,13 +175,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/面试问题.md",
+                "file": "Summary/MicroService Design.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "面试问题 的大纲"
+              "title": "MicroService Design 的大纲"
             }
           }
         ]
@@ -603,8 +603,9 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "abeae7846fe6ef89",
+  "active": "14e0094191dc1fe5",
   "lastOpenFiles": [
+    "Summary/面试问题.md",
     "Summary/TO DO LIST.md",
     "kafka生产消费流程图 1.png.md",
     "Summary/JVM.md",
@@ -640,7 +641,6 @@
     "Summary/image/IO/Unconfirmed 543465.crdownload",
     "Summary/Zookeeper.md",
     "Summary/DDD.md",
-    "Summary/Dubbo.md",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
     "Summary/image/Dubbo/Unconfirmed 914640.crdownload",
     "Summary/image/Dubbo/dubbo-spi.png",
