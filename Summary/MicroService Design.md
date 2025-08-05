@@ -200,6 +200,7 @@ TODO
 ### 数据库
 
 通过唯一索引实现。
+> 数据库成为单点（需主从/集群），故障切换时可能丢失锁信息或导致脑裂。
 
 ### [Redis 分布式锁](https://github.com/doocs/advanced-java/blob/main/docs/distributed-system/distributed-lock-redis-vs-zookeeper.md#redis-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81)
 
