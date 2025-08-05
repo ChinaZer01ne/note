@@ -569,11 +569,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
+              "icon": "lucide-file",
+              "title": "插件不再活动"
+            }
+          },
+          {
+            "id": "abeae7846fe6ef89",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
           }
-        ]
+        ],
+        "currentTab": 30
       }
     ],
     "direction": "horizontal",
@@ -592,7 +603,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "14e0094191dc1fe5",
+  "active": "abeae7846fe6ef89",
   "lastOpenFiles": [
     "Summary/TO DO LIST.md",
     "kafka生产消费流程图 1.png.md",
