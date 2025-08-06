@@ -1584,16 +1584,16 @@ select * from t1 straight_join t2 on (t1.a=t2.b);
 1. **如果可以使用 Index Nested-Loop Join 算法，也就是说可以用上被驱动表上的索引，其实是没问题的；**
 2. **如果使用 Block Nested-Loop Join 算法**，扫描行数就会过多。尤其是在大表上的 join 操作，这样可能要扫描被驱动表很多次，会占用大量的系统资源。**所以这种 join 尽量不要用**。
 
-所以你在判断要不要使用 join 语句时，就是看 explain 结果里面，Extra 字段里面有没有出现“Block Nested Loop”字样。
+所以**你在判断要不要使用 join 语句时，就是看 explain 结果里面，Extra 字段里面有没有出现“Block Nested Loop”字样**。
 
 第二个问题是：如果要使用 join，应该选择大表做驱动表还是选择小表做驱动表？
 
-1. 如果是 Index Nested-Loop Join 算法，应该选择小表做驱动表；
-2. 如果是 Block Nested-Loop Join 算法：
-    - 在 join_buffer_size 足够大的时候，是一样的；
-    - 在 join_buffer_size 不够大的时候（这种情况更常见），应该选择小表做驱动表。
+1. **如果是 Index Nested-Loop Join 算法，应该选择小表做驱动表**；
+2. **如果是 Block Nested-Loop Join 算法**：
+    - **在 join_buffer_size 足够大的时候，是一样的**；
+    - **在 join_buffer_size 不够大的时候（这种情况更常见），应该选择小表做驱动表**。
 
-所以，这个问题的结论就是，总是应该使用小表做驱动表。
+所以，这个问题的结论就是，**总是应该使用小表做驱动表**。
 
 当然了，这里我需要说明下，**什么叫作“小表”**。
 
@@ -1623,7 +1623,9 @@ select t1.b,t2.* from  t2  straight_join t1 on (t1.b=t2.b) where t2.id<=100;
 这里，我们应该选择表 t1 作为驱动表。也就是说在这个例子里，“只需要一列参与 join 的表 t1”是那个相对小的表。
 
 所以，更准确地说，**在决定哪个表做驱动表的时候，应该是两个表按照各自的条件过滤，过滤完成之后，计算参与 join 的各个字段的总数据量，数据量小的那个表，就是“小表”，应该作为驱动表。**
+
 ## 如何优化join语句
+
 * 基于回表的优化
 	* MRR
 * 循环嵌套链接（NLJ）
@@ -1763,6 +1765,7 @@ select SQL_BIG_RESULT id%100 as m, count(*) as c from t1 group by m;
 4. 如果数据量实在太大，使用 SQL_BIG_RESULT 这个提示，来告诉优化器直接使用排序算法得到 group by 的结果。
 ## order by 是如何工作的？::
 ### 全字段排序
+
 我们拿以下sql为例：
 ```sql
 select city,name,age from t where city='杭州' order by name limit 1000 ;
@@ -1825,6 +1828,7 @@ city、name、age 这三个字段的定义总长度是 36，我把 max_length_fo
 
 需要说明的是，最后的“结果集”是一个逻辑概念，实际上 MySQL 服务端从排序后的 sort_buffer 中依次取出 id，然后到原表查到 city、name 和 age 这三个字段的结果，不需要在服务端再耗费内存存储结果，是直接返回给客户端的。
 ### 全字段排序 VS rowid 排序
+
 如果 MySQL 实在是担心排序内存太小，会影响排序效率，才会采用 rowid 排序算法，这样排序过程中一次可以排序更多行，但是需要再回到原表去取数据。
 
 如果 MySQL 认为内存足够大，会优先选择全字段排序，把需要的字段都放到 sort_buffer 中，这样排序后就会直接从内存里面返回查询结果了，不用再回到原表去取数据。
@@ -1969,6 +1973,7 @@ alter table t add index city_user_age(city, name, age);
 所以结论是：按照效率排序的话，`count(字段)`  < `count(主键 id)` < `count(1)`  ≈ `count(*)`，所以我建议你，尽量使用 `count(*)`。
 
 ## Multi-Range Read 优化
+
 Multi-Range Read 优化 (MRR)主要目的是尽量使用顺序读盘。
 
 我们先来回顾一下“回表”的概念。回表是指，InnoDB 在普通索引 a 上查到主键 id 的值后，再根据一个个主键 id 的值到主键索引上去查整行数据的过程。
@@ -2003,6 +2008,7 @@ select * from t1 where a>=1 and a<=100;
 **MRR 能够提升性能的核心**在于，这条查询语句在索引 a 上做的是一个范围查询（也就是说，这是一个多值查询），可以得到足够多的主键 id。这样通过排序以后，再去主键索引查数据，才能体现出“顺序性”的优势。
 
 ## Batched Key Access
+
 MySQL 在 5.6 版本后开始引入的 Batched Key Access(BKA) 算法了。这个 BKA 算法是对 NLJ 算法的优化。
 
 我们再来看看上一篇文章中用到的 NLJ 算法的流程图：
@@ -2208,7 +2214,13 @@ TODO
 也有可能是单个sql消耗资源不多，但是突然有大量的session链接进来导致cpu飙升，这种情况需要和业务一起分析链接激增的原因，做出相应调整，比如限制连接数等。
 
 ## Where和Having的区别？
-TODO
+|特性|WHERE|HAVING|
+|---|---|---|
+|**作用对象**|表的原始行记录 (Rows)|分组后的结果组 (Groups)，通常由 `GROUP BY` 创建|
+|**执行时机**|在 `GROUP BY` 和聚合计算 **之前**|在 `GROUP BY` 和聚合计算 **之后**|
+|**能否使用聚合函数**|**否**（在过滤条件中不能直接用 `SUM`, `AVG`, `COUNT` 等）|**是**（常用聚合函数结果作为过滤条件）|
+|**典型使用场景**|过滤不符合条件的单个记录，如 `WHERE salary > 50000`|过滤不符合聚合条件的分组，如 `HAVING AVG(salary) > 60000`|
+|**是否依赖 `GROUP BY`**|不依赖（可单独使用）|通常依赖（除非单独用于过滤聚合结果）|
 
 ## InnoDB和MyISAM的区别
 todo
