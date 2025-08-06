@@ -1516,7 +1516,7 @@ select * from t1 straight_join t2 on (t1.a=t2.b);
 ### Block Nested-Loop Join
 这时候，被驱动表上没有可用的索引，算法的流程是这样的：
 
-1. 把表 t1 的数据读入线程内存 join_buffer 中，由于我们这个语句中写的是 select *，因此是把整个表 t1 放入了内存；
+1. 把表 t1 的数据读入线程内存 join_buffer 中，由于我们这个语句中写的是 select ，因此是把整个表 t1 放入了内存；
 2. 扫描表 t2，把表 t2 中的每一行取出来，跟 join_buffer 中的数据做对比，满足 join 条件的，作为结果集的一部分返回。
 
 这个过程的流程图如下：
@@ -1579,10 +1579,10 @@ select * from t1 straight_join t2 on (t1.a=t2.b);
 
 这就是为什么，你可能会看到一些建议告诉你，如果你的 join 语句很慢，就把 join_buffer_size 改大。
 
-第一个问题：能不能使用 join 语句？
+第一个问题：**能不能使用 join 语句？**
 
-1. 如果可以使用 Index Nested-Loop Join 算法，也就是说可以用上被驱动表上的索引，其实是没问题的；
-2. 如果使用 Block Nested-Loop Join 算法，扫描行数就会过多。尤其是在大表上的 join 操作，这样可能要扫描被驱动表很多次，会占用大量的系统资源。所以这种 join 尽量不要用。
+1. **如果可以使用 Index Nested-Loop Join 算法，也就是说可以用上被驱动表上的索引，其实是没问题的；**
+2. **如果使用 Block Nested-Loop Join 算法**，扫描行数就会过多。尤其是在大表上的 join 操作，这样可能要扫描被驱动表很多次，会占用大量的系统资源。**所以这种 join 尽量不要用**。
 
 所以你在判断要不要使用 join 语句时，就是看 explain 结果里面，Extra 字段里面有没有出现“Block Nested Loop”字样。
 
