@@ -91,6 +91,7 @@ TODO
 		>取决于queue的数量：单分区单线程消费
 
 ## RocketMQ的Rebalance机制
+
 Rebalance即再均衡，指的是将⼀个Topic下的多个Queue在同⼀个Consumer Group中的多个 Consumer间进行重新分配的过程，它能够提升消息的并行消费能力。
 ### 触发时机    
 
