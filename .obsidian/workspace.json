@@ -14,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Mysql.md",
+                "file": "Summary/面试问题.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Mysql"
+              "title": "面试问题"
             }
           },
           {
@@ -189,13 +189,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Mysql.md",
+                "file": "Summary/面试问题.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Mysql 的大纲"
+              "title": "面试问题 的大纲"
             }
           }
         ]
@@ -629,7 +629,17 @@
   },
   "active": "14e0094191dc1fe5",
   "lastOpenFiles": [
+    "Summary/Java.md",
+    "Summary/Nacos.md",
+    "Summary/Redis.md",
+    "Summary/Sentinel.md",
+    "Summary/Spring.md",
+    "Summary/Spring Cloud.md",
+    "Summary/System Design.md",
+    "Summary/Zookeeper.md",
     "Summary/MQ.md",
+    "Summary/Mybatis.md",
+    "Summary/Mysql.md",
     "Summary/MicroService Design.md",
     "Summary/ES.md",
     "Summary/image/microservice/distributed-transaction-local-message-table.png",
@@ -640,23 +650,14 @@
     "Summary/image/microservice/Unconfirmed 235175.crdownload",
     "Summary/image/microservice",
     "Summary/image/新建文件夹",
-    "Summary/Spring Cloud.md",
     "Summary/面试问题.md",
     "Summary/TO DO LIST.md",
     "kafka生产消费流程图 1.png.md",
     "Summary/JVM.md",
     "Summary/Algorithm.md",
-    "Summary/Mysql.md",
     "daliy_note/2023-09-27.md",
     "daliy_note/2025-08-04.md",
     "daliy_note/2024-10-29.md",
-    "Summary/Java.md",
-    "Summary/System Design.md",
-    "Summary/Spring.md",
-    "Summary/Sentinel.md",
-    "Summary/Redis.md",
-    "Summary/Nacos.md",
-    "Summary/Mybatis.md",
     "Summary/MarkDown.md",
     "Summary/Log.md",
     "Summary/Linux.md",
@@ -671,7 +672,6 @@
     "Summary/image/IO/Unconfirmed 706510.crdownload",
     "Summary/image/IO/传统IO.png",
     "Summary/image/IO/Unconfirmed 543465.crdownload",
-    "Summary/Zookeeper.md",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
     "Summary/image/Dubbo/dubbo-spi.png",
     "Untitled.canvas",
