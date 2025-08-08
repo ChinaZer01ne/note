@@ -603,12 +603,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
+              "icon": "lucide-file",
+              "title": "插件不再活动"
+            }
+          },
+          {
+            "id": "65712f69bbe9a222",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
           }
         ],
-        "currentTab": 31
+        "currentTab": 32
       }
     ],
     "direction": "horizontal",
@@ -627,7 +637,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "14e0094191dc1fe5",
+  "active": "65712f69bbe9a222",
   "lastOpenFiles": [
     "Summary/Java.md",
     "Summary/Nacos.md",
