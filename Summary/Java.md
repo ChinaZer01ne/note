@@ -1179,11 +1179,9 @@ ExecutorService pool = Executors.newFixedThreadPool(5);
 3. **推动函数式编程风格**  
     支持 `map`、`filter`、`flatMap` 等操作。
     
-
-
 ### 最佳实践
 
-#### ✅ **推荐做法**
+#### ✅ 推荐做法
 
 1. **作为返回值**  
     用 `Optional` 替代可能返回 `null` 的方法：
@@ -1196,9 +1194,7 @@ ExecutorService pool = Executors.newFixedThreadPool(5);
 	```    
 2. **使用 `orElseGet()` 替代 `orElse()` 用于耗时操作**  
     `orElse()` 总会计算默认值，即使值存在：
-    
-   
-```java
+	```java
     // 不推荐：即使 value 存在，也会执行 expensiveOperation()
     value.orElse(expensiveOperation());
     
@@ -1208,29 +1204,25 @@ ExecutorService pool = Executors.newFixedThreadPool(5);
 3. **链式操作代替条件嵌套**  
     用 `map`/`flatMap`/`filter` 消除 `if` 嵌套：
     
-```java
-    
-    // 传统方式
-    if (user != null) {
-        Address address = user.getAddress();
-        if (address != null) {
-            return address.getCity();
-        }
-    }
-    return "Unknown";
-    
-    // Optional 方式
-    return Optional.ofNullable(user)
-         .map(User::getAddress)
-         .map(Address::getCity)
-         .orElse("Unknown");
-    ```
-    
+	```java
+	// 传统方式
+	if (user != null) {
+		Address address = user.getAddress();
+		if (address != null) {
+			return address.getCity();
+		}
+	}
+	return "Unknown";
+	
+	// Optional 方式
+	return Optional.ofNullable(user)
+		 .map(User::getAddress)
+		 .map(Address::getCity)
+		 .orElse("Unknown");
+	```
 4. **优先使用 `ifPresent()` 而非 `isPresent()` + `get()`**  
     更安全且符合函数式风格：
-    
-```java
-    
+	```java
     // 不推荐
     if (optional.isPresent()) {
         doSomething(optional.get());
@@ -1241,12 +1233,12 @@ ExecutorService pool = Executors.newFixedThreadPool(5);
     ```
     
 
-#### ❌ **避免的陷阱**
+#### ❌ 避免的陷阱
 
 1. **不要用 `Optional` 做字段、方法参数或集合元素**  
     增加复杂度且破坏设计初衷。应直接使用对象或 `null`。
     
-```java
+	```java
     
     // 反例
     class User {
@@ -1259,38 +1251,35 @@ ExecutorService pool = Executors.newFixedThreadPool(5);
     
 3. **不要过度使用**  
     以下情况无需 `Optional`：
-    
     - 集合返回空集合（而非 `null`）时，直接返回 `Collections.emptyList()`。
-        
     - 明确不会返回 `null` 的方法。
         
 4. **谨慎与序列化结合**  
     `Optional` 未实现 `Serializable`，序列化字段可能导致问题。
-    
 
-### **六、Java 9+ 增强**
+### Java 9+ 增强
 
 - **`or()`**  
     值缺失时返回另一个 `Optional`：
     
-    java
-    
+	```java
     optional.or(() -> backupOptional);
+    ```
     
 - **`ifPresentOrElse()`**  
     值存在/缺失分别执行操作：
     
-    java
-    
+	```java
     optional.ifPresentOrElse(
         value -> use(value),
         () -> log("Value missing")
     );
+    ```
     
 - **`stream()`**  
     将 `Optional` 转为单元素流或空流：
     
-    java
-    
+	```java
     List<String> names = optional.stream().collect(Collectors.toList());
+    ```
 
