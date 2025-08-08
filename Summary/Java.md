@@ -1168,17 +1168,8 @@ ExecutorService pool = Executors.newFixedThreadPool(5);
 
 ## Optional
 
-**用于优雅地处理可能为 `null` 的值**，避免显式的 `null` 检查和 `NullPointerException`。
+**用于优雅地处理可能为 `null` 的值**，避免显式的`null`检查和 `NullPointerException`。
 
-1. **显式表达"值可能不存在"**  
-    替代返回 `null`，明确提示调用方需处理空值场景。
-    
-2. **减少 `NullPointerException`**  
-    通过链式方法安全操作值。
-    
-3. **推动函数式编程风格**  
-    支持 `map`、`filter`、`flatMap` 等操作。
-    
 ### 最佳实践
 
 #### ✅ 推荐做法
