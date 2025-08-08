@@ -1167,3 +1167,214 @@ ExecutorService pool = Executors.newFixedThreadPool(5);
 		* 简化包导入：`import java.xml.*;` → 单行模块声明
 
 ## Optional
+**用于优雅地处理可能为 `null` 的值**，避免显式的 `null` 检查和 `NullPointerException`。以下是核心概念和最佳实践：
+
+---
+
+### **一、Optional 的核心作用**
+
+1. **显式表达"值可能不存在"**  
+    替代返回 `null`，明确提示调用方需处理空值场景。
+    
+2. **减少 `NullPointerException`**  
+    通过链式方法安全操作值。
+    
+3. **推动函数式编程风格**  
+    支持 `map`、`filter`、`flatMap` 等操作。
+    
+
+---
+
+### **二、创建 Optional 的三种方式**
+
+|方法|描述|使用场景|
+|---|---|---|
+|`Optional.empty()`|创建空 Optional|表示无值|
+|`Optional.of(value)`|创建非空 Optional|**值必须非 null**（否则抛 NPE）|
+|`Optional.ofNullable(value)`|创建可为空的 Optional|值可能为 `null` 时|
+
+java
+
+Optional<String> empty = Optional.empty();
+Optional<String> name = Optional.of("Alice"); // 值非 null
+Optional<String> mayBeNull = Optional.ofNullable(getNullableValue());
+
+---
+
+### **三、关键操作与方法**
+
+#### 1. **检查值是否存在**
+
+java
+
+if (optional.isPresent()) { 
+    // 值存在
+}
+
+#### 2. **条件消费值（推荐）**
+
+java
+
+optional.ifPresent(value -> System.out.println(value)); // 值存在时执行操作
+
+#### 3. **安全获取值**
+
+java
+
+String result = optional.orElse("default"); // 值不存在时返回默认值
+String result = optional.orElseGet(() -> generateDefault()); // 懒加载默认值（推荐用于耗时操作）
+String result = optional.orElseThrow(); // 抛 NoSuchElementException
+String result = optional.orElseThrow(CustomException::new); // 抛自定义异常
+
+#### 4. **链式转换与过滤**
+
+java
+
+// 转换值（若存在）
+Optional<String> upper = optional.map(String::toUpperCase);
+
+// 嵌套 Optional 解包（如方法返回 Optional）
+Optional<Int> length = optional.flatMap(s -> Optional.of(s.length()));
+
+// 条件过滤
+Optional<String> filtered = optional.filter(s -> s.length() > 3);
+
+---
+
+### **四、最佳实践**
+
+#### ✅ **推荐做法**
+
+1. **作为返回值**  
+    用 `Optional` 替代可能返回 `null` 的方法：
+    
+    java
+    
+    public Optional<User> findUserById(String id) {
+        // ... 可能返回 null
+        return Optional.ofNullable(user);
+    }
+    
+2. **使用 `orElseGet()` 替代 `orElse()` 用于耗时操作**  
+    `orElse()` 总会计算默认值，即使值存在：
+    
+    java
+    
+    // 不推荐：即使 value 存在，也会执行 expensiveOperation()
+    value.orElse(expensiveOperation());
+    
+    // 推荐：仅当值缺失时执行
+    value.orElseGet(() -> expensiveOperation());
+    
+3. **链式操作代替条件嵌套**  
+    用 `map`/`flatMap`/`filter` 消除 `if` 嵌套：
+    
+    java
+    
+    // 传统方式
+    if (user != null) {
+        Address address = user.getAddress();
+        if (address != null) {
+            return address.getCity();
+        }
+    }
+    return "Unknown";
+    
+    // Optional 方式
+    return Optional.ofNullable(user)
+         .map(User::getAddress)
+         .map(Address::getCity)
+         .orElse("Unknown");
+    
+4. **优先使用 `ifPresent()` 而非 `isPresent()` + `get()`**  
+    更安全且符合函数式风格：
+    
+    java
+    
+    // 不推荐
+    if (optional.isPresent()) {
+        doSomething(optional.get());
+    }
+    
+    // 推荐
+    optional.ifPresent(value -> doSomething(value));
+    
+
+#### ❌ **避免的陷阱**
+
+1. **不要用 `Optional` 做字段、方法参数或集合元素**  
+    增加复杂度且破坏设计初衷。应直接使用对象或 `null`。
+    
+    java
+    
+    // 反例
+    class User {
+        private Optional<String> name; // 不要这样！
+    }
+    
+2. **避免调用 `get()` 前未检查 `isPresent()`**  
+    可能引发 `NoSuchElementException`。
+    
+3. **不要过度使用**  
+    以下情况无需 `Optional`：
+    
+    - 集合返回空集合（而非 `null`）时，直接返回 `Collections.emptyList()`。
+        
+    - 明确不会返回 `null` 的方法。
+        
+4. **谨慎与序列化结合**  
+    `Optional` 未实现 `Serializable`，序列化字段可能导致问题。
+    
+
+---
+
+### **五、Optional vs. null**
+
+|场景|`Optional`|`null`|
+|---|---|---|
+|明确性|显式表达"值可能缺失"|隐式约定|
+|安全性|编译时无保障，需遵循约定|运行时易引发 NPE|
+|链式操作|支持函数式操作|需手动检查|
+
+---
+
+### **六、Java 9+ 增强**
+
+- **`or()`**  
+    值缺失时返回另一个 `Optional`：
+    
+    java
+    
+    optional.or(() -> backupOptional);
+    
+- **`ifPresentOrElse()`**  
+    值存在/缺失分别执行操作：
+    
+    java
+    
+    optional.ifPresentOrElse(
+        value -> use(value),
+        () -> log("Value missing")
+    );
+    
+- **`stream()`**  
+    将 `Optional` 转为单元素流或空流：
+    
+    java
+    
+    List<String> names = optional.stream().collect(Collectors.toList());
+    
+
+---
+
+### **总结**
+
+|场景|建议方案|
+|---|---|
+|方法可能返回 `null`|**返回 `Optional`**|
+|消费可能缺失的值|**`ifPresent()`**|
+|链式转换/过滤|**`map()`/`filter()`/`flatMap()`**|
+|提供默认值|**`orElse()`/`orElseGet()`**|
+|字段/参数|**避免使用 `Optional`**|
+
+**核心原则**：`Optional` 是表达“无结果”的语义工具，而非替代 `null` 的通用容器。正确使用可显著提升代码可读性和健壮性。
