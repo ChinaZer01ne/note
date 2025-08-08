@@ -1093,7 +1093,7 @@ ExecutorService pool = Executors.newFixedThreadPool(5);
 > * 结合实际场景（如日期格式化、上下文传递）理解其价值。
 
 
-## 新特性
+# 新特性
 * Java 8
 	* Lambda 表达式
 	* Stream API
@@ -1165,5 +1165,5 @@ ExecutorService pool = Executors.newFixedThreadPool(5);
 		* 替代`ThreadLocal`，安全共享不可变数据（虚拟线程友好）
 	* 模块导入声明
 		* 简化包导入：`import java.xml.*;` → 单行模块声明
-	
-	
+
+## Optional
