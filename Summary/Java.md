@@ -341,15 +341,41 @@ LRU
 ### TreeMap
 
 ### 对比
-| 特性             | HashMap                                                        | LinkedHashMap              | TreeMap                              |
-| -------------- | -------------------------------------------------------------- | -------------------------- | ------------------------------------ |
-| **底层数据结构**     | **数组 + 链表/红黑树** (JDK8+)                                        | **数组 + 链表/红黑树 + 双向链表**     | **红黑树** (自平衡二叉搜索树)                   |
-| **迭代顺序**       | **无保证的随机顺序**                                                   | **可预测的顺序** (插入顺序 或 访问顺序)   | **排序顺序** (自然顺序 或 自定义顺序)              |
-| **是否允许`null`** | Key 和 Value **都允许** `null`                                     | Key 和 Value **都允许** `null` | **Key 不允许** `null` (取决于比较器)          |
-| **性能 (平均)**    | `O(1)` (get, put)                                              | `O(1)` (get, put)          | `O(log n)` (get, put, containsKey)   |
-| **排序依据**       | 无                                                              | 插入顺序或访问顺序                  | Key 的自然顺序 或 Comparator               |
-| **实现接口**       | Map                                                            | Map                        | Map, **SortedMap**, **NavigableMap** |
-| **线程安全**       | **否** (需用 `Collections.synchronizedMap` 或 `ConcurrentHashMap`) | **否** (同步方式同 `HashMap`)    | **否** (同步方式同 `HashMap`)              |
+
+* HashMap
+	* 底层数据结构：数组 + 链表/红黑树
+	* 迭代顺序：无保证的随机顺序
+	* 是否允许`null`：Key 和 Value **都允许** `null` 
+	* 性能 (平均)：`O(1)` (get, put)        
+	* 排序依据：无
+	* 实现接口：Map
+	* 线程安全：**否** (需用 `Collections.synchronizedMap` 或 `ConcurrentHashMap`)
+* LinkedHashMap
+	* 底层数据结构：数组 + 链表/红黑树 + 双向链表
+	* 迭代顺序：**可预测的顺序** (插入顺序 或 访问顺序)
+	* 是否允许`null`：Key 和 Value **都允许** `null` 
+	* 性能 (平均)：`O(1)` (get, put)        
+	* 排序依据：插入顺序或访问顺序
+	* 实现接口：Map
+	* 线程安全：**否** (需用 `Collections.synchronizedMap` 或 `ConcurrentHashMap`)
+* TreeMap
+	* 底层数据结构：**红黑树** (自平衡二叉搜索树)
+	* 迭代顺序：**排序顺序** (自然顺序 或 自定义顺序)
+	* 是否允许`null`：**Key 不允许** `null` (取决于比较器)
+	* 性能 (平均)：``O(log n)` (get, put, containsKey)
+	* 排序依据：Key 的自然顺序 或 Comparator
+	* 实现接口：Map, **SortedMap**, **NavigableMap**
+	* 线程安全：**否** (需用 `Collections.synchronizedMap` 或 `ConcurrentHashMap`)
+
+| 特性             | LinkedHashMap              | TreeMap                              |
+| -------------- | -------------------------- | ------------------------------------ |
+| **底层数据结构**     | **数组 + 链表/红黑树 + 双向链表**     | **红黑树** (自平衡二叉搜索树)                   |
+| **迭代顺序**       | **可预测的顺序** (插入顺序 或 访问顺序)   | **排序顺序** (自然顺序 或 自定义顺序)              |
+| **是否允许`null`** | Key 和 Value **都允许** `null` | **Key 不允许** `null` (取决于比较器)          |
+| **性能 (平均)**    | `O(1)` (get, put)          | `O(log n)` (get, put, containsKey)   |
+| **排序依据**       | 插入顺序或访问顺序                  | Key 的自然顺序 或 Comparator               |
+| **实现接口**       | Map                        | Map, **SortedMap**, **NavigableMap** |
+| **线程安全**       | **否** (同步方式同 `HashMap`)    | **否** (同步方式同 `HashMap`)              |
 # 并发
 
 ## Java中有哪些实现线程安全的方式？::
