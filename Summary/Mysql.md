@@ -2225,6 +2225,9 @@ TODO
 ## InnoDB和MyISAM的区别
 todo
 
+## union和union all的区别
+todo
+
 # 数据库连接池配置
 
 * **maxActive**  

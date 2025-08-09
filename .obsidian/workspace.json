@@ -14,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/线上问题分享（TODO）.md",
+                "file": "Summary/Mysql.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "线上问题分享（TODO）"
+              "title": "Mysql"
             }
           },
           {
@@ -189,13 +189,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/线上问题分享（TODO）.md",
+                "file": "Summary/Mysql.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "线上问题分享（TODO） 的大纲"
+              "title": "Mysql 的大纲"
             }
           }
         ]
@@ -649,6 +649,7 @@
   },
   "active": "14e0094191dc1fe5",
   "lastOpenFiles": [
+    "Summary/线上问题分享（TODO）.md",
     "Summary/Java.md",
     "Summary/Concurrent programming.md",
     "Summary/Zookeeper.md",
@@ -682,7 +683,6 @@
     "daliy_note/2024-10-29.md",
     "Summary/MarkDown.md",
     "Summary/Log.md",
-    "Summary/Linux.md",
     "Summary/image/IO/reactor原理.png",
     "Summary/image/IO/Unconfirmed 683321.crdownload",
     "Summary/image/IO/多个Reactor设计.png",
