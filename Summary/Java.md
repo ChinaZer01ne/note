@@ -950,6 +950,19 @@ Java中CAS机制使用版本号进行对比，避免ABA问题，具体可以看`
 3. **如何定位死锁：**
     - `jstack <pid>` 命令查看线程栈信息，通常会明确提示 `Found one Java-level deadlock` 并列出死锁线程和锁信息。
     - [fastthread.io](https://fastthread.io/)、JConsole, VisualVM 等可视化工具。
+	```mermaid
+	flowchart TD
+	    A[发现线程阻塞] --> B{获取3次Thread Dump}
+	    B --> C[上传fastthread.io分析]
+	    C -->|检测到死锁| D[定位循环等待链]
+	    C -->|无死锁| E[分析BLOCKED线程栈]
+	    E --> F[绘制锁依赖图]
+	    F --> G[检查锁获取顺序]
+	    G -->|顺序不一致| H[强制全局锁序]
+	    G -->|资源泄露| I[添加超时/释放机制]
+	    D --> J[修改冲突代码]
+	```
+
 ## ForkJoin
 
 ## 线程

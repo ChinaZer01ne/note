@@ -14,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Java.md",
+                "file": "Summary/面试问题.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Java"
+              "title": "面试问题"
             }
           },
           {
@@ -189,13 +189,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Java.md",
+                "file": "Summary/面试问题.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Java 的大纲"
+              "title": "面试问题 的大纲"
             }
           }
         ]
@@ -230,7 +230,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "```mer",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -659,8 +659,10 @@
   },
   "active": "14e0094191dc1fe5",
   "lastOpenFiles": [
-    "Summary/Concurrent programming.md",
     "Summary/Java.md",
+    "Summary/DDD.md",
+    "Summary/ES.md",
+    "Summary/Concurrent programming.md",
     "Summary/JVM.md",
     "Summary/Spring.md",
     "Summary/Mysql.md",
@@ -676,7 +678,6 @@
     "Summary/MQ.md",
     "Summary/Mybatis.md",
     "Summary/MicroService Design.md",
-    "Summary/ES.md",
     "Summary/image/microservice/distributed-transaction-local-message-table.png",
     "Summary/image/microservice/Unconfirmed 429806.crdownload",
     "Summary/image/microservice/distributed-transaction-saga.png",
@@ -692,7 +693,6 @@
     "daliy_note/2025-08-04.md",
     "daliy_note/2024-10-29.md",
     "Summary/MarkDown.md",
-    "Summary/Log.md",
     "Summary/image/IO/reactor原理.png",
     "Summary/image/IO/Unconfirmed 683321.crdownload",
     "Summary/image/IO/多个Reactor设计.png",
