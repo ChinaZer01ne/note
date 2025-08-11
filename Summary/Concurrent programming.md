@@ -96,29 +96,24 @@ CompletableFuture‌是Java 8中引入的一个类，它实现了Future和Comple
     ```
     
 - **监控线程池状态**：记录队列堆积、拒绝次数等指标，结合告警快速定位瓶颈。
-    
 
 #### 其他高级技巧
 
 - **批量任务优化**：
-    
-    - 使用 `allOf()` 合并多个 Future，但避免在其后直接调用 `join()`（仍阻塞）5。
-        
+    - 使用 `allOf()` 合并多个 Future，但避免在其后直接调用 `join()`（仍阻塞）。
     - 改用 `thenCompose()` 实现非阻塞依赖：
-        
-        java
-        
+		```java
         future1.thenCompose(res1 -> future2(res1)) // future2 依赖 future1
                .thenAccept(finalRes -> ...);
-        
+        ```
 - **单元测试避坑**：  
     用 Mockito 模拟线程池行为，避免测试阻塞：
-    
-    java
-    
+	```java
     // 强制同步执行异步任务
     doAnswer(inv -> ((Runnable) inv.getArgument(0)).run())
        .when(executor).execute(any(Runnable.class));
+    ```
+       
 ### 面试深入 (理解原理、细节、陷阱、最佳实践)
 
 1. **与 Future 的区别：**

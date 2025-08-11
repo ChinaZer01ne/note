@@ -929,7 +929,6 @@ Java中CAS机制使用版本号进行对比，避免ABA问题，具体可以看`
 	* `java.util.concurrent` 包中的无锁数据结构： `ConcurrentLinkedQueue`, `CopyOnWriteArrayList` 等。
 ### 锁相关
 
-
 ### 死锁（Deadlock）
 
 1. 必要条件： 互斥、请求与保持、不可剥夺、循环等待。
@@ -950,7 +949,7 @@ Java中CAS机制使用版本号进行对比，避免ABA问题，具体可以看`
     - **破坏循环等待**：**按固定顺序获取锁**（所有线程都按相同的顺序申请锁资源，如 A->B->C）。
 3. **如何定位死锁：**
     - `jstack <pid>` 命令查看线程栈信息，通常会明确提示 `Found one Java-level deadlock` 并列出死锁线程和锁信息。
-    - JConsole, VisualVM 等可视化工具。
+    - [fastthread.io](https://fastthread.io/)、JConsole, VisualVM 等可视化工具。
 ## ForkJoin
 
 ## 线程
