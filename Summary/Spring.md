@@ -259,27 +259,27 @@ Spring设计了三级缓存来解决循环依赖问题。在`DefaultSingletonBea
 > 2. Transaction02将age值修改为30。
 > 3. Transaction01再次读取age值为30，和第一次读取不一致。
 
+每次都读到已提交的事务，没有事务开启时的快照。
+
 **3) 幻读**
-> 1. Transaction01读取了STUDENT表中的一部分数据。
-> 2. Transaction02向STUDENT表中插入了新的行。
-> 3. Transaction01读取了STUDENT表时，多出了一些行。
+> 1. Transaction01读取了Student表中的一部分数据。
+> 2. Transaction02向Student表中插入了新的行。
+> 3. Transaction01读取了Student表时，多出了一些行。
 
 ### 隔离级别
 > 数据库系统必须具有隔离并发运行各个事务的能力，使它们不会相互影响，避免各种并发问题。一个事务与其他事务隔离的程度称为隔离级别。SQL标准中规定了多种事务隔离级别，不同隔离级别对应不同的干扰程度，隔离级别越高，数据一致性就越好，但并发性越弱。
 
 - **读未提交**：READ UNCOMMITTED
-允许`Transaction01`读取`Transaction02`未提交的修改。
+	允许`Transaction01`读取`Transaction02`未提交的修改。
 
 - **读已提交(Oracle默认隔离级别)**：READ COMMITTED
-​ 要求Transaction01只能读取`Transaction02`已提交的修改。
+	​ 要求Transaction01只能读取`Transaction02`已提交的修改。
 
 - **可重复读(MySQL的默认事务隔离级别)**：REPEATABLE READ
-​ 确保Transaction01可以多次从一个字段中读取到相同的值，即Transaction01执行期间禁止其它事务对这个字段进行更新。也就是简单点说，操作读完提交事务才释放锁，而不是一读完就释放锁。
+	​ 确保Transaction01可以多次从一个字段中读取到相同的值，即Transaction01执行期间禁止其它事务对这个字段进行更新。也就是简单点说，操作读完提交事务才释放锁，而不是一读完就释放锁。
 - **可串行化**：SERIALIZABLE
-​ 确保Transaction01可以多次从一个表中读取到相同的行，在Transaction01执行期间，禁止其它事务对这个表进行添加、更新、删除操作。可以避免任何并发问题，但性能十分低下。
-如果不是可串行化的话，会出现读取存在的行是10行，但是事务没提交，这个时候锁住的是存在的行，这个时候插入行并提交了的话，就会产生后面读取的行数不对了。出现幻读了。
-
-解决方案就是使用可串行化，把整个表给锁住了。
+	​ 确保Transaction01可以多次从一个表中读取到相同的行，在Transaction01执行期间，禁止其它事务对这个表进行添加、更新、删除操作。可以避免任何并发问题，但性能十分低下。
+	如果不是可串行化的话，会出现读取存在的行是10行，但是事务没提交，这个时候锁住的是存在的行，这个时候插入行并提交了的话，就会产生后面读取的行数不对了。出现幻读了。解决方案就是使用可串行化，把整个表给锁住了。
 
 # Spring有哪些重要的BeanFactoryPostProcessor？::
 * `ConfigurationClassPostProcessor`
