@@ -38,6 +38,87 @@ CompletableFuture‌是Java 8中引入的一个类，它实现了Future和Comple
 ### 线程池管理
 - 理解默认使用 `ForkJoinPool.commonPool()`。
 - **重要实践：** **为 I/O 密集型或需要隔离的任务显式指定自定义线程池 (`Executor`)**，避免阻塞公共池影响其他任务。这是生产环境中的常见优化点。
+### 最佳实践
+
+####  务必自定义线程池
+
+- **根据任务类型配置线程池**：
+    
+    ```java
+    // 示例：专用 I/O 线程池
+    ExecutorService ioExecutor = Executors.newFixedThreadPool(50);
+    CompletableFuture.supplyAsync(() -> httpCall(), ioExecutor);
+    ```
+- **拒绝策略必用 `AbortPolicy`**：线程池满时立即抛 `RejectedExecutionException`，避免隐式丢弃任务导致 `get()` 阻塞。
+
+#### 用链式调用替代 `get()`/`join()`
+
+- **优先使用非阻塞方法**：
+	```java
+    // 反例：阻塞调用
+    String result = future.get(5, SECONDS); // 仍可能超时阻塞
+    
+    // 正例：链式处理
+    future.thenApply(res -> process(res))
+          .exceptionally(ex -> fallback());
+    ```
+    
+- **必须超时控制**：
+    - 对 I/O 任务使用 `orTimeout()`：
+	```java
+	future.orTimeout(2, SECONDS) // 超时自动取消任务
+		  .exceptionally(ex -> "timeout");
+	```
+
+#### 线程池隔离与资源限制
+
+- **关键操作独立线程池**：
+    
+	```java
+    // 耗时任务与快任务隔离
+    ExecutorService slowPool = Executors.newFixedThreadPool(10);
+    ExecutorService fastPool = Executors.newFixedThreadPool(20);
+    
+    CompletableFuture.runAsync(() -> heavyTask(), slowPool);
+    CompletableFuture.runAsync(() -> lightTask(), fastPool);
+    ```
+    
+- **控制并发量**：通过 `Semaphore` 或 `CompletableFuture[]` 限制最大并行任务数，防止突发流量击溃线程池。
+
+#### 异常处理与状态监控
+
+- **链式捕获异常**：
+	```java
+    future.handle((res, ex) -> {
+        if (ex != null) log.error("Failed", ex);
+        return res != null ? res : defaultValue;
+    });
+    ```
+    
+- **监控线程池状态**：记录队列堆积、拒绝次数等指标，结合告警快速定位瓶颈。
+    
+
+#### 其他高级技巧
+
+- **批量任务优化**：
+    
+    - 使用 `allOf()` 合并多个 Future，但避免在其后直接调用 `join()`（仍阻塞）5。
+        
+    - 改用 `thenCompose()` 实现非阻塞依赖：
+        
+        java
+        
+        future1.thenCompose(res1 -> future2(res1)) // future2 依赖 future1
+               .thenAccept(finalRes -> ...);
+        
+- **单元测试避坑**：  
+    用 Mockito 模拟线程池行为，避免测试阻塞：
+    
+    java
+    
+    // 强制同步执行异步任务
+    doAnswer(inv -> ((Runnable) inv.getArgument(0)).run())
+       .when(executor).execute(any(Runnable.class));
 ### 面试深入 (理解原理、细节、陷阱、最佳实践)
 
 1. **与 Future 的区别：**
