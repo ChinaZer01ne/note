@@ -213,6 +213,7 @@ Spring设计了三级缓存来解决循环依赖问题。在`DefaultSingletonBea
 
 * 方法内自调用
 	* this对象不是代理对象
+	* 可以使用`AopContext.currentProxy()` + `@EnableAspectJAutoProxy(exposeProxy = true)`解决（不推荐）
 * 方法是private的
 	* spring事务会基于cglib来进行aop，cglib是通过重写子类的方式生成代理对象，由于方法是private，导致子类无法重写方法
 * 方法是final
@@ -222,9 +223,8 @@ Spring设计了三级缓存来解决循环依赖问题。在`DefaultSingletonBea
 * 异常被catch
 * 类没有被spring管理
 * 数据库不支持事务
-# Spring中支持的常用数据库事务传播属性和事务隔离级别
 
-## 事务的传播行为
+# Spring中事务的传播行为
 
 > 当事务方法被另一个事务方法调用时，必须指定事务应该如何传播，列如方法可能继续在现有事务中运行，也可能开启一个新事务，并在自己的事务中运行，事务传播的行为有传播属性指定，Spring定义了7中类传播行为
 
@@ -241,7 +241,7 @@ Spring设计了三级缓存来解决循环依赖问题。在`DefaultSingletonBea
 
 **事务传播属性可以在@Transactional注解的propagation属性中定义**
 
-## 事务隔离级别
+# Spring中事务隔离级别
 
 ### 数据库事务并发问题
 ​ 假设现在有两个事务：Transaction01和Transaction02并发执行。
