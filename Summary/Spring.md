@@ -246,68 +246,41 @@ Spring设计了三级缓存来解决循环依赖问题。在`DefaultSingletonBea
 ​ 假设现在有两个事务：Transaction01和Transaction02并发执行。
 
 **1) 脏读**
-> ①Transaction01将某条记录的AGE值从20修改为30。
-> 
-> ②Transaction02读取了Transaction01更新后的值：30。
-> 
-> ③Transaction01回滚，AGE值恢复到了20。
-> 
-> ④Transaction02读取到的30就是一个无效的值。
+> 1. Transaction01将某条记录的age值从20修改为30。
+> 2. Transaction02读取了Transaction01更新后的值：30。
+> 3. Transaction01回滚，age值恢复到了20。
+> 4. Transaction02读取到的30就是一个无效的值。
+
+读到了没有提交的事务。
 
 **2) 不可重复读**
 
-> ①Transaction01读取了AGE值为20。
->
-> ②Transaction02将AGE值修改为30。
->
-> ③Transaction01再次读取AGE值为30，和第一次读取不一致。
+> 1. Transaction01读取了age值为20。
+> 2. Transaction02将age值修改为30。
+> 3. Transaction01再次读取age值为30，和第一次读取不一致。
 
 **3) 幻读**
-> ①Transaction01读取了STUDENT表中的一部分数据。
-> 
-> ②Transaction02向STUDENT表中插入了新的行。
-> 
->③Transaction01读取了STUDENT表时，多出了一些行。
+> 1. Transaction01读取了STUDENT表中的一部分数据。
+> 2. Transaction02向STUDENT表中插入了新的行。
+> 3. Transaction01读取了STUDENT表时，多出了一些行。
 
 ### 隔离级别
 > 数据库系统必须具有隔离并发运行各个事务的能力，使它们不会相互影响，避免各种并发问题。一个事务与其他事务隔离的程度称为隔离级别。SQL标准中规定了多种事务隔离级别，不同隔离级别对应不同的干扰程度，隔离级别越高，数据一致性就越好，但并发性越弱。
 
 - **读未提交**：READ UNCOMMITTED
 允许`Transaction01`读取`Transaction02`未提交的修改。
-![img_5.png](img_5.png)
+
 - **读已提交(Oracle默认隔离级别)**：READ COMMITTED
 ​ 要求Transaction01只能读取`Transaction02`已提交的修改。
-![img_6.png](Image%2Fimg_6.png)
-如上图所示，在事务进行读写的时候，加入了锁（读锁和写锁，锁的相容性矩阵），这样在`Transaction01`进行修改的时候，加入了写锁（排他锁）直到事务提交释放锁，这样就保证了`Transaction02`就无法读取该值，解决了脏读的问题。
-- ![img_7.png](Image%2Fimg_7.png)
-  但是读已提交仍然会存在不可重复读的问题，如上图所示。使得`Transaction02` 前后两次读取的同一变量的值不一样。那怎么办呢，就到我们不可重复读的情况。
+
 - **可重复读(MySQL的默认事务隔离级别)**：REPEATABLE READ
 ​ 确保Transaction01可以多次从一个字段中读取到相同的值，即Transaction01执行期间禁止其它事务对这个字段进行更新。也就是简单点说，操作读完提交事务才释放锁，而不是一读完就释放锁。
-  MySQL会利用MVCC机制让其读到更新之前的值，也就第一次读到的值。即使事务巍提交之前，有另外的事务将其值修改，也是读到旧值。
-![img_8.png](Image%2Fimg_8.png)
 - **可串行化**：SERIALIZABLE
 ​ 确保Transaction01可以多次从一个表中读取到相同的行，在Transaction01执行期间，禁止其它事务对这个表进行添加、更新、删除操作。可以避免任何并发问题，但性能十分低下。
 如果不是可串行化的话，会出现读取存在的行是10行，但是事务没提交，这个时候锁住的是存在的行，这个时候插入行并提交了的话，就会产生后面读取的行数不对了。出现幻读了。
-![img_9.png](Image%2Fimg_9.png)
+
 解决方案就是使用可串行化，把整个表给锁住了。
-![img_10.png](Image%2Fimg_10.png)
 
-**m面试题测试**
-```text
-//1.请简单介绍Spring支持的常用数据库事务传播属性和事务隔离级别？
-
-/**
- * 事务的属性：
- * 	1.★propagation：用来设置事务的传播行为
- * 		事务的传播行为：一个方法运行在了一个开启了事务的方法中时，当前方法是使用原来的事务还是开启一个新的事务
- * 		-Propagation.REQUIRED：默认值，使用原来的事务
- * 		-Propagation.REQUIRES_NEW：将原来的事务挂起，开启一个新的事务
- * 	2.★isolation：用来设置事务的隔离级别
- * 		-Isolation.REPEATABLE_READ：可重复读，MySQL默认的隔离级别
- * 		-Isolation.READ_COMMITTED：读已提交，Oracle默认的隔离级别，开发时通常使用的隔离级别
- */
-
-```
 # Spring有哪些重要的BeanFactoryPostProcessor？::
 * `ConfigurationClassPostProcessor`
 	* 是比较重要的`BeanFactoryPostProcessor`，它和SpringBoot的自动装配息息相关。他负责`Configuration`、`Import`、`ImportResource`、`Component`、`ComponentScan`、`Bean`等注解的处理，和SpringBoot的自动装配息息相关，此类还会对配置类进行代理操作，解决@Bean 的单例问题
