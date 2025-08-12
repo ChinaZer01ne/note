@@ -1017,8 +1017,8 @@ Java中CAS机制使用版本号进行对比，避免ABA问题，具体可以看`
 	- DiscardOldestPolicy：丢弃等待队列中最旧的任务，并执行当前任务  
 	- DiscardPolicy：直接丢弃任务，也不抛出异常    
 
-```
-graph TD
+```mermaid
+flowchart TD
     A[新任务提交] --> B{核心线程可用?}
     B -->|是| C[使用核心线程处理]
     B -->|否| D{队列未满?}
