@@ -230,7 +230,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "```mer",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -678,7 +678,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "8c5baa16c0626a03",
+  "active": "14e0094191dc1fe5",
   "lastOpenFiles": [
     "Summary/JVM.md",
     "Summary/面试问题.md",
