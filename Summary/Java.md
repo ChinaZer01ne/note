@@ -808,7 +808,6 @@ TODO
 	- **性能：** 在低竞争下 `synchronized`（经过优化）可能更好；在高竞争或需要高级功能时 `Lock` 更优或更灵活。
 -    
 #### `Condition` 接口
-    
 - 由 `Lock` 对象创建 (`lock.newCondition()`)。
 - 提供 `await()`, `signal()`, `signalAll()` 方法，功能类似于 `Object.wait()`, `Object.notify()`, `Object.notifyAll()`，但更强大：
 	- 一个 `Lock` 可以关联**多个** `Condition`。
