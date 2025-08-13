@@ -821,8 +821,55 @@ TODO
 - **实现基础：** 内部通常基于 `AbstractQueuedSynchronizer`。面试官可能要求简述其实现思想（如 CLH 队列变体、CAS 操作）。
 
 #### ReentrantLock和synchronized有什么区别
-TODO
+| **特性**    | `synchronized` (JVM 内置锁)     | `Lock` (如 `ReentrantLock`)          |
+| --------- | ---------------------------- | ----------------------------------- |
+| **锁获取方式** | 隐式获取/释放（自动管理）                | 显式调用 `lock()`/`unlock()`（手动控制）      |
+| **灵活性**   | 简单但死板（仅单条件等待）                | 高度灵活（多条件变量、可中断等）                    |
+| **公平性**   | 仅非公平模式                       | 支持公平/非公平（构造函数指定）                    |
+| **超时机制**  | ❌ 不支持                        | ✅ `tryLock(timeout, unit)` 避免死锁     |
+| **可中断性**  | ❌ 阻塞不可中断                     | ✅ `lockInterruptibly()` 支持响应中断      |
+| **性能**    | JDK6+ 优化后接近 `Lock` (低竞争场景更优) | 高竞争场景更稳定（尤其公平锁）                     |
+| **代码可读性** | ✅ 简洁（语法糖）                    | ❌ 需 `try-finally` 块（易忘 `unlock()`)  |
+| **锁绑定条件** | 单条件（`wait()`/`notify()`）     | 多条件（`Condition` 分组唤醒）               |
+| **锁状态查询** | ❌ 无法查询                       | ✅ `isLocked()`、`getQueueLength()` 等 |
+| **跨方法释放** | ❌ 必须在同一代码块释放                 | ✅ 可在不同方法中获取和释放                      |
+| **锁升级**   | ✅ 支持（偏向锁→轻量级锁→重量级锁）          | ❌ 仅重量级实现                            |
+##### **底层原理对比**
 
+###### `synchronized` 实现（JVM 层）
+
+```java
+public synchronized void method() { 
+    // 临界区
+}
+```
+
+- **字节码**：编译为 `monitorenter` 和 `monitorexit` 指令
+- **锁升级路径**（JDK6+ 优化）：
+    1. **偏向锁**：无竞争时标记线程ID（减少CAS）
+    2. **轻量级锁**：竞争时用CAS自旋（避免阻塞）
+    3. **重量级锁**：自旋失败后升级为OS互斥量（线程阻塞）
+- **锁释放**：代码块结束或异常时自动释放
+
+###### `ReentrantLock` 实现（API 层）
+
+```java
+private final Lock lock = new ReentrantLock();
+public void method() {
+    lock.lock();  // 显式加锁
+    try {
+        // 临界区
+    } finally {
+        lock.unlock(); // 必须手动释放！
+    }
+}
+```
+- **基于 AQS**（AbstractQueuedSynchronizer）
+- **核心组件**：
+    - `state`：锁状态（0=未锁定，>0=重入次数）
+    - `CLH队列`：管理阻塞线程
+- **非公平锁实现**：直接CAS抢锁（性能高但可能饥饿）
+- **公平锁实现**：先检查队列是否有等待线程
 ### 其他锁
 `ReadWriteLock` 接口 & `ReentrantReadWriteLock`：
     
