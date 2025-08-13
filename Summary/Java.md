@@ -870,6 +870,21 @@ public void method() {
     - `CLH队列`：管理阻塞线程
 - **非公平锁实现**：直接CAS抢锁（性能高但可能饥饿）
 - **公平锁实现**：先检查队列是否有等待线程
+##### 选型
+```mermaid
+graph TD
+    A[选择锁机制] --> B{需要高级功能？}
+    B -->|超时/中断/公平锁| C[Lock]
+    B -->|否| D{代码简洁性优先？}
+    D -->|是| E[synchronized]
+    D -->|否| F{高竞争场景？}
+    F -->|是| G[Lock（性能更稳定）]
+    F -->|否| H[synchronized（JVM优化更好）]
+```
+* 场景 1：基础同步（首选 `synchronized`）
+* 场景 2：需要超时/中断（强制用 `Lock`）
+* 场景 3：多条件等待（必须 `Lock + Condition`）
+* 场景 4：读多写少（选 `ReentrantReadWriteLock`）
 ### 其他锁
 `ReadWriteLock` 接口 & `ReentrantReadWriteLock`：
     
