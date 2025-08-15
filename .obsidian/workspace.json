@@ -524,12 +524,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
+              "icon": "lucide-file",
+              "title": "插件不再活动"
+            }
+          },
+          {
+            "id": "8b425dba697e3304",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
           }
         ],
-        "currentTab": 37
+        "currentTab": 38
       }
     ],
     "direction": "horizontal",
@@ -548,7 +558,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "cf75074690919d0b",
+  "active": "8b425dba697e3304",
   "lastOpenFiles": [
     "Summary/Java.md",
     "Summary/面试问题.md",
