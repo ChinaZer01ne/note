@@ -553,12 +553,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
+              "icon": "lucide-file",
+              "title": "插件不再活动"
+            }
+          },
+          {
+            "id": "fec2c54cd935a4f4",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
           }
         ],
-        "currentTab": 40
+        "currentTab": 41
       }
     ],
     "direction": "horizontal",
@@ -577,7 +587,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "49618e42af754773",
+  "active": "fec2c54cd935a4f4",
   "lastOpenFiles": [
     "Summary/TO DO LIST.md",
     "Summary/面试问题.md",
