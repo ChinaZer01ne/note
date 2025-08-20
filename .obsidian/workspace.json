@@ -23,6 +23,20 @@
             }
           },
           {
+            "id": "6ea2eec9a9f914af",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Summary/面试问题.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "面试问题"
+            }
+          },
+          {
             "id": "f6af8daf10e5e50f",
             "type": "leaf",
             "state": {
@@ -50,7 +64,8 @@
               "title": "Java"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "2a8c8c4affce576d",
@@ -213,8 +228,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -237,8 +252,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -247,8 +262,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -257,8 +272,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -267,8 +282,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -277,8 +292,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -287,8 +302,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -297,8 +312,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -307,8 +322,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -317,8 +332,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -327,8 +342,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -337,8 +352,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -347,8 +362,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -357,8 +372,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -367,8 +382,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -377,8 +392,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -387,8 +402,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -397,8 +412,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -407,8 +422,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -417,8 +432,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -427,8 +442,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -437,8 +452,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -447,8 +462,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -457,8 +472,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -467,8 +482,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -477,8 +492,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -487,8 +502,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -497,8 +512,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -507,8 +522,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -517,8 +532,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -527,8 +542,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -537,8 +552,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -547,8 +562,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -557,8 +572,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -567,8 +582,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -577,12 +592,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
             "id": "9e929df664a92fc9",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "db0e1dd69f0650a5",
             "type": "leaf",
             "state": {
               "type": "review-queue-list-view",
@@ -592,7 +617,7 @@
             }
           }
         ],
-        "currentTab": 42
+        "currentTab": 43
       }
     ],
     "direction": "horizontal",
@@ -601,6 +626,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:创建新数据库": false,
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
       "canvas:新建白板": false,
@@ -611,7 +637,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "14e0094191dc1fe5",
+  "active": "6ea2eec9a9f914af",
   "lastOpenFiles": [
     "Summary/ES.md",
     "Summary/面试问题.md",
