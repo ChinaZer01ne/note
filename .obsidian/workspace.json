@@ -632,12 +632,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "24e3515caf47f885",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
           }
         ],
-        "currentTab": 45
+        "currentTab": 46
       }
     ],
     "direction": "horizontal",
@@ -657,7 +667,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "fe563d391e8cf8f3",
+  "active": "24e3515caf47f885",
   "lastOpenFiles": [
     "Summary/ES.md",
     "Summary/面试问题.md",
