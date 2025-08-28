@@ -708,12 +708,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "28952fe1759e5ef4",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
           }
         ],
-        "currentTab": 47
+        "currentTab": 48
       }
     ],
     "direction": "horizontal",
@@ -733,7 +743,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "37a144a8d6a58598",
+  "active": "28952fe1759e5ef4",
   "lastOpenFiles": [
     "Summary/JVM.md",
     "Summary/面试问题.md",
