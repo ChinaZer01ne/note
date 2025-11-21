@@ -140,18 +140,6 @@
               "icon": "lucide-file",
               "title": "面试问题"
             }
-          },
-          {
-            "id": "45805c10980713ee",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.10.3"
-              },
-              "icon": "lucide-book-up",
-              "title": "版本说明 1.10.3"
-            }
           }
         ],
         "currentTab": 9
@@ -273,10 +261,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Concurrent programming.md"
+                "file": "Summary/面试问题.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Concurrent programming 的大纲"
+              "title": "面试问题 的大纲"
             }
           },
           {
@@ -344,11 +335,11 @@
             }
           }
         ],
-        "currentTab": 9
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 347.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -363,7 +354,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "a4e496166d78d175",
+  "active": "cb57ded5bb6d015c",
   "lastOpenFiles": [
     "conflict-files-obsidian-git.md",
     "Summary/image/Dubbo/dubbo.png",
