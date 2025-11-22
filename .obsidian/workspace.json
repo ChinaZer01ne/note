@@ -133,12 +133,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/缓存.md",
+                "file": "Summary/前端.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "缓存"
+              "title": "前端"
             }
           }
         ],
@@ -261,13 +261,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/缓存.md",
+                "file": "Summary/前端.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "缓存 的大纲"
+              "title": "前端 的大纲"
             }
           },
           {
@@ -366,6 +366,7 @@
   },
   "active": "a4e496166d78d175",
   "lastOpenFiles": [
+    "Summary/缓存.md",
     "Summary/方法论.md",
     "Summary/面试问题.md",
     "conflict-files-obsidian-git.md",
@@ -390,7 +391,6 @@
     "Summary/前端.md",
     "Summary/大杂烩.md",
     "Summary/Redis.md",
-    "Summary/缓存.md",
     "Summary/extension/Redis-extension.md",
     "Summary/image/Redis/Redis命令执行流程图.png.crdownload",
     "Summary/image/Redis/Redis命令处理流程.png.crdownload",
