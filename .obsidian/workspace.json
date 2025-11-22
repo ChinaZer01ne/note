@@ -133,12 +133,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/面试问题.md",
+                "file": "Summary/方法论.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "面试问题"
+              "title": "方法论"
             }
           }
         ],
@@ -261,13 +261,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/面试问题.md",
+                "file": "Summary/方法论.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "面试问题 的大纲"
+              "title": "方法论 的大纲"
             }
           },
           {
@@ -364,8 +364,9 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "cb57ded5bb6d015c",
+  "active": "a4e496166d78d175",
   "lastOpenFiles": [
+    "Summary/面试问题.md",
     "conflict-files-obsidian-git.md",
     "Summary/image/Dubbo/dubbo.png",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
@@ -388,7 +389,6 @@
     "Summary/System Design.md",
     "Summary/前端.md",
     "Summary/大杂烩.md",
-    "Summary/面试问题.md",
     "Summary/Redis.md",
     "Summary/缓存.md",
     "Summary/extension/Redis-extension.md",
