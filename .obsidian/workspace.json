@@ -133,12 +133,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/前端.md",
+                "file": "Summary/稳定性治理.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "前端"
+              "title": "稳定性治理"
             }
           }
         ],
@@ -261,13 +261,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/前端.md",
+                "file": "Summary/稳定性治理.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "前端 的大纲"
+              "title": "稳定性治理 的大纲"
             }
           },
           {
@@ -366,6 +366,7 @@
   },
   "active": "a4e496166d78d175",
   "lastOpenFiles": [
+    "Summary/前端.md",
     "Summary/缓存.md",
     "Summary/方法论.md",
     "Summary/面试问题.md",
@@ -388,7 +389,6 @@
     "Summary/Arthas.md",
     "Summary/Computer Network.md",
     "Summary/System Design.md",
-    "Summary/前端.md",
     "Summary/大杂烩.md",
     "Summary/Redis.md",
     "Summary/extension/Redis-extension.md",
