@@ -350,12 +350,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "9bfdd5ce1ac59c89",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 12
       }
     ],
     "direction": "horizontal",
@@ -374,7 +384,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "a4e496166d78d175",
+  "active": "9bfdd5ce1ac59c89",
   "lastOpenFiles": [
     "Summary/Build Tool.md",
     "Summary/Arthas.md",
