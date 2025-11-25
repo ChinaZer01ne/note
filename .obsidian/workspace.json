@@ -133,12 +133,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Spring.md",
+                "file": "Summary/Mysql.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Spring"
+              "title": "Mysql"
             }
           }
         ],
@@ -261,13 +261,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Spring.md",
+                "file": "Summary/Mysql.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": "AOF"
               },
               "icon": "lucide-list",
-              "title": "Spring 的大纲"
+              "title": "Mysql 的大纲"
             }
           },
           {
@@ -396,12 +396,12 @@
   },
   "active": "a4e496166d78d175",
   "lastOpenFiles": [
-    "Summary/面试问题.md",
     "Summary/Redis.md",
+    "Summary/Spring.md",
+    "Summary/面试问题.md",
     "Summary/Sentinel.md",
     "Summary/Zookeeper.md",
     "Summary/项目要点.md",
-    "Summary/Spring.md",
     "Summary/Spring Cloud.md",
     "Summary/System Design.md",
     "Summary/Mysql.md",
