@@ -133,12 +133,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Mysql.md",
+                "file": "Summary/JVM.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Mysql"
+              "title": "JVM"
             }
           }
         ],
@@ -261,13 +261,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Mysql.md",
+                "file": "Summary/JVM.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Mysql 的大纲"
+              "title": "JVM 的大纲"
             }
           },
           {
@@ -396,12 +396,12 @@
   },
   "active": "a4e496166d78d175",
   "lastOpenFiles": [
+    "Summary/Mysql.md",
     "Summary/Zookeeper.md",
     "Summary/ES.md",
     "Summary/Redis.md",
     "Summary/Sentinel.md",
     "Summary/Nacos.md",
-    "Summary/Mysql.md",
     "Summary/Mybatis.md",
     "Summary/MicroService Design.md",
     "Summary/Java.md",
