@@ -1097,14 +1097,12 @@ TODO
 > * 如果是非核心线程会调用阻塞队列的`poll`方法，超时返回，销毁线程；如果是核心线程会调用阻塞队列的`take`方法，让worker线程挂起在阻塞队列上。
 > * 挂起的操作底层是调用的Unsafe的park和unpark方法。
 
-
 ### 其他问题
 线程池的状态有什么，如何记录的？  
 线程池为什么添加空任务的非核心线程  
 在没任务时，线程池中的工作线程在干嘛？  
 工作线程出现异常会导致什么问题？  
 工作线程继承AQS的目的是什么？
-
 
 ## ThreadLocal
 
@@ -1122,10 +1120,10 @@ TODO
 
 1. **根本原因**
     - **弱引用 Key**：`Entry` 的 Key（`ThreadLocal` 实例）是弱引用，GC 时会被回收，导致 `Entry` 变成 `<null, Value>`。
-    - **强引用 Value**：Value 仍被强引用，若线程未终止（如线程池线程），Value 永远无法回收，引发内存泄漏124。
+    - **强引用 Value**：Value 仍被强引用，若线程未终止（如线程池线程），Value 永远无法回收，引发内存泄漏。
         
 2. **解决方案**
-    - **主动调用 `remove()`**：使用完 `ThreadLocal` 后必须调用 `remove()` 清除 Entry1410。
+    - **主动调用 `remove()`**：使用完 `ThreadLocal` 后必须调用 `remove()` 清除 Entry。
     - **最佳实践**：结合 `try-finally` 确保清理：
 	```java
 	        
@@ -1172,7 +1170,7 @@ TODO
 ![](threadlocal结构.png)
 
 ### 为什么 ThreadLocalMap 的 Key 是弱引用？Value 可不可以弱引用？
-若 Key 是强引用：即使 `ThreadLocal` 实例不再使用，仍被 `ThreadLocalMap` 引用，导致 `ThreadLocal` 无法回收，而弱引用可避免此问题1410。
+若 Key 是强引用：即使 `ThreadLocal` 实例不再使用，仍被 `ThreadLocalMap` 引用，导致 `ThreadLocal` 无法回收，而弱引用可避免此问题。
 
 #### 当前设计（Key 弱引用 + Value 强引用）的合理性：
 
