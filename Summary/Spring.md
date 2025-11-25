@@ -4,8 +4,8 @@ Spring的初始化流程主要是执行`AbstractApplicationContext`类的`refres
 - refresh  
     - prepareRefresh  
     - obtainFreshBeanFactory  
-        * createBeanFactory：创建容器DefaultListableBeanFactory
-        * loadBeanDefinitions：加载配置文件
+        * **createBeanFactory**：创建容器DefaultListableBeanFactory
+        * **loadBeanDefinitions**：加载配置文件
             - loadBeanDefinitions ：加载成Document  
             - registerBeanDefinitions ：注册BeanDefinition
                 - 以BeanDefinition的形式注册到容器`DefaultListableBeanFactory#beanDefinitionMap`中  
@@ -14,22 +14,22 @@ Spring的初始化流程主要是执行`AbstractApplicationContext`类的`refres
     - prepareBeanFactory：
         - 主要是属性值的设置，比如SPEL，Aware接口，监听器
     - postProcessBeanFactory  
-    - invokeBeanFactoryPostProcessors：执行[BeanFactoryPostProcessor](#Spring有哪些重要的BeanFactoryPostProcessor？)
+    - **invokeBeanFactoryPostProcessors**：执行[BeanFactoryPostProcessor](#Spring有哪些重要的BeanFactoryPostProcessor？)
     - registerBeanPostProcessors：创建所有BeanPostProcessor  
     - initMessageSource：国际化相关  
     - initApplicationEventMulticaster：发布事件初始化相关  
     - onRefresh  
     - registerListeners：注册事件监听器  
-    - finishBeanFactoryInitialization  
-        - getBean方法：创建初始化Bean  
+    - **finishBeanFactoryInitialization**  
+        - **getBean**方法：创建初始化Bean  
 	        - [FactoryBean](#什么是FactoryBean？)处理
 		        - 所有的FactoryBean需要延迟创建的单例对象（getObject方法创建的）都保存在factoryBeanObjectCache中，原始的FactoryBean对象在一级缓存中
 			- 普通Bean处理  
 				- resolveBeforeInstantiation  
 					- 会执行InstantiationAwareBeanPostProcessor该类方法可以做扩展来提早初始化bean，而不用一定执行doCreateBean，默认空实现  
 					- AOP在这个地方创建代理对象  
-				- doCreateBean  
-					- createBeanInstance：创建对象
+				- **doCreateBean**  
+					- **createBeanInstance**：创建对象
 					- applyMergedBeanDefinitionPostProcessors：注解解析
 						- 通过执行`MergedBeanDefinitionPostProcessor`的子类`postProcessMergedBeanDefinition`方法来解析注解，提前保存到BeanDefinition
 							- `CommonAnnotationBeanPostProcessor`  
@@ -40,7 +40,7 @@ Spring的初始化流程主要是执行`AbstractApplicationContext`类的`refres
 								- @Autowired  
 								- @Value  
 								- @Inject  
-					- populateBean：注入属性（解决循环依赖问题）  
+					- **populateBean**：注入属性（解决循环依赖问题）  
 						- 执行实例化的后置处理：
 							- `InstantiationAwareBeanPostProcessor#postProcessAfterInstantiation`  
 						- 根据配置文件的autowire属性注入  
@@ -50,16 +50,16 @@ Spring的初始化流程主要是执行`AbstractApplicationContext`类的`refres
 							- 将之前MergedBeanDefinitionPostProcessor处理的注解字段，在此处进行赋值操作，主要是调用`InstantiationAwareBeanPostProcessor#postProcessProperties`方法  
 						- 配置文件的property属性注入  
 							- applyPropertyValues
-					- initializeBean：初始化
+					- **initializeBean**：初始化
 						- Aware接口回调
 							- `BeanNameAware`
 							- `BeanClassLoaderAware`  
 							- `BeanFactoryAware`  
-						- 执行[BeanPostProcessor#postProcessBeforeInitialization](#Spring有哪些重要的BeanPostProcessor？)  
-						- 初始化
+						- **执行[BeanPostProcessor#postProcessBeforeInitialization](#Spring有哪些重要的BeanPostProcessor？)**  
+						- **初始化**
 							- `InitializingBean#afterPropertiesSet`  
 							- `init-method`  
-						- 执行[BeanPostProcessor#postProcessAfterInitialization](#Spring有哪些重要的BeanPostProcessor？)  
+						- **执行[BeanPostProcessor#postProcessAfterInitialization](#Spring有哪些重要的BeanPostProcessor？)**  
         - Bean初始化后的回调处理  
     - finishRefresh：发布ContextRefreshedEvent事件
 
