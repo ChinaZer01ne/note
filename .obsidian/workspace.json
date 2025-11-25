@@ -264,7 +264,7 @@
                 "file": "Summary/面试问题.md",
                 "followCursor": false,
                 "showSearch": true,
-                "searchQuery": ""
+                "searchQuery": "Redis"
               },
               "icon": "lucide-list",
               "title": "面试问题 的大纲"
@@ -397,8 +397,8 @@
   "active": "a4e496166d78d175",
   "lastOpenFiles": [
     "Summary/Redis.md",
-    "Summary/Sentinel.md",
     "Summary/面试问题.md",
+    "Summary/Sentinel.md",
     "Summary/Zookeeper.md",
     "Summary/项目要点.md",
     "Summary/Spring.md",
