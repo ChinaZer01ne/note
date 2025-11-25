@@ -264,7 +264,7 @@
                 "file": "Summary/面试问题.md",
                 "followCursor": false,
                 "showSearch": true,
-                "searchQuery": "R"
+                "searchQuery": ""
               },
               "icon": "lucide-list",
               "title": "面试问题 的大纲"
@@ -394,11 +394,11 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "cb57ded5bb6d015c",
+  "active": "a4e496166d78d175",
   "lastOpenFiles": [
     "Summary/Redis.md",
-    "Summary/面试问题.md",
     "Summary/Sentinel.md",
+    "Summary/面试问题.md",
     "Summary/Zookeeper.md",
     "Summary/项目要点.md",
     "Summary/Spring.md",

@@ -51,9 +51,9 @@ Redis的淘汰策略主要是指当内存达到最大配置时（maxmemory），
 	maxmemory 100mb
 	```
 2. 直接连接redis执行命令
-```shell
+	```shell
 	config set maxmemory 100mb
-   ```
+	```
 3. 通过命令查看当前配置的最大内存量
 	 ```shell
 	config get maxmemory
