@@ -15,7 +15,7 @@ CompletableFuture‌是Java 8中引入的一个类，它**实现了Future和Comp
 - `thenApply(Function<T, U> fn)`: 对**上一步结果**进行**同步**转换，返回新的 `CompletionStage`。
 - `thenAccept(Consumer<T> action)`: 消费**上一步结果**（无返回值），返回 `CompletionStage<Void>`。
 - `thenRun(Runnable action)`: 在上一步完成后执行一个动作（不关心上一步结果），返回 `CompletionStage<Void>`。
-- **异步变体：** `thenApplyAsync`, `thenAcceptAsync`, `thenRunAsync` - 在**新线程**中执行转换/消费/动作（默认使用 `ForkJoinPool` 或指定线程池）。**理解 `...Async` 后缀的含义是关键！**
+- 异步变体： `thenApplyAsync`, `thenAcceptAsync`, `thenRunAsync` - 在新线程中执行转换/消费/动作（默认使用 `ForkJoinPool` 或指定线程池）。理解 `...Async` 后缀的含义是关键！
 ### 组合多个 Future
 - `thenCompose(Function<T, CompletionStage<U>> fn)`: **扁平化**。当前阶段完成后，使用其结果**异步触发**另一个 `CompletionStage`（避免嵌套 `CompletableFuture<CompletableFuture<U>>`）。
 - `thenCombine(CompletionStage<U> other, BiFunction<T, U, V> fn)`: 等待**当前阶段**和 **`other` 阶段**都完成后，将两者的结果进行**同步**合并处理。
@@ -33,7 +33,6 @@ CompletableFuture‌是Java 8中引入的一个类，它**实现了Future和Comp
 - `complete(T value)`: 如果尚未完成，则手动设置结果并完成 Future。
 - `completeExceptionally(Throwable ex)`: 如果尚未完成，则手动设置异常并完成 Future（异常结束）。
 - `obtrudeValue(T value)` / `obtrudeException(Throwable ex)`: 强制设置结果或异常，**即使已经完成**。**慎用！**
-        
 ### 线程池管理
 - 理解默认使用 `ForkJoinPool.commonPool()`。
 - **重要实践：** **为 I/O 密集型或需要隔离的任务显式指定自定义线程池 (`Executor`)**，避免阻塞公共池影响其他任务。这是生产环境中的常见优化点。
@@ -42,7 +41,6 @@ CompletableFuture‌是Java 8中引入的一个类，它**实现了Future和Comp
 ####  务必自定义线程池
 
 - **根据任务类型配置线程池**：
-    
     ```java
     // 示例：专用 I/O 线程池
     ExecutorService ioExecutor = Executors.newFixedThreadPool(50);
@@ -158,7 +156,6 @@ CompletableFuture‌是Java 8中引入的一个类，它**实现了Future和Comp
     - `defaultExecutor()`: 获取默认的异步执行器（通常是 `ForkJoinPool.commonPool()`）。
     - `copy()`: Java 12+，创建一个新的、独立的副本（结果相同）。
     - `minimalCompletionStage()`: Java 12+，返回一个只读的 `CompletionStage` 视图。
-        
 11. **底层原理 (加分项)：**
     - 了解其内部大致使用**栈**（Treiber Stack）来管理依赖（后续阶段）。
     - 理解 `Completion` 对象（如 `UniApply`, `UniAccept` 等）代表链中的每个阶段节点。
@@ -166,7 +163,6 @@ CompletableFuture‌是Java 8中引入的一个类，它**实现了Future和Comp
 **总结关键点：**
 
 - **日常：** 熟练创建 (`supplyAsync/runAsync`)、链式调用 (`thenApply/Accept/Run[Async]`)、组合 (`thenCompose/thenCombine/allOf/anyOf`)、异常处理 (`exceptionally/handle`)、**务必使用自定义线程池处理阻塞操作**、谨慎使用 `get/join`。
-    
 - **面试：** 深入理解其与 `Future` 的区别、线程模型（回调执行线程、默认线程池问题）、异常传播机制、组合操作原理 (`thenCompose` 解嵌套)、常见陷阱（阻塞回调、未处理异常）、手动完成的应用、以及与响应式编程的关系。能清晰解释为什么需要自定义线程池。
 
 ## Callable
@@ -211,13 +207,11 @@ CompletableFuture‌是Java 8中引入的一个类，它**实现了Future和Comp
     - **核心机制：通过 `ExecutorService` 提交。**
         
     - `ExecutorService` 提供了提交 `Callable` 并获取 `Future` 的方法：
-        
         - `Future<V> submit(Callable<V> task)`: 提交任务，返回一个代表其异步结果的 `Future<V>`。
         - `List<Future<V>> invokeAll(Collection<? extends Callable<V>> tasks) throws InterruptedException`: 提交一组任务，等待**所有**任务完成，返回包含它们 `Future` 的列表。
         - `List<Future<V>> invokeAll(Collection<? extends Callable<V>> tasks, long timeout, TimeUnit unit) throws InterruptedException`: 带超时的 `invokeAll`。
         - `V invokeAny(Collection<? extends Callable<V>> tasks) throws InterruptedException, ExecutionException`: 提交一组任务，返回**任意一个**成功完成的任务的结果（一旦有结果就返回，取消其他未完成的任务）。
         - `V invokeAny(Collection<? extends Callable<V>> tasks, long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException`: 带超时的 `invokeAny`。
-            
     
 ```java
 	ExecutorService executor = Executors.newFixedThreadPool(2);
@@ -296,27 +290,20 @@ CompletableFuture‌是Java 8中引入的一个类，它**实现了Future和Comp
     - 你可以通过 `Future` 的方法**在未来的某个时间点**获取这个结果或检查状态。`Future` 是 `Callable` 执行结果的“凭证”或“占位符”。
         
 4. **invokeAll 和 invokeAny 的工作原理与使用场景：**
-    
     - **invokeAll:**
-        
         - **原理：** 内部提交所有任务，使用 `CountDownLatch` 或类似机制等待所有任务完成（或超时）。
         - **使用场景：** 需要并行执行一批独立任务，并**等待所有任务都完成**后再继续处理（如并行查询多个数据源并聚合结果）。
         - **结果获取：** 返回的 `List<Future<V>>` 顺序与提交的 `Callable` 集合顺序一致。遍历列表，对每个 `Future` 调用 `get()` 获取结果（注意处理异常）。
     - **invokeAny:**
-        
         - **原理：** 提交所有任务，使用类似 `CompletionService` 的机制（通常基于阻塞队列），**只要有一个任务成功完成，就立即返回其结果并尝试取消其他所有未完成的任务**。如果所有任务都失败，抛出 `ExecutionException`（包装最后一个任务的异常）。
         - **使用场景：** 需要并行执行多个等效任务（如访问多个冗余服务），**只要其中一个成功返回结果即可**（如获取最快的服务响应）。
         - **结果：** 直接返回第一个成功任务的结果值 `V`。**注意：** 被取消的任务可能还在运行中被中断（取决于 `cancel(true)` 的效果）。
-            
 5. **异常处理最佳实践：**
-    
     - 在 `Callable.call()` 方法中，应抛出具体的业务异常或标准异常，不要仅仅打印日志或吞掉。
     - 在调用 `Future.get()` 时，**必须捕获 `InterruptedException` 和 `ExecutionException`**。
     - **关键：** 通过 `ExecutionException.getCause()` **获取 `call()` 方法中抛出的原始异常**，进行具体的业务处理（重试、降级、告警等）。
     - 考虑在 `Callable` 内部进行必要的 `try-catch`，将非受检异常转换为有意义的受检异常或包装后再抛出，提供更清晰的错误信息。
-        
 6. **线程池的选择：**
-    
     - 与 `CompletableFuture` 类似，**为 `Callable` 任务选择合适的 `ExecutorService` 至关重要**。
     - CPU 密集型：`Executors.newFixedThreadPool(nThreads)` (nThreads ≈ CPU核心数)。
     - I/O 密集型：`Executors.newCachedThreadPool()` 或 `newFixedThreadPool` (设置更大的线程数，或使用专为 I/O 优化的线程池如 `ThreadPoolExecutor` 配合合适的 `BlockingQueue`)。
@@ -326,7 +313,6 @@ CompletableFuture‌是Java 8中引入的一个类，它**实现了Future和Comp
 7. **与 CompletableFuture 的结合：**
     
     - `CompletableFuture` 提供了更强大的异步编程能力，但它底层仍然离不开 `ExecutorService` 和任务单元 (`Runnable`/`Callable`)。
-        
     - 可以将传统的 `Callable` 任务包装成 `CompletableFuture`：
       
 	```java
@@ -369,7 +355,6 @@ CompletableFuture‌是Java 8中引入的一个类，它**实现了Future和Comp
 ###  核心概念与角色
 
 1. **是什么？**
-    
     - `FutureTask` 是一个**可取消的异步计算任务**。
     - 它实现了 `Future<V>` 接口（提供查询状态、取消任务、获取结果的能力）。
     - 它实现了 `Runnable` 接口（意味着它可以被提交给 `Executor` 或 `Thread` 直接执行）。
@@ -398,24 +383,19 @@ CompletableFuture‌是Java 8中引入的一个类，它**实现了Future和Comp
 ```
     
 2. **执行 FutureTask：**
-    
     - **方式 1：提交给线程池 (`ExecutorService`)** (推荐)
-
-```java
-ExecutorService executor = Executors.newSingleThreadExecutor();
-executor.execute(futureTask); // 利用其 Runnable 特性
-// 或者，虽然 submit(Runnable) 返回 Future<?>，但用 FutureTask 本身更直接
-// Future<?> future = executor.submit(futureTask);
-```
-        
-- **方式 2：直接启动新线程执行**
-```java
-Thread thread = new Thread(futureTask); // 利用其 Runnable 特性
-        thread.start();
-```
-        
-1. **获取结果与状态控制：** (通过 `Future` 接口)
-    
+	```java
+	ExecutorService executor = Executors.newSingleThreadExecutor();
+	executor.execute(futureTask); // 利用其 Runnable 特性
+	// 或者，虽然 submit(Runnable) 返回 Future<?>，但用 FutureTask 本身更直接
+	// Future<?> future = executor.submit(futureTask);
+	```
+	- **方式 2：直接启动新线程执行**
+	```java
+	Thread thread = new Thread(futureTask); // 利用其 Runnable 特性
+	        thread.start();
+	```
+3. **获取结果与状态控制：** (通过 `Future` 接口)
     ```java
     // 1. 阻塞获取结果 (和 Future 一样)
     try {
@@ -434,24 +414,17 @@ Thread thread = new Thread(futureTask); // 利用其 Runnable 特性
     boolean mayInterruptIfRunning = true; // true: 尝试中断正在执行任务的线程; false: 仅标记取消
     boolean cancelSuccess = futureTask.cancel(mayInterruptIfRunning);
     ```
-2. **手动运行（通常不推荐，了解即可）：**
-    
+4. **手动运行（通常不推荐，了解即可）：**
     - 可以直接调用 `futureTask.run()`。这会在**当前线程**中同步执行任务（而不是异步）。通常只在特定场景（如自定义调度）或测试中使用。
 
 ### 面试深入 (原理、设计、场景、陷阱)
 
 1. **与 `Future` / `Callable` / `Runnable` 的关系：**
-    
     - `FutureTask` 是 `RunnableFuture<V>` 的标准实现，而 `RunnableFuture<V>` 扩展了 `Runnable` 和 `Future<V>`。
-        
     - 它**适配器模式**的体现：将 `Callable` 或 `Runnable + 结果` 包装成一个统一的、可执行且可获取结果/状态的对象。
-        
     - **为什么需要它？** `ExecutorService.submit(Callable)` 内部其实就是创建了一个 `FutureTask` 来包装你的 `Callable`，然后执行它并返回这个 `FutureTask`（作为 `Future`）。它提供了任务执行、状态管理和结果获取的基础设施。
-        
 2. **内部状态机：**
-    
     - `FutureTask` 使用一个 `volatile int state` 变量来表示任务的状态，状态变迁是单向的：
-        
         - `NEW` (0)：新建，任务尚未执行。
         - `COMPLETING` (1)：任务执行即将完成（结果或异常正在被设置）。**瞬时状态**。
         - `NORMAL` (2)：任务**正常完成**，结果已设置。
@@ -459,26 +432,19 @@ Thread thread = new Thread(futureTask); // 利用其 Runnable 特性
         - `CANCELLED` (4)：任务在**未启动时被取消** (`cancel(false)` 或 `cancel(true)` 但任务未启动)。
         - `INTERRUPTING` (5)：任务**正在被中断** (`cancel(true)` 且任务正在运行)。**瞬时状态**。
         - `INTERRUPTED` (6)：任务**已被中断** (`cancel(true)` 成功中断了运行中的任务)。
-            
     - 状态变迁路径 (`NEW -> ...`):
-        
         - `NEW -> COMPLETING -> NORMAL` (正常完成)
         - `NEW -> COMPLETING -> EXCEPTIONAL` (异常完成)
         - `NEW -> CANCELLED` (未启动被取消)
         - `NEW -> INTERRUPTING -> INTERRUPTED` (运行中被中断取消)
-            
     - **关键点：** 状态机保证了操作的原子性和结果的可见性。`get()` 方法会根据状态决定是阻塞等待、立即返回结果还是抛出异常。
-        
 3. **`run()` 方法的核心逻辑：**
-    
     1. 检查状态必须是 `NEW`，并通过 CAS 确保只有一个线程能执行任务。
     2. 调用封装的 `Callable.call()`（或适配后的 `Runnable.run()`）。
     3. 如果调用成功，设置结果 (`set(result)`)，状态从 `NEW` 经 `COMPLETING` 变为 `NORMAL`。
     4. 如果调用抛出异常，设置异常 (`setException(ex)`)，状态从 `NEW` 经 `COMPLETING` 变为 `EXCEPTIONAL`。
     5. **无论如何完成，最终都会调用 `finishCompletion()`：** 唤醒所有在 `get()` 上阻塞的线程，并执行注册的后续操作（`CompletableFuture` 用这个机制实现回调链）。
-        
 4. **`cancel(boolean mayInterruptIfRunning)` 的工作原理：**
-    
     - 如果任务状态不是 `NEW`，直接返回 `false` (无法取消)。
     - 尝试通过 CAS 将状态从 `NEW` 改为：
         - 如果 `mayInterruptIfRunning == false` -> 直接改为 `CANCELLED`。
@@ -488,9 +454,7 @@ Thread thread = new Thread(futureTask); // 利用其 Runnable 特性
         - 将状态最终改为 `INTERRUPTED`。
     - 调用 `finishCompletion()` 唤醒等待线程。
     - 返回 `true` 表示取消请求已成功发出（注意：**成功发出请求不代表任务一定立即停止**，取决于任务是否响应中断）。
-        
 5. **`get()` 方法的工作原理：**
-    
     - 如果状态是 `NORMAL`，直接返回结果。
     - 如果状态是 `EXCEPTIONAL`，抛出 `ExecutionException` (包装原始异常)。
     - 如果状态是 `CANCELLED` / `INTERRUPTING` / `INTERRUPTED`，抛出 `CancellationException`。
@@ -498,13 +462,11 @@ Thread thread = new Thread(futureTask); // 利用其 Runnable 特性
         - 当前线程会通过 `LockSupport.park()` 或 `wait()` (旧版) 挂起（阻塞）。
         - 当任务状态变为最终状态 (`NORMAL`, `EXCEPTIONAL`, `CANCELLED`, `INTERRUPTED`) 时，`finishCompletion()` 会唤醒所有阻塞在 `get()` 上的线程。
 6. **适用场景：**
-    
     - **需要手动控制任务执行时机：** 当不想直接使用 `ExecutorService.submit()`，而是想自己决定何时何地（在哪个线程）执行任务时。
     - **实现自定义的任务调度器/执行器：** 作为任务队列中的基本任务单元。
     - **需要重复执行的任务？** **注意：** `FutureTask` 设计为**一次性**的。一旦运行完成（无论成功、失败、取消），就不能再运行。如果需要重复执行，需要创建新的 `FutureTask` 实例。
     - **需要 `runAndReset()` 的场景 (高级)：** `FutureTask` 提供了一个 `protected` 方法 `runAndReset()`。它执行任务但不设置结果/状态（保持 `NEW` 状态），允许任务被再次执行。**这是 `FutureTask` 特有的高级功能，但使用场景相对狭窄且需要小心同步问题**（例如，实现自定义的周期性任务，但通常 `ScheduledThreadPoolExecutor` 是更好的选择）。
 7. **与 `CompletableFuture` 的区别 (关键面试点)：**
-    
     |特性|`FutureTask`|`CompletableFuture`|
     |---|---|---|
     |**核心目标**|**基础任务执行单元**：封装任务、管理状态、提供结果|**高级异步编程模型**：提供强大的**组合、链式调用、异常处理**|
@@ -520,23 +482,19 @@ Thread thread = new Thread(futureTask); // 利用其 Runnable 特性
     |**适用场景**|基础任务封装、自定义执行器底层|现代异步编程、非阻塞IO集成、复杂任务流编排|
     
     **总结：** `FutureTask` 是**构建块**，提供了任务执行和结果管理的基础能力。`CompletableFuture` 是建立在类似基础（内部可能也用了类似 `FutureTask` 的机制）之上的**高级抽象**，专注于简化复杂的异步编程。
-    
-8. **常见陷阱与注意事项：**
-    
+1. **常见陷阱与注意事项：**
     - **一次性：** 最大的陷阱是忘记 `FutureTask` 是一次性的。尝试重新执行一个已经完成（无论方式）的 `FutureTask` 的 `run()` 方法**不会做任何事**。需要重新创建实例。
     - **阻塞 `get()`：** 在主线程或关键线程中调用 `get()` 会导致阻塞，破坏响应性/并发性。尽量结合 `isDone()` 轮询或使用 `CompletableFuture` 的非阻塞回调。
     - **正确取消：** `cancel(true)` 只是发送中断请求，任务代码**必须响应中断** (`Thread.interrupted()`) 才能真正停止。否则任务可能继续运行直到结束。
     - **内存可见性：** `FutureTask` 内部通过状态机 (`volatile state`) 和 CAS 操作保证结果的可见性，这是安全的。但任务内部使用的共享数据仍需开发者自己保证线程安全（通过同步、`volatile`、原子类等）。
     - **`runAndReset()` 的复杂性：** 使用这个高级功能需要非常小心同步和状态重置逻辑，容易出错。优先考虑标准库的调度器 (`ScheduledExecutorService`)。
     - **结果类型：** 用 `Runnable` 构造时，结果是预设的固定值 (`resultValue`)。如果任务实际需要动态计算结果，必须使用 `Callable` 构造。
-9. **为什么 `FutureTask` 仍然重要？**
-    
+2. **为什么 `FutureTask` 仍然重要？**
     - **基础性：** 它是理解 `ExecutorService` 提交任务后返回 `Future` 内部运作的基础。
     - **灵活性：** 在需要完全控制任务执行线程或实现高度定制化执行逻辑时，它提供了底层控制能力。
     - **学习价值：** 其状态机的实现是并发编程中状态管理和线程间通信（结果传递、唤醒）的经典案例。
 
 ### 总结关键点
-
 - **核心身份：** `FutureTask` 是 `Runnable` + `Future` 的实现 (`RunnableFuture`)。它将 `Callable` 或 `Runnable` 任务包装成一个可执行、可取消、可获取结果/状态的对象。
 - **状态机：** 理解其内部状态 (`NEW`, `COMPLETING`, `NORMAL`, `EXCEPTIONAL`, `CANCELLED`, `INTERRUPTING`, `INTERRUPTED`) 及其变迁是深入掌握其原理的关键。
 - **执行：** 通过 `Thread.start()` 或 `Executor.execute/submit()` 执行其 `run()` 方法。
