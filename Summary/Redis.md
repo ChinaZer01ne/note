@@ -707,9 +707,7 @@ typedef struct redisDb {
 ### Redis的弱事务性
 
 - Redis语法错误
-    
     整个事务的命令在队列里都清除
-    
 
 ```bash
 127.0.0.1:6379> multi
