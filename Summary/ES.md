@@ -20,7 +20,7 @@
     - 当然在某些情况下，存在 Memory Buffer 和 Filesystem Cache 的数据可能会丢失， ES 是通过[ translog的机制](#translog)来保证数据的可靠性的。其实现机制是接收到请求后，同时也会写入到 translog 中，当 Filesystem cache 中的数据写入到磁盘中时，才会清除掉，这个过程叫做 [flush](#flush)；  
         - **为保证数据可靠性，当 Filesystem cache 中的数据写入到磁盘，translog才被清除**
     - 在 flush 过程中，内存中的缓冲将被清除，内容被写入一个新段，段的 fsync 将创建一个新的提交点，并将内容刷新到磁盘，旧的 translog 将被删除并开始一个新的 translog。  
-    - f**lush 触发的时机是定时触发（默认 30 分钟）或者 translog 变得太大（默认为 512M）时**；  
+    - **flush 触发的时机是定时触发（默认 30 分钟）或者 translog 变得太大（默认为 512M）时**；  
 4. 主分片将数据发送给副本  
     - 一致性参数设置  
         - one  

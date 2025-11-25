@@ -133,12 +133,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Concurrent programming.md",
+                "file": "Summary/Spring Cloud.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Concurrent programming"
+              "title": "Spring Cloud"
             }
           }
         ],
@@ -261,13 +261,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Concurrent programming.md",
+                "file": "Summary/Spring Cloud.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Concurrent programming 的大纲"
+              "title": "Spring Cloud 的大纲"
             }
           },
           {
@@ -396,14 +396,23 @@
   },
   "active": "a4e496166d78d175",
   "lastOpenFiles": [
+    "Summary/Spring.md",
+    "Summary/MarkDown.md",
+    "Summary/Linux.md",
+    "Summary/JVM.md",
+    "Summary/Java.md",
+    "Summary/IO.md",
+    "Summary/ES.md",
+    "Summary/Distributed Theory.md",
+    "Summary/Design Patterns.md",
+    "Summary/Design Docments.md",
+    "Summary/Concurrent programming.md",
     "Summary/面试问题.md",
     "Summary/线上问题分享（TODO）.md",
-    "Summary/JVM.md",
     "Summary/MQ.md",
     "Summary/Mybatis.md",
     "Summary/Mysql.md",
     "Summary/Redis.md",
-    "Summary/Spring.md",
     "Summary/Sentinel.md",
     "Summary/Zookeeper.md",
     "Summary/项目要点.md",
@@ -412,18 +421,9 @@
     "Summary/TO DO LIST.md",
     "未命名 1.base",
     "未命名.base",
-    "Summary/Design Docments.md",
     "Summary/前端.md",
     "Summary/缓存.md",
     "Summary/方法论.md",
-    "Summary/MicroService Design.md",
-    "Summary/Log.md",
-    "Summary/Linux.md",
-    "Summary/Java.md",
-    "Summary/IO.md",
-    "Summary/ES.md",
-    "Summary/Dubbo.md",
-    "Summary/Distributed Theory.md",
     "Summary/image/Dubbo/dubbo.png",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
     "Summary/image/Dubbo/dubbo-spi.png",
