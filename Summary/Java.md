@@ -1397,13 +1397,11 @@ ExecutorService pool = Executors.newFixedThreadPool(5);
     // 推荐
     optional.ifPresent(value -> doSomething(value));
     ```
-    
 
 #### ❌ 避免的陷阱
 
 1. **不要用 `Optional` 做字段、方法参数或集合元素**  
     增加复杂度且破坏设计初衷。应直接使用对象或 `null`。
-    
 	```java
     
     // 反例
