@@ -11,6 +11,7 @@
 - 做分布式锁(Redis)
 	>悲观锁：`setnx`
 	>乐观锁：`watch` + `incr`
+
 # Redis单线程架构
 
 ### 单线程模型
