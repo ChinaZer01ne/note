@@ -133,12 +133,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/面试问题.md",
+                "file": "Summary/Redis.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "面试问题"
+              "title": "Redis"
             }
           }
         ],
@@ -174,7 +174,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "docker",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -195,8 +195,7 @@
               "title": "书签"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -262,13 +261,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/面试问题.md",
+                "file": "Summary/Redis.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "面试问题 的大纲"
+              "title": "Redis 的大纲"
             }
           },
           {
@@ -395,12 +394,17 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "d4b7c9ad3456c250",
+  "active": "a4e496166d78d175",
   "lastOpenFiles": [
-    "Summary/Java.md",
     "Summary/Sentinel.md",
-    "Summary/Spring Cloud.md",
     "Summary/Nacos.md",
+    "Summary/Mysql.md",
+    "Summary/Mybatis.md",
+    "Summary/MicroService Design.md",
+    "Summary/Java.md",
+    "Summary/ES.md",
+    "Summary/面试问题.md",
+    "Summary/Spring Cloud.md",
     "Summary/System Design.md",
     "Summary/Zookeeper.md",
     "Summary/TO DO LIST.md",
@@ -409,22 +413,17 @@
     "Summary/Linux.md",
     "Summary/JVM.md",
     "Summary/IO.md",
-    "Summary/ES.md",
     "Summary/Distributed Theory.md",
     "Summary/Design Patterns.md",
     "Summary/Design Docments.md",
     "Summary/Concurrent programming.md",
-    "Summary/面试问题.md",
     "Summary/线上问题分享（TODO）.md",
     "Summary/MQ.md",
-    "Summary/Mybatis.md",
-    "Summary/Mysql.md",
     "Summary/Redis.md",
     "Summary/项目要点.md",
     "未命名 1.base",
     "未命名.base",
     "Summary/前端.md",
-    "Summary/缓存.md",
     "Summary/image/Dubbo/dubbo.png",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
     "Summary/image/Dubbo/dubbo-spi.png",

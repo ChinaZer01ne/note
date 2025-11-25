@@ -240,7 +240,6 @@ int expireIfNeeded(redisDb *db, robj *key) {
     propagateExpire(db,key);
     return dbDelete(db,key);
 }
-
 ```
 
 **优点**：对 CPU 友好，仅在使用时触发删除操作。
