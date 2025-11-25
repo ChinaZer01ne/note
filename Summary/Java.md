@@ -764,13 +764,9 @@ https://blog.csdn.net/Weixiaohuai/article/details/126498242
 ![](重量级锁monitor.webp)
 
 当有线程获取到锁时，锁对象头中的Mark Word变成了指向Monitor的指针。（原本mark word当中的内容会存储到Monitor当中，释放时会取出这些内容再次放到mark word。）
-    
 thread3 来竞争这把锁，此时只有它自己，那么thread3将会被设置为Monitor的Owner，有且只能有一个Owner。
-
 如果thread3持有锁的过程中，如果thread4和thread5也来竞争锁，就会添加到EntryList当中，此时线程将被阻塞（BLOCKED）。
-    
 当thread执行完同步代码块当中的内容，会唤醒EntryList当中的线程来竞争锁，此竞争是非公平的。
-    
 另外，在WaitSet当中的thread1和thread2，其状态是WAITING，表示他们之前获得过锁，执行了等待方法。
 
 https://baijiahao.baidu.com/s?id=1717781876275288385&wfr=spider&for=pc
