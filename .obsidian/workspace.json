@@ -133,12 +133,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Spring.md",
+                "file": "Summary/Redis.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Spring"
+              "title": "Redis"
             }
           }
         ],
@@ -261,13 +261,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Spring.md",
+                "file": "Summary/Redis.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Spring 的大纲"
+              "title": "Redis 的大纲"
             }
           },
           {
@@ -396,12 +396,13 @@
   },
   "active": "a4e496166d78d175",
   "lastOpenFiles": [
+    "Summary/Spring Cloud.md",
+    "Summary/System Design.md",
+    "Summary/Zookeeper.md",
+    "Summary/Spring.md",
     "Summary/面试问题.md",
     "Summary/Mysql.md",
-    "Summary/Spring.md",
-    "Summary/System Design.md",
     "Summary/项目要点.md",
-    "Summary/Zookeeper.md",
     "Summary/TO DO LIST.md",
     "未命名 1.base",
     "未命名.base",
@@ -423,7 +424,6 @@
     "Summary/Design Patterns.md",
     "Summary/DDD.md",
     "Summary/Concurrent programming.md",
-    "Summary/Computer Network.md",
     "Summary/image/Dubbo/dubbo.png",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
     "Summary/image/Dubbo/dubbo-spi.png",
