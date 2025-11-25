@@ -133,12 +133,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Zookeeper.md",
+                "file": "Summary/面试问题.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Zookeeper"
+              "title": "面试问题"
             }
           }
         ],
@@ -261,13 +261,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Zookeeper.md",
+                "file": "Summary/面试问题.md",
                 "followCursor": false,
-                "showSearch": false,
-                "searchQuery": ""
+                "showSearch": true,
+                "searchQuery": "R"
               },
               "icon": "lucide-list",
-              "title": "Zookeeper 的大纲"
+              "title": "面试问题 的大纲"
             }
           },
           {
@@ -394,15 +394,16 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "a4e496166d78d175",
+  "active": "cb57ded5bb6d015c",
   "lastOpenFiles": [
-    "Summary/项目要点.md",
-    "Summary/面试问题.md",
-    "Summary/Spring.md",
     "Summary/Redis.md",
+    "Summary/面试问题.md",
+    "Summary/Sentinel.md",
+    "Summary/Zookeeper.md",
+    "Summary/项目要点.md",
+    "Summary/Spring.md",
     "Summary/Spring Cloud.md",
     "Summary/System Design.md",
-    "Summary/Zookeeper.md",
     "Summary/Mysql.md",
     "Summary/TO DO LIST.md",
     "未命名 1.base",
@@ -423,7 +424,6 @@
     "Summary/Dubbo.md",
     "Summary/Distributed Theory.md",
     "Summary/Design Patterns.md",
-    "Summary/DDD.md",
     "Summary/image/Dubbo/dubbo.png",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
     "Summary/image/Dubbo/dubbo-spi.png",
