@@ -133,12 +133,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/线上问题分享（TODO）.md",
+                "file": "Summary/System Design.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "线上问题分享（TODO）"
+              "title": "System Design"
             }
           }
         ],
@@ -261,13 +261,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/线上问题分享（TODO）.md",
+                "file": "Summary/System Design.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "线上问题分享（TODO） 的大纲"
+              "title": "System Design 的大纲"
             }
           },
           {
@@ -370,6 +370,16 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "26afde1bb07ad517",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
@@ -394,8 +404,9 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "a4e496166d78d175",
+  "active": "cb57ded5bb6d015c",
   "lastOpenFiles": [
+    "Summary/线上问题分享（TODO）.md",
     "Summary/面试问题.md",
     "Summary/JVM.md",
     "Summary/Mysql.md",
@@ -418,7 +429,6 @@
     "Summary/Design Patterns.md",
     "Summary/Design Docments.md",
     "Summary/Concurrent programming.md",
-    "Summary/线上问题分享（TODO）.md",
     "Summary/MQ.md",
     "Summary/项目要点.md",
     "未命名 1.base",
