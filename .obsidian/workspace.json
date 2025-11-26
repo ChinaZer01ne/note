@@ -133,12 +133,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/System Design.md",
+                "file": "Summary/Spring.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "System Design"
+              "title": "Spring"
             }
           }
         ],
@@ -174,7 +174,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "prototy",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -195,7 +195,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -261,13 +262,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/System Design.md",
+                "file": "Summary/Spring.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "System Design 的大纲"
+              "title": "Spring 的大纲"
             }
           },
           {
@@ -404,10 +405,12 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "cb57ded5bb6d015c",
+  "active": "a4e496166d78d175",
   "lastOpenFiles": [
-    "Summary/线上问题分享（TODO）.md",
     "Summary/面试问题.md",
+    "Summary/System Design.md",
+    "Summary/线上问题分享（TODO）.md",
+    "Summary/缓存.md",
     "Summary/JVM.md",
     "Summary/Mysql.md",
     "Summary/Zookeeper.md",
@@ -419,7 +422,6 @@
     "Summary/MicroService Design.md",
     "Summary/Java.md",
     "Summary/Spring Cloud.md",
-    "Summary/System Design.md",
     "Summary/TO DO LIST.md",
     "Summary/Spring.md",
     "Summary/MarkDown.md",
@@ -433,7 +435,6 @@
     "Summary/项目要点.md",
     "未命名 1.base",
     "未命名.base",
-    "Summary/前端.md",
     "Summary/image/Dubbo/dubbo.png",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
     "Summary/image/Dubbo/dubbo-spi.png",
