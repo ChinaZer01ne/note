@@ -404,9 +404,19 @@
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
+          },
+          {
+            "id": "3281891def67bc40",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "笔记复习序列"
+            }
           }
         ],
-        "currentTab": 15
+        "currentTab": 16
       }
     ],
     "direction": "horizontal",
@@ -427,6 +437,8 @@
   },
   "active": "6aa11b407ce3eab2",
   "lastOpenFiles": [
+    "未命名.base",
+    "未命名 1.base",
     "投资",
     "新建文件夹",
     "哲学",
@@ -456,8 +468,6 @@
     "Summary/Design Docments.md",
     "Summary/Concurrent programming.md",
     "Summary/MQ.md",
-    "未命名 1.base",
-    "未命名.base",
     "Summary/image/Dubbo/dubbo.png",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
     "Summary/image/Dubbo/dubbo-spi.png",
