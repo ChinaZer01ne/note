@@ -150,7 +150,7 @@
                 "currentVersion": "1.10.6"
               },
               "icon": "lucide-book-up",
-              "title": "版本说明 1.10.6"
+              "title": "Release Notes 1.10.6"
             }
           }
         ],
@@ -177,7 +177,7 @@
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
-              "title": "文件列表"
+              "title": "Files"
             }
           },
           {
@@ -287,8 +287,8 @@
             "state": {
               "type": "calendar",
               "state": {},
-              "icon": "calendar-with-checkmark",
-              "title": "Calendar"
+              "icon": "lucide-ghost",
+              "title": "calendar"
             }
           },
           {
@@ -401,12 +401,32 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "3281891def67bc40",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
               "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "title": "Notes Review Queue"
+            }
+          },
+          {
+            "id": "26d50f0c4a1dbfe0",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "Notes Review Queue"
             }
           }
         ],
-        "currentTab": 15
+        "currentTab": 17
       }
     ],
     "direction": "horizontal",
@@ -414,19 +434,21 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "bases:创建新数据库": false,
-      "switcher:打开快速切换": false,
-      "graph:查看关系图谱": false,
-      "canvas:新建白板": false,
-      "daily-notes:打开/创建今天的日记": false,
-      "templates:插入模板": false,
-      "command-palette:打开命令面板": false,
-      "markdown-importer:打开 Markdown 格式转换器": false,
-      "obsidian-spaced-repetition:复习卡片": false
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "markdown-importer:Open format converter": false,
+      "bases:Create new base": false,
+      "obsidian-spaced-repetition:Review flashcards": false
     }
   },
-  "active": "6aa11b407ce3eab2",
+  "active": "26d50f0c4a1dbfe0",
   "lastOpenFiles": [
+    "未命名.base",
+    "未命名 1.base",
     "投资",
     "新建文件夹",
     "哲学",
@@ -456,8 +478,6 @@
     "Summary/Design Docments.md",
     "Summary/Concurrent programming.md",
     "Summary/MQ.md",
-    "未命名 1.base",
-    "未命名.base",
     "Summary/image/Dubbo/dubbo.png",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
     "Summary/image/Dubbo/dubbo-spi.png",
