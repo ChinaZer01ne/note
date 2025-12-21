@@ -145,12 +145,14 @@
             "id": "cf6713abcb7102fb",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
+              "type": "markdown",
               "state": {
-                "currentVersion": "1.10.6"
+                "file": "daliy_note/2025-12-21.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-book-up",
-              "title": "版本说明 1.10.6"
+              "icon": "lucide-file",
+              "title": "2025-12-21"
             }
           }
         ],
@@ -401,8 +403,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -414,9 +416,19 @@
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
+          },
+          {
+            "id": "98bf3435e4a5c2b6",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "笔记复习序列"
+            }
           }
         ],
-        "currentTab": 16
+        "currentTab": 17
       }
     ],
     "direction": "horizontal",
@@ -435,8 +447,9 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "6aa11b407ce3eab2",
+  "active": "cf6713abcb7102fb",
   "lastOpenFiles": [
+    "daliy_note/2025-12-21.md",
     "未命名.base",
     "未命名 1.base",
     "投资",
@@ -481,7 +494,6 @@
     "Summary/image/Redis/redis热key.jpg",
     "Summary/image/Redis/redis服务器分布样式.png",
     "Summary/image/Redis/Redis命令执行流程图.png.crdownload",
-    "Summary/image/Redis/Redis命令处理流程.png.crdownload",
-    "Summary/image/Redis/双工请求响应模式.png.crdownload"
+    "Summary/image/Redis/Redis命令处理流程.png.crdownload"
   ]
 }
