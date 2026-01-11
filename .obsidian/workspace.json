@@ -413,8 +413,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -426,9 +426,19 @@
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
+          },
+          {
+            "id": "336751b8133ed98d",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "笔记复习序列"
+            }
           }
         ],
-        "currentTab": 17
+        "currentTab": 18
       }
     ],
     "direction": "horizontal",
@@ -447,7 +457,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "cf6713abcb7102fb",
+  "active": "336751b8133ed98d",
   "lastOpenFiles": [
     "daliy_note/2025-12-21.md",
     "未命名.base",
