@@ -147,12 +147,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "daliy_note/2025-12-21.md",
+                "file": "投资/操作守则.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2025-12-21"
+              "title": "操作守则"
             }
           }
         ],
@@ -423,8 +423,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -436,9 +436,19 @@
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
+          },
+          {
+            "id": "c088bdc820a56c88",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "笔记复习序列"
+            }
           }
         ],
-        "currentTab": 18
+        "currentTab": 19
       }
     ],
     "direction": "horizontal",
@@ -457,9 +467,10 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "336751b8133ed98d",
+  "active": "cf6713abcb7102fb",
   "lastOpenFiles": [
     "daliy_note/2025-12-21.md",
+    "投资/操作守则.md",
     "未命名.base",
     "未命名 1.base",
     "投资",
@@ -490,7 +501,6 @@
     "Summary/Design Patterns.md",
     "Summary/Design Docments.md",
     "Summary/Concurrent programming.md",
-    "Summary/MQ.md",
     "Summary/image/Dubbo/dubbo.png",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
     "Summary/image/Dubbo/dubbo-spi.png",
