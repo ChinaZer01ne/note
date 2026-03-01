@@ -196,9 +196,23 @@
               "icon": "lucide-file",
               "title": "思考"
             }
+          },
+          {
+            "id": "87b37b9a1613b33e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "投资/思考.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "思考"
+            }
           }
         ],
-        "currentTab": 13
+        "currentTab": 14
       }
     ],
     "direction": "vertical"
@@ -515,8 +529,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -528,9 +542,19 @@
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
+          },
+          {
+            "id": "1d768c9a8efbc695",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "笔记复习序列"
+            }
           }
         ],
-        "currentTab": 23
+        "currentTab": 24
       }
     ],
     "direction": "horizontal",
@@ -549,7 +573,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "c300b851080e4222",
+  "active": "87b37b9a1613b33e",
   "lastOpenFiles": [
     "投资/思考.md",
     "投资/操作守则.md",
