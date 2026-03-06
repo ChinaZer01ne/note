@@ -1,6 +1,8 @@
 - [ ] [[复习分层导航]]
+- [ ] [[新增模块学习计划]]
 - [ ] [[30天复习计划]]
 - [ ] [[现代Java资深开发补充主题]]
+- [ ] [[AI工程化与Java落地]]
 - [x] [[Spring#Spring Bean的生命周期]]
 - [x] [[Spring#什么是BeanFactory？]]
 - [x] [[Mysql#Redo Log]]

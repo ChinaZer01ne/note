@@ -203,12 +203,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/复习分层导航.md",
+                "file": "Summary/30天复习计划.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "复习分层导航"
+              "title": "30天复习计划"
             }
           }
         ],
@@ -559,8 +559,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -572,9 +572,19 @@
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
+          },
+          {
+            "id": "33660d4b27d71c75",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "笔记复习序列"
+            }
           }
         ],
-        "currentTab": 26
+        "currentTab": 27
       }
     ],
     "direction": "horizontal",
@@ -595,9 +605,9 @@
   },
   "active": "87b37b9a1613b33e",
   "lastOpenFiles": [
+    "Summary/复习分层导航.md",
     "Summary/Algorithm.md",
     "Summary/TO DO LIST.md",
-    "Summary/复习分层导航.md",
     "Summary/Java.md",
     "Summary/AI.md",
     "投资/思考.md",
