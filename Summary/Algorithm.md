@@ -98,7 +98,7 @@ public List<Integer> inorderTraversal(TreeNode root) {
     return res;  
 }
 ```
-### [后序遍历](https://leetcode.cn/problems/binary-tree-postorder-traversal/)
+### 后序遍历
 #### 思路一：
 * 前序遍历（根左右），用栈先压右子树，在压左子树；
 * 如果我们先压左子树，在压右子树，那么打印的就是根右左的顺序
@@ -164,7 +164,7 @@ public List<Integer> postorderTraversal(TreeNode root) {
     return res;  
 }
 ```
-### [层序遍历](https://leetcode.cn/problems/binary-tree-level-order-traversal/)
+### 层序遍历
 ```java
 class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
