@@ -203,12 +203,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/30天复习计划.md",
+                "file": "Summary/新增模块学习计划.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "30天复习计划"
+              "title": "新增模块学习计划"
             }
           }
         ],
@@ -569,8 +569,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -582,9 +582,19 @@
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
+          },
+          {
+            "id": "2f436b343b147c9c",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "笔记复习序列"
+            }
           }
         ],
-        "currentTab": 27
+        "currentTab": 28
       }
     ],
     "direction": "horizontal",
@@ -606,6 +616,9 @@
   "active": "87b37b9a1613b33e",
   "lastOpenFiles": [
     "Summary/复习分层导航.md",
+    "Summary/现代Java资深开发补充主题.md",
+    "Summary/新增模块学习计划.md",
+    "Summary/30天复习计划.md",
     "Summary/Algorithm.md",
     "Summary/TO DO LIST.md",
     "Summary/Java.md",
@@ -634,9 +647,6 @@
     "Summary/Mybatis.md",
     "Summary/MicroService Design.md",
     "Summary/Spring Cloud.md",
-    "Summary/Spring.md",
-    "Summary/MarkDown.md",
-    "Summary/Linux.md",
     "Summary/image/Dubbo/dubbo.png",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
     "Summary/image/Dubbo/dubbo-spi.png",
