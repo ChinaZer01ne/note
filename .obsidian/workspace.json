@@ -599,8 +599,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -612,9 +612,19 @@
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
+          },
+          {
+            "id": "4caec0e442a0cc8b",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "笔记复习序列"
+            }
           }
         ],
-        "currentTab": 30
+        "currentTab": 31
       }
     ],
     "direction": "horizontal",
@@ -633,7 +643,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "87b37b9a1613b33e",
+  "active": "4caec0e442a0cc8b",
   "lastOpenFiles": [
     "Summary/新增模块学习计划.md",
     "历史/历史上的金融危机.md",
