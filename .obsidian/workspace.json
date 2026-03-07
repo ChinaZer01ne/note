@@ -203,12 +203,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/新增模块学习计划.md",
+                "file": "历史/历史上的金融危机.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "新增模块学习计划"
+              "title": "历史上的金融危机"
             }
           }
         ],
@@ -589,8 +589,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -602,9 +602,19 @@
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
+          },
+          {
+            "id": "2e01ca2d9b0902f9",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "笔记复习序列"
+            }
           }
         ],
-        "currentTab": 29
+        "currentTab": 30
       }
     ],
     "direction": "horizontal",
@@ -625,8 +635,8 @@
   },
   "active": "87b37b9a1613b33e",
   "lastOpenFiles": [
-    "历史/历史上的金融危机.md",
     "Summary/新增模块学习计划.md",
+    "历史/历史上的金融危机.md",
     "Summary/复习分层导航.md",
     "Summary/现代Java资深开发补充主题.md",
     "Summary/30天复习计划.md",
