@@ -203,12 +203,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "历史/历史上的金融危机.md",
+                "file": "投资/操作守则.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "历史上的金融危机"
+              "title": "操作守则"
             }
           }
         ],
@@ -609,8 +609,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -622,9 +622,19 @@
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
+          },
+          {
+            "id": "698d5137e88aa7e1",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "笔记复习序列"
+            }
           }
         ],
-        "currentTab": 31
+        "currentTab": 32
       }
     ],
     "direction": "horizontal",
@@ -643,10 +653,10 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "4caec0e442a0cc8b",
+  "active": "87b37b9a1613b33e",
   "lastOpenFiles": [
-    "Summary/新增模块学习计划.md",
     "历史/历史上的金融危机.md",
+    "Summary/新增模块学习计划.md",
     "Summary/复习分层导航.md",
     "Summary/现代Java资深开发补充主题.md",
     "Summary/30天复习计划.md",
