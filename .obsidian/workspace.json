@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "投资/操作守则.md",
+                "file": "Summary/JVM.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "操作守则"
+              "title": "JVM"
             }
           }
         ]
@@ -435,9 +435,9 @@
   },
   "active": "9bc99ca2867f9df0",
   "lastOpenFiles": [
-    "daliy_note/2025-12-21.md",
     "投资/操作守则.md",
     "投资/思考.md",
+    "daliy_note/2025-12-21.md",
     "daliy_note/2026-01-30.md",
     "历史/历史上的金融危机.md",
     "历史",
