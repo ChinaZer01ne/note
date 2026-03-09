@@ -1136,8 +1136,39 @@ flowchart TD
     H --> O[拒绝处理流程]
 ```
 > 编者注：线程池的各个参数与线程池的执行流程。
+
+### 线程池参数实战模板（CPU密集/IO密集）::
+- CPU 密集型（计算任务）
+  - `corePoolSize = CPU核数 或 CPU核数 + 1`
+  - `maximumPoolSize = corePoolSize`
+  - `workQueue`：有界队列，避免任务无界堆积
+- IO 密集型（网络/磁盘等待）
+  - `corePoolSize = CPU核数 * 2`（起步值）
+  - `maximumPoolSize = CPU核数 * 4`（按下游容量与压测结果收敛）
+  - `workQueue`：有界队列，长度按可接受排队时间反推
+
+### 参数选型边界与默认值坑点::
+- `corePoolSize` 过小：队列积压、TP99变差；过大：上下文切换与CPU开销增加。
+- `maximumPoolSize` 过大：容易放大下游故障（DB/Redis/MQ被打爆）。
+- `workQueue` 过大：延迟恶化且可能OOM；过小：过早触发拒绝。
+- `handler` 必须按业务分级：核心链路优先 `CallerRunsPolicy`，非核心异步链路可丢弃。
+- 不建议生产默认直接用 `Executors.newFixedThreadPool/newCachedThreadPool`（上限不可控）。
+
 ### 线程池的核心参数应该怎么设置？::
-TODO
+#### 拒绝策略选择建议
+- 核心链路：`CallerRunsPolicy`（反压，保护系统）
+- 非核心异步任务：`DiscardPolicy` / `DiscardOldestPolicy`
+- 强一致写链路：`AbortPolicy` + 明确告警与补偿
+
+#### 线程池隔离建议
+- 按业务域隔离：下单池、查询池、回调池拆开
+- 按依赖隔离：DB访问池、远程调用池拆开
+- 防止“一处慢，处处堵”
+
+#### 线上调优观察指标
+- `activeCount`、`queueSize`、`completedTaskCount`、拒绝次数、任务等待时长、任务执行时长
+- 目标：在 SLA 下平衡吞吐、TP99、资源占用
+
 
 ### 线程池如何保证核心线程不被销毁？::
 核心线程会循环从队列中取任务，如果取不到任务则会在队列上阻塞等待而不会被销毁，而非核心线程拿不到任务的时候会结束循环，那意味着线程结束了。
@@ -1151,6 +1182,13 @@ TODO
 在没任务时，线程池中的工作线程在干嘛？  
 工作线程出现异常会导致什么问题？  
 工作线程继承AQS的目的是什么？
+
+### 线程池事故排查SOP::
+1. 看现象：RT升高、超时增多、拒绝数上升。
+2. 看指标：`activeCount`、`queueSize`、`completedTaskCount`、`rejectCount`。
+3. 判瓶颈：线程不足、队列过长，还是下游依赖变慢。
+4. 先止血：限流/降级/临时扩容（受下游容量约束）。
+5. 再治理：参数重设、线程池隔离、任务拆分与异步化。
 
 ## ThreadLocal
 

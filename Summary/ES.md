@@ -339,7 +339,6 @@ flush 操作主要通过以下几个参数控制
 >	* 提供**分布式查询流程**（Query then Fetch）来协调多个分片上的 Lucene 查询。
 >	* 提供 **RESTful API**、**聚合分析**、**管理功能**等上层能力。
 
-
 ## master 选举流程  
 
 - Elasticsearch的选主是ZenDiscovery模块负责的，主要包含Ping（节点之间通过这个RPC来发现彼此）和Unicast（单播模块包含-一个主机列表以控制哪些节点需要ping通）这两部分。  
@@ -509,9 +508,13 @@ L --> M[返回最终结果]
 	```
 
 ## 生产调优
+### 索引与查询优化清单
+- Mapping 字段类型是否匹配查询场景
+- 分片副本是否过多或过少
+- 慢查询是否命中关键词段
+- 热点分片是否出现倾斜
 
 #### 场景 1：写入吞吐优先（日志采集）
-
 
 ```json
 
@@ -558,3 +561,5 @@ PUT /transactions/_settings
     }
     POST /temp_index/_refresh
     ```
+
+

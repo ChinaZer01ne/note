@@ -10,7 +10,6 @@
 - 二级缓存不是默认收益，更新频繁场景可能适得其反。
 - ORM 问题本质仍是 SQL 问题，最终要回到执行计划分析。
 
-
 ## 重要组件
 * SqlSessionFactory
 * SqlSession
@@ -21,8 +20,16 @@
 
 ![](mybatis执行流程图.jpg)
 
-## MyBatis面试补漏
+## 执行流程与风险点
+
+- ${} 注入风险
+- N+1 查询
+- 批量写未启用 BATCH
+- 二级缓存误用
+
 - 执行流程：MapperProxy -> SqlSession -> Executor -> StatementHandler -> JDBC。
 - `#{}` 使用预编译参数，占位安全；`${}` 是字符串拼接，需白名单约束。
 - 一级缓存作用域是 SqlSession；二级缓存作用域是 Mapper，更新语句会触发失效。
 - 常见性能问题：N+1 查询、批量写未使用 BATCH、分页未命中索引。
+
+

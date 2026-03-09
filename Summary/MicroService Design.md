@@ -10,7 +10,6 @@
 - 重试不是万能，需配合幂等与熔断避免放大故障。
 - 分布式事务要按业务一致性等级选型，不追求“全部强一致”。
 
-
 # 注册中心
 
 服务注册中⼼本质上是为了解耦服务提供者和服务消费者。为了⽀持弹性扩缩容特性，⼀个微服务的提供者的数量和分布往往是动态变化的，也是⽆法预先确定的。因此需要引⼊服务注册中⼼。
@@ -75,6 +74,7 @@ Nacos是⼀个更易于构建云原⽣应⽤的动态服务发现、配置管理
 TODO
 
 # 分布式事务
+
 - 2PC（强一致性)）
 - 3PC（强一致性)）
 - TCC 方案（强一致性)）
@@ -148,7 +148,6 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 
 > 业务侵入性大，事务回滚依赖于开发者来回滚和补偿，代码量大，复杂度高。需要处理幂等、空回滚、悬挂等问题。
 
-
 [![distributed-transacion-TCC](distributed-transaction-TCC.png)
 ## Saga 方案
 
@@ -207,6 +206,15 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 
 ## SETA的XA和AT模式
 TODO
+
+## 分布式事务选型表
+- 强一致优先：TCC/XA（侵入高）
+- 最终一致优先：可靠消息（解耦强）
+- 非核心链路：最大努力通知
+
+## 事务与调用链路联动治理
+- 统一超时、重试、幂等策略
+- 关键链路增加熔断与降级
 # 分布式锁
 
 ### 数据库
@@ -247,7 +255,6 @@ TODO
 #### Redis 最普通的分布式锁
 
 第一个最普通的实现方式，就是在 Redis 里使用 `SET key value [EX seconds] [PX milliseconds] NX` 创建一个 key，这样就算加锁。
-
 
 ```r
 SET resource_name my_random_value PX 30000 NX
@@ -636,7 +643,6 @@ public class ZooKeeperDistributedLock implements Watcher {
 
 # 分布式ID
 
-
 # 熔断限流
 
 ## 微服务中的雪崩效应
@@ -720,3 +726,5 @@ public class ZooKeeperDistributedLock implements Watcher {
 	- 分级流控
 	- 并发流控
 	- 连接数控制
+
+

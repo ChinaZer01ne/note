@@ -3,6 +3,8 @@
 - `P0-2` 调用链排障：`trace`/`stack`/`watch`/`tt`。
 - `P0-3` 类与字节码：`sc`/`sm`/`jad`/`redefine` 风险边界。
 - `P0-4` 火焰图与热点：`profiler` + CPU/锁竞争分析。
+- 排查闭环：`dashboard` 看全局，`thread -n` 查热点线程，`trace/watch` 定位慢方法，最后沉淀排查记录与回归检查项。
+
 - `P0-5` 线上规范：权限控制、审计、回滚与操作留痕。
 
 ## P0常见误区修正（本页已修订）
@@ -161,7 +163,6 @@ $ $ java -jar arthas-boot.jar
 |  .-.  ||  '--'.'   |  |   |  .--.  ||  .-.  |`.  `-.
 |  | |  ||  |\  \    |  |   |  |  |  ||  | |  |.-'    |
 `--' `--'`--' '--'   `--'   `--'  `--'`--' `--'`-----'
-
 
 wiki: https://arthas.aliyun.com/doc
 version: 3.0.5.20181127201536
@@ -508,7 +509,6 @@ thread -n 3
 $ thread -n 3
 "C1 CompilerThread0" [Internal] cpuUsage=1.63% deltaTime=3ms time=1170ms
 
-
 "arthas-command-execute" Id=23 cpuUsage=0.11% deltaTime=0ms time=401ms RUNNABLE
     at java.management@11.0.7/sun.management.ThreadImpl.dumpThreads0(Native Method)
     at java.management@11.0.7/sun.management.ThreadImpl.getThreadInfo(ThreadImpl.java:466)
@@ -525,7 +525,6 @@ $ thread -n 3
     at java.base@11.0.7/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
     at java.base@11.0.7/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
     at java.base@11.0.7/java.lang.Thread.run(Thread.java:834)
-
 
 "VM Periodic Task Thread" [Internal] cpuUsage=0.07% deltaTime=0ms time=584ms
 
@@ -706,7 +705,6 @@ RUNTIME
  MarkSweepCompact               Eden Space
                                 Survivor Space
                                 Tenured Gen
-
 
 --------------------------------------------------------------------------------------------------------------
  MEMORY
@@ -1040,7 +1038,6 @@ fields            modifierprivate,static
                   modifierprivate
                   type    int
                   name    illegalArgumentCount
-
 
 Affect(row-cnt:1) cost in 19 ms.
 ```
@@ -1877,3 +1874,6 @@ Arthas只是一个java程序，所以可以直接用java -jar运行。
 * wc 按行统计输出结果
 * options 查看或设置Arthas全局开关
 * profiler 使用async-profiler对应用采样，生成火焰图
+
+
+

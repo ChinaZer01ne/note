@@ -241,12 +241,14 @@ Spring设计了三级缓存来解决循环依赖问题。在`DefaultSingletonBea
 * 方法内自调用
 	* this对象不是代理对象
 	* 可以使用`AopContext.currentProxy()` + `@EnableAspectJAutoProxy(exposeProxy = true)`解决（不推荐）
+	* 通过代理对象调用事务方法
 * 方法是private的
 	* 代理无法拦截 `private` 方法（无论 JDK 动态代理还是 CGLIB，本质都无法对 private 方法做事务增强）子类无法重写private方法
 * 方法是final
 	* 对于 CGLIB 代理，`final` 方法不能被子类重写，事务增强会失效；JDK 动态代理只对接口方法生效，目标类内部直接调用同样不会生效
 * 单独的线程调用方法
 	* spring会从ThreadLocal中获取连接对象，如果新开启了线程，由于ThreadLocal的隔离，会导致拿不到连接，进而新创建一个来连接，这个新连接是自动提交的模式，无法回滚
+	* 可以尝试改为补偿或消息事务
 * 异常被catch
 * 类没有被spring管理
 * 数据库不支持事务
@@ -382,7 +384,6 @@ Spring设计了三级缓存来解决循环依赖问题。在`DefaultSingletonBea
 >解析得到的视图对象负责渲染模型数据，生成最终的响应结果。它会将模型数据填充到视图模板中，并生成 HTML 或其他格式的响应内容。
 7. 响应返回给客户端：
 >最终生成的响应结果通过响应对象传递给前端控制器（DispatcherServlet），然后通过网络传输返回给客户端。
-
 
 
 
