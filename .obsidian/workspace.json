@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/JVM.md",
+                "file": "Summary/30天复习计划.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "JVM"
+              "title": "30天复习计划"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/JVM.md",
+                "file": "Summary/30天复习计划.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "JVM 的大纲"
+              "title": "30天复习计划 的大纲"
             }
           },
           {
@@ -437,6 +437,9 @@
   },
   "active": "9bc99ca2867f9df0",
   "lastOpenFiles": [
+    "Summary/复习分层导航.md",
+    "Summary/30天复习计划.md",
+    "Summary/JVM.md",
     "Summary/面试问题.md",
     "Summary/压测.md",
     "Summary/Spring Cloud.md",
@@ -455,14 +458,11 @@
     "Summary/Redis.md",
     "Summary/Mysql.md",
     "Summary/Spring.md",
-    "Summary/30天复习计划.md",
     "Summary/Algorithm.md",
     "投资/操作守则.md",
     "投资/思考.md",
-    "Summary/JVM.md",
     "Summary/Java.md",
     "daliy_note/2025-12-21.md",
-    "daliy_note/2026-01-30.md",
     "历史",
     "Summary/Java.md~",
     "Summary/image/服务启动 1.7z",
