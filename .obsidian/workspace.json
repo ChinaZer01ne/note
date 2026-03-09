@@ -4,24 +4,201 @@
     "type": "split",
     "children": [
       {
-        "id": "c9b1345aaf5ebbc4",
+        "id": "66b299b4ad7dcf7a",
         "type": "tabs",
         "children": [
           {
-            "id": "9bc99ca2867f9df0",
+            "id": "312c29067cf17634",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/30天复习计划.md",
+                "file": "Summary/Concurrent programming.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "30天复习计划"
+              "title": "Concurrent programming"
+            }
+          },
+          {
+            "id": "14a0451441558df1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Summary/Spring.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Spring"
+            }
+          },
+          {
+            "id": "42a1bb09ee705063",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Summary/Spring.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Spring"
+            }
+          },
+          {
+            "id": "9853eeb54748babc",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "Summary/image/Java/synchronized原理.jpg"
+              },
+              "icon": "lucide-image",
+              "title": "synchronized原理"
+            }
+          },
+          {
+            "id": "8911a4ef808e3e47",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "Summary/image/Java/synchronized原理.jpg"
+              },
+              "icon": "lucide-image",
+              "title": "synchronized原理"
+            }
+          },
+          {
+            "id": "cd72376271d089ca",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Summary/Mysql.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Mysql"
+            }
+          },
+          {
+            "id": "0e0b8d0421a54c60",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Summary/IO.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "IO"
+            }
+          },
+          {
+            "id": "032342cbdcd1a9d4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Summary/Computer Network.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Computer Network"
+            }
+          },
+          {
+            "id": "813c721fab44e82e",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.7.4"
+              },
+              "icon": "lucide-file",
+              "title": "Release Notes 1.7.4"
+            }
+          },
+          {
+            "id": "a4e496166d78d175",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Summary/Spring.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Spring"
+            }
+          },
+          {
+            "id": "cf6713abcb7102fb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "投资/操作守则.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "操作守则"
+            }
+          },
+          {
+            "id": "ddbe3434375a38ad",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "daliy_note/2026-01-30.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2026-01-30"
+            }
+          },
+          {
+            "id": "edb4e17aee22bd1b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "投资/操作守则.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "操作守则"
+            }
+          },
+          {
+            "id": "c300b851080e4222",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "投资/操作守则.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "操作守则"
             }
           }
-        ]
+        ],
+        "currentTab": 13
       }
     ],
     "direction": "vertical"
@@ -53,7 +230,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "prototy",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -61,7 +238,7 @@
                 "sortOrder": "alphabetical"
               },
               "icon": "lucide-search",
-              "title": "Search"
+              "title": "搜索"
             }
           },
           {
@@ -78,7 +255,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 300
   },
   "right": {
     "id": "3d4e2dd6527cd4e7",
@@ -128,9 +305,7 @@
               "type": "tag",
               "state": {
                 "sortOrder": "frequency",
-                "useHierarchy": true,
-                "showSearch": false,
-                "searchQuery": ""
+                "useHierarchy": true
               },
               "icon": "lucide-tags",
               "title": "标签"
@@ -142,13 +317,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/30天复习计划.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "30天复习计划 的大纲"
+              "title": "大纲"
             }
           },
           {
@@ -191,8 +365,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -221,8 +395,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -231,8 +405,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -271,8 +445,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -286,7 +460,7 @@
             }
           },
           {
-            "id": "26d50f0c4a1dbfe0",
+            "id": "98bf3435e4a5c2b6",
             "type": "leaf",
             "state": {
               "type": "review-queue-list-view",
@@ -296,7 +470,7 @@
             }
           },
           {
-            "id": "dc28bd0bd60e7333",
+            "id": "336751b8133ed98d",
             "type": "leaf",
             "state": {
               "type": "review-queue-list-view",
@@ -306,7 +480,137 @@
             }
           },
           {
-            "id": "369067357869fe34",
+            "id": "c088bdc820a56c88",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "08870bfe9b0d0744",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "20d56ffc3950d861",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "6e60d2be2a6dadf1",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "4c94991ebd5ff7a3",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "1d768c9a8efbc695",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "8fa767dd7f21b372",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "56ec17bcb9d40481",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "33660d4b27d71c75",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "2f436b343b147c9c",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "369f4c34e0731c1e",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "2e01ca2d9b0902f9",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "4caec0e442a0cc8b",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "698d5137e88aa7e1",
             "type": "leaf",
             "state": {
               "type": "review-queue-list-view",
@@ -316,97 +620,7 @@
             }
           },
           {
-            "id": "55da70b0d50fc1e7",
-            "type": "leaf",
-            "state": {
-              "type": "review-queue-list-view",
-              "state": {},
-              "icon": "lucide-ghost",
-              "title": "review-queue-list-view"
-            }
-          },
-          {
-            "id": "09d0aeae72062bd6",
-            "type": "leaf",
-            "state": {
-              "type": "review-queue-list-view",
-              "state": {},
-              "icon": "lucide-ghost",
-              "title": "review-queue-list-view"
-            }
-          },
-          {
-            "id": "a7314419e7f35395",
-            "type": "leaf",
-            "state": {
-              "type": "review-queue-list-view",
-              "state": {},
-              "icon": "lucide-ghost",
-              "title": "review-queue-list-view"
-            }
-          },
-          {
-            "id": "03e5872b65fc1a60",
-            "type": "leaf",
-            "state": {
-              "type": "review-queue-list-view",
-              "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
-            }
-          },
-          {
-            "id": "11ad427883b98bdb",
-            "type": "leaf",
-            "state": {
-              "type": "review-queue-list-view",
-              "state": {},
-              "icon": "lucide-ghost",
-              "title": "review-queue-list-view"
-            }
-          },
-          {
-            "id": "1bc59dc2433caefd",
-            "type": "leaf",
-            "state": {
-              "type": "review-queue-list-view",
-              "state": {},
-              "icon": "lucide-ghost",
-              "title": "review-queue-list-view"
-            }
-          },
-          {
-            "id": "919c68376371928e",
-            "type": "leaf",
-            "state": {
-              "type": "review-queue-list-view",
-              "state": {},
-              "icon": "lucide-ghost",
-              "title": "review-queue-list-view"
-            }
-          },
-          {
-            "id": "7a8f4966d1a0520d",
-            "type": "leaf",
-            "state": {
-              "type": "review-queue-list-view",
-              "state": {},
-              "icon": "lucide-ghost",
-              "title": "review-queue-list-view"
-            }
-          },
-          {
-            "id": "0ef05c7b6ec55544",
-            "type": "leaf",
-            "state": {
-              "type": "review-queue-list-view",
-              "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
-            }
-          },
-          {
-            "id": "9d2a459380cb0f9a",
+            "id": "f1191e0622f2eef0",
             "type": "leaf",
             "state": {
               "type": "review-queue-list-view",
@@ -416,14 +630,15 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 33
       }
     ],
     "direction": "horizontal",
-    "width": 425.5
+    "width": 347.5
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:新建数据库": false,
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
       "canvas:新建白板": false,
@@ -431,57 +646,56 @@
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
       "markdown-importer:打开 Markdown 格式转换器": false,
-      "bases:新建数据库": false,
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "9bc99ca2867f9df0",
+  "active": "6aa11b407ce3eab2",
   "lastOpenFiles": [
-    "Summary/复习分层导航.md",
-    "Summary/30天复习计划.md",
-    "Summary/JVM.md",
-    "Summary/面试问题.md",
-    "Summary/压测.md",
-    "Summary/Spring Cloud.md",
-    "Summary/Linux.md",
-    "Summary/Computer Network.md",
-    "Summary/Distributed Theory.md",
-    "Summary/Mybatis.md",
-    "Summary/ES.md",
-    "Summary/Sentinel.md",
-    "Summary/Nacos.md",
-    "Summary/Architecture Design.md",
-    "Summary/缓存.md",
-    "Summary/MicroService Design.md",
-    "Summary/System Design.md",
-    "Summary/MQ.md",
-    "Summary/Redis.md",
-    "Summary/Mysql.md",
-    "Summary/Spring.md",
-    "Summary/Algorithm.md",
     "投资/操作守则.md",
-    "投资/思考.md",
-    "Summary/Java.md",
+    "conflict-files-obsidian-git.md",
+    "daliy_note/2026-01-30.md",
     "daliy_note/2025-12-21.md",
-    "历史",
-    "Summary/Java.md~",
-    "Summary/image/服务启动 1.7z",
-    "Summary/image/服务启动.7z",
-    "Summary/image/GameCmdEnum.java",
+    "历史/历史上的金融危机.md",
+    "Summary/新增模块学习计划.md",
+    "Summary/复习分层导航.md",
+    "Summary/现代Java资深开发补充主题.md",
+    "Summary/30天复习计划.md",
+    "Summary/Algorithm.md",
+    "Summary/TO DO LIST.md",
+    "Summary/Java.md",
+    "Summary/AI.md",
+    "投资/思考.md",
     "未命名.base",
     "未命名 1.base",
     "投资",
     "新建文件夹",
     "哲学",
+    "历史",
+    "Summary/面试问题.md",
+    "Summary/System Design.md",
+    "Summary/线上问题分享（TODO）.md",
+    "Summary/缓存.md",
+    "Summary/JVM.md",
+    "Summary/Mysql.md",
+    "Summary/Zookeeper.md",
+    "Summary/ES.md",
+    "Summary/Redis.md",
+    "Summary/Sentinel.md",
+    "Summary/Nacos.md",
+    "Summary/Mybatis.md",
     "Summary/image/Dubbo/dubbo.png",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
     "Summary/image/Dubbo/dubbo-spi.png",
+    "Summary/image/Dubbo",
     "Summary/image/microservice/distributed-transaction-TCC.png",
     "Summary/image/microservice/distributed-transaction-saga.png",
     "Summary/image/microservice/distributed-transaction-local-message-table.png",
+    "Summary/image/microservice",
     "Summary/image/Redis/基于虚拟节点的一致性hash算法图解.png",
     "Summary/image/Redis/分布式锁+时间戳.jpg",
     "Summary/image/Redis/redis热key.jpg",
-    "Summary/image/Redis/redis服务器分布样式.png"
+    "Summary/image/Redis/redis服务器分布样式.png",
+    "Summary/image/Redis/Redis命令执行流程图.png.crdownload",
+    "Summary/image/Redis/Redis命令处理流程.png.crdownload"
   ]
 }
