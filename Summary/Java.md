@@ -7,6 +7,7 @@
 - `P0-5` CAS与无锁：ABA问题、`Atomic*` 与 `LongAdder` 的适用边界。
 - `P0-6` ThreadLocal：结构、内存泄漏根因、线程池场景 `remove()`。
 
+
 ## P0常见误区修正（本页已修订）
 - HashMap 扩容触发条件是“元素个数超过阈值”，不是“必须发生哈希冲突”。
 - HashSet 底层复用 HashMap 的固定哨兵值（`PRESENT`），不是每次都 `new Object()`。
@@ -1460,4 +1461,8 @@ ExecutorService pool = Executors.newFixedThreadPool(5);
 	```java
     List<String> names = optional.stream().collect(Collectors.toList());
     ```
+
+
+
+
 
