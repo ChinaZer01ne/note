@@ -4,157 +4,35 @@
     "type": "split",
     "children": [
       {
-        "id": "66b299b4ad7dcf7a",
+        "id": "c9b1345aaf5ebbc4",
         "type": "tabs",
         "children": [
           {
-            "id": "312c29067cf17634",
+            "id": "9bc99ca2867f9df0",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Concurrent programming.md",
+                "file": "daliy_note/2026-02-09.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Concurrent programming"
+              "title": "2026-02-09"
             }
           },
           {
-            "id": "14a0451441558df1",
+            "id": "1aeb503f373b91b3",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/Spring.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Spring"
-            }
-          },
-          {
-            "id": "42a1bb09ee705063",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/Spring.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Spring"
-            }
-          },
-          {
-            "id": "9853eeb54748babc",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "Summary/image/Java/synchronized原理.jpg"
-              },
-              "icon": "lucide-image",
-              "title": "synchronized原理"
-            }
-          },
-          {
-            "id": "8911a4ef808e3e47",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "Summary/image/Java/synchronized原理.jpg"
-              },
-              "icon": "lucide-image",
-              "title": "synchronized原理"
-            }
-          },
-          {
-            "id": "cd72376271d089ca",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/Mysql.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Mysql"
-            }
-          },
-          {
-            "id": "0e0b8d0421a54c60",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/IO.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "IO"
-            }
-          },
-          {
-            "id": "032342cbdcd1a9d4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/Computer Network.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Computer Network"
-            }
-          },
-          {
-            "id": "813c721fab44e82e",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.7.4"
-              },
-              "icon": "lucide-file",
-              "title": "Release Notes 1.7.4"
-            }
-          },
-          {
-            "id": "a4e496166d78d175",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Summary/Spring.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Spring"
-            }
-          },
-          {
-            "id": "cf6713abcb7102fb",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.10.6"
-              },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.10.6"
+              "title": "新标签页"
             }
           }
         ],
-        "currentTab": 10
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -177,7 +55,7 @@
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
-              "title": "Files"
+              "title": "文件列表"
             }
           },
           {
@@ -186,7 +64,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "prototy",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -194,7 +72,7 @@
                 "sortOrder": "alphabetical"
               },
               "icon": "lucide-search",
-              "title": "搜索"
+              "title": "Search"
             }
           },
           {
@@ -211,7 +89,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "3d4e2dd6527cd4e7",
@@ -273,12 +151,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "daliy_note/2025-12-19.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "大纲"
+              "title": "Outline of 2025-12-19"
             }
           },
           {
@@ -411,8 +290,8 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "Notes Review Queue"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
@@ -421,77 +300,197 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "dc28bd0bd60e7333",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "369067357869fe34",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "55da70b0d50fc1e7",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "09d0aeae72062bd6",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "a7314419e7f35395",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "03e5872b65fc1a60",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "11ad427883b98bdb",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "1bc59dc2433caefd",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "919c68376371928e",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "7a8f4966d1a0520d",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "0ef05c7b6ec55544",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
               "icon": "SpacedRepIcon",
-              "title": "Notes Review Queue"
+              "title": "笔记复习序列"
+            }
+          },
+          {
+            "id": "9d2a459380cb0f9a",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "笔记复习序列"
             }
           }
         ],
-        "currentTab": 17
+        "currentTab": 29
       }
     ],
     "direction": "horizontal",
-    "width": 347.5
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false,
-      "markdown-importer:Open format converter": false,
-      "bases:Create new base": false,
-      "obsidian-spaced-repetition:Review flashcards": false
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "markdown-importer:打开 Markdown 格式转换器": false,
+      "bases:新建数据库": false,
+      "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "26d50f0c4a1dbfe0",
+  "active": "1aeb503f373b91b3",
   "lastOpenFiles": [
+    "daliy_note/2026-01-30.md",
+    "daliy_note/2025-12-21.md",
+    "投资/操作守则.md",
+    "投资/思考.md",
+    "历史/历史上的金融危机.md",
+    "历史",
+    "Summary/现代Java资深开发补充主题.md",
+    "Summary/测试体系与质量保障.md",
+    "Summary/新增模块学习计划.md",
+    "Summary/应用安全与合规.md",
+    "Summary/工程化交付与发布治理.md",
+    "Summary/复习分层导航.md",
+    "Summary/API设计与契约治理.md",
+    "Summary/AI工程化与Java落地.md",
+    "Summary/AI.md",
+    "Summary/30天复习计划.md",
+    "daliy_note/2026-01-05.md",
+    "daliy_note/2026-01-04.md",
+    "daliy_note/2026-02-09.md",
+    "daliy_note/2026-03-02.md",
+    "daliy_note/2026-02-04.md",
+    "daliy_note/2026-02-03.md",
+    "daliy_note/2026-01-28.md",
+    "daliy_note/2026-01-27.md",
+    "daliy_note/2026-01-22 1.md",
+    "daliy_note/2026-01-22.md",
+    "Summary/Java.md",
+    "Summary/Java.md~",
+    "Summary/image/服务启动 1.7z",
+    "Summary/image/服务启动.7z",
+    "Summary/image/GameCmdEnum.java",
     "未命名.base",
     "未命名 1.base",
     "投资",
     "新建文件夹",
     "哲学",
-    "历史",
-    "Summary/面试问题.md",
-    "Summary/System Design.md",
-    "Summary/线上问题分享（TODO）.md",
-    "Summary/缓存.md",
-    "Summary/JVM.md",
-    "Summary/Mysql.md",
-    "Summary/Zookeeper.md",
-    "Summary/ES.md",
-    "Summary/Redis.md",
-    "Summary/Sentinel.md",
-    "Summary/Nacos.md",
-    "Summary/Mybatis.md",
-    "Summary/MicroService Design.md",
-    "Summary/Java.md",
-    "Summary/Spring Cloud.md",
-    "Summary/TO DO LIST.md",
-    "Summary/Spring.md",
-    "Summary/MarkDown.md",
-    "Summary/Linux.md",
-    "Summary/IO.md",
-    "Summary/Distributed Theory.md",
-    "Summary/Design Patterns.md",
-    "Summary/Design Docments.md",
-    "Summary/Concurrent programming.md",
-    "Summary/MQ.md",
     "Summary/image/Dubbo/dubbo.png",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
     "Summary/image/Dubbo/dubbo-spi.png",
-    "Summary/image/Dubbo",
     "Summary/image/microservice/distributed-transaction-TCC.png",
     "Summary/image/microservice/distributed-transaction-saga.png",
     "Summary/image/microservice/distributed-transaction-local-message-table.png",
-    "Summary/image/microservice",
     "Summary/image/Redis/基于虚拟节点的一致性hash算法图解.png",
     "Summary/image/Redis/分布式锁+时间戳.jpg",
     "Summary/image/Redis/redis热key.jpg",
-    "Summary/image/Redis/redis服务器分布样式.png",
-    "Summary/image/Redis/Redis命令执行流程图.png.crdownload",
-    "Summary/image/Redis/Redis命令处理流程.png.crdownload",
-    "Summary/image/Redis/双工请求响应模式.png.crdownload"
+    "Summary/image/Redis/redis服务器分布样式.png"
   ]
 }
