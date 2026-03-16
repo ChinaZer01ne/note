@@ -189,12 +189,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "投资/操作守则.md",
+                "file": "Summary/前端.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "操作守则"
+              "title": "前端"
             }
           }
         ],
@@ -317,12 +317,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "Summary/前端.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "大纲"
+              "title": "前端 的大纲"
             }
           },
           {
@@ -640,7 +641,7 @@
             }
           }
         ],
-        "currentTab": 34
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -659,7 +660,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "56f16272636be022",
+  "active": "cb57ded5bb6d015c",
   "lastOpenFiles": [
     "投资/操作守则.md",
     "conflict-files-obsidian-git.md",
