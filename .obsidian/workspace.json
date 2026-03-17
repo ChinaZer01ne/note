@@ -626,12 +626,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
             "id": "56f16272636be022",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "82b44c7eb507fd81",
             "type": "leaf",
             "state": {
               "type": "review-queue-list-view",
@@ -662,6 +672,7 @@
   },
   "active": "cb57ded5bb6d015c",
   "lastOpenFiles": [
+    "Summary/前端.md",
     "投资/操作守则.md",
     "conflict-files-obsidian-git.md",
     "daliy_note/2026-01-30.md",
@@ -693,7 +704,6 @@
     "Summary/Redis.md",
     "Summary/Sentinel.md",
     "Summary/Nacos.md",
-    "Summary/Mybatis.md",
     "Summary/image/Dubbo/dubbo.png",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
     "Summary/image/Dubbo/dubbo-spi.png",
