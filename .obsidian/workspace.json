@@ -646,12 +646,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "37241238ac070e22",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 36
       }
     ],
     "direction": "horizontal",
@@ -670,7 +680,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "cb57ded5bb6d015c",
+  "active": "37241238ac070e22",
   "lastOpenFiles": [
     "Summary/前端.md",
     "投资/操作守则.md",
