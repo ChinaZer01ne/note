@@ -42,3 +42,9 @@ kratos upgrade
 ```shell
 kratos new helloword
 ```
+
+#### 加载依赖
+
+```shell
+go mod tidy
+```
