@@ -43,6 +43,7 @@ kratos upgrade
 kratos new helloword
 ```
 
+> 注意查看项目中`go.mod`中`go`的版本，安装高版本的`go`会有兼容性问题
 #### 加载依赖
 
 ```shell
