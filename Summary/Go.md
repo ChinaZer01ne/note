@@ -68,3 +68,83 @@ go build -o ./bin/ ./...
 ```shell
 go mod tidy
 ```
+
+
+### 接入consul
+
+#### 安装consul
+
+https://developer.hashicorp.com/consul/install
+
+#### 启动consul
+
+```shell
+consul agent -dev
+```
+
+#### 在consul中增加配置
+
+  - 打开 http://localhost:8500/ui
+  - 进入 KV
+  - 新建 key：`kratos/helloworld/config.yaml`
+  - 值填入你当前 `configs/config.yaml` 的完整内容
+
+通过以下命令查看配置值：
+```shell
+consul kv get kratos/helloworld/config.yaml
+```
+#### 增加配置
+
+```go
+message Bootstrap {  
+  Server server = 1;  
+  Data data = 2;  
+  Consul consul = 3;  
+}
+
+// 增加consul  
+message Consul {  
+  string scheme = 1;  
+  string address = 2;  
+  string config_path = 3;  
+  string service_name = 4;  
+  string service_version = 5;  
+}
+```
+
+#### 安装依赖
+
+```shell
+go get github.com/hashicorp/consul/api
+go get github.com/go-kratos/kratos/contrib/config/consul/v2
+go get github.com/go-kratos/kratos/contrib/registry/consul/v2
+```
+
+安装完依赖需要执行
+```shell
+go mod tidy
+```
+
+#### 接入
+
+`main.go`中修改
+```go
+// 接入consul  
+client, err := consulAPI.NewClient(&consulAPI.Config{  
+    Address: "127.0.0.1:8500",  
+    Scheme:  "http",  
+})  
+if err != nil {  
+    panic(err)  
+}  
+cs, err := consulConfig.New(  
+    client,  
+    consulConfig.WithPath("kratos/helloworld/config.yaml"),  
+)  
+if err != nil {  
+    panic(err)  
+}  
+c := config.New(  
+    config.WithSource(cs),  
+)
+```
