@@ -158,3 +158,27 @@ go get go.temporal.io/sdk@latest
 go mod tidy
 ```
 
+#### 增加配置
+
+```go
+message Temporal {  
+  string host_port = 1;  
+  string namespace = 2;  
+  string task_queue = 3;  
+  bool auto_create_schedule = 4;  
+  string user_snapshot_schedule_id = 5;  
+  google.protobuf.Duration user_snapshot_every = 6;  
+}  
+
+Temporal temporal = 1;
+```
+
+```yml
+temporal:
+  host_port: 127.0.0.1:7233
+  namespace: default
+  task_queue: user-service-scheduler
+  auto_create_schedule: true
+  user_snapshot_schedule_id: user-snapshot-every-minute
+  user_snapshot_every: 60s
+```
