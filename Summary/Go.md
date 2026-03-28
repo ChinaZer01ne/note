@@ -182,3 +182,13 @@ temporal:
   user_snapshot_schedule_id: user-snapshot-every-minute
   user_snapshot_every: 60s
 ```
+
+#### 安装Temporal
+
+```shell
+git clone https://github.com/temporalio/docker-compose.git cd 
+docker-compose 
+docker-compose up -d
+```
+
+http://localhost:8233
