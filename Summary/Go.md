@@ -148,3 +148,13 @@ c := config.New(
     config.WithSource(cs),  
 )
 ```
+
+
+### 接入Temporal
+
+```shell
+go get go.temporal.io/sdk@latest
+
+go mod tidy
+```
+

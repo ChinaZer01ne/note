@@ -189,12 +189,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "daliy_note/2026-03-26.md",
+                "file": "Summary/Go.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2026-03-26"
+              "title": "Go"
             }
           }
         ],
@@ -317,13 +317,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "daliy_note/2026-03-26.md",
+                "file": "Summary/Go.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "2026-03-26 的大纲"
+              "title": "Go 的大纲"
             }
           },
           {
@@ -699,9 +699,19 @@
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
+          },
+          {
+            "id": "b1f726937a727137",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "笔记复习序列"
+            }
           }
         ],
-        "currentTab": 40
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -720,10 +730,10 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "c300b851080e4222",
+  "active": "cb57ded5bb6d015c",
   "lastOpenFiles": [
-    "Summary/Go.md",
     "daliy_note/2026-03-26.md",
+    "Summary/Go.md",
     "daliy_note",
     "Summary/前端.md",
     "投资/操作守则.md",
