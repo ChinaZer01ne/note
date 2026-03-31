@@ -4,5 +4,5 @@
 
 ### 前端
 
-* vscode-icon
+* vscode-icons
 * live server
