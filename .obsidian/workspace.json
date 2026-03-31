@@ -189,12 +189,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/Go.md",
+                "file": "Summary/前端.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Go"
+              "title": "前端"
             }
           }
         ],
@@ -317,13 +317,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/Go.md",
+                "file": "Summary/前端.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Go 的大纲"
+              "title": "前端 的大纲"
             }
           },
           {
@@ -696,12 +696,22 @@
             "state": {
               "type": "review-queue-list-view",
               "state": {},
-              "icon": "SpacedRepIcon",
-              "title": "笔记复习序列"
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
             }
           },
           {
             "id": "b1f726937a727137",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "review-queue-list-view"
+            }
+          },
+          {
+            "id": "a31063c7158f86bc",
             "type": "leaf",
             "state": {
               "type": "review-queue-list-view",
@@ -711,7 +721,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 42
       }
     ],
     "direction": "horizontal",
@@ -730,10 +740,10 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "cb57ded5bb6d015c",
+  "active": "c300b851080e4222",
   "lastOpenFiles": [
-    "daliy_note/2026-03-26.md",
     "Summary/Go.md",
+    "daliy_note/2026-03-26.md",
     "daliy_note",
     "Summary/前端.md",
     "投资/操作守则.md",
