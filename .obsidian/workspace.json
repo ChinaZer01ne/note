@@ -175,12 +175,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/VS  Code.md",
+                "file": "Summary/前端.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "VS  Code"
+              "title": "前端"
             }
           }
         ],
@@ -303,13 +303,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/VS  Code.md",
+                "file": "Summary/前端.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "VS  Code 的大纲"
+              "title": "前端 的大纲"
             }
           },
           {
@@ -728,8 +728,8 @@
   },
   "active": "edb4e17aee22bd1b",
   "lastOpenFiles": [
-    "投资/操作守则.md",
     "Summary/VS  Code.md",
+    "投资/操作守则.md",
     "Summary/前端.md",
     "Summary/Go.md",
     "daliy_note/2026-03-26.md",
