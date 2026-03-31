@@ -189,12 +189,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Summary/前端.md",
+                "file": "Summary/VS  Code.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "前端"
+              "title": "VS  Code"
             }
           }
         ],
@@ -317,13 +317,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Summary/前端.md",
+                "file": "Summary/VS  Code.md",
                 "followCursor": false,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "前端 的大纲"
+              "title": "VS  Code 的大纲"
             }
           },
           {
@@ -742,10 +742,11 @@
   },
   "active": "c300b851080e4222",
   "lastOpenFiles": [
+    "Summary/前端.md",
+    "Summary/VS  Code.md",
     "Summary/Go.md",
     "daliy_note/2026-03-26.md",
     "daliy_note",
-    "Summary/前端.md",
     "投资/操作守则.md",
     "conflict-files-obsidian-git.md",
     "daliy_note/2026-01-30.md",
@@ -774,7 +775,6 @@
     "Summary/Mysql.md",
     "Summary/Zookeeper.md",
     "Summary/ES.md",
-    "Summary/Redis.md",
     "Summary/image/Dubbo/dubbo.png",
     "Summary/image/Dubbo/dubbo-负载均衡.png",
     "Summary/image/Dubbo/dubbo-spi.png",
