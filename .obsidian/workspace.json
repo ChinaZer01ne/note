@@ -705,9 +705,19 @@
               "icon": "SpacedRepIcon",
               "title": "笔记复习序列"
             }
+          },
+          {
+            "id": "7bb84388df0b0608",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "笔记复习序列"
+            }
           }
         ],
-        "currentTab": 42
+        "currentTab": 43
       }
     ],
     "direction": "horizontal",
@@ -726,7 +736,7 @@
       "obsidian-spaced-repetition:复习卡片": false
     }
   },
-  "active": "edb4e17aee22bd1b",
+  "active": "7bb84388df0b0608",
   "lastOpenFiles": [
     "Summary/VS  Code.md",
     "投资/操作守则.md",
