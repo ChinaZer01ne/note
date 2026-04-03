@@ -78,3 +78,10 @@ fabric.properties
 .obsidian/search.json
 .obsidian/graph.json
 .obsidian/tags.json
+
+
+# 忽略日记文件夹下所有内容
+daliy_note/*
+
+# 🔥 例外：只保留 README.md 占位文件，提交到 Git
+!daliy_note/README.md
