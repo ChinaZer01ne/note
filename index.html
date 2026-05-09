@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>个人知识库 | 技术、阅读与实践笔记</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="一个长期维护的个人知识库，涵盖后端工程、系统设计、工程治理与跨学科学习笔记。">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
+</head>
+<body>
+  <div id="app">正在加载知识库...</div>
+  <script>
+    window.$docsify = {
+      name: '个人知识库',
+      nameLink: '#/',
+      homepage: 'README.md',
+      loadSidebar: true,
+      auto2top: true,
+      maxLevel: 3,
+      subMaxLevel: 2,
+      search: {
+        paths: 'auto',
+        placeholder: '搜索主题、概念或关键词',
+        noData: '未找到相关内容'
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/sidebar.min.js"></script>
+</body>
+</html>
