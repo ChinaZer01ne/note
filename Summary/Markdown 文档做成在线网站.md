@@ -123,38 +123,21 @@ docsify serve .
 	git push -u origin master
 	```
 
-## 第六步：开启 Gitee Pages 生成在线网址
+## 第六步：开启 Github Pages 生成在线网址
 
-1. Gitee 进入你的仓库 → 右上角 **服务** → **Gitee Pages**
-2. 设置：
-    
-    - 部署分支：`master`
-    - 部署目录：`/` 根目录
-    
-3. 点击 **启动**
-4. 等待 1 分钟，会生成一个网址：
+1. 在 GitHub 仓库打开Settings -> Pages
+2. 在 Build and deployment 里选择
+	- Source: Deploy from a branch
+	- Branch: 选你的分支，比如 master
+	- Folder: 选 /(root)
+	- Save
+3. 保存后页面会提示「Your site is ready to be published at https:// 你的用户名.github.io/ 仓库名 /」
+	- 等待 1-2 分钟（GitHub 会自动部署），刷新 Pages 页面，会显示绿色的「Your site is live at xxx」
+4. 根据仓库名不同，访问地址分两种：
+	* 仓库名是 `用户名.github.io` → 地址：`https://用户名.github.io`
+	* 仓库名是自定义（比如 `my-docs`）→ 地址：`https://用户名.github.io/my-docs/`
 
-```plaintext
-https://你的用户名.gitee.io/my-docs/
-```
-
-**手机、电脑随时打开这个网址就能看所有文档**
-
----
-
-## 后续使用
-
-以后你新增 / 修改 `.md` 文件，只需要：
-
-
-```bash
-git add .
-git commit -m "更新文档"
-git push
-```
-
-然后去 Gitee Pages 点一下**更新**，网站就同步更新了。
-
----
-
-我可以给你**打包好现成模板**，你直接解压把自己的 md 丢进去，直接上传就能用，要不要我发给你？
+> 如果出现侧边栏不展示的问题
+> 在仓库根目录加一个空文件：`.nojekyll`
+  作用：
+	  * 告诉 GitHub Pages 不要用 Jekyll 处理这个仓库`_sidebar.md`、`_coverpage.md` 这类 Docsify 文件就能正常访问
