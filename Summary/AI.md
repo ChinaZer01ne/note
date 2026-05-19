@@ -29,7 +29,15 @@
 	* 运作模式：面对复杂任务，Agent 能自动拆解步骤，并连续、多次调用工具，直至目标达成。
 	- 构建模式：常见的包括 ReAct (Reason + Act) 和 Plan and Execute。
 	- Agent产品：Claude Code、Codex、Gemini CLI这些都是Agent，他们都具备规划能力，拆解任务，完成任务。他们底层的LLM是比如Claude Opus4.7、GPT5.5、Gemini3等
-- Agent Skill 
+- Agent Skill
+	- 本质：一份给 Agent 阅读的说明文档（通常为 Markdown 格式），用于规范其特定场景下的行为。 
+	- 结构组成：
+		- 元数据层 (Metadata)：包含名称 (Name) 和描述 (Description)，用于 Agent 匹配判断。
+		- 指令层 (Instructions)：规定目标、执行步骤、判断逻辑、输出格式及示例 (Few-shots)。
+	- 工程规范（以 Cline 为例）：
+		- 需存放在特定目录（如 `skills/`）。
+		- 文件夹名称必须与技能名一致。
+		- 文件名必须固定为 `SKILL.md`。
 
 
 * 
