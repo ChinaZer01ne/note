@@ -26,8 +26,10 @@
 	- Tool通过MCP接入平台，供LLM调用。
 * Agent
 	* 特征：具备自主规划能力。
-	* - 运作模式：面对复杂任务，Agent 能自动拆解步骤，并连续、多次调用工具，直至目标达成。
+	* 运作模式：面对复杂任务，Agent 能自动拆解步骤，并连续、多次调用工具，直至目标达成。
 	- 构建模式：常见的包括 ReAct (Reason + Act) 和 Plan and Execute。
+	- Agent产品：Claude Code、Codex、Gemini CLI这些都是Agent，他们都具备规划能力，拆解任务，完成任务。他们底层的LLM是比如Claude Opus4.7、GPT5.5、Gemini3等
+- Agent Skill 
 
 
 * 
