@@ -63,3 +63,70 @@
 	* 反馈
 
 ## 对接LLM
+
+### 千问
+
+```python
+import requests
+import json
+
+API_KEY = "你的通义key"
+url = "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation"
+
+headers = {
+    "Authorization": f"Bearer {API_KEY}",
+    "Content-Type": "application/json"
+}
+
+data = {
+    "model": "qwen-turbo",
+    "input": {
+        "messages": [
+            {"role":"system","content":"你是专业Java技术顾问"},
+            {"role":"user","content":"解释一下Spring AI是什么"}
+        ]
+    },
+    "parameters": {"result_format":"message"}
+}
+
+res = requests.post(url, headers=headers, json=data)
+print(res.json()["output"]["choices"][0]["message"]["content"])
+
+```
+### OpenAI
+```python
+import requests
+
+api_key = "你的key"
+url = "https://api.openai.com/v1/chat/completions"
+
+headers = {
+    "Authorization": f"Bearer {api_key}",
+    "Content-Type":"application/json"
+}
+
+body = {
+    "model":"gpt-3.5-turbo",
+    "messages":[
+        {"role":"user","content":"介绍RAG原理"}
+    ],
+    "temperature":0.7
+}
+
+res = requests.post(url, headers=headers, json=body)
+print(res.json()["choices"][0]["message"]["content"])
+
+```
+
+#### 流式调用
+
+```python
+# 加上 stream: true 就是流式输出
+body = {
+    "model":"gpt-3.5-turbo",
+    "messages":[{"role":"user","content":"简单介绍Java"}],
+    "stream":True
+}
+```
+
+### Deepsee
