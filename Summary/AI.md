@@ -129,4 +129,58 @@ body = {
 }
 ```
 
-### Deepsee
+### Deepseek
+
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",  # DeepSeek API Key
+    base_url="https://api.deepseek.com/v1"
+)
+
+resp = client.chat.completions.create(
+    model="deepseek-chat",  # 或 deepseek-coder
+    messages=[
+        {"role": "system", "content": "你是一个技术专家"},
+        {"role": "user", "content": "解释一下模型幻觉"}
+    ],
+    temperature=0.7
+)
+
+print(resp.choices[0].message.content)
+
+```
+
+### Claude
+```python
+import anthropic
+
+client = anthropic.Anthropic(
+    api_key="sk-ant-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+)
+
+msg = client.messages.create(
+    model="claude-3-sonnet-20240229",  # opus/sonnet/haiku
+    max_tokens=1024,
+    system="你是技术顾问",
+    messages=[
+        {"role": "user", "content": "写一段 Python 快速排序"}
+    ]
+)
+
+print(msg.content[0].text)
+
+```
+
+### Gemini
+```python
+import google.generativeai as genai
+
+genai.configure(api_key="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")  # Gemini API Key
+
+model = genai.GenerativeModel("gemini-pro")  # 文本用 gemini-pro，多模态用 gemini-pro-vision
+resp = model.generate_content("解释什么是对话上下文")
+print(resp.text)
+
+```
