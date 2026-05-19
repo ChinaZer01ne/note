@@ -43,10 +43,13 @@
 > LLM 作为核心大脑，通过 Token 处理信息，在 Context 窗口内运作。通过 User 和 System Prompt 的配合，利用 Tool 和 MCP 协议扩展能力边界。当系统具备自主规划能力时即进化为 Agent，而 Agent Skill 则为其提供了精细化执行特定任务的专业指南。
 ### AI其他概念
 
-* 温度（temprature）
-* top_p
-* 
-* 
+* 温度（temprature）：越高越随机、有创造力；越低越确定越保守
+* top_p：越高越随机、有创造力；越低越确定越保守
+* 重复性惩罚
+
+
+
+
 * 梯度下降：局部最优
 	* 随机梯度下降
 	* mini-batch
