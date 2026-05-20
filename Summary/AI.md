@@ -76,6 +76,12 @@ https://ollama.com/
 
 ###### 安装
 
+windows安装：
+
+```powershell
+// 可以指定安装目录
+OllamaSetup.exe /DIR=D:\develop\ollama
+```
 
 
 
