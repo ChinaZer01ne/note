@@ -45,6 +45,8 @@
 
 ### AI其他概念
 
+* GPT和ChatGPT
+	* gpt是LLM，ChatGPT是da'mo'xing'ying'yong
 * 温度（temprature）：越高越随机、有创造力；越低越确定越保守
 	* 通过影响softMax函数，来控制每个Token的概率大小，温度越低，概率差距越大，温度越高，概率差距越小
 * top_p：越高越随机、有创造力；越低越确定越保守
@@ -53,9 +55,6 @@
 * 模型幻觉
 * 流式输出（SSE）
 * Transformer
-
-
-
 * 梯度下降：局部最优
 	* 随机梯度下降
 	* mini-batch
