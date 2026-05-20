@@ -7,6 +7,10 @@
   - [每日笔记说明](daliy_note/README.md)
 
 - 技术专题
+  - AI大模型开发
+    - [Python](Summary/Python.md)
+    - [AI](Summary/AI.md)
+    - [LangChain](LangChain.md)
   - Java 与语言基础
     - [Java](Summary/Java.md)
     - [JVM](Summary/JVM.md)
