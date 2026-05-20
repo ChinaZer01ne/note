@@ -1,4 +1,5 @@
-## 基础概念
+## 通识
+### 基础概念
 
 * LLM：生成式AI
 * Token：Token 是LLM处理文本的最基本单元
@@ -43,10 +44,10 @@
 > LLM 作为核心大脑，通过 Token 处理信息，在 Context 窗口内运作。通过 User 和 System Prompt 的配合，利用 Tool 和 MCP 协议扩展能力边界。当系统具备自主规划能力时即进化为 Agent，而 Agent Skill 则为其提供了精细化执行特定任务的专业指南。
 
 
-### AI其他概念
+### 其他概念
 
 * GPT和ChatGPT
-	* gpt是LLM，ChatGPT是da'mo'xing'ying'yong
+	* gpt是LLM，ChatGPT是大模型应用：web应用 + LLM
 * 温度（temprature）：越高越随机、有创造力；越低越确定越保守
 	* 通过影响softMax函数，来控制每个Token的概率大小，温度越低，概率差距越大，温度越高，概率差距越小
 * top_p：越高越随机、有创造力；越低越确定越保守
